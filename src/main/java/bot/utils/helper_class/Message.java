@@ -1,4 +1,4 @@
-package bot.utils;
+package bot.utils.helper_class;
 
 import bot.Chatbot;
 import org.json.simple.JSONObject;
@@ -19,9 +19,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static bot.utils.CONSTANTS.*;
-import static bot.utils.XPATHS.MESSAGE_IMAGE;
-import static bot.utils.XPATHS.MESSAGE_TEXT;
+import static bot.utils.helper_interface.CONSTANTS.*;
+import static bot.utils.helper_interface.XPATHS.MESSAGE_IMAGE;
+import static bot.utils.helper_interface.XPATHS.MESSAGE_TEXT;
 import static org.apache.commons.lang.StringEscapeUtils.unescapeHtml;
 
 public class Message {

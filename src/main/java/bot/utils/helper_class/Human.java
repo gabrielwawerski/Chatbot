@@ -1,4 +1,4 @@
-package bot.utils;
+package bot.utils.helper_class;
 
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static bot.utils.XPATHS.MESSAGE_SENDER_NICKNAME;
-import static bot.utils.XPATHS.MESSAGE_SENDER_REAL_NAME;
+import static bot.utils.helper_interface.XPATHS.MESSAGE_SENDER_NICKNAME;
+import static bot.utils.helper_interface.XPATHS.MESSAGE_SENDER_REAL_NAME;
 
 public class Human {
     //region Constants

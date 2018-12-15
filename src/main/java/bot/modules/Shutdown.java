@@ -1,16 +1,16 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.Message;
-import bot.utils.Module;
+import bot.utils.helper_class.Message;
+import bot.utils.helper_interface.Module;
 import bot.utils.exceptions.MalformedCommandException;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.utils.CONSTANTS.ACTIONIFY;
-import static bot.utils.CONSTANTS.DEACTIONIFY;
+import static bot.utils.helper_interface.CONSTANTS.ACTIONIFY;
+import static bot.utils.helper_interface.CONSTANTS.DEACTIONIFY;
 
 public class Shutdown implements Module {
     //region Constants

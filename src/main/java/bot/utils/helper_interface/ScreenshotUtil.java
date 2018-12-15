@@ -1,4 +1,4 @@
-package bot.utils;
+package bot.utils.helper_interface;
 
 import org.codehaus.plexus.util.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import static bot.utils.CONSTANTS.ERROR_DATE_FORMATTER;
+import static bot.utils.helper_interface.CONSTANTS.ERROR_DATE_FORMATTER;
 
 public interface ScreenshotUtil {
     private static void screenshot(TakesScreenshot o) {

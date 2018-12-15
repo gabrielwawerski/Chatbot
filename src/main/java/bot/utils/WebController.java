@@ -1,6 +1,9 @@
 package bot.utils;
 
 import bot.Chatbot;
+import bot.utils.helper_class.Human;
+import bot.utils.helper_class.Message;
+import bot.utils.helper_interface.ScreenshotUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
 
-import static bot.utils.XPATHS.*;
+import static bot.utils.helper_interface.XPATHS.*;
 
 public class WebController {
     //region Variables

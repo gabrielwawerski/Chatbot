@@ -1,8 +1,8 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.Message;
-import bot.utils.Module;
+import bot.utils.helper_class.Message;
+import bot.utils.helper_interface.Module;
 import bot.utils.exceptions.MalformedCommandException;
 import com.google.common.collect.Lists;
 import org.json.simple.JSONArray;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.utils.CONSTANTS.*;
+import static bot.utils.helper_interface.CONSTANTS.*;
 
 public class Quotes implements Module {
     //region Constants

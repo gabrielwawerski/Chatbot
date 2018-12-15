@@ -1,4 +1,4 @@
-package bot.utils;
+package bot.utils.helper_class;
 
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;

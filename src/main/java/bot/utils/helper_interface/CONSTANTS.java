@@ -1,4 +1,4 @@
-package bot.utils;
+package bot.utils.helper_interface;
 
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;

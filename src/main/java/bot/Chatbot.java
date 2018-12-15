@@ -4,9 +4,9 @@ import bot.modules.OneLinkCommand;
 import bot.modules.Ping;
 import bot.modules.Shutdown;
 import bot.modules.Stats;
-import bot.utils.Human;
-import bot.utils.Message;
-import bot.utils.Module;
+import bot.utils.helper_class.Human;
+import bot.utils.helper_class.Message;
+import bot.utils.helper_interface.Module;
 import bot.utils.WebController;
 import bot.utils.exceptions.MalformedCommandException;
 import com.google.errorprone.annotations.ForOverride;
@@ -20,8 +20,7 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    //region Constants
-    private final String VERSION = "V1.19.0";
+    private final String VERSION = "v1.0";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -30,15 +29,11 @@ public class Chatbot {
     private final LocalDateTime startupTime = LocalDateTime.now();
     private final Duration messageTimeout = Duration.ofMinutes(1);
     private final long refreshRate = 100;
-    //endregion
 
-    //region Variables
     private boolean running = true;
     private String threadId;
     private Human me;
-    //endregion
 
-    //region Constructors
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
         webController = new WebController(this, debugMessages, headless, maximised);
         run(username, password, threadId, debugMode, silentMode);

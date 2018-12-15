@@ -1,15 +1,15 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.Message;
-import bot.utils.Module;
+import bot.utils.helper_class.Message;
+import bot.utils.helper_interface.Module;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static bot.utils.CONSTANTS.*;
+import static bot.utils.helper_interface.CONSTANTS.*;
 
 public class Stats implements Module {
     //region Constants

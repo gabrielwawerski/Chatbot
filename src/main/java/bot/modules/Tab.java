@@ -1,15 +1,15 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.Message;
-import bot.utils.Module;
+import bot.utils.helper_class.Message;
+import bot.utils.helper_interface.Module;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static bot.utils.CONSTANTS.ACTIONIFY;
-import static bot.utils.CONSTANTS.DEACTIONIFY;
+import static bot.utils.helper_interface.CONSTANTS.ACTIONIFY;
+import static bot.utils.helper_interface.CONSTANTS.DEACTIONIFY;
 
 public class Tab implements Module {
     //region Constants

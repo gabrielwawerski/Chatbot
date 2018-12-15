@@ -1,4 +1,4 @@
-package bot.dogbot;
+package bot.utils.dogbot;
 
 import bot.Chatbot;
 import bot.modules.*;
