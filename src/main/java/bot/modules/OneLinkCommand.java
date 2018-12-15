@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OneLinkCommand implements Module {
-    //region Constants
     private final List<String> COMMAND_REGEXES;
     private final String url;
     private final String message;
     private final Chatbot chatbot;
-    //endregion
 
     public OneLinkCommand(Chatbot chatbot, List<String> commands, String link, String message) {
         this.chatbot = chatbot;

@@ -16,16 +16,12 @@ import java.util.regex.Pattern;
 import static bot.utils.helper_interface.CONSTANTS.*;
 
 public class EightBall implements Module {
-    //region Constants
     private final String NO_QUESTION_REGEX = ACTIONIFY("8ball|ask");
     private final String EIGHT_BALL_REGEX = ACTIONIFY("8ball (.*)");
     private final String ASK_REGEX = ACTIONIFY("ask (.*)");
     private final Chatbot chatbot;
-    //endregion
 
-    //region Variables
     private List<String> responses;
-    //endregion
 
     public EightBall(Chatbot chatbot) {
         this.chatbot = chatbot;
@@ -36,7 +32,6 @@ public class EightBall implements Module {
         }
     }
 
-    //region Overrides
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         String match = getMatch(message);

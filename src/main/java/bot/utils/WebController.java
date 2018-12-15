@@ -21,7 +21,6 @@ import java.io.IOException;
 import static bot.utils.helper_interface.XPATHS.*;
 
 public class WebController {
-    //region Variables
     private Chatbot chatbot;
     private final ChromeDriverService service;
     private final WebDriver webDriver;
@@ -29,16 +28,13 @@ public class WebController {
     private final WebDriverWait wait;
     private final WebDriverWait messageWait;
     private final boolean debugMessages;
-    //endregion
 
     public WebController(Chatbot chatbot, boolean debugMessages, boolean headless, boolean maximised) {
         this.chatbot = chatbot;
         this.debugMessages = debugMessages;
 
         ClassLoader classLoader = getClass().getClassLoader();
-        File driver = System.getProperty("os.name").toLowerCase().contains("windows") ?
-                new File(classLoader.getResource("drivers/windows/chromedriver.exe").getFile()) :
-                new File(classLoader.getResource("drivers/linux/chromedriver").getFile());
+        File driver = new File(classLoader.getResource("drivers/windows/chromedriver.exe").getFile());
         driver.setExecutable(true);
 
         //Create service
@@ -75,13 +71,12 @@ public class WebController {
 
     public void quit(boolean withMessage) {
         if (withMessage) {
-            sendMessage("I'm off to sleep now, see you soon!");
+            sendMessage("Przechodzę offline. Jebać ulane kurwy.");
         }
         webDriver.quit();
         System.exit(0);
     }
 
-    //region Login
     public void login(String username, String password) {
         //Goto page
         webDriver.get("https://www.messenger.com");
@@ -101,7 +96,6 @@ public class WebController {
         chatbot.setMe(Human.createForBot(getMyRealName()));
         webDriver.get("https://www.messenger.com/t/" + threadId);
     }
-    //endregion
 
     //region Sending messages
     public void sendMessage(Message message) {

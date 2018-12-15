@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 import static bot.utils.helper_interface.CONSTANTS.*;
 
 public class Quotes implements Module {
-    //region Constants
     private final String FULL_CAPS_QUOTE_REGEX = ACTIONIFY_CASE("QUOTE");
     private final String SHAKEY_QUOTE_REGEX = ACTIONIFY_CASE("quote");
     private final String QUOTE_REGEX = ACTIONIFY("quote");
@@ -33,11 +32,8 @@ public class Quotes implements Module {
     private final JSONParser jsonParser = new JSONParser();
     private final File quoteFile;
     private final Chatbot chatbot;
-    //endregion
 
-    //region Variables
     private JSONArray quotesList;
-    //endregion
 
     public Quotes(Chatbot chatbot) {
         this.chatbot = chatbot;
@@ -45,7 +41,6 @@ public class Quotes implements Module {
         reloadQuotes();
     }
 
-    //region Overrides
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         String match = getMatch(message);
@@ -148,7 +143,6 @@ public class Quotes implements Module {
     public String appendModulePath(String message) {
         return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
     }
-    //endregion
 
     private void quote(String type) {
         if (quotesList.size() > 0) {

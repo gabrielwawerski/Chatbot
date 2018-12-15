@@ -1,15 +1,12 @@
 package bot;
 
-import bot.modules.OneLinkCommand;
-import bot.modules.Ping;
-import bot.modules.Shutdown;
-import bot.modules.Stats;
+import bot.modules.gabe_modules.Weather.JebacLeze;
+import bot.modules.gabe_modules.Weather.WeatherModule;
 import bot.utils.helper_class.Human;
 import bot.utils.helper_class.Message;
 import bot.utils.helper_interface.Module;
 import bot.utils.WebController;
 import bot.utils.exceptions.MalformedCommandException;
-import com.google.errorprone.annotations.ForOverride;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -20,8 +17,9 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String VERSION = "v1.0";
+    private final String version = "v0.20";
     protected final HashMap<String, Module> modules = new HashMap<>();
+    protected final HashMap<String, bot.utils.gabe_modules.Module> gabeModules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
     private final ArrayList<Human> people = new ArrayList<>();
@@ -33,6 +31,12 @@ public class Chatbot {
     private boolean running = true;
     private String threadId;
     private Human me;
+
+    protected void loadModules() {
+        gabeModules.put("WeatherModule", new WeatherModule(this, List.of("pogoda", "p")));
+        gabeModules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"), "responses.txt"));
+
+    }
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
         webController = new WebController(this, debugMessages, headless, maximised);
@@ -101,7 +105,7 @@ public class Chatbot {
 
                 //Handle options
                 try {
-                    for (Module module : modules.values()) {
+                    for (bot.utils.gabe_modules.Module module : gabeModules.values()) {
                         module.process(newMessage);
                     }
                 } catch (MalformedCommandException e) {
@@ -119,41 +123,39 @@ public class Chatbot {
             }
         }
     }
-    //endregion
 
-    //region ForOverrides
-    @ForOverride
     public String getVersion() {
-        return VERSION;
+        return version;
     }
 
-    @ForOverride
-    protected void loadModules() {
-        modules.put("Shutdown", new Shutdown(this));
-        modules.put("Stats", new Stats(this));
-        modules.put("Ping", new Ping(this));
-        modules.put("Github", new OneLinkCommand(this,
-                List.of("github"),
-                "https://github.com/hollandjake/Chatbot",
-                "Github repository"));
-        modules.put("Commands", new OneLinkCommand(this,
-                List.of("commands", "help"),
-                "https://github.com/hollandjake/Chatbot/blob/master/README.md",
-                "A list of commands can be found at"));
-    }
-
-    @ForOverride
     protected void initMessage() {
-        webController.sendMessage("Chatbot " + getVersion() + " is online!");
+        webController.sendMessage("PcionBot " + getVersion() + " jest online!");
     }
 
-    @ForOverride
+    public void sendMessage(String message) {
+        webController.sendMessage(message);
+    }
+
+    public void sendImageWithMessage(String image, String message) {
+        webController.sendImageWithMessage(image, message);
+    }
+
+    public void sendImageWithMessage(Image image, String message) {
+        webController.sendMessage(new Message(me, message, image));
+    }
+
+    public void sendImageFromURLWithMessage(String url, String message) {
+        webController.sendImageFromURLWithMessage(url, message);
+    }
+
+    public void sendMessage(Message message) {
+        webController.sendMessage(message);
+    }
+
     public String appendRootPath(String path) {
         return "/" + path;
     }
-    //endregion
 
-    //region Getters & Setters
     public ArrayList<Message> getMessageLog() {
         return messageLog;
     }
@@ -178,8 +180,8 @@ public class Chatbot {
         return threadId;
     }
 
-    public HashMap<String, Module> getModules() {
-        return modules;
+    public HashMap<String, bot.utils.gabe_modules.Module> getModules() {
+        return gabeModules;
     }
 
     public LocalDateTime getStartupTime() {
@@ -194,32 +196,8 @@ public class Chatbot {
         return refreshRate;
     }
 
-    //endregion
-
-    //region Send Message
-    public void sendMessage(String message) {
-        webController.sendMessage(message);
-    }
-
-    public void sendImageWithMessage(String image, String message) {
-        webController.sendImageWithMessage(image, message);
-    }
-
-    public void sendImageWithMessage(Image image, String message) {
-        webController.sendMessage(new Message(me, message, image));
-    }
-
-    public void sendImageFromURLWithMessage(String url, String message) {
-        webController.sendImageFromURLWithMessage(url, message);
-    }
-
-    public void sendMessage(Message message) {
-        webController.sendMessage(message);
-    }
-    //endregion
-
     public boolean containsCommand(Message message) {
-        for (Module module : modules.values()) {
+        for (bot.utils.gabe_modules.Module module : gabeModules.values()) {
             if (!module.getMatch(message).equals("")) {
                 return true;
             }
