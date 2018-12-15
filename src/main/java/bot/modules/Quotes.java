@@ -1,9 +1,9 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.helper_class.Message;
-import bot.utils.helper_interface.Module;
-import bot.utils.exceptions.MalformedCommandException;
+import bot.utils.bot.helper_class.Message;
+import bot.utils.bot.helper_interface.Module;
+import bot.utils.bot.exceptions.MalformedCommandException;
 import com.google.common.collect.Lists;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.utils.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.CONSTANTS.*;
 
 public class Quotes implements Module {
     private final String FULL_CAPS_QUOTE_REGEX = ACTIONIFY_CASE("QUOTE");

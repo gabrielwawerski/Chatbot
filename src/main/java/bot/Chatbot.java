@@ -1,12 +1,12 @@
 package bot;
 
-import bot.modules.gabe_modules.Weather.JebacLeze;
+import bot.modules.gabe_modules.Weather.Eightball;
 import bot.modules.gabe_modules.Weather.WeatherModule;
-import bot.utils.helper_class.Human;
-import bot.utils.helper_class.Message;
-import bot.utils.helper_interface.Module;
-import bot.utils.WebController;
-import bot.utils.exceptions.MalformedCommandException;
+import bot.utils.gabe_modules.modules_base.Module;
+import bot.utils.bot.helper_class.Human;
+import bot.utils.bot.helper_class.Message;
+import bot.utils.bot.WebController;
+import bot.utils.bot.exceptions.MalformedCommandException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -19,7 +19,6 @@ import java.util.List;
 public class Chatbot {
     private final String version = "v0.20";
     protected final HashMap<String, Module> modules = new HashMap<>();
-    protected final HashMap<String, bot.utils.gabe_modules.Module> gabeModules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
     private final ArrayList<Human> people = new ArrayList<>();
@@ -33,8 +32,8 @@ public class Chatbot {
     private Human me;
 
     protected void loadModules() {
-        gabeModules.put("WeatherModule", new WeatherModule(this, List.of("pogoda", "p")));
-        gabeModules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"), "responses.txt"));
+        modules.put("WeatherModule", new WeatherModule(this, List.of("pogoda", "p", "weather", "w")));
+        modules.put("Eightball", new Eightball(this, List.of("8ball", "ask", "?"), "responses.txt"));
 
     }
 
@@ -105,7 +104,7 @@ public class Chatbot {
 
                 //Handle options
                 try {
-                    for (bot.utils.gabe_modules.Module module : gabeModules.values()) {
+                    for (Module module : modules.values()) {
                         module.process(newMessage);
                     }
                 } catch (MalformedCommandException e) {
@@ -180,8 +179,8 @@ public class Chatbot {
         return threadId;
     }
 
-    public HashMap<String, bot.utils.gabe_modules.Module> getModules() {
-        return gabeModules;
+    public HashMap<String, Module> getModules() {
+        return modules;
     }
 
     public LocalDateTime getStartupTime() {
@@ -197,7 +196,7 @@ public class Chatbot {
     }
 
     public boolean containsCommand(Message message) {
-        for (bot.utils.gabe_modules.Module module : gabeModules.values()) {
+        for (Module module : modules.values()) {
             if (!module.getMatch(message).equals("")) {
                 return true;
             }

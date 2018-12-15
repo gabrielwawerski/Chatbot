@@ -1,9 +1,8 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.helper_class.Message;
-import bot.utils.helper_interface.Module;
-import bot.utils.helper_interface.RedditModule;
+import bot.utils.bot.helper_class.Message;
+import bot.utils.bot.helper_interface.Module;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,13 +13,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static bot.utils.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.CONSTANTS.*;
 
 public class Reddit implements Module {
     //region Constants

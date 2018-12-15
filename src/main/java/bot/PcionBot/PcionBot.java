@@ -5,6 +5,7 @@ import bot.Chatbot;
 public class PcionBot extends Chatbot {
 
     public static void main(String[] args) {
+        Chatbot pcionbot;
         String username = "ezelbot66@gmail.com";
         String password = "lezetykurwo";
 
@@ -17,7 +18,7 @@ public class PcionBot extends Chatbot {
         String GRUPKA_ID = "1158615960915822";
         String GRZAGSOFT_ID = "1506449319457834";
 
-        Chatbot pcionBot = new Chatbot(
+        pcionbot = new Chatbot(
                 username,
                 password,
 
@@ -29,5 +30,10 @@ public class PcionBot extends Chatbot {
                 headless,
                 maximized
         );
+    }
+
+    @Override
+    public String appendRootPath(String path) {
+        return "src/main/resources/" + path;
     }
 }

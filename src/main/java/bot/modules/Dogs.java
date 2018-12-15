@@ -1,8 +1,8 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.helper_class.Message;
-import bot.utils.helper_interface.RedditModule;
+import bot.utils.bot.helper_class.Message;
+import bot.utils.bot.helper_interface.RedditModule;
 
 import java.awt.*;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static bot.modules.Reddit.loadSubreddits;
-import static bot.utils.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.CONSTANTS.*;
 
 public class Dogs implements RedditModule {
     //region Constants
