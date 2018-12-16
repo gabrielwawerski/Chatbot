@@ -1,7 +1,7 @@
-package bot.utils.bot.helper_interface;
+package bot.utils.bot.helper.helper_interface;
 
 import bot.utils.bot.exceptions.MalformedCommandException;
-import bot.utils.bot.helper_class.Message;
+import bot.utils.bot.helper.helper_class.Message;
 
 import java.util.ArrayList;
 

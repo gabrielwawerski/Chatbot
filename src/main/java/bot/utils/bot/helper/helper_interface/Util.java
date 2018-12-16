@@ -1,4 +1,4 @@
-package bot.utils.bot.helper_interface;
+package bot.utils.bot.helper.helper_interface;
 
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -20,11 +20,11 @@ public interface Util {
 
     //region Date formats
     SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yy");
-    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm:ss");
-    DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss");
+    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+    DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
     //endregion
 
-    Random RANDOM = new Random();
+    static final Random RANDOM = new Random();
 
     static String ACTIONIFY(String arg) {
         return "(?i)^!\\s*" + arg + "$";

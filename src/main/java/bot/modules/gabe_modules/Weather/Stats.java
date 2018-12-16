@@ -1,23 +1,21 @@
 package bot.modules.gabe_modules.Weather;
 
 import bot.Chatbot;
-import bot.utils.bot.helper_class.Message;
-import bot.utils.bot.helper_interface.Module;
+import bot.utils.bot.helper.helper_class.Message;
+import bot.utils.bot.helper.helper_interface.Module;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static bot.utils.bot.helper_interface.Util.*;
+import static bot.utils.bot.helper.helper_interface.Util.*;
 
 public class Stats implements Module {
-    //region Constants
     private final String STATS_REGEX = ACTIONIFY("stats");
     private final String UPTIME_REGEX = ACTIONIFY("uptime");
     private final String PUPTIME_REGEX = ACTIONIFY("puptime");
     private final Chatbot chatbot;
-    //endregion
 
     public Stats(Chatbot chatbot) {
         this.chatbot = chatbot;

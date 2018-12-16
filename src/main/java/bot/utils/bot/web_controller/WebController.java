@@ -1,9 +1,9 @@
-package bot.utils.bot;
+package bot.utils.bot.web_controller;
 
 import bot.Chatbot;
-import bot.utils.bot.helper_class.Human;
-import bot.utils.bot.helper_class.Message;
-import bot.utils.bot.helper_interface.ScreenshotUtil;
+import bot.utils.bot.helper.helper_class.Human;
+import bot.utils.bot.helper.helper_class.Message;
+import bot.utils.bot.helper.helper_interface.ScreenshotUtil;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
 
-import static bot.utils.bot.helper_interface.XPATHS.*;
+import static bot.utils.bot.helper.helper_interface.XPATHS.*;
 
 public class WebController {
     private Chatbot chatbot;
@@ -44,6 +44,7 @@ public class WebController {
         try {
             service.start();
         } catch (IOException e) {
+            System.out.println("Cannot start ChromeDriverService.");
             e.printStackTrace();
         }
 
@@ -62,16 +63,23 @@ public class WebController {
         wait = new WebDriverWait(webDriver, 10);
         messageWait = new WebDriverWait(webDriver, chatbot.getMessageTimeout().getSeconds(), chatbot.getRefreshRate());
 
+
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             e.printStackTrace();
             screenshot();
             quit(false);
         });
+
+        // TODO sposób na mniej crashy (hopefully)
+//        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
+//            System.out.println("Coś poszło nie tak.");
+//            sendMessage("Coś poszło nie tak.");
+//        });
     }
 
     public void quit(boolean withMessage) {
         if (withMessage) {
-            sendMessage("I'm off to sleep now, see you soon!");
+            sendMessage("Przechodzę offline");
         }
         webDriver.quit();
         System.exit(0);

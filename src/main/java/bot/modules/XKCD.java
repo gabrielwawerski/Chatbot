@@ -1,8 +1,8 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.bot.helper_class.Message;
-import bot.utils.bot.helper_interface.Module;
+import bot.utils.bot.helper.helper_class.Message;
+import bot.utils.bot.helper.helper_interface.Module;
 import bot.utils.bot.exceptions.MalformedCommandException;
 import org.json.JSONObject;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.utils.bot.helper_interface.Util.*;
+import static bot.utils.bot.helper.helper_interface.Util.*;
 
 public class XKCD implements Module {
     //region Constants

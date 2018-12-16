@@ -2,8 +2,8 @@ package bot.modules.gabe_modules.Weather;
 
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
-import bot.utils.gabe_modules.modules_base.BaseModule;
-import bot.utils.bot.helper_class.Message;
+import bot.utils.gabe_modules.modules_base.ModuleBase;
+import bot.utils.bot.helper.helper_class.Message;
 import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
 import com.github.prominence.openweathermap.api.WeatherRequester;
 import com.github.prominence.openweathermap.api.constants.Accuracy;
@@ -15,7 +15,7 @@ import com.github.prominence.openweathermap.api.model.response.Weather;
 
 import java.util.List;
 
-public class WeatherModule extends BaseModule {
+public class SimpleWeather extends ModuleBase {
     private OpenWeatherMapManager openWeatherManager;
     WeatherRequester weatherRequester;
 
@@ -26,7 +26,7 @@ public class WeatherModule extends BaseModule {
     public static final String LUBLIN_ID = "765876";
 
 
-    public WeatherModule(Chatbot chatbot, List<String> commands) {
+    public SimpleWeather(Chatbot chatbot, List<String> commands) {
         super(chatbot, commands);
         openWeatherManager = new OpenWeatherMapManager(API_KEY);
     }
@@ -41,27 +41,31 @@ public class WeatherModule extends BaseModule {
                     Weather weatherResponse = new Weather();
                     StringBuilder builder = new StringBuilder();
 
-                    // init open weather with desired settings
+                    // init openweather with desired settings
                     weatherResponse = openWeatherManager.getWeatherRequester()
                             .setLanguage(LANGUAGE)
                             .setUnitSystem(UNIT_SYSTEM)
                             .setAccuracy(ACCURACY)
                             .getByCityId(LUBLIN_ID);
 
+                    // tells messenger to format the message as a block of code
                     builder.append("```\n");
 
-                    // city name - weather description
+                    // name of the city, weather description
                     builder.append(weatherResponse.getCityName())
                             .append(" - ")
                             .append(weatherResponse.getWeatherDescription())
+
                             .append(System.getProperty("line.separator"));
 
                     builder.append("Temperatura: ")
-                            .append(weatherResponse.getTemperature()).append(" ").append(weatherResponse.getTemperatureUnit())
+                            .append(new java.text.DecimalFormat("#").format(weatherResponse.getTemperature()))
+                            .append(weatherResponse.getTemperatureUnit())
+
                             .append(System.getProperty("line.separator"))
                             .append(System.getProperty("line.separator"));
 
-                    if (weatherResponse.getRain() == null) {
+                    if (weatherResponse.getRain().toString().isEmpty()) {
                         builder.append("Brak opadów deszczu");
                     } else {
                         builder.append("Opady: ").append(weatherResponse.getRain().toString());
@@ -88,12 +92,16 @@ public class WeatherModule extends BaseModule {
                             .append(System.getProperty("line.separator"))
                             .append(System.getProperty("line.separator"));
 
-                    Weather.WeatherInfo weatherInfo = weatherResponse.getWeatherInfo();
                     builder.append("Minimalna: ")
-                            .append(weatherResponse.getWeatherInfo().getMinimumTemperature()).append(" ").append(weatherResponse.getWeatherInfo().getTemperatureUnit())
+                            .append(new java.text.DecimalFormat("#").format(weatherResponse.getWeatherInfo().getMinimumTemperature()))
+                            .append(weatherResponse.getWeatherInfo().getTemperatureUnit())
+
                             .append(System.getProperty("line.separator"))
+
                             .append("Maksymalna: ")
-                            .append(weatherResponse.getWeatherInfo().getMaximumTemperature()).append(" ").append(weatherResponse.getWeatherInfo().getTemperatureUnit())
+                            .append(new java.text.DecimalFormat("#").format(weatherResponse.getWeatherInfo().getMaximumTemperature()))
+                            .append(weatherResponse.getWeatherInfo().getTemperatureUnit())
+
                             .append(System.getProperty("line.separator"));
 
                     // tells when data was gathered

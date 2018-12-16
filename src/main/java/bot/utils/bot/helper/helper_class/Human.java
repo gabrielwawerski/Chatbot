@@ -1,4 +1,4 @@
-package bot.utils.bot.helper_class;
+package bot.utils.bot.helper.helper_class;
 
 import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static bot.utils.bot.helper_interface.XPATHS.MESSAGE_SENDER_NICKNAME;
-import static bot.utils.bot.helper_interface.XPATHS.MESSAGE_SENDER_REAL_NAME;
+import static bot.utils.bot.helper.helper_interface.XPATHS.MESSAGE_SENDER_NICKNAME;
+import static bot.utils.bot.helper.helper_interface.XPATHS.MESSAGE_SENDER_REAL_NAME;
 
 public class Human {
     protected final String name;

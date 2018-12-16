@@ -1,4 +1,4 @@
-package bot.utils.bot.helper_interface;
+package bot.utils.bot.helper.helper_interface;
 
 public interface XPATHS {
     //region Login

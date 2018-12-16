@@ -1,12 +1,12 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.bot.helper_class.Message;
-import bot.utils.bot.helper_interface.Module;
+import bot.utils.bot.helper.helper_class.Message;
+import bot.utils.bot.helper.helper_interface.Module;
 
 import java.util.ArrayList;
 
-import static bot.utils.bot.helper_interface.Util.*;
+import static bot.utils.bot.helper.helper_interface.Util.*;
 
 public class Inspire implements Module {
     //region Constants

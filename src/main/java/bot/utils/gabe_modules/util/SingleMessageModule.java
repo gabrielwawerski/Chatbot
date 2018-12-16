@@ -2,12 +2,12 @@ package bot.utils.gabe_modules.util;
 
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
-import bot.utils.gabe_modules.modules_base.BaseModule;
-import bot.utils.bot.helper_class.Message;
+import bot.utils.gabe_modules.modules_base.ModuleBase;
+import bot.utils.bot.helper.helper_class.Message;
 
 import java.util.List;
 
-public class SingleMessageModule extends BaseModule {
+public class SingleMessageModule extends ModuleBase {
     protected String message;
 
     public SingleMessageModule(Chatbot chatbot, List<String> commands, String message) {

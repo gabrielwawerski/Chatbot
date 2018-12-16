@@ -2,20 +2,19 @@ package bot.utils.gabe_modules.util;
 
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
-import bot.utils.bot.helper_interface.Util;
-import bot.utils.gabe_modules.modules_base.BaseModule;
-import bot.utils.bot.helper_class.Message;
+import bot.utils.bot.helper.helper_interface.Util;
+import bot.utils.gabe_modules.modules_base.ModuleBase;
+import bot.utils.bot.helper.helper_class.Message;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ResourceModule extends BaseModule {
-    protected List<String> responses;
+public abstract class ResourceModule extends ModuleBase {
+    protected List<String> resourceName;
 
     /**
      *
@@ -27,10 +26,11 @@ public class ResourceModule extends BaseModule {
     public ResourceModule(Chatbot chatbot, List<String> commands, String resourceName) {
         super(chatbot, commands);
 
-            System.out.println(appendModulePath(responsesFile));
         try {
-            responses = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + responsesFile));
+            System.out.println(appendModulePath(resourceName));
+            this.resourceName = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
         } catch (IOException e) {
+            // TODO add global debugMessages field in Chatbot so this can be toggled.
             System.out.println(getClass().getSimpleName() + " niedostępne w bieżącej sesji.");
             e.printStackTrace();
         }
@@ -38,23 +38,34 @@ public class ResourceModule extends BaseModule {
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
-        String match = getMatch(message);
+        updateMatch(message);
+
         for (String command : commands) {
             if (match.equals(command)) {
-                    Random randomizer = new Random();
-                    String random = responses.get(randomizer.nextInt(responses.size()));
-                    if (responses.get(randomizer.nextInt(responses.size())) == "A skoncz pierdolic") {
-                        random = responses.get(randomizer.nextInt(responses.size()));
-
-                        chatbot.sendMessage(random);
-                        return true;
-                    }
-                else {
-                    System.out.println("continue block");
-                    continue;
+                Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
+                if (matcher.find() && !matcher.group(1).isEmpty()) {
+                    String randomMessage = Util.GET_RANDOM(resourceName);
+                    chatbot.sendMessage(randomMessage);
+                } else {
+                    throw new MalformedCommandException();
                 }
+                return true;
+            } else {
+                return false;
             }
         }
+        System.out.println("Coś poszło nie tak...\ncommands.size(): " + commands.size());
         return false;
+    }
+
+    @Override
+    public String getMatch(Message message) {
+        String messageBody = message.getMessage();
+        for (String command : commands) {
+            if (messageBody.matches(command)) {
+                return command;
+            }
+        }
+        return "";
     }
 }

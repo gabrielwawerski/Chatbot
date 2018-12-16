@@ -1,16 +1,16 @@
 package bot.modules;
 
 import bot.Chatbot;
-import bot.utils.bot.helper_class.Message;
-import bot.utils.bot.helper_interface.Module;
+import bot.utils.bot.helper.helper_class.Message;
+import bot.utils.bot.helper.helper_interface.Module;
 import bot.utils.bot.exceptions.MalformedCommandException;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.utils.bot.helper_interface.Util.ACTIONIFY;
-import static bot.utils.bot.helper_interface.Util.DEACTIONIFY;
+import static bot.utils.bot.helper.helper_interface.Util.ACTIONIFY;
+import static bot.utils.bot.helper.helper_interface.Util.DEACTIONIFY;
 
 public class Roll implements Module {
     //region Constants

@@ -1,11 +1,11 @@
 package bot;
 
 import bot.modules.gabe_modules.Weather.Eightball;
-import bot.modules.gabe_modules.Weather.WeatherModule;
-import bot.utils.gabe_modules.modules_base.Module;
-import bot.utils.bot.helper_class.Human;
-import bot.utils.bot.helper_class.Message;
-import bot.utils.bot.WebController;
+import bot.modules.gabe_modules.Weather.SimpleWeather;
+import bot.utils.gabe_modules.interfaces.Module;
+import bot.utils.bot.helper.helper_class.Human;
+import bot.utils.bot.helper.helper_class.Message;
+import bot.utils.bot.web_controller.WebController;
 import bot.utils.bot.exceptions.MalformedCommandException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
@@ -32,7 +32,7 @@ public class Chatbot {
     private Human me;
 
     protected void loadModules() {
-        modules.put("WeatherModule", new WeatherModule(this, List.of("pogoda", "p", "weather", "w")));
+        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p", "weather", "w")));
         modules.put("Eightball", new Eightball(this, List.of("8ball", "ask", "?"), "responses.txt"));
 
     }
@@ -105,6 +105,7 @@ public class Chatbot {
                 //Handle options
                 try {
                     for (Module module : modules.values()) {
+                        System.out.println("called");
                         module.process(newMessage);
                     }
                 } catch (MalformedCommandException e) {
