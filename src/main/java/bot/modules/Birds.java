@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static bot.modules.Reddit.loadSubreddits;
-import static bot.utils.bot.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.Util.*;
 
 public class Birds implements RedditModule {
     //region Constants

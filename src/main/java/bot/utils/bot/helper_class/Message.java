@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.Util.*;
 import static bot.utils.bot.helper_interface.XPATHS.MESSAGE_IMAGE;
 import static bot.utils.bot.helper_interface.XPATHS.MESSAGE_TEXT;
 import static org.apache.commons.lang.StringEscapeUtils.unescapeHtml;

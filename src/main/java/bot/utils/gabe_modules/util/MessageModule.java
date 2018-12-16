@@ -7,7 +7,7 @@ import bot.utils.bot.helper_class.Message;
 
 import java.util.List;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.GET_RANDOM;
+import static bot.utils.bot.helper_interface.Util.GET_RANDOM;
 
 /**
  * Easily create new modules if you only need following functionality: preset trigger commands and resourceName that

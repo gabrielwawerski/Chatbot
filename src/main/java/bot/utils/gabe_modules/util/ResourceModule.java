@@ -2,6 +2,7 @@ package bot.utils.gabe_modules.util;
 
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
+import bot.utils.bot.helper_interface.Util;
 import bot.utils.gabe_modules.modules_base.BaseModule;
 import bot.utils.bot.helper_class.Message;
 

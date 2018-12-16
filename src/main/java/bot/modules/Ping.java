@@ -6,8 +6,8 @@ import bot.utils.bot.helper_interface.Module;
 
 import java.util.ArrayList;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.ACTIONIFY;
-import static bot.utils.bot.helper_interface.CONSTANTS.DEACTIONIFY;
+import static bot.utils.bot.helper_interface.Util.ACTIONIFY;
+import static bot.utils.bot.helper_interface.Util.DEACTIONIFY;
 
 public class Ping implements Module {
     //region Constants

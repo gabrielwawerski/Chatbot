@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.ERROR_DATE_FORMATTER;
+import static bot.utils.bot.helper_interface.Util.ERROR_DATE_FORMATTER;
 
 public interface ScreenshotUtil {
     private static void screenshot(TakesScreenshot o) {

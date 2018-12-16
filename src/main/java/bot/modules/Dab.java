@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.Util.*;
 
 public class Dab implements Module {
     //region Constants

@@ -9,7 +9,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.Util.*;
 
 public class Stats implements Module {
     //region Constants

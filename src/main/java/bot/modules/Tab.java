@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.ACTIONIFY;
-import static bot.utils.bot.helper_interface.CONSTANTS.DEACTIONIFY;
+import static bot.utils.bot.helper_interface.Util.ACTIONIFY;
+import static bot.utils.bot.helper_interface.Util.DEACTIONIFY;
 
 public class Tab implements Module {
     //region Constants

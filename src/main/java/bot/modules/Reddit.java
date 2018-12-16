@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.Util.*;
 
 public class Reddit implements Module {
     //region Constants

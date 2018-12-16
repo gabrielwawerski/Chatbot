@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
-public interface CONSTANTS {
+public interface Util {
     //region Keyboard operations
     Clipboard CLIPBOARD = Toolkit.getDefaultToolkit().getSystemClipboard();
     String COPY = Keys.chord(Keys.CONTROL, "c");

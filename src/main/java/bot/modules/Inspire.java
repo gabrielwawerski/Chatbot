@@ -6,7 +6,7 @@ import bot.utils.bot.helper_interface.Module;
 
 import java.util.ArrayList;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.*;
+import static bot.utils.bot.helper_interface.Util.*;
 
 public class Inspire implements Module {
     //region Constants

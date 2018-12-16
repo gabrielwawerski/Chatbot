@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.utils.bot.helper_interface.CONSTANTS.ACTIONIFY;
-import static bot.utils.bot.helper_interface.CONSTANTS.DEACTIONIFY;
+import static bot.utils.bot.helper_interface.Util.ACTIONIFY;
+import static bot.utils.bot.helper_interface.Util.DEACTIONIFY;
 
 public class Roll implements Module {
     //region Constants
