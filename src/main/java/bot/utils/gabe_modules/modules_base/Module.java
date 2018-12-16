@@ -27,9 +27,12 @@ public interface Module {
      */
     public boolean process(Message message) throws MalformedCommandException;
 
+    /**
+     * Attempts to match your regexes against latest message.
+     * @param message
+     * @return
+     */
     public String getMatch(Message message);
-
-    public void updateMatch(Message message);
 
     public String appendModulePath(String message);
 

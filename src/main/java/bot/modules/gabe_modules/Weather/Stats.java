@@ -1,4 +1,4 @@
-package bot.modules;
+package bot.modules.gabe_modules.Weather;
 
 import bot.Chatbot;
 import bot.utils.bot.helper_class.Message;

@@ -8,11 +8,13 @@ import java.util.ArrayList;
 /**
  * Extend from this class if you want to set up regexes yourself.
  *
- * @author Gabe
+ * @author hollandjake, Gabe
  */
 public abstract class BareModule implements Module {
     protected final Chatbot chatbot;
-    /** Must be called when overriding {@link #process(Message)} method */
+    /** Needs to be assigned to the latest received message String value. Use {@link #updateMatch(Message)} to have it
+     * assigned for you automatically, or put <pre>{@code match = getMatch(message)}</pre> as a first instruction inside
+     * your overriden {@link #process(Message)} method. */
     protected String match;
 
     public BareModule(Chatbot chatbot) {
@@ -20,11 +22,14 @@ public abstract class BareModule implements Module {
     }
 
     /**
-     * Call this method as a first instruction inside overriden {@link Module#process(Message)} method.
+     * Helper method. Either call it as a first instruction when overriding {@link #process(Message)}, or call:<br>
+     * <pre>
+     * {@code match = getMatch(message)}
+     * </pre>
+     * yourself, after overriding {@link #process(Message)}.
      *
-     * @param message
+     * @param message received message
      */
-    @Override
     public void updateMatch(Message message) {
         match = getMatch(message);
     }

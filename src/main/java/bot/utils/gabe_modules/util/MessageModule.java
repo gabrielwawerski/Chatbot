@@ -41,9 +41,4 @@ public class MessageModule extends BaseModule {
     public String getMatch(Message message) {
         return "";
     }
-
-    @Override
-    public boolean getCommandMatch(String message) {
-        return false;
-    }
 }
