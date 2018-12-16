@@ -16,7 +16,14 @@ import java.util.regex.Pattern;
 public class ResourceModule extends BaseModule {
     protected List<String> responses;
 
-    public ResourceModule(Chatbot chatbot, List<String> commands, String responsesFile) {
+    /**
+     *
+     * @param chatbot
+     * @param commands
+     * @param resourceName full resource name (with extension) located in your resource package folder.
+     * @author Gabe
+     */
+    public ResourceModule(Chatbot chatbot, List<String> commands, String resourceName) {
         super(chatbot, commands);
 
             System.out.println(appendModulePath(responsesFile));

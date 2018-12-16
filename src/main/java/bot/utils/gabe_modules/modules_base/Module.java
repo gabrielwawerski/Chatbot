@@ -28,7 +28,7 @@ public interface Module {
     public boolean process(Message message) throws MalformedCommandException;
 
     /**
-     * Attempts to match your regexes against latest message.
+     * Should make an attempt to match your regexes against latest received message.
      * @param message
      * @return
      */

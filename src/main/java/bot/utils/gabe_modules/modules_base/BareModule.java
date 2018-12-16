@@ -6,15 +6,17 @@ import bot.utils.bot.helper_class.Message;
 import java.util.ArrayList;
 
 /**
- * Extend from this class if you want to set up regexes yourself.
+ * Extend from this class if you want to have absolute control over how your
  *
- * @author hollandjake, Gabe
+ * @author Gabe
  */
 public abstract class BareModule implements Module {
     protected final Chatbot chatbot;
-    /** Needs to be assigned to the latest received message String value. Use {@link #updateMatch(Message)} to have it
-     * assigned for you automatically, or put <pre>{@code match = getMatch(message)}</pre> as a first instruction inside
-     * your overriden {@link #process(Message)} method. */
+    /** Needs to be assigned to the latest received {@code message}'s value. After overriding {@link #process(Message)}
+     * method, call {@link #updateMatch(Message)} inside it first, which takes care of the assigning for you. Although
+     * this field and it's corresponding method are not necessary, they aim to make writing modules easier.<br>
+     * If you don't want to use them, use the snippet below at the beginning of your overriden {@code process} method.
+     * <pre>{@code match = getMatch(message)}</pre> */
     protected String match;
 
     public BareModule(Chatbot chatbot) {
@@ -22,13 +24,10 @@ public abstract class BareModule implements Module {
     }
 
     /**
-     * Helper method. Either call it as a first instruction when overriding {@link #process(Message)}, or call:<br>
-     * <pre>
-     * {@code match = getMatch(message)}
-     * </pre>
-     * yourself, after overriding {@link #process(Message)}.
+     * Convenience method. Either make it a first call inside overriden {@link #process(Message)} method, or use the
+     * snippet below:<pre>{@code match = getMatch(message)}</pre> whic. See {@link #match} for more info.
      *
-     * @param message received message
+     * @param message latest thread message, passed to your module, in {@link #process(Message)} method
      */
     public void updateMatch(Message message) {
         match = getMatch(message);

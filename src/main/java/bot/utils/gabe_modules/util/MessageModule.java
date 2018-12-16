@@ -10,9 +10,9 @@ import java.util.List;
 import static bot.utils.bot.helper_interface.CONSTANTS.GET_RANDOM;
 
 /**
- * Easily create new modules if you only need following functionality: preset trigger commands and responses that
+ * Easily create new modules if you only need following functionality: preset trigger commands and resourceName that
  * will not change. This class takes care of API backend, if you only need mentioned functionality.<br>
- * Simply extend your module with this class, provide commands and responses in the constructor and you're set!
+ * Simply extend your module with this class, provide commands and resourceName in the constructor and you're set!
  *
  * @version 1.0
  * @author Gabe
@@ -20,6 +20,15 @@ import static bot.utils.bot.helper_interface.CONSTANTS.GET_RANDOM;
 public class MessageModule extends BaseModule {
     private List<String> messages;
 
+    /**
+     * Provides an easy way of getting the bot to respond to command/s. If there is more that one message, it gets
+     * picked at random.
+     *
+     * @param chatbot
+     * @param commands
+     * @param messages
+     * @author Gabe
+     */
     public MessageModule(Chatbot chatbot, List<String> commands, List<String> messages) {
         super(chatbot, commands);
         this.messages = messages;
