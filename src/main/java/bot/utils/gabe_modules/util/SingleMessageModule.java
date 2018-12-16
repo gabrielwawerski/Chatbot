@@ -12,6 +12,7 @@ public class SingleMessageModule extends ModuleBase {
 
     public SingleMessageModule(Chatbot chatbot, List<String> commands, String message) {
         super(chatbot, commands);
+        this.message = message;
     }
 
     public SingleMessageModule(Chatbot chatbot, List<String> commands) {

@@ -30,11 +30,8 @@ public class Message {
     private final Image image;
     private final Date date = new Date();
 
-    //region Variables
     private boolean containsCommand = false;
-    //endregion
 
-    //region Constructors
     public Message(Human me, String message) {
         this.sender = me; //Sender is the bot
         this.message = unescapeHtml(message);
@@ -83,7 +80,6 @@ public class Message {
             return null;
         }
     }
-    //endregion
 
     private static Image imageFromUrl(String url) {
         try {

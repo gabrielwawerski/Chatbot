@@ -3,29 +3,26 @@ package bot.modules;
 import bot.Chatbot;
 import bot.utils.bot.helper.helper_class.Message;
 import bot.utils.bot.helper.helper_interface.Module;
+import bot.utils.gabe_modules.modules_base.ModuleBase;
 
 import java.util.ArrayList;
 
 import static bot.utils.bot.helper.helper_interface.Util.*;
 
-public class Inspire implements Module {
-    //region Constants
+public class Inspire extends ModuleBase {
     private final String INSPIRE_REGEX = ACTIONIFY("inspire");
-    private final Chatbot chatbot;
-    //endregion
 
     public Inspire(Chatbot chatbot) {
-        this.chatbot = chatbot;
+        super(chatbot);
     }
 
-    //region Overrides
     @Override
     @SuppressWarnings("Duplicates")
     public boolean process(Message message) {
         String match = getMatch(message);
         if (match.equals(INSPIRE_REGEX)) {
             String imgURL = GET_PAGE_SOURCE("http://inspirobot.me/api?generate=true");
-            chatbot.sendImageFromURLWithMessage(imgURL, "Inspiring.");
+            chatbot.sendImageFromURLWithMessage(imgURL, "Inspiruje..");
             return true;
         } else {
             return false;
@@ -55,5 +52,4 @@ public class Inspire implements Module {
     public String appendModulePath(String message) {
         return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
     }
-    //endregion
 }

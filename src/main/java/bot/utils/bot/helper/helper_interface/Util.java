@@ -19,8 +19,8 @@ public interface Util {
     //endregion
 
     //region Date formats
-    SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd/MM/yy");
-    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm:ss");
+    SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yy");
+    DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss");
     DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
     //endregion
 
@@ -51,8 +51,7 @@ public interface Util {
             return Unirest.get(url).header("User-agent", "Dogbot Reborn").asString().getBody();
         } catch (UnirestException e) {
             System.out.println("Page doesn't exist");
-            e.printStackTrace();
-            return "";
+            return "Coś poszło nie tak.";
         }
     }
 }

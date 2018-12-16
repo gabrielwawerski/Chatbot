@@ -71,10 +71,11 @@ public class WebController {
         });
 
         // TODO sposób na mniej crashy (hopefully)
-//        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
-//            System.out.println("Coś poszło nie tak.");
-//            sendMessage("Coś poszło nie tak.");
-//        });
+        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
+            System.out.println("Coś poszło nie tak.");
+            sendMessage("Coś poszło nie tak. Nieoczekiwany koniec sesji.");
+            quit(false);
+        });
     }
 
     public void quit(boolean withMessage) {

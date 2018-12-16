@@ -1,5 +1,7 @@
 package bot;
 
+import bot.PcionBot.PcionBot;
+import bot.modules.Inspire;
 import bot.modules.Think;
 import bot.modules.gabe_modules.*;
 import bot.utils.gabe_modules.interfaces.Module;
@@ -11,13 +13,16 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String version = "v0.20";
+    private final String version = "v0.3";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -41,7 +46,12 @@ public class Chatbot {
         modules.put("SimpleRoll", new SimpleRoll(this));
         modules.put("GoogleSearch", new GoogleSearch(this));
         modules.put("Think", new Think(this));
+        modules.put("Inspire", new Inspire(this));
+        modules.put("Shutdown", new Shutdown(this));
 
+        modules.put("Commands", new Commands(this, List.of("cmd", "help", "commands")));
+        modules.put("Info", new Info(this, List.of("info", "stats", "uptime", "status")));
+//        modules.put("RestartBot", new RestartBot(this, List.of("restart"), "Restartowanie..."));
     }
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {

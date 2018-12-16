@@ -20,15 +20,15 @@ public class PcionBot extends Chatbot {
 
     // !roulette <punkty> !roulette all
 
-
     public static void main(String[] args) {
+        System.out.println(args.toString());
         Chatbot pcionbot;
         String username = "ezelbot66@gmail.com";
         String password = "lezetykurwo";
 
-        boolean debugMode = false;
-        boolean silentMode = true;
-        boolean debugMessages = false;
+        boolean debugMode = true;      // debugs messages to console
+        boolean silentMode = true;    // does not greet itself
+        boolean debugMessages = false; // adds bot's full name before it's message, and a ":" after.
         boolean headless = false;
         boolean maximized = true;
 
@@ -42,7 +42,7 @@ public class PcionBot extends Chatbot {
                 username,
                 password,
 
-                GRZAGSOFT_ID,
+                GRUPKA_ID,
 
                 debugMode,
                 silentMode,
