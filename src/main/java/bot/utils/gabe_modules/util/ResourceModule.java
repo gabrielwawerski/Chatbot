@@ -24,12 +24,23 @@ public abstract class ResourceModule extends ModuleBase {
      */
     public ResourceModule(Chatbot chatbot, List<String> commands, String resourceName) {
         super(chatbot, commands);
-
         try {
             this.resourceContent
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
             System.out.println(getClass().getSimpleName() + " online.");
         } catch (IOException e) { // TODO add global debugMessages field in Chatbot so this can be toggled.
+            System.out.println(getClass().getSimpleName() + " niedostępne w bieżącej sesji.");
+            e.printStackTrace();
+        }
+    }
+
+    public ResourceModule(Chatbot chatbot, String resourceName) {
+        super(chatbot);
+        try {
+            this.resourceContent
+                    = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
+            System.out.println(getClass().getSimpleName() + " online.");
+        } catch (IOException e) {
             System.out.println(getClass().getSimpleName() + " niedostępne w bieżącej sesji.");
             e.printStackTrace();
         }

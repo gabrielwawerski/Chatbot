@@ -3,6 +3,23 @@ package bot.PcionBot;
 import bot.Chatbot;
 
 public class PcionBot extends Chatbot {
+    // to do
+    // !sleep !silent !mute !wakeup
+    // !restart
+    // !popcorn !rajza - michael jackson popcorn gif
+    // !stats:
+    //     pcionbot wersja
+    //     uptime
+    //     unikatowe wiadomosci
+    //     top 3 ladder
+
+    // !ladder
+    // ranking wszystkich na grupce
+
+    // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
+
+    // !roulette <punkty> !roulette all
+
 
     public static void main(String[] args) {
         Chatbot pcionbot;

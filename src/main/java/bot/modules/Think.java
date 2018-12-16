@@ -4,6 +4,7 @@ import bot.Chatbot;
 import bot.utils.bot.helper.helper_class.Message;
 import bot.utils.bot.helper.helper_interface.Module;
 import bot.utils.bot.exceptions.MalformedCommandException;
+import bot.utils.gabe_modules.modules_base.ModuleBase;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -12,22 +13,17 @@ import java.util.regex.Pattern;
 import static bot.utils.bot.helper.helper_interface.Util.ACTIONIFY;
 import static bot.utils.bot.helper.helper_interface.Util.DEACTIONIFY;
 
-public class Think implements Module {
-    //region Constants
+public class Think extends ModuleBase {
     private final String THINK_REGEX = ACTIONIFY("think");
     private final String MULTI_THINK_REGEX = ACTIONIFY("think (\\d*)");
     private final String THONK_REGEX = ACTIONIFY("thonk");
     private final String MULTI_THONK_REGEX = ACTIONIFY("thonk (\\d*)");
-    private final Chatbot chatbot;
-    //endregion
 
     public Think(Chatbot chatbot) {
-        this.chatbot = chatbot;
+        super(chatbot);
     }
 
-    //region Overrides
     @Override
-    @SuppressWarnings("Duplicates")
     public boolean process(Message message) throws MalformedCommandException {
         String match = getMatch(message);
         if (match.equals(THINK_REGEX) || match.equals(THONK_REGEX)) {
@@ -38,7 +34,7 @@ public class Think implements Module {
             if (matcher.find()) {
                 int repeats = Integer.parseInt(matcher.group(1));
                 if (repeats > 100) {
-                    chatbot.sendMessage("That's a bit too much thinking right there!");
+                    chatbot.sendMessage("Nie zamyśl sie debilu");
                 } else {
                     chatbot.sendMessage(new String(new char[repeats]).replace("\0", "\uD83E\uDD14"));
                 }
@@ -78,10 +74,4 @@ public class Think implements Module {
         commands.add(DEACTIONIFY(MULTI_THONK_REGEX));
         return commands;
     }
-
-    @Override
-    public String appendModulePath(String message) {
-        return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
-    }
-    //endregion
 }

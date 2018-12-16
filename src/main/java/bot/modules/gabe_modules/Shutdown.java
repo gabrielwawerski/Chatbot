@@ -1,9 +1,10 @@
-package bot.modules;
+package bot.modules.gabe_modules;
 
 import bot.Chatbot;
 import bot.utils.bot.helper.helper_class.Message;
 import bot.utils.bot.helper.helper_interface.Module;
 import bot.utils.bot.exceptions.MalformedCommandException;
+import bot.utils.gabe_modules.modules_base.BareModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -12,17 +13,13 @@ import java.util.regex.Pattern;
 import static bot.utils.bot.helper.helper_interface.Util.ACTIONIFY;
 import static bot.utils.bot.helper.helper_interface.Util.DEACTIONIFY;
 
-public class Shutdown implements Module {
-    //region Constants
+public class Shutdown extends BareModule {
     private final String SHUTDOWN_REGEX = ACTIONIFY("shutdown (\\d*)");
-    private final Chatbot chatbot;
-    //endregion
 
     public Shutdown(Chatbot chatbot) {
-        this.chatbot = chatbot;
+        super(chatbot);
     }
 
-    //region Overrides
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         String match = getMatch(message);
@@ -32,7 +29,8 @@ public class Shutdown implements Module {
                 chatbot.quit();
                 return true;
             } else {
-                throw new MalformedCommandException();
+                chatbot.sendMessage("No chyba cie pojebalo");
+                return true;
             }
         } else {
             return false;
@@ -40,7 +38,6 @@ public class Shutdown implements Module {
     }
 
     @Override
-    @SuppressWarnings("Duplicates")
     public String getMatch(Message message) {
         String messageBody = message.getMessage();
         if (messageBody.matches(SHUTDOWN_REGEX)) {
@@ -51,17 +48,9 @@ public class Shutdown implements Module {
     }
 
     @Override
-    @SuppressWarnings("Duplicates")
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
         commands.add(DEACTIONIFY(SHUTDOWN_REGEX));
         return commands;
     }
-
-    @Override
-    public String appendModulePath(String message) {
-        return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
-    }
-
-    //endregion
 }

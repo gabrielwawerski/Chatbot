@@ -14,6 +14,14 @@ public class SingleMessageModule extends ModuleBase {
         super(chatbot, commands);
     }
 
+    public SingleMessageModule(Chatbot chatbot, List<String> commands) {
+        super(chatbot, commands);
+    }
+
+    public SingleMessageModule(Chatbot chatbot) {
+        super(chatbot);
+    }
+
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);

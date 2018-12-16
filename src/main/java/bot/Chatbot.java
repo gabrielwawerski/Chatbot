@@ -1,8 +1,7 @@
 package bot;
 
-import bot.modules.gabe_modules.Weather.JebacLeze;
-import bot.modules.gabe_modules.Weather.SimpleWeather;
-import bot.modules.gabe_modules.Weather.EightBall;
+import bot.modules.Think;
+import bot.modules.gabe_modules.*;
 import bot.utils.gabe_modules.interfaces.Module;
 import bot.utils.bot.helper.helper_class.Human;
 import bot.utils.bot.helper.helper_class.Message;
@@ -34,10 +33,14 @@ public class Chatbot {
 
     protected void loadModules() {
         modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p", "weather", "w")));
-        modules.put("EightBall", new EightBall(this, List.of("8ball", "ask", "zapytaj"),
-                "responses.txt"));
+        modules.put("EightBall", new EightBall(this, "responses.txt"));
         modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
                 "responses.txt"));
+        modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
+                "responses.txt"));
+        modules.put("SimpleRoll", new SimpleRoll(this));
+        modules.put("GoogleSearch", new GoogleSearch(this));
+        modules.put("Think", new Think(this));
 
     }
 
@@ -109,7 +112,6 @@ public class Chatbot {
                 //Handle options
                 try {
                     for (Module module : modules.values()) {
-                        System.out.println("called");
                         module.process(newMessage);
                     }
                 } catch (MalformedCommandException e) {
