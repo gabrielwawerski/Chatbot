@@ -11,13 +11,9 @@ import static bot.utils.bot.helper_interface.XPATHS.MESSAGE_SENDER_NICKNAME;
 import static bot.utils.bot.helper_interface.XPATHS.MESSAGE_SENDER_REAL_NAME;
 
 public class Human {
-    //region Constants
     protected final String name;
-    //endregion
 
-    //region Variables
     protected String nickname;
-    //endregion
 
     //region Constructors
     private Human(WebElement webElement) {
@@ -51,7 +47,6 @@ public class Human {
     }
     //endregion
 
-    //region Getters and Setters
     public String getName() {
         return name;
     }
@@ -59,8 +54,6 @@ public class Human {
     public String getNickname() {
         return nickname;
     }
-
-    //endregion
 
     public JSONObject toJSON() {
         JSONObject me = new JSONObject();

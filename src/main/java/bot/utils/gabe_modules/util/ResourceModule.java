@@ -21,7 +21,7 @@ public class ResourceModule extends BaseModule {
 
             System.out.println(appendModulePath(responsesFile));
         try {
-            responses = Files.readAllLines(Paths.get("modules/Eightball/" + responsesFile));
+            responses = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + responsesFile));
         } catch (IOException e) {
             System.out.println(getClass().getSimpleName() + " niedostępne w bieżącej sesji.");
             e.printStackTrace();
@@ -33,16 +33,16 @@ public class ResourceModule extends BaseModule {
         String match = getMatch(message);
         for (String command : commands) {
             if (match.equals(command)) {
-                Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
-                if (matcher.find()) {
                     Random randomizer = new Random();
                     String random = responses.get(randomizer.nextInt(responses.size()));
                     if (responses.get(randomizer.nextInt(responses.size())) == "A skoncz pierdolic") {
                         random = responses.get(randomizer.nextInt(responses.size()));
+
+                        chatbot.sendMessage(random);
+                        return true;
                     }
-                    chatbot.sendMessage(random);
-                    return true;
-                } else {
+                else {
+                    System.out.println("continue block");
                     continue;
                 }
             }

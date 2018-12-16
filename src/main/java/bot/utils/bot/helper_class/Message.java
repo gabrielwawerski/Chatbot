@@ -25,12 +25,10 @@ import static bot.utils.bot.helper_interface.XPATHS.MESSAGE_TEXT;
 import static org.apache.commons.lang.StringEscapeUtils.unescapeHtml;
 
 public class Message {
-    //region Constants
     private final Human sender;
     private final String message;
     private final Image image;
     private final Date date = new Date();
-    //endregion
 
     //region Variables
     private boolean containsCommand = false;

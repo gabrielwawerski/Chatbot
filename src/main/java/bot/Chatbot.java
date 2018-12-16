@@ -33,7 +33,7 @@ public class Chatbot {
 
     protected void loadModules() {
         modules.put("WeatherModule", new WeatherModule(this, List.of("pogoda", "p", "weather", "w")));
-//        modules.put("Eightball", new Eightball(this, List.of("8ball", "ask", "?"), "responses.txt"));
+        modules.put("Eightball", new Eightball(this, List.of("8ball", "ask", "?"), "responses.txt"));
 
     }
 
