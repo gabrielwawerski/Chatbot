@@ -31,7 +31,7 @@ public interface Module {
      *
      * Use this snippet if your module will send only one, same message.
      * <pre>{@code
-     * String match = getMatch(message);
+     * updateMatch(message);
      * for (String command : commands) {
      *     if (match.equals(command)) {
      *         chatbot.sendMessage(this.message);
@@ -41,7 +41,7 @@ public interface Module {
      * return false;
      * }</pre>
      *
-     * @param message latest message, received from API
+     * @param message latest message, received from API gods themselves. Praise the sun.
      * @return should return true if request has been successfully processed, false otherwise
      * @throws MalformedCommandException
      */

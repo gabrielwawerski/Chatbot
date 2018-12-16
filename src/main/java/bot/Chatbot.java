@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String version = "v0.3";
+    private final String version = "v0.30";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Chatbot {
     private Human me;
 
     protected void loadModules() {
-        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p", "weather", "w")));
+        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p", "w", "p jutro")));
         modules.put("EightBall", new EightBall(this, "responses.txt"));
         modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
                 "responses.txt"));
@@ -51,7 +51,9 @@ public class Chatbot {
 
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "commands")));
         modules.put("Info", new Info(this, List.of("info", "stats", "uptime", "status")));
-//        modules.put("RestartBot", new RestartBot(this, List.of("restart"), "Restartowanie..."));
+//        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
+        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk")));
+        modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random")));
     }
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {

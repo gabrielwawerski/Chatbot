@@ -63,16 +63,9 @@ public class WebController {
         wait = new WebDriverWait(webDriver, 10);
         messageWait = new WebDriverWait(webDriver, chatbot.getMessageTimeout().getSeconds(), chatbot.getRefreshRate());
 
-
-        Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
-            e.printStackTrace();
-            screenshot();
-            quit(false);
-        });
-
         // TODO sposób na mniej crashy (hopefully)
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
-            System.out.println("Coś poszło nie tak.");
+            e.printStackTrace();
             sendMessage("Coś poszło nie tak. Nieoczekiwany koniec sesji.");
             quit(false);
         });

@@ -14,11 +14,18 @@ import java.util.regex.Pattern;
 
 import static bot.utils.bot.helper.helper_interface.Util.DEACTIONIFY;
 
+/**
+ * @author Gabe
+ */
 public class GoogleSearch extends ModuleBase {
     private final String GOOGLE_REGEX = Util.ACTIONIFY("google (.*)");
     private final String G_REGEX = Util.ACTIONIFY("g (.*)");
     private final String SEARCH_REGEX = Util.ACTIONIFY("search (.*)");
     private final String S_REGEX = Util.ACTIONIFY("s (.*)");
+
+    private final String G_LEZE_REGEX = Util.ACTIONIFY("g leze");
+    private final String G_HELP_REGEX = Util.ACTIONIFY("g help");
+
 
     private final String GOOGLE_SEARCH_URL = "https://www.google.com/search?q=";
 
@@ -29,7 +36,7 @@ public class GoogleSearch extends ModuleBase {
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
-        Matcher matcher;
+        Matcher matcher = null;
 
         if (match.equals(GOOGLE_REGEX)) {
             matcher = Pattern.compile(GOOGLE_REGEX).matcher(message.getMessage());
@@ -39,6 +46,19 @@ public class GoogleSearch extends ModuleBase {
             matcher = Pattern.compile(SEARCH_REGEX).matcher(message.getMessage());
         } else if (match.equals(S_REGEX)) {
             matcher = Pattern.compile(S_REGEX).matcher(message.getMessage());
+        } else if (match.equals(G_LEZE_REGEX)) {
+            List list = List.of("POSZUKAJ KUUUURRWAAAAA",
+                    "Masz, ty inwalido umysłowy",
+                    "No kurwa leze poszukaj sobie, nie masz google?",
+                    "Ty ulana łysa lebiodo");
+            chatbot.sendMessage(Util.GET_RANDOM(list) +
+                    "\nhttps://www.google.com/");
+            return true;
+        } else if (match.equals(G_HELP_REGEX)) {
+            chatbot.sendMessage("Jak przetłumaczyć tekst na inny język?\n" +
+                    "!g <tekst> translate *language\n" +
+                    "en, pl, ");
+            return true;
         } else {
             return false;
         }

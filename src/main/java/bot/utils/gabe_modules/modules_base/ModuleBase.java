@@ -13,17 +13,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Provides an easy way of creating new modules. Does not provide messaging capabilities. If you need your module to be
- * able to communicate back, see {@link MessageModule}, {@link ResourceModule}, {@link SingleMessageModule}. If these do
- * not satisfy your needs, you can extend lower "level" classes such as this, or {@link BareModule} class, which gives
- * you only basic connection to this chatbot's API. You can of course extend from "higher level" classes and override as
- * needed.<br><br>
- *
- * Extend from this class if you will be supplying commands through constructor. All {@link Module} methods are taken
- * care of, except {@link Module#process(Message)}, which you have to implement yourself.<br> If you need more control
- * over your commands, see {@link BareModule}. Take a moment to check these classes as well: {@link }
- * See {@linkplain Module#process(Message)} documentation for more info.<br>
- * See {@link Module} and {@link BareModule} for more info.
+ * Offers a simple way to create modules. Does not provide messaging capabilities. If you need your module to be
+ * able to communicate back, see {@link MessageModule}, {@link ResourceModule}, {@link SingleMessageModule}
+ * implementations. If these do not satisfy your needs, you can extend "lower" level classes, such as this one,
+ * or {@link BareModule} class, which gives you only basic connection to the chatbot's API. You can of course implement
+ * {@link Module} interface and it's methods yourself or even use hollandjake's implementation.<br>
+ * See {@link bot.utils.bot.helper.helper_interface.Module}
+ * <br><br>
+ * Extend from this class if you will be supplying commands through constructor. All {@link Module} methods have been
+ * taken care of for you, except {@link Module#process(Message)}, which you have to implement yourself.<br>
+ * If you need more control over your commands, see {@link BareModule}.  See
+ * {@linkplain Module#process(Message)}, {@link Module} and {@link BareModule} for more info.
  *
  * @author Gabe (gabriel.wawerski@gmail.com)
  */
@@ -32,7 +32,7 @@ public abstract class ModuleBase extends BareModule {
     protected List<String> commands;
 
     /**
-     * Use {@code List.of()} when creating an instance.
+     * Use {@code List.of()} to provide the commands.
      *
      * @param chatbot chatbot reference
      * @param commands trigger commands that bot will react to in {@link #process(Message)} method

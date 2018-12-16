@@ -16,6 +16,10 @@ import java.util.regex.Pattern;
 public abstract class ResourceModule extends ModuleBase {
     protected List<String> resourceContent;
 
+    public ResourceModule(Chatbot chatbot, List<String> commands) {
+        super(chatbot, commands);
+    }
+
     /**
      *
      * @param chatbot
