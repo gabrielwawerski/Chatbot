@@ -10,9 +10,9 @@ import java.util.List;
 import static bot.utils.bot.helper.helper_interface.Util.GET_RANDOM;
 
 /**
- * Easily create new modules if you only need following functionality: preset trigger commands and resourceName that
+ * Easily create new modules if you only need following functionality: preset trigger commands and resourceContent that
  * will not change. This class takes care of API backend, if you only need mentioned functionality.<br>
- * Simply extend your module with this class, provide commands and resourceName in the constructor and you're set!
+ * Simply extend your module with this class, provide commands and resourceContent in the constructor and you're set!
  *
  * @version 1.0
  * @author Gabe

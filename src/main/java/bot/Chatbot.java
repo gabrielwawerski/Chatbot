@@ -1,7 +1,8 @@
 package bot;
 
-import bot.modules.gabe_modules.Weather.Eightball;
+import bot.modules.gabe_modules.Weather.JebacLeze;
 import bot.modules.gabe_modules.Weather.SimpleWeather;
+import bot.modules.gabe_modules.Weather.EightBall;
 import bot.utils.gabe_modules.interfaces.Module;
 import bot.utils.bot.helper.helper_class.Human;
 import bot.utils.bot.helper.helper_class.Message;
@@ -33,7 +34,10 @@ public class Chatbot {
 
     protected void loadModules() {
         modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p", "weather", "w")));
-        modules.put("Eightball", new Eightball(this, List.of("8ball", "ask", "?"), "responses.txt"));
+        modules.put("EightBall", new EightBall(this, List.of("8ball", "ask", "zapytaj"),
+                "responses.txt"));
+        modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
+                "responses.txt"));
 
     }
 

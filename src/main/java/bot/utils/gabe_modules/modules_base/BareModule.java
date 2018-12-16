@@ -30,11 +30,6 @@ public abstract class BareModule implements Module {
      * {@link #process(Message)} */
     protected String match;
 
-    /**
-     *
-     *
-     * @param chatbot
-     */
     public BareModule(Chatbot chatbot) {
         this.chatbot = chatbot;
     }
@@ -47,5 +42,10 @@ public abstract class BareModule implements Module {
      */
     public void updateMatch(Message message) {
         match = getMatch(message);
+    }
+
+    @Override
+    public String appendModulePath(String message) {
+        return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
     }
 }

@@ -14,12 +14,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class ResourceModule extends ModuleBase {
-    protected List<String> resourceName;
+    protected List<String> resourceContent;
 
     /**
      *
      * @param chatbot
-     * @param commands
      * @param resourceName full resource name (with extension) located in your resource package folder.
      * @author Gabe
      */
@@ -27,10 +26,10 @@ public abstract class ResourceModule extends ModuleBase {
         super(chatbot, commands);
 
         try {
-            System.out.println(appendModulePath(resourceName));
-            this.resourceName = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
-        } catch (IOException e) {
-            // TODO add global debugMessages field in Chatbot so this can be toggled.
+            this.resourceContent
+                    = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
+            System.out.println(getClass().getSimpleName() + " online.");
+        } catch (IOException e) { // TODO add global debugMessages field in Chatbot so this can be toggled.
             System.out.println(getClass().getSimpleName() + " niedostępne w bieżącej sesji.");
             e.printStackTrace();
         }
@@ -40,21 +39,13 @@ public abstract class ResourceModule extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
+        String match = getMatch(message);
         for (String command : commands) {
             if (match.equals(command)) {
-                Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
-                if (matcher.find() && !matcher.group(1).isEmpty()) {
-                    String randomMessage = Util.GET_RANDOM(resourceName);
-                    chatbot.sendMessage(randomMessage);
-                } else {
-                    throw new MalformedCommandException();
-                }
+                chatbot.sendMessage(Util.GET_RANDOM(resourceContent));
                 return true;
-            } else {
-                return false;
             }
         }
-        System.out.println("Coś poszło nie tak...\ncommands.size(): " + commands.size());
         return false;
     }
 

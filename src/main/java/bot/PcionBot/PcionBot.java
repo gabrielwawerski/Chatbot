@@ -18,6 +18,9 @@ public class PcionBot extends Chatbot {
         String GRUPKA_ID = "1158615960915822";
         String GRZAGSOFT_ID = "1506449319457834";
 
+//        System.out.println(String.format("%12s%12s%1s%n", "Temperatura","-2", "oC"));
+//        System.out.println(String.format("%12s%12s%1s%n", "Wiatr", "26", "km/h"));
+
         pcionbot = new Chatbot(
                 username,
                 password,

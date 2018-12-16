@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 public abstract class ModuleBase extends BareModule {
     /** Your module's trigger commands, provided by you in the constructor. See {@link #ModuleBase(Chatbot, List)}*/
-    protected final List<String> commands;
+    protected List<String> commands;
 
     /**
      * Use {@code List.of()} when creating an instance.
@@ -40,6 +40,10 @@ public abstract class ModuleBase extends BareModule {
     public ModuleBase(Chatbot chatbot, List<String> commands) {
         super(chatbot);
         this.commands = commands.stream().map(Util::ACTIONIFY).collect(Collectors.toList());
+    }
+
+    public ModuleBase(Chatbot chatbot) {
+        super(chatbot);
     }
 
     /**
@@ -63,10 +67,5 @@ public abstract class ModuleBase extends BareModule {
     @Override
     public ArrayList<String> getCommands() {
         return (ArrayList<String>) commands.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
-    }
-
-    @Override
-    public String appendModulePath(String message) {
-        return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
     }
 }
