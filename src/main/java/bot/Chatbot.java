@@ -53,7 +53,7 @@ public class Chatbot {
         modules.put("Info", new Info(this, List.of("info", "stats", "uptime", "status")));
 //        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
         modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk")));
-        modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random")));
+        modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
     }
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
