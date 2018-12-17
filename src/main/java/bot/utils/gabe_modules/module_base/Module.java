@@ -1,11 +1,11 @@
-package bot.utils.gabe_modules.interfaces;
+package bot.utils.gabe_modules.module_base;
 
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
 import bot.utils.bot.helper.helper_class.Message;
 import bot.utils.bot.helper.helper_interface.Util;
-import bot.utils.gabe_modules.modules_base.BareModule;
-import bot.utils.gabe_modules.modules_base.ModuleBase;
+import bot.utils.gabe_modules.util.BareModule;
+import bot.utils.gabe_modules.util.ModuleBase;
 import bot.utils.gabe_modules.util.MessageModule;
 import bot.utils.gabe_modules.util.ResourceModule;
 import bot.utils.gabe_modules.util.SingleMessageModule;

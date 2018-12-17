@@ -3,15 +3,12 @@ package bot.utils.gabe_modules.util;
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
 import bot.utils.bot.helper.helper_interface.Util;
-import bot.utils.gabe_modules.modules_base.ModuleBase;
 import bot.utils.bot.helper.helper_class.Message;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public abstract class ResourceModule extends ModuleBase {
     protected List<String> resourceContent;

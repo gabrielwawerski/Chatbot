@@ -2,9 +2,8 @@ package bot.modules.gabe_modules;
 
 import bot.Chatbot;
 import bot.utils.bot.helper.helper_class.Message;
-import bot.utils.bot.helper.helper_interface.Module;
 import bot.utils.bot.exceptions.MalformedCommandException;
-import bot.utils.gabe_modules.modules_base.BareModule;
+import bot.utils.gabe_modules.util.BareModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

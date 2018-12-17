@@ -3,8 +3,6 @@ package bot.modules.gabe_modules;
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
 import bot.utils.bot.helper.helper_class.Message;
-import bot.utils.gabe_modules.modules_base.BareModule;
-import bot.utils.gabe_modules.modules_base.ModuleBase;
 import bot.utils.gabe_modules.util.SingleMessageModule;
 
 import java.time.LocalDateTime;

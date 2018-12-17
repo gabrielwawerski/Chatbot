@@ -2,7 +2,7 @@ package bot.modules.gabe_modules;
 
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
-import bot.utils.gabe_modules.modules_base.ModuleBase;
+import bot.utils.gabe_modules.util.ModuleBase;
 import bot.utils.bot.helper.helper_class.Message;
 import com.github.prominence.openweathermap.api.HourlyForecastRequester;
 import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
@@ -16,9 +16,7 @@ import com.github.prominence.openweathermap.api.model.response.HourlyForecast;
 import com.github.prominence.openweathermap.api.model.response.Weather;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class SimpleWeather extends ModuleBase {
     private OpenWeatherMapManager openWeatherManager;

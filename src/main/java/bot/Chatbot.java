@@ -1,10 +1,8 @@
 package bot;
 
-import bot.PcionBot.PcionBot;
-import bot.modules.Inspire;
 import bot.modules.Think;
 import bot.modules.gabe_modules.*;
-import bot.utils.gabe_modules.interfaces.Module;
+import bot.utils.gabe_modules.module_base.Module;
 import bot.utils.bot.helper.helper_class.Human;
 import bot.utils.bot.helper.helper_class.Message;
 import bot.utils.bot.web_controller.WebController;
@@ -13,9 +11,6 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;

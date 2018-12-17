@@ -3,7 +3,7 @@ package bot.modules.gabe_modules;
 import bot.Chatbot;
 import bot.utils.bot.exceptions.MalformedCommandException;
 import bot.utils.bot.helper.helper_class.Message;
-import bot.utils.gabe_modules.modules_base.ModuleBase;
+import bot.utils.gabe_modules.util.ModuleBase;
 
 import javax.swing.*;
 import java.awt.*;

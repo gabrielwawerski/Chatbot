@@ -1,11 +1,8 @@
-package bot.utils.gabe_modules.modules_base;
+package bot.utils.gabe_modules.util;
 
 import bot.Chatbot;
 import bot.utils.bot.helper.helper_class.Message;
-import bot.utils.gabe_modules.interfaces.Module;
-import bot.utils.gabe_modules.util.MessageModule;
-import bot.utils.gabe_modules.util.ResourceModule;
-import bot.utils.gabe_modules.util.SingleMessageModule;
+import bot.utils.gabe_modules.module_base.Module;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
