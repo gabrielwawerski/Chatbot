@@ -66,8 +66,8 @@ public class WebController {
         // TODO sposób na mniej crashy (hopefully)
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             e.printStackTrace();
-            sendMessage("Coś poszło nie tak. Nieoczekiwany koniec sesji.");
-            quit(false);
+            sendMessage("Coś poszło nie tak.");
+//            quit(false);
         });
     }
 

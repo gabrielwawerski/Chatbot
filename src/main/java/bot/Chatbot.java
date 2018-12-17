@@ -46,7 +46,7 @@ public class Chatbot {
         modules.put("SimpleRoll", new SimpleRoll(this));
         modules.put("GoogleSearch", new GoogleSearch(this));
         modules.put("Think", new Think(this));
-        modules.put("Inspire", new Inspire(this));
+//        modules.put("Inspire", new Inspire(this));
         modules.put("Shutdown", new Shutdown(this));
 
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "commands")));

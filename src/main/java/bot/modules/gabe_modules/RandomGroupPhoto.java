@@ -27,12 +27,11 @@ public class RandomGroupPhoto extends ModuleBase {
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
+        imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
+        Image image = imageIcon.getImage();
 
         for (String command : commands) {
             if (match.equals(command)) {
-                imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
-                Image image = imageIcon.getImage();
-
                 chatbot.sendImageWithMessage(image, "Losuję...");
                 return true;
             }
