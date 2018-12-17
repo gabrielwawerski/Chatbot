@@ -27,7 +27,7 @@ import java.util.ArrayList;
  */
 public interface Module {
     /**
-     * Should first call {@link #getMatch(Message)}, where you check given message
+     * You should first call {@link #getMatch(Message)}.
      *
      * Use this snippet if your module will send only one, same message.
      * <pre>{@code
