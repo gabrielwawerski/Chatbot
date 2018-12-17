@@ -7,6 +7,7 @@ import bot.utils.bot.helper.helper_interface.Util;
 import bot.utils.gabe_modules.modules_base.ModuleBase;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,8 +31,9 @@ public class RandomGroupPhoto extends ModuleBase {
         for (String command : commands) {
             if (match.equals(command)) {
                 imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
+                Image image = imageIcon.getImage();
 
-                chatbot.sendImageWithMessage(imageIcon.getImage(), "Losuję...");
+                chatbot.sendImageWithMessage(image, "Losuję...");
                 return true;
             }
         }
