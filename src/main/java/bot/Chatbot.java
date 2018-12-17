@@ -147,7 +147,7 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " jest online!");
+        webController.sendMessage("PcionBot " + getVersion() + " online!\nWpisz !cmd aby zobaczyć listę komend");
     }
 
     public void sendMessage(String message) {

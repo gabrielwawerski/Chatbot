@@ -26,8 +26,8 @@ public class PcionBot extends Chatbot {
         String username = "ezelbot66@gmail.com";
         String password = "lezetykurwo";
 
-        boolean debugMode = true;      // debugs messages to console
-        boolean silentMode = true;    // does not greet itself
+        boolean debugMode = false;      // debugs messages to console
+        boolean silentMode = false;    // does not greet itself
         boolean debugMessages = false; // adds bot's full name before it's message, and a ":" after.
         boolean headless = false;
         boolean maximized = true;
