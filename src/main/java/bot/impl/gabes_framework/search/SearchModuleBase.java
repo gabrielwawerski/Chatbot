@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * <p>Example:
  * <pre>
  * {@code private static final String EXAMPLE_ANY_REGEX    = makeRegex("command (.*)");}
- * {@code private static final String EXAMPLE_PRESET_REGEX = makeRegex("command|help);}</pre>
+ * {@code private static final String EXAMPLE_PRESET_REGEX = makeRegex("command help);}</pre>
  *
  * <p><p><b>Tips on how to write custom regular expression:</b>
  * <ul>
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  *         command. See {@link #ANY_REGEX} for more info</li>
  *     <li>it's best to assign regexes with a call to {@link #makeRegex(String)}.</li>
  *     <li>if you want to add a fixed command and you want it to be prefixed with module's signature command, write
- *         it down as shown in second example above (notice that there is no gap between the two commands)</li>
+ *         it down as shown in second example above </li>
  *     <li>single command </li>
  * </ul>
  * @version 1.0
