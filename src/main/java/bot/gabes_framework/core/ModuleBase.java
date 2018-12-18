@@ -1,11 +1,11 @@
-package bot.impl.gabes_framework.core;
+package bot.gabes_framework.core;
 
-import bot.Chatbot;
-import bot.impl.gabes_framework.core.libs.api.Module;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.gabes_framework.message.MessageModule;
-import bot.impl.gabes_framework.resource.ResourceModule;
-import bot.impl.gabes_framework.message.SingleMessageModule;
+import bot.core.Chatbot;
+import bot.gabes_framework.core.libs.api.Module;
+import bot.core.helper.misc.Message;
+import bot.gabes_framework.message.MessageModule;
+import bot.gabes_framework.resource.ResourceModule;
+import bot.gabes_framework.message.SingleMessageModule;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,

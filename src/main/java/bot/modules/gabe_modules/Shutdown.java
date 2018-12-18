@@ -1,16 +1,16 @@
 package bot.modules.gabe_modules;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
-import bot.impl.gabes_framework.core.ModuleBase;
+import bot.core.Chatbot;
+import bot.core.helper.misc.Message;
+import bot.core.exceptions.MalformedCommandException;
+import bot.gabes_framework.core.ModuleBase;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.impl.orig_impl.helper.interfaces.Util.ACTIONIFY;
-import static bot.impl.orig_impl.helper.interfaces.Util.DEACTIONIFY;
+import static bot.core.helper.interfaces.Util.ACTIONIFY;
+import static bot.core.helper.interfaces.Util.DEACTIONIFY;
 
 public class Shutdown extends ModuleBase {
     private final String SHUTDOWN_REGEX = ACTIONIFY("shutdown (\\d*)");

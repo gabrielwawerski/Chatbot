@@ -1,8 +1,8 @@
 package bot.modules.hollandjake;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.orig_impl.helper.interfaces.Module;
+import bot.core.Chatbot;
+import bot.core.helper.misc.Message;
+import bot.core.helper.interfaces.Module;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bot.impl.orig_impl.helper.interfaces.Util.*;
+import static bot.core.helper.interfaces.Util.*;
 
 public class Dab implements Module {
     //region Constants

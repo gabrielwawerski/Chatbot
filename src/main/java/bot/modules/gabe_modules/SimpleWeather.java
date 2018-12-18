@@ -1,9 +1,9 @@
 package bot.modules.gabe_modules;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
-import bot.impl.gabes_framework.simple.SimpleModule;
-import bot.impl.orig_impl.helper.misc.Message;
+import bot.core.Chatbot;
+import bot.core.exceptions.MalformedCommandException;
+import bot.gabes_framework.simple.SimpleModule;
+import bot.core.helper.misc.Message;
 import com.github.prominence.openweathermap.api.HourlyForecastRequester;
 import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
 import com.github.prominence.openweathermap.api.WeatherRequester;

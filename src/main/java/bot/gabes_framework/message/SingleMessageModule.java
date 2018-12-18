@@ -1,9 +1,9 @@
-package bot.impl.gabes_framework.message;
+package bot.gabes_framework.message;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.gabes_framework.simple.SimpleModule;
+import bot.core.Chatbot;
+import bot.core.exceptions.MalformedCommandException;
+import bot.core.helper.misc.Message;
+import bot.gabes_framework.simple.SimpleModule;
 
 import java.util.List;
 

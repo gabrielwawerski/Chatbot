@@ -1,4 +1,4 @@
-package bot;
+package bot.core;
 
 import bot.modules.gabe_modules.searcher.AllegroSearch;
 import bot.modules.gabe_modules.searcher.GoogleSearch;
@@ -6,11 +6,11 @@ import bot.modules.gabe_modules.Think;
 import bot.modules.gabe_modules.*;
 import bot.modules.gabe_modules.searcher.PyszneSearch;
 import bot.modules.gabe_modules.searcher.YoutubeSearch;
-import bot.impl.gabes_framework.core.libs.api.Module;
-import bot.impl.orig_impl.helper.misc.Human;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.orig_impl.web_controller.WebController;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
+import bot.gabes_framework.core.libs.api.Module;
+import bot.core.helper.misc.Human;
+import bot.core.helper.misc.Message;
+import bot.core.web_controller.WebController;
+import bot.core.exceptions.MalformedCommandException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 

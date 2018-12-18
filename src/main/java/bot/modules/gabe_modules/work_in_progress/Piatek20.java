@@ -1,7 +1,7 @@
 package bot.modules.gabe_modules.work_in_progress;
 
-import bot.Chatbot;
-import bot.impl.gabes_framework.message.SingleMessageModule;
+import bot.core.Chatbot;
+import bot.gabes_framework.message.SingleMessageModule;
 
 import java.util.List;
 

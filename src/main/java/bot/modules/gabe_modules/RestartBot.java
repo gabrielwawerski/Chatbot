@@ -1,10 +1,10 @@
 package bot.modules.gabe_modules;
 
-import bot.Chatbot;
-import bot.PcionBot;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.gabes_framework.message.SingleMessageModule;
+import bot.core.Chatbot;
+import bot.core.PcionBot;
+import bot.core.exceptions.MalformedCommandException;
+import bot.core.helper.misc.Message;
+import bot.gabes_framework.message.SingleMessageModule;
 
 import java.io.File;
 import java.io.IOException;

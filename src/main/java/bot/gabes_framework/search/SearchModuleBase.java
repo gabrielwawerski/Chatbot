@@ -1,10 +1,10 @@
-package bot.impl.gabes_framework.search;
+package bot.gabes_framework.search;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.helper.interfaces.Util;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.gabes_framework.core.ModuleBase;
-import bot.impl.gabes_framework.core.libs.Utils;
+import bot.core.Chatbot;
+import bot.core.helper.interfaces.Util;
+import bot.core.helper.misc.Message;
+import bot.gabes_framework.core.ModuleBase;
+import bot.gabes_framework.core.libs.Utils;
 
 import java.util.List;
 import java.util.regex.Matcher;

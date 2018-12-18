@@ -1,11 +1,10 @@
 package bot.modules.gabe_modules.searcher;
 
-import bot.Chatbot;
-import bot.impl.gabes_framework.search.SimpleSearchModule;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.gabes_framework.search.SearchModuleBase;
-import bot.impl.gabes_framework.core.libs.Utils;
+import bot.core.Chatbot;
+import bot.core.exceptions.MalformedCommandException;
+import bot.core.helper.misc.Message;
+import bot.gabes_framework.search.SearchModuleBase;
+import bot.gabes_framework.core.libs.Utils;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

@@ -1,13 +1,13 @@
-package bot.impl.gabes_framework.message;
+package bot.gabes_framework.message;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.gabes_framework.simple.SimpleModule;
+import bot.core.Chatbot;
+import bot.core.exceptions.MalformedCommandException;
+import bot.core.helper.misc.Message;
+import bot.gabes_framework.simple.SimpleModule;
 
 import java.util.List;
 
-import static bot.impl.orig_impl.helper.interfaces.Util.GET_RANDOM;
+import static bot.core.helper.interfaces.Util.GET_RANDOM;
 
 /**
  * Easily create new modules if you only need following functionality: preset trigger regexes and a single resource

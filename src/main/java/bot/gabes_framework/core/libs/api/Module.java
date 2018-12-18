@@ -1,20 +1,19 @@
-package bot.impl.gabes_framework.core.libs.api;
+package bot.gabes_framework.core.libs.api;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.orig_impl.helper.interfaces.Util;
-import bot.impl.gabes_framework.core.ModuleBase;
-import bot.impl.gabes_framework.message.MessageModule;
-import bot.impl.gabes_framework.resource.ResourceModule;
-import bot.impl.gabes_framework.simple.SimpleModule;
-import bot.impl.gabes_framework.message.SingleMessageModule;
+import bot.core.exceptions.MalformedCommandException;
+import bot.core.helper.misc.Message;
+import bot.core.helper.interfaces.Util;
+import bot.gabes_framework.core.ModuleBase;
+import bot.gabes_framework.message.MessageModule;
+import bot.gabes_framework.resource.ResourceModule;
+import bot.gabes_framework.simple.SimpleModule;
+import bot.gabes_framework.message.SingleMessageModule;
 
 import java.util.ArrayList;
 
 /**
  * Connects my framework to hollandjake's facebook's messenger API. As of now, this interface is a copy of hollandjake's
- * {@link bot.impl.orig_impl.helper.interfaces.Module} interface, with the exception of added javadocs.
+ * {@link bot.core.helper.interfaces.Module} interface, with the exception of added javadocs.
  *
  * <p>If you want to write modules from scratch, you have to implement this interface. It currently is hooked to
  * hollandjake's API (instead of his), therefore implementing his interface or instantiating his modules will not work.

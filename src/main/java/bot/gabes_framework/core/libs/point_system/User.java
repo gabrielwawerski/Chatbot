@@ -1,4 +1,4 @@
-package bot.impl.gabes_framework.core.libs.point_system;
+package bot.gabes_framework.core.libs.point_system;
 
 public class User {
     String name;

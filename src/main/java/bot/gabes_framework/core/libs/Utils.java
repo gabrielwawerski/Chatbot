@@ -1,7 +1,7 @@
-package bot.impl.gabes_framework.core.libs;
+package bot.gabes_framework.core.libs;
 
-import bot.impl.orig_impl.helper.interfaces.Util;
-import bot.impl.orig_impl.helper.misc.Message;
+import bot.core.helper.interfaces.Util;
+import bot.core.helper.misc.Message;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;

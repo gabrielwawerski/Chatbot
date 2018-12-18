@@ -1,9 +1,9 @@
 package bot.modules.hollandjake;
 
-import bot.Chatbot;
-import bot.impl.orig_impl.helper.misc.Message;
-import bot.impl.orig_impl.helper.interfaces.Module;
-import bot.impl.orig_impl.exceptions.MalformedCommandException;
+import bot.core.Chatbot;
+import bot.core.helper.misc.Message;
+import bot.core.helper.interfaces.Module;
+import bot.core.exceptions.MalformedCommandException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.impl.orig_impl.helper.interfaces.Util.*;
+import static bot.core.helper.interfaces.Util.*;
 
 public class Reacts implements Module {
     //region Constants

@@ -1,4 +1,4 @@
-package bot;
+package bot.core;
 
 public class PcionBot extends Chatbot {
     // to do:
