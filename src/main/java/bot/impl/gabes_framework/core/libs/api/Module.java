@@ -13,14 +13,19 @@ import bot.impl.gabes_framework.message.SingleMessageModule;
 import java.util.ArrayList;
 
 /**
- * Connects my framework to hollandjake's API, which in turn is an API to the SeleniumAPI (?). As of now, this interface
- * is a copy of hollandjake's {@link bot.impl.orig_impl.helper.interfaces.Module} interface.
+ * Connects my framework to hollandjake's facebook's messenger API. As of now, this interface is a copy of hollandjake's
+ * {@link bot.impl.orig_impl.helper.interfaces.Module} interface, with the exception of added javadocs.
  *
- * <p>If writing module from scratch, you have to implement this interface, otherwise the API will not be able to access it
- * when iterating over loaded modules.<p>
+ * <p>If you want to write modules from scratch, you have to implement this interface. It currently is hooked to
+ * hollandjake's API (instead of his), therefore implementing his interface or instantiating his modules will not work.
  *
- * Each module that implements, as well as is created inside {@link Chatbot#loadModules()} method, will have it's
- * {@link #process(Message)} method called every time new message is grabbed. If a module wants to be able to react
+ * <p>Every new message, sent to the thread that the bot is set to listen to, gets scraped by the API, which creates
+ * a new {@link Message} instance from the message data. It then loops over all loaded modules, calling each module
+ * {@link #process(Message)} method.
+ *
+ * <p>Your module can react to trigger commands which you can specify, either by subclassing one of my
+ *     Each module that implements, as well as is instantiated inside {@link Chatbot#loadModules()} method, every time
+ * a new message is grabbed, will have it's {@link #process(Message)} called . If a module wants to be able to react
  * to trigger regexList, they have to be "actionified" first, inside the constructor. See {@link Util#ACTIONIFY(String)}.<p>
  *
  * Created for my implementation of the modules framework. I'm hoping to add more functionality, so this interface might change.
