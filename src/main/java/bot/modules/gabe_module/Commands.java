@@ -2,7 +2,7 @@ package bot.modules.gabe_module;
 
 import bot.core.Chatbot;
 import bot.modules.gabe_module.searcher.GoogleSearch;
-import bot.utils.gabe_modules.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.message.SingleMessageModule;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class Commands extends SingleMessageModule {
                                         .append("\n")
 
                 /** {@link SimpleWeather} */
-                .append("Podaje aktualne informacje o pogodzie w Lublinie")
+                .append("Aktualna pogoda")
                                         .append("\n")
                 .append("pogoda")
                                         .append("\n")
@@ -39,7 +39,7 @@ public class Commands extends SingleMessageModule {
                                         .append("\n")
 
                 /** {@link GoogleSearch} */
-                .append("Po komendzie wpisz szukaną frazę aby otrzymać link")
+                .append("Po komendzie wpisz szukaną frazę")
                                         .append("\n")
                 .append("google <tekst>")
                                         .append("\n")
@@ -51,7 +51,7 @@ public class Commands extends SingleMessageModule {
                                         .append("\n")
                                         .append("\n")
 
-                .append("Wysyła losowe zdjęcie z historii grupki")
+                .append("Losowe zdjęcie z historii grupki")
                                         .append("\n")
                 .append("random")
                                         .append("\n")

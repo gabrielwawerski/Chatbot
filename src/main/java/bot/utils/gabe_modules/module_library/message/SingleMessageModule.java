@@ -1,8 +1,9 @@
-package bot.utils.gabe_modules.module_library;
+package bot.utils.gabe_modules.module_library.message;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
+import bot.utils.gabe_modules.module_library.simple.SimpleModule;
 
 import java.util.List;
 

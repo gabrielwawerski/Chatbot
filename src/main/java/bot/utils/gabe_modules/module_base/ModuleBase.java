@@ -2,9 +2,9 @@ package bot.utils.gabe_modules.module_base;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.module_library.MessageModule;
-import bot.utils.gabe_modules.module_library.ResourceModule;
-import bot.utils.gabe_modules.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.message.MessageModule;
+import bot.utils.gabe_modules.module_library.resource.ResourceModule;
+import bot.utils.gabe_modules.module_library.message.SingleMessageModule;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
@@ -20,12 +20,11 @@ import bot.utils.gabe_modules.module_library.SingleMessageModule;
  * {@link ResourceModule}
  *
  * @version 1.0
- * @since TODO
- * @author Gabe
+ * @since 0.29
  */
 public abstract class ModuleBase implements Module {
     protected final Chatbot chatbot;
-    /** Needs to be assigned to the latest received {@code message}'s value. After overriding {@link #process(Message)}
+    /** Needs to be assigned to the latest received {@code message}'s value. After overriding {@link Module#process(Message)}
      * method, call {@link #updateMatch(Message)} inside it first, which takes care of the assigning for you. Although
      * this field and it's corresponding method are not necessary, they aim to make writing modules less error prone.<br>
      * If you don't want to use them, use the snippet below at the beginning of your overriden {@code process} method.
@@ -39,9 +38,15 @@ public abstract class ModuleBase implements Module {
 
     /**
      * Convenience method. Either make it a first call inside overriden {@link #process(Message)} method, or use the
-     * snippet below:<pre>{@code match = getMatch(message)}</pre>See {@link #match} for more info.
+     * snippet below:<pre>{@code match = getMatch(message)}</pre><p><p>
      *
-     * @param message thread latest message, passed to your module {@link #process(Message)} method
+     * <b>WARNING!<br></b>
+     * Make sure that you have <b>implemented</b> {@link Module#getMatch(Message)} <b>before</b> calling this method!
+     *
+     * @param message thread latest message, passed to your module in {@link #process(Message)}
+     * @see #match
+     * @see Module#getMatch(Message)
+     * @see #process(Message)
      */
     public void updateMatch(Message message) {
         match = getMatch(message);

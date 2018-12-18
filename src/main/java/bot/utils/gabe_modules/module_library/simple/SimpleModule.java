@@ -1,10 +1,13 @@
-package bot.utils.gabe_modules.module_library;
+package bot.utils.gabe_modules.module_library.simple;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
 import bot.utils.gabe_modules.module_base.ModuleBase;
 import bot.utils.gabe_modules.module_base.Module;
+import bot.utils.gabe_modules.module_library.message.MessageModule;
+import bot.utils.gabe_modules.module_library.message.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.resource.ResourceModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +26,11 @@ import java.util.stream.Collectors;
  * If you need more control over your regexes, see {@link ModuleBase}. See {@link Module#process(Message)}, {@link Module}
  * and {@link ModuleBase} for more info.
  *
- * @author Gabe (gabriel.wawerski@gmail.com)
+ * @version 1.0
+ * @since 0.30
  */
 public abstract class SimpleModule extends ModuleBase {
-    /** Your module trigger regexes, provided by you in the constructor. See {@link #SimpleModule(Chatbot, List)}*/
+    /** Your module trigger regexes, provided by you in the constructor. See {@link #SimpleModule(Chatbot, List)} */
     protected List<String> regexList;
 
     /**

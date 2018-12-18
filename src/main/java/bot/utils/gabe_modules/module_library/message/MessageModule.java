@@ -1,8 +1,9 @@
-package bot.utils.gabe_modules.module_library;
+package bot.utils.gabe_modules.module_library.message;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
+import bot.utils.gabe_modules.module_library.simple.SimpleModule;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import static bot.core.helper.interfaces.Util.GET_RANDOM;
  * file name in the constructor and you're set!
  *
  * @version 1.0
- * @author Gabe
+ * @since 0.29
  */
 public abstract class MessageModule extends SimpleModule {
     protected List<String> messages;
@@ -28,7 +29,6 @@ public abstract class MessageModule extends SimpleModule {
      * @param chatbot chatbot reference
      * @param regexes trigger regexes for your module
      * @param messages message, or multiple messages (picked at random) for bot to send, after trigger is matched
-     * @author Gabe
      */
     public MessageModule(Chatbot chatbot, List<String> regexes, List<String> messages) {
         super(chatbot, regexes);

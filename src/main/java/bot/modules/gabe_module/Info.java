@@ -3,7 +3,7 @@ package bot.modules.gabe_module;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.message.SingleMessageModule;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;

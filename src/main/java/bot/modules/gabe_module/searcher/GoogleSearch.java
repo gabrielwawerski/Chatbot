@@ -4,33 +4,34 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.module_library.SimpleModule;
+import bot.utils.gabe_modules.module_library.simple.SearchModuleBase;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.helper.interfaces.Util.DEACTIONIFY;
-
 /**
- * @author Gabe
+ * @version 1.0
+ * @since 0.30
  */
-public class GoogleSearch extends SimpleModule {
-    private final String SEARCH_URL = "https://www.google.com/search?q=";
+public class GoogleSearch extends SearchModuleBase {
+    private static final String SEARCH_URL = "https://www.google.com/search?q=";
+    private static final String SEPARATOR = "+";
 
     private final String GOOGLE_REGEX = Util.ACTIONIFY("google (.*)");
     private final String G_REGEX = Util.ACTIONIFY("g (.*)");
-    private final String SEARCH_REGEX = Util.ACTIONIFY("search (.*)");
-    private final String S_REGEX = Util.ACTIONIFY("s (.*)");
 
-    private final String G_HELP_REGEX = Util.ACTIONIFY("g help");
-    private final String G_LEZE_REGEX = Util.ACTIONIFY("g leze");
-
-
+    private final String G_HELP_REGEX = Util.ACTIONIFY("g|help");
+    private final String G_LEZE_REGEX = Util.ACTIONIFY("g|leze");
 
     public GoogleSearch(Chatbot chatbot) {
         super(chatbot);
+    }
+
+    @Override
+    public String getMatch(Message message) {
+        return null;
     }
 
     @Override
@@ -39,13 +40,8 @@ public class GoogleSearch extends SimpleModule {
         Matcher matcher = null;
 
         if (match.equals(GOOGLE_REGEX)) {
-            matcher = Pattern.compile(GOOGLE_REGEX).matcher(message.getMessage());
-        } else if (match.equals(G_REGEX)) {
-            matcher = Pattern.compile(G_REGEX).matcher(message.getMessage());
-        } else if (match.equals(SEARCH_REGEX)) {
-            matcher = Pattern.compile(SEARCH_REGEX).matcher(message.getMessage());
-        } else if (match.equals(S_REGEX)) {
-            matcher = Pattern.compile(S_REGEX).matcher(message.getMessage());
+            matcher = Pattern.compile(match).matcher(message.getMessage());
+
         } else if (match.equals(G_LEZE_REGEX)) {
             List list = List.of("POSZUKAJ KUUUURRWAAAAA",
                     "Masz, ty inwalido umysłowy",
@@ -55,10 +51,9 @@ public class GoogleSearch extends SimpleModule {
                     "\nhttps://www.google.com/");
             return true;
         } else if (match.equals(G_HELP_REGEX)) {
-            chatbot.sendMessage(
-                    "Jak otrzymać link z tłumaczeniem?\n"
-                    + "!g <tekst> translate *język*\n"
-                    + "Języki: en, pl, ...");
+            chatbot.sendMessage("Jak otrzymać link z tłumaczeniem?\n"
+                            + "!g <tekst> translate *język*\n"
+                            + "Języki: en, pl, ...");
             return true;
         } else {
             return false;
@@ -75,28 +70,19 @@ public class GoogleSearch extends SimpleModule {
     }
 
     @Override
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-        if (messageBody.matches(GOOGLE_REGEX)) {
-            return GOOGLE_REGEX;
-        } else if (messageBody.matches(G_REGEX)) {
-            return G_REGEX;
-        } else if (messageBody.matches(SEARCH_REGEX)){
-            return SEARCH_REGEX;
-        } else if (messageBody.matches(S_REGEX)) {
-            return S_REGEX;
-        } else {
-            return "";
-        }
+    public ArrayList<String> getCommands() {
+        ArrayList<String> commands = new ArrayList<>();
+
+        commands.add()
     }
 
     @Override
-    public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(DEACTIONIFY(GOOGLE_REGEX));
-        commands.add(DEACTIONIFY(G_REGEX));
-        commands.add(DEACTIONIFY(SEARCH_REGEX));
-        commands.add(DEACTIONIFY(S_REGEX));
-        return commands;
+    protected String setSearchUrl() {
+        return SEARCH_URL;
+    }
+
+    @Override
+    protected String setSeparator() {
+        return SEPARATOR;
     }
 }

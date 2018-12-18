@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.module_library.ResourceModule;
+import bot.utils.gabe_modules.module_library.resource.ResourceModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

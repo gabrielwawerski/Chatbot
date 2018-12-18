@@ -1,9 +1,10 @@
-package bot.utils.gabe_modules.module_library;
+package bot.utils.gabe_modules.module_library.resource;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.interfaces.Util;
 import bot.core.helper.misc.Message;
+import bot.utils.gabe_modules.module_library.simple.SimpleModule;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +27,8 @@ public abstract class ResourceModule extends SimpleModule {
      *
      * @param chatbot
      * @param resourceName full resource name (with extension) located in your resource package folder.
-     * @author Gabe
+     * @version 1.0
+     * @since 0.29
      */
     public ResourceModule(Chatbot chatbot, List<String> regexes, String resourceName) {
         super(chatbot, regexes);

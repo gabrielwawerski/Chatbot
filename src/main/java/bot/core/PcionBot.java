@@ -1,24 +1,29 @@
-package bot.core.pcionbot;
+package bot.core;
 
 import bot.core.Chatbot;
 
 public class PcionBot extends Chatbot {
-    // to do
-    // !sleep !silent !mute !wakeup
+    // to do:
     // !restart
-    // !popcorn !rajza - michael jackson popcorn gif
+    // !info
+    //      wersja pcionbot
+    //      uptime
+    //      top 3 ladder
+
     // !stats:
-    //     pcionbot wersja
-    //     uptime
-    //     unikatowe wiadomosci
+    //     statystyki (unikatowe wiadomosci, etc.)
     //     top 3 ladder
 
     // !ladder
     // ranking wszystkich na grupce
 
+    // !uptime
+    // czas dzialania bota
+
     // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
 
-    // !roulette <punkty> !roulette all
+    // !roulette <punkty>
+    // !roulette all
 
     public static void main(String[] args) {
         System.out.println(args.toString());
@@ -27,7 +32,7 @@ public class PcionBot extends Chatbot {
         String password = "lezetykurwo";
 
         boolean debugMode = false;      // debugs messages to console
-        boolean silentMode = false;    // does not greet itself
+        boolean silentMode = true;    // does not greet itself
         boolean debugMessages = false; // adds bot's full name before it's message, and a ":" after.
         boolean headless = false;
         boolean maximized = true;
@@ -43,7 +48,7 @@ public class PcionBot extends Chatbot {
                 username,
                 password,
 
-                GRUPKA_ID,
+                GRZAGSOFT_ID,
 
                 debugMode,
                 silentMode,

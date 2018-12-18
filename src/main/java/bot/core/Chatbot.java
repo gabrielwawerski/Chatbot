@@ -1,8 +1,11 @@
 package bot.core;
 
+import bot.modules.gabe_module.searcher.AllegroSearch;
 import bot.modules.gabe_module.searcher.GoogleSearch;
 import bot.modules.gabe_module.Think;
 import bot.modules.gabe_module.*;
+import bot.modules.gabe_module.searcher.PyszneSearch;
+import bot.modules.gabe_module.searcher.YoutubeSearch;
 import bot.utils.gabe_modules.module_base.Module;
 import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
@@ -50,6 +53,9 @@ public class Chatbot {
 //        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
         modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk")));
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
+        modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
+        modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
+        modules.put("PyszneSearch", new PyszneSearch(this, List.of("pyszne")));
     }
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {

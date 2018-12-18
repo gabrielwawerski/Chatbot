@@ -4,10 +4,10 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.module_library.MessageModule;
-import bot.utils.gabe_modules.module_library.ResourceModule;
-import bot.utils.gabe_modules.module_library.SimpleModule;
-import bot.utils.gabe_modules.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.message.MessageModule;
+import bot.utils.gabe_modules.module_library.resource.ResourceModule;
+import bot.utils.gabe_modules.module_library.simple.SimpleModule;
+import bot.utils.gabe_modules.module_library.message.SingleMessageModule;
 
 import java.util.ArrayList;
 
