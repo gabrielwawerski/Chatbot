@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String version = "v0.30";
+    private final String version = "v0.34";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -149,7 +149,7 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("pcionbot " + getVersion() + " online!\nWpisz !cmd aby zobaczyć listę komend");
+        webController.sendMessage("PcionBot " + getVersion() + " online!\nWpisz !cmd aby zobaczyć listę komend");
     }
 
     public void sendMessage(String message) {

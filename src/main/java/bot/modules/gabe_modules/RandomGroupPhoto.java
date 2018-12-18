@@ -5,6 +5,7 @@ import bot.impl.orig_impl.exceptions.MalformedCommandException;
 import bot.impl.orig_impl.helper.misc.Message;
 import bot.impl.orig_impl.helper.interfaces.Util;
 import bot.impl.gabes_framework.simple.SimpleModule;
+import org.openqa.selenium.WebElement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +33,8 @@ public class RandomGroupPhoto extends SimpleModule {
 
         for (String regex : regexList) {
             if (match.equals(regex)) {
-                chatbot.sendImageWithMessage(image, "Losuję...");
+                chatbot.sendImageWithMessage(image, "Losuję..."); // TODO try to run on new thread
+                /** {@link Message#sendMessageWithImage(WebElement, String, Image)}  */
                 return true;
             }
         }

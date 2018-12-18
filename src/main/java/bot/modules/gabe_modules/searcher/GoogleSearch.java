@@ -21,8 +21,8 @@ public class GoogleSearch extends SearchModuleBase {
     private final String GOOGLE_REGEX = Util.ACTIONIFY("google (.*)");
     private final String G_REGEX = Util.ACTIONIFY("g (.*)");
 
-    private final String G_HELP_REGEX = Util.ACTIONIFY("g|help");
-    private final String G_LEZE_REGEX = Util.ACTIONIFY("g|leze");
+    private final String G_HELP_REGEX = Util.ACTIONIFY("g help");
+    private final String G_LEZE_REGEX = Util.ACTIONIFY("g leze");
 
     public GoogleSearch(Chatbot chatbot) {
         super(chatbot);

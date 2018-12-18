@@ -19,7 +19,7 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String SEARCH_URL = "pyszne.pl/restauracja-lublin-lublin-";
     private static final String SEPARATOR = "-";
 
-    private final String PYSZNE_HELP_REGEX = makeRegex("pyszne|help");
+    private final String PYSZNE_HELP_REGEX = makeRegex("pyszne help");
     private final String PYSZNE_ANY_REGEX = makeRegex("pyszne (.*)");
 
     public PyszneSearch(Chatbot chatbot) {
@@ -71,13 +71,6 @@ public class PyszneSearch extends SearchModuleBase {
     }
 
     private boolean analyzeMessage(String messageBody) {
-//        return Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(0))).find()      // Yx-xxx
-//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(1))).find()  // xY-xxx
-//                && (messageBody.charAt(2) == '-' && messageBody.charAt(2) == ' ')                      // - /spacja
-//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(3))).find()  // xx-Yxx
-//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(4))).find()  // xx-xYx
-//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(5))).find(); // xx-xxY
-
         String re1 = "(\\d)";    // Any Single Digit 1
         String re2 = "(\\d)";    // Any Single Digit 2
         String re3 = "(-)";    // Any Single Character 1

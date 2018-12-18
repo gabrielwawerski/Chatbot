@@ -51,7 +51,7 @@ public class Commands extends SingleMessageModule {
                                         .append("\n")
                                         .append("\n")
 
-                .append("Losowe zdjęcie z historii grupki")
+                .append("Losowe zdjęcie grupki")
                                         .append("\n")
                 .append("random")
                                         .append("\n")

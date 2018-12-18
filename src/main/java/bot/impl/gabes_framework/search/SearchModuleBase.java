@@ -48,12 +48,10 @@ public abstract class SearchModuleBase extends ModuleBase {
     /** {@code (.*)} regex, means "any text" */
     protected static final String ANY_REGEX = " (.*)";
 
-
     public SearchModuleBase(Chatbot chatbot) {
         super(chatbot);
         SEARCH_URL = setSearchUrl();
         SEPARATOR = setSeparator();
-
     }
 
     /**
