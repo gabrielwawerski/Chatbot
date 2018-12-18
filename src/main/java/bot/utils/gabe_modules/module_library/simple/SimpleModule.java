@@ -8,6 +8,7 @@ import bot.utils.gabe_modules.module_base.Module;
 import bot.utils.gabe_modules.module_library.message.MessageModule;
 import bot.utils.gabe_modules.module_library.message.SingleMessageModule;
 import bot.utils.gabe_modules.module_library.resource.ResourceModule;
+import bot.utils.gabe_modules.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,6 @@ public abstract class SimpleModule extends ModuleBase {
 
     @Override
     public ArrayList<String> getCommands() {
-        return (ArrayList<String>) regexList.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
+        return Utils.getCommands(regexList);
     }
 }

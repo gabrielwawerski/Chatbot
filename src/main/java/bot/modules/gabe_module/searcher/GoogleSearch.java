@@ -4,13 +4,11 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.module_library.simple.SearchModuleBase;
+import bot.utils.gabe_modules.module_library.search.SearchModuleBase;
 import bot.utils.gabe_modules.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @version 1.0
@@ -31,43 +29,55 @@ public class GoogleSearch extends SearchModuleBase {
     }
 
     @Override
-    public String getMatch(Message message) {
-        return null;
-    }
-
-    @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
-        Matcher matcher = null;
+        String msg = message.getMessage();
 
-        if (match.equals(GOOGLE_REGEX)) {
-            matcher = Pattern.compile(match).matcher(message.getMessage());
+        if (match.equals(G_HELP_REGEX)) {
+            chatbot.sendMessage("Jak coś przetłumaczyć?\n"
+                    + "!g <tekst> translate *język*\n"
+                    + "Języki: en, pl, ...");
+            return true;
 
         } else if (match.equals(G_LEZE_REGEX)) {
-            List list = List.of("POSZUKAJ KUUUURRWAAAAA",
+            List<String> list = List.of("POSZUKAJ KUUUURRWAAAAA",
                     "Masz, ty inwalido umysłowy",
                     "No kurwa leze poszukaj sobie, nie masz google?",
                     "Ty ulana łysa lebiodo");
             chatbot.sendMessage(Util.GET_RANDOM(list) +
                     "\nhttps://www.google.com/");
             return true;
-        } else if (match.equals(G_HELP_REGEX)) {
-            chatbot.sendMessage("Jak otrzymać link z tłumaczeniem?\n"
-                    + "!g <tekst> translate *język*\n"
-                    + "Języki: en, pl, ...");
-            return true;
+
+        } else if (match.equals(GOOGLE_REGEX) || match.equals(G_REGEX)) {
+            updateMatcher(msg);
+
+            if (isMatchFound()) {
+                chatbot.sendMessage(getFinalMessage(msg));
+                return true;
+            }
         } else {
             return false;
         }
-
-        if (matcher.find()) {
-            String msg = matcher.group(1);
-            msg = msg.replaceAll("\\s+","+");
-//            msg = msg.trim().replaceAll("\\s{2,}", "+").trim();
-            chatbot.sendMessage(SEARCH_URL + msg);
-            return true;
-        }
         return false;
+    }
+
+    @Override
+    public String getMatch(Message message) {
+        String messageBody = message.getMessage();
+
+        if (messageBody.matches(G_HELP_REGEX)) {
+            return G_HELP_REGEX;
+        }
+        if (messageBody.matches(G_LEZE_REGEX)) {
+            return G_LEZE_REGEX;
+        }
+        if (messageBody.matches(GOOGLE_REGEX)) {
+            return GOOGLE_REGEX;
+        }
+        if (messageBody.matches(G_REGEX)) {
+            return G_REGEX;
+        }
+        return "";
     }
 
     @Override

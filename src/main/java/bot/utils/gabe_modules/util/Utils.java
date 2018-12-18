@@ -2,11 +2,16 @@ package bot.utils.gabe_modules.util;
 
 import bot.core.helper.interfaces.Module;
 import bot.core.helper.interfaces.Util;
+import bot.core.helper.misc.Message;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+
+import static bot.core.helper.interfaces.Util.GET_RANDOM;
 
 /**
  * I have only added javadocs. All credit goes to hollandjake.
@@ -24,6 +29,26 @@ public final class Utils {
     public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yy");
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss");
     public static final DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+
+    public static String getMatch(Message message, List<String> regexList) {
+        String messageBody = message.getMessage();
+        for (String regex : regexList) {
+            if (messageBody.matches(regex)) {
+                return regex;
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Returns an ArrayList, containing regexes with their original form. (i think)
+     *
+     * @param regexList
+     * @author hollandjake
+     */
+    public static ArrayList<String> getCommands(List<String> regexList) {
+        return (ArrayList<String>) regexList.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
+    }
 
     /**
      * Always make sure to "actionify"

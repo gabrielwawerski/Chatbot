@@ -3,21 +3,26 @@ package bot.modules.gabe_module.searcher;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.module_library.search.SearchModule;
+import bot.utils.gabe_modules.module_library.search.SearchModuleBase;
+import bot.utils.gabe_modules.util.Utils;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
  * @version 1.0
  * @since 0.30 (18.12.2018)
  */
-public class PyszneSearch extends SearchModule {
+public class PyszneSearch extends SearchModuleBase {
     private static final String SEARCH_URL = "pyszne.pl/restauracja-lublin-lublin-";
     private static final String SEPARATOR = "-";
 
-    public PyszneSearch(Chatbot chatbot, List<String> regexes) {
-        super(chatbot, regexes);
+    private static final String PYSZNE_HELP_REGEX = makeRegex("pyszne|help");
+    private static final String PYSZNE_ANY_REGEX = makeRegex("pyszne (.*)");
+
+
+    public PyszneSearch(Chatbot chatbot) {
+        super(chatbot);
     }
 
     @Override
@@ -34,15 +39,15 @@ public class PyszneSearch extends SearchModule {
 //            chatbot.sendMessage("Nieprawidłowy kod pocztowy.");
 //            return true;
 //        } else {
-//            chatbot.sendMessage(getFinalUrl(messageBody));
+//            chatbot.sendMessage(getFinalMessage(messageBody));
 //        }
 //
 //        for (String regex : regexList) {
 //            if (match.equals(regex)) {
-//                setMatcher(messageBody);
+//                updateMatcher(messageBody);
 //
 //                if (isMatchFound()) {
-//                    chatbot.sendMessage(getFinalUrl(messageBody));
+//                    chatbot.sendMessage(getFinalMessage(messageBody));
 //                    return true;
 //                } else {
 //                    throw new MalformedCommandException();
@@ -52,14 +57,31 @@ public class PyszneSearch extends SearchModule {
         return false;
     }
 
-    private boolean analyzeMessage(String message) {
-        return
-                   Pattern.compile("[0-9]").matcher(Character.toString(message.charAt(0))).find()  // Yx-xxx
-                && Pattern.compile("[0-9]").matcher(Character.toString(message.charAt(1))).find()  // xY-xxx
-                && (message.charAt(2) == '-' && message.charAt(2) == ' ')                          // - lub spacja
-                && Pattern.compile("[0-9]").matcher(Character.toString(message.charAt(3))).find()  // xx-Yxx
-                && Pattern.compile("[0-9]").matcher(Character.toString(message.charAt(4))).find()  // xx-xYx
-                && Pattern.compile("[0-9]").matcher(Character.toString(message.charAt(5))).find(); // xx-xxY
+    @Override
+    public String getMatch(Message message) {
+        String messageBody = message.getMessage();
+
+        if (messageBody.matches(PYSZNE_HELP_REGEX)) {
+            return PYSZNE_HELP_REGEX;
+        } else if (messageBody.matches(PYSZNE_ANY_REGEX)) {
+            return PYSZNE_ANY_REGEX;
+        }
+    }
+
+    @Override
+    public ArrayList<String> getCommands() {
+        ArrayList<String> commands = new ArrayList<>();
+        commands.add(Utils.deactionify(PYSZNE_ANY_REGEX));
+        commands.add(Utils.deactionify(PYSZNE_HELP_REGEX));
+    }
+
+    private boolean analyzeMessage(String messageBody) {
+        return Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(0))).find()      // Yx-xxx
+                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(1))).find()  // xY-xxx
+                && (messageBody.charAt(2) == '-' && messageBody.charAt(2) == ' ')                      // - lub spacja
+                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(3))).find()  // xx-Yxx
+                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(4))).find()  // xx-xYx
+                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(5))).find(); // xx-xxY
     }
 
     @Override

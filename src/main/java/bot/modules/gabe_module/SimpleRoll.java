@@ -76,6 +76,9 @@ public class SimpleRoll extends ModuleBase {
         return commands;
     }
 
+    /**
+     * @author hollandjake
+     */
     private int roll(int lower, int upper) {
         return (int) (Math.random() * (upper - lower) + lower);
     }

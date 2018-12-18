@@ -1,7 +1,7 @@
 package bot.modules.gabe_module.searcher;
 
 import bot.core.Chatbot;
-import bot.utils.gabe_modules.module_library.search.SearchModule;
+import bot.utils.gabe_modules.module_library.search.SimpleSearchModule;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @since 0.30 (18.12.2018)
  * @author Gabe
  */
-public class AllegroSearch extends SearchModule {
+public class AllegroSearch extends SimpleSearchModule {
     private static final String SEARCH_URL = "https://allegro.pl/listing?string=";
     private static final String SEPARATOR = "%20";
 
