@@ -55,7 +55,7 @@ public class Chatbot {
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
         modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
-        modules.put("PyszneSearch", new PyszneSearch(this, List.of("pyszne")));
+        modules.put("PyszneSearch", new PyszneSearch(this));
     }
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
