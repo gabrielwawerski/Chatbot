@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.pcionbot.PcionBot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.util.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.SingleMessageModule;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class RestartBot extends SingleMessageModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String command : commands) {
+        for (String command : regexList) {
             if (match.equals(command)) {
                 try {
                     restartApplication();

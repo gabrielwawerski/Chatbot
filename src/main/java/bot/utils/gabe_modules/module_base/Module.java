@@ -4,10 +4,10 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.util.module_library.MessageModule;
-import bot.utils.gabe_modules.util.module_library.ResourceModule;
-import bot.utils.gabe_modules.util.module_library.SimpleModule;
-import bot.utils.gabe_modules.util.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.MessageModule;
+import bot.utils.gabe_modules.module_library.ResourceModule;
+import bot.utils.gabe_modules.module_library.SimpleModule;
+import bot.utils.gabe_modules.module_library.SingleMessageModule;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  *
  * Each module that implements, as well as is created inside {@link Chatbot#loadModules()} method, will have it's
  * {@link #process(Message)} method called every time new message is grabbed. If a module wants to be able to react
- * to trigger commands, they have to be "actionified" first, inside the constructor. See {@link Util#ACTIONIFY(String)}.<p>
+ * to trigger regexList, they have to be "actionified" first, inside the constructor. See {@link Util#ACTIONIFY(String)}.<p>
  *
  * Created for my own module implementation. I'm hoping to add more functionality, so this interface might change.
  * All credit for making custom messenger bots possible, goes to hollandjake.<p>
@@ -35,13 +35,13 @@ import java.util.ArrayList;
  */
 public interface Module {
     /**
-     * You should first call {@link #getMatch(Message)}.
+     * You should first call {@link #getMatch(Message)} after overriding.
      *
      * Use this snippet if your module will send only one, same message.
      * <pre>{@code
      * updateMatch(message);
-     * for (String command : commands) {
-     *     if (match.equals(command)) {
+     * for (String regex : regexList) {
+     *     if (match.equals(regex)) {
      *         chatbot.sendMessage(this.message);
      *         return true;
      *     }
@@ -65,7 +65,7 @@ public interface Module {
     public String appendModulePath(String message);
 
     /**
-     * Use {@link Util#DEACTIONIFY(String)} on your commands when adding them to ArrayList.
+     * Use {@link Util#DEACTIONIFY(String)} on your regexes when adding them to ArrayList.
      *
      * @return
      */

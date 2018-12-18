@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.util.module_library.SimpleModule;
+import bot.utils.gabe_modules.module_library.SimpleModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +19,12 @@ import static bot.core.helper.interfaces.Util.DEACTIONIFY;
 public class GoogleSearch extends SimpleModule {
     private final String SEARCH_URL = "https://www.google.com/search?q=";
 
-    private final String G_HELP_REGEX = Util.ACTIONIFY("g help");
-
     private final String GOOGLE_REGEX = Util.ACTIONIFY("google (.*)");
     private final String G_REGEX = Util.ACTIONIFY("g (.*)");
     private final String SEARCH_REGEX = Util.ACTIONIFY("search (.*)");
     private final String S_REGEX = Util.ACTIONIFY("s (.*)");
 
+    private final String G_HELP_REGEX = Util.ACTIONIFY("g help");
     private final String G_LEZE_REGEX = Util.ACTIONIFY("g leze");
 
 
@@ -56,9 +55,10 @@ public class GoogleSearch extends SimpleModule {
                     "\nhttps://www.google.com/");
             return true;
         } else if (match.equals(G_HELP_REGEX)) {
-            chatbot.sendMessage("Jak dostać link do tłumaczenia?\n" +
-                    "!g <tekst> translate *language\n" +
-                    "en, pl, ");
+            chatbot.sendMessage(
+                    "Jak otrzymać link z tłumaczeniem?\n"
+                    + "!g <tekst> translate *język*\n"
+                    + "Języki: en, pl, ...");
             return true;
         } else {
             return false;

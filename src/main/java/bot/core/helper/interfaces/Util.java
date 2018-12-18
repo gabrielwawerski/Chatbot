@@ -11,6 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author hollandjake
+ */
 public interface Util {
     //region Keyboard operations
     Clipboard CLIPBOARD = Toolkit.getDefaultToolkit().getSystemClipboard();

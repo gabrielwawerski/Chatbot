@@ -1,7 +1,7 @@
 package bot.core;
 
 import bot.modules.gabe_module.searcher.GoogleSearch;
-import bot.modules.hollandjake.Think;
+import bot.modules.gabe_module.Think;
 import bot.modules.gabe_module.*;
 import bot.utils.gabe_modules.module_base.Module;
 import bot.core.helper.misc.Human;
@@ -45,8 +45,8 @@ public class Chatbot {
 //        modules.put("Inspire", new Inspire(this));
         modules.put("Shutdown", new Shutdown(this));
 
-        modules.put("Commands", new Commands(this, List.of("cmd", "help", "commands")));
-        modules.put("Info", new Info(this, List.of("info", "stats", "uptime", "status")));
+        modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
+        modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
 //        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
         modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk")));
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));

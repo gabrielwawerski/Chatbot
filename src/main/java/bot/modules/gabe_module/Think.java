@@ -1,9 +1,9 @@
-package bot.modules.hollandjake;
+package bot.modules.gabe_module;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
 import bot.core.exceptions.MalformedCommandException;
-import bot.utils.gabe_modules.util.module_library.SimpleModule;
+import bot.utils.gabe_modules.module_library.SimpleModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -12,6 +12,11 @@ import java.util.regex.Pattern;
 import static bot.core.helper.interfaces.Util.ACTIONIFY;
 import static bot.core.helper.interfaces.Util.DEACTIONIFY;
 
+/**
+ * Original code by hollandjake.
+ * @author Gabe
+ * @author hollandjake
+ */
 public class Think extends SimpleModule {
     private final String THINK_REGEX = ACTIONIFY("think");
     private final String MULTI_THINK_REGEX = ACTIONIFY("think (\\d*)");

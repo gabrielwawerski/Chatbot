@@ -1,7 +1,7 @@
 package bot.modules.gabe_module;
 
 import bot.core.Chatbot;
-import bot.utils.gabe_modules.util.module_library.ResourceModule;
+import bot.utils.gabe_modules.module_library.ResourceModule;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package bot.utils.gabe_modules.util.module_library;
+package bot.utils.gabe_modules.module_library;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
@@ -11,25 +11,25 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
- * Extend if your module_library needs
+ * Extend if your module needs
  */
 public abstract class ResourceModule extends SimpleModule {
     protected List<String> resourceContent;
 
-    public ResourceModule(Chatbot chatbot, List<String> commands) {
-        super(chatbot, commands);
+    public ResourceModule(Chatbot chatbot, List<String> regexes) {
+        super(chatbot, regexes);
     }
 
     /**
-     * Be sure to add file (with the same name as {@code resourceName argument} to your module_library's folder. Your module_library
-     * folder's name has to also be named like your module_library's class name.
+     * Be sure to add a file (with the same name as {@code resourceName} to your module folder. Your module folder's name
+     * has to be named like your module's class name.
      *
      * @param chatbot
      * @param resourceName full resource name (with extension) located in your resource package folder.
      * @author Gabe
      */
-    public ResourceModule(Chatbot chatbot, List<String> commands, String resourceName) {
-        super(chatbot, commands);
+    public ResourceModule(Chatbot chatbot, List<String> regexes, String resourceName) {
+        super(chatbot, regexes);
         try {
             this.resourceContent
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
@@ -57,8 +57,8 @@ public abstract class ResourceModule extends SimpleModule {
         updateMatch(message);
 
         String match = getMatch(message);
-        for (String command : commands) {
-            if (match.equals(command)) {
+        for (String regex : regexList) {
+            if (match.equals(regex)) {
                 chatbot.sendMessage(Util.GET_RANDOM(resourceContent));
                 return true;
             }
@@ -69,9 +69,9 @@ public abstract class ResourceModule extends SimpleModule {
     @Override
     public String getMatch(Message message) {
         String messageBody = message.getMessage();
-        for (String command : commands) {
-            if (messageBody.matches(command)) {
-                return command;
+        for (String regex : regexList) {
+            if (messageBody.matches(regex)) {
+                return regex;
             }
         }
         return "";

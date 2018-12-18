@@ -1,4 +1,4 @@
-package bot.utils.gabe_modules.stat_system;
+package bot.utils.gabe_modules.util.stat_system;
 
 public class User {
     String name;

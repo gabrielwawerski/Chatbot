@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.util.module_library.ResourceModule;
+import bot.utils.gabe_modules.module_library.ResourceModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -31,8 +31,10 @@ public class EightBall extends ResourceModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (match.equals(EIGHT_BALL_REGEX) || match.equals(ASK_REGEX) || match.equals(EIGHT_REGEX)) {
+        if (match.equals(EIGHT_BALL_REGEX) || match.equals(ASK_REGEX)
+                || match.equals(EIGHT_REGEX)) {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
+
             if (matcher.find() && !matcher.group(1).isEmpty()) {
                 chatbot.sendMessage(Util.GET_RANDOM(resourceContent));
             } else {

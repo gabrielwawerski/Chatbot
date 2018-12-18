@@ -3,7 +3,7 @@ package bot.modules.gabe_module;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.util.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.SingleMessageModule;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -24,7 +24,7 @@ public class Info extends SingleMessageModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String command : commands) {
+        for (String command : regexList) {
             if (match.equals(command)) {
                 this.message = getStats();
                 chatbot.sendMessage(this.message);

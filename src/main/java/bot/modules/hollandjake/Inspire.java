@@ -2,7 +2,7 @@ package bot.modules.hollandjake;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.util.module_library.SimpleModule;
+import bot.utils.gabe_modules.module_library.SimpleModule;
 
 import java.util.ArrayList;
 

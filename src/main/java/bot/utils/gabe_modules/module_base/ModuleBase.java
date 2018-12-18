@@ -2,21 +2,25 @@ package bot.utils.gabe_modules.module_base;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.util.module_library.MessageModule;
-import bot.utils.gabe_modules.util.module_library.ResourceModule;
-import bot.utils.gabe_modules.util.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.MessageModule;
+import bot.utils.gabe_modules.module_library.ResourceModule;
+import bot.utils.gabe_modules.module_library.SingleMessageModule;
 
 /**
- * Base class for all my modules. It is the absolute minimum needed for a module_library to work properly. Extend from it,
- * if you need to have absolute control over your module_library's functionality.<br>
+ * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
+ * if you need to have absolute control over your module functionality.<p>
  *
- * If you're considering writing a module_library that will respond when specified trigger commands are detected, with only
- * one message, see my "helper" class: {@link SingleMessageModule}<br>
- * If you want to write a module_library that responds with random message if any of the trigger commands are detected,
- * see {@link MessageModule}<br>
- * If you wanted to create a module_library that will respond with random message, taken from .txt file, take a look at
+ * If you're considering writing a module that will respond with a single message when specified trigger regex/es are
+ * matched, see my library class: {@link SingleMessageModule}<p>
+ *
+ * If you want to write a module that responds with random message if any of the trigger regex/es are detected,
+ * see {@link MessageModule}<p>
+ *
+ * If you want to create a module that will respond with random message, taken from a .txt file, take a look at
  * {@link ResourceModule}
  *
+ * @version 1.0
+ * @since TODO
  * @author Gabe
  */
 public abstract class ModuleBase implements Module {
@@ -37,7 +41,7 @@ public abstract class ModuleBase implements Module {
      * Convenience method. Either make it a first call inside overriden {@link #process(Message)} method, or use the
      * snippet below:<pre>{@code match = getMatch(message)}</pre>See {@link #match} for more info.
      *
-     * @param message thread's latest message, passed to your module_library, to {@link #process(Message)} method
+     * @param message thread latest message, passed to your module {@link #process(Message)} method
      */
     public void updateMatch(Message message) {
         match = getMatch(message);

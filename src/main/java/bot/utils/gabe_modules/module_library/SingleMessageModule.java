@@ -1,4 +1,4 @@
-package bot.utils.gabe_modules.util.module_library;
+package bot.utils.gabe_modules.module_library;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
@@ -9,13 +9,14 @@ import java.util.List;
 public abstract class SingleMessageModule extends SimpleModule {
     protected String message;
 
-    public SingleMessageModule(Chatbot chatbot, List<String> commands, String message) {
-        super(chatbot, commands);
+    // TODO make this the only constructor - other two break class's name agenda
+    public SingleMessageModule(Chatbot chatbot, List<String> regexes, String message) {
+        super(chatbot, regexes);
         this.message = message;
     }
 
-    public SingleMessageModule(Chatbot chatbot, List<String> commands) {
-        super(chatbot, commands);
+    public SingleMessageModule(Chatbot chatbot, List<String> regexes) {
+        super(chatbot, regexes);
     }
 
     public SingleMessageModule(Chatbot chatbot) {
@@ -26,8 +27,8 @@ public abstract class SingleMessageModule extends SimpleModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String command : commands) {
-            if (match.equals(command)) {
+        for (String regex : regexList) {
+            if (match.equals(regex)) {
                 chatbot.sendMessage(this.message);
                 return true;
             }

@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.utils.gabe_modules.util.module_library.SimpleModule;
+import bot.utils.gabe_modules.module_library.SimpleModule;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +17,8 @@ public class RandomGroupPhoto extends SimpleModule {
     protected ArrayList<File> files;
     protected ImageIcon imageIcon;
 
-    public RandomGroupPhoto(Chatbot chatbot, List<String> commands) {
-        super(chatbot, commands);
+    public RandomGroupPhoto(Chatbot chatbot, List<String> regexes) {
+        super(chatbot, regexes);
 
         File f = new File("D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\");
         files = new ArrayList<File>(Arrays.asList(f.listFiles()));
@@ -30,8 +30,8 @@ public class RandomGroupPhoto extends SimpleModule {
         imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
         Image image = imageIcon.getImage();
 
-        for (String command : commands) {
-            if (match.equals(command)) {
+        for (String regex : regexList) {
+            if (match.equals(regex)) {
                 chatbot.sendImageWithMessage(image, "Losuję...");
                 return true;
             }

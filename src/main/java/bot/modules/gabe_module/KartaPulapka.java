@@ -3,7 +3,7 @@ package bot.modules.gabe_module;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.util.module_library.SimpleModule;
+import bot.utils.gabe_modules.module_library.SimpleModule;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class KartaPulapka extends SimpleModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String command : commands) {
+        for (String command : regexList) {
             if (match.equals(command)) {
                 chatbot.sendImageWithMessage(kartaPulapka, "Wyciągam...");
                 return true;

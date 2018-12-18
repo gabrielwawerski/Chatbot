@@ -11,7 +11,7 @@ Message responses
 ------------------
 | Command | Response |
 | ------- | -------- |
-| `!commands` or `!help` | Links to this readme |
+| `!regexList` or `!help` | Links to this readme |
 | `!github` | Links to [this](https://github.com/hollandjake/Chatbot) github repository |
 | `!ping` | Checks if bot is active |
 | `!shutdown [code]` | shuts the bot down. The code is output at boot for the bot |

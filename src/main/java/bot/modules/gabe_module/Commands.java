@@ -2,7 +2,7 @@ package bot.modules.gabe_module;
 
 import bot.core.Chatbot;
 import bot.modules.gabe_module.searcher.GoogleSearch;
-import bot.utils.gabe_modules.util.module_library.SingleMessageModule;
+import bot.utils.gabe_modules.module_library.SingleMessageModule;
 
 import java.util.List;
 
@@ -12,48 +12,102 @@ public class Commands extends SingleMessageModule {
 
         message
                 = new StringBuilder() // instead of making an instance and assigning build String to message.
-                .append("```\n")
+                .append("```") // tells messenger to start formatting text
 
+                                        .append("\n")
                 .append("Dostępne komendy:")
-                .append("\n==================\n")
+                                        .append("\n")
+                .append("==================")
+                                        .append("\n")
+                                        .append("\n")
+
+                .append("info")
+                                        .append("\n")
+                .append("status")
+                                        .append("\n")
+                                        .append("\n")
 
                 /** {@link SimpleWeather} */
+                .append("Podaje aktualne informacje o pogodzie w Lublinie")
+                                        .append("\n")
                 .append("pogoda")
-                .append("\n")
+                                        .append("\n")
                 .append("p")
-                .append("\n")
+                                        .append("\n")
                 .append("w")
-                .append("\n")
+                                        .append("\n")
+                                        .append("\n")
 
                 /** {@link GoogleSearch} */
+                .append("Po komendzie wpisz szukaną frazę aby otrzymać link")
+                                        .append("\n")
                 .append("google <tekst>")
-                .append("\n")
+                                        .append("\n")
                 .append("g <tekst>")
-                .append("\n")
+                                        .append("\n")
                 .append("g help")
-                .append("\n")
+                                        .append("\n")
+                .append("g leze")
+                                        .append("\n")
+                                        .append("\n")
+
+                .append("Wysyła losowe zdjęcie z historii grupki")
+                                        .append("\n")
+                .append("random")
+                                        .append("\n")
+                .append("r")
+                                        .append("\n")
+                                        .append("\n")
 
                 /** {@link EightBall} */
-                .append("8ball <pytanie>")
+                .append("Zadaj pytanie po komendzie")
+                                        .append("\n")
+                .append("8ball")
+                                        .append("\n")
                 .append("ask")
+                                        .append("\n")
                 .append("8")
-                .append("\n")
-                .append("roll      | roll <liczba>")
-                .append("\n")
-                .append("inspire")
-                .append("\n")
-                .append("jebacleze | leze")
-                .append("\n")
-                .append("spam")
-                .append("\n")
-                .append("think     | think <liczba>")
-                .append("\n")
-                .append("kartapulapka ")
-                .append("\n")
-                .append("karta     | pulapka")
-                .append("\n")
-                .append("myk")
+                                        .append("\n")
+                                        .append("\n")
 
-                .append("\n```").toString();
+                /** {@link EightBall} */
+                .append("Losowa liczba z zakresu (1-100)")
+                                        .append("\n")
+                .append("roll")
+                                        .append("\n")
+                .append("roll <max>")
+                                        .append("\n")
+                                        .append("\n")
+
+                /** {@link JebacLeze} */
+                .append("jebacleze")
+                                        .append("\n")
+                .append("leze")
+                                        .append("\n")
+
+                /** {@link LezeSpam} */
+                .append("spam")
+                                        .append("\n")
+                                        .append("\n")
+
+                /** {@link Think */
+                .append("think")
+                                        .append("\n")
+                .append("think <liczba>")
+                                        .append("\n")
+                                        .append("\n")
+
+                /** {@link KartaPulapka} */
+                .append("kartapulapka ")
+                                        .append("\n")
+                .append("karta")
+                                        .append("\n")
+                .append("myk")
+                                        .append("\n")
+                                        .append("\n")
+
+                .append("```") // shows messenger where formatting ends
+
+                .toString();
     }
 }
