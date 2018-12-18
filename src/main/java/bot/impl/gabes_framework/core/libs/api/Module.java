@@ -23,12 +23,11 @@ import java.util.ArrayList;
  * a new {@link Message} instance from the message data. It then loops over all loaded modules, calling each module
  * {@link #process(Message)} method.
  *
- * <p>Your module can react to trigger commands which you can specify, either by subclassing one of my
- *     Each module that implements, as well as is instantiated inside {@link Chatbot#loadModules()} method, every time
- * a new message is grabbed, will have it's {@link #process(Message)} called . If a module wants to be able to react
- * to trigger regexList, they have to be "actionified" first, inside the constructor. See {@link Util#ACTIONIFY(String)}.<p>
+ * <p>Modules can react to commands, which you can specify by subclassing one of my framework abstract classes and
+ * passing commands in the constructor (see {@link SimpleModule} for more info), or by adding them to your subclass by
+ * hand. See {@link ModuleBase} for more info.
  *
- * Created for my implementation of the modules framework. I'm hoping to add more functionality, so this interface might change.
+ * <p>Created for my modules framework. I'm hoping to add more functionality, so this interface might change.
  * All credit for making custom messenger bots possible goes to hollandjake.<p>
  *
  * For more info, take a look at the rest of my framework: {@linkplain ModuleBase}, {@linkplain SimpleModule},

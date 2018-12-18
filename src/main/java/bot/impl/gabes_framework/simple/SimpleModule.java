@@ -37,6 +37,9 @@ public abstract class SimpleModule extends ModuleBase {
     /**
      * Use {@code List.of()} to provide the regex/es.
      *
+     * Example:
+     * <pre>{@code }
+     *
      * @param chatbot chatbot reference
      * @param regexList trigger regexes that bot will react to in {@link #process(Message)} method
      */
