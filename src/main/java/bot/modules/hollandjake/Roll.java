@@ -1,16 +1,16 @@
 package bot.modules.hollandjake;
 
-import bot.core.Chatbot;
-import bot.core.helper.misc.Message;
-import bot.core.helper.interfaces.Module;
-import bot.core.exceptions.MalformedCommandException;
+import bot.Chatbot;
+import bot.impl.orig_impl.helper.misc.Message;
+import bot.impl.orig_impl.helper.interfaces.Module;
+import bot.impl.orig_impl.exceptions.MalformedCommandException;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.helper.interfaces.Util.ACTIONIFY;
-import static bot.core.helper.interfaces.Util.DEACTIONIFY;
+import static bot.impl.orig_impl.helper.interfaces.Util.ACTIONIFY;
+import static bot.impl.orig_impl.helper.interfaces.Util.DEACTIONIFY;
 
 public class Roll implements Module {
     //region Constants

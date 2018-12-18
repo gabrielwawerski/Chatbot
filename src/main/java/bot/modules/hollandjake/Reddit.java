@@ -1,8 +1,8 @@
 package bot.modules.hollandjake;
 
-import bot.core.Chatbot;
-import bot.core.helper.misc.Message;
-import bot.core.helper.interfaces.Module;
+import bot.Chatbot;
+import bot.impl.orig_impl.helper.misc.Message;
+import bot.impl.orig_impl.helper.interfaces.Module;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static bot.core.helper.interfaces.Util.*;
+import static bot.impl.orig_impl.helper.interfaces.Util.*;
 
 public class Reddit implements Module {
     //region Constants

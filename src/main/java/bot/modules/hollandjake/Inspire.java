@@ -1,12 +1,12 @@
 package bot.modules.hollandjake;
 
-import bot.core.Chatbot;
-import bot.core.helper.misc.Message;
-import bot.utils.gabe_modules.module_library.simple.SimpleModule;
+import bot.Chatbot;
+import bot.impl.orig_impl.helper.misc.Message;
+import bot.impl.gabes_framework.simple.SimpleModule;
 
 import java.util.ArrayList;
 
-import static bot.core.helper.interfaces.Util.*;
+import static bot.impl.orig_impl.helper.interfaces.Util.*;
 
 public class Inspire extends SimpleModule {
     private final String INSPIRE_REGEX = ACTIONIFY("inspire");
