@@ -1,6 +1,7 @@
 package bot.modules.gabe_modules.searcher;
 
 import bot.Chatbot;
+import bot.impl.gabes_framework.search.SimpleSearchModule;
 import bot.impl.orig_impl.exceptions.MalformedCommandException;
 import bot.impl.orig_impl.helper.misc.Message;
 import bot.impl.gabes_framework.search.SearchModuleBase;
@@ -18,17 +19,8 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String SEARCH_URL = "pyszne.pl/restauracja-lublin-lublin-";
     private static final String SEPARATOR = "-";
 
-    String re1="(\\d)";	// Any Single Digit 1
-    String re2="(\\d)";	// Any Single Digit 2
-    String re3="(-)";	// Any Single Character 1
-    String re4="(\\d)";	// Any Single Digit 3
-    String re5="(\\d)";	// Any Single Digit 4
-    String re6="(\\d)";	// Any Single Digit 5
-
-
-
-    private static final String PYSZNE_HELP_REGEX = makeRegex("pyszne|help");
-    private static final String PYSZNE_ANY_REGEX = makeRegex("pyszne (.*)");
+    private final String PYSZNE_HELP_REGEX = makeRegex("pyszne|help");
+    private final String PYSZNE_ANY_REGEX = makeRegex("pyszne (.*)");
 
     public PyszneSearch(Chatbot chatbot) {
         super(chatbot);
@@ -38,28 +30,20 @@ public class PyszneSearch extends SearchModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
         String messageBody = message.getMessage();
-        String msgToAnalyze = null;
 
-        if (msgToAnalyze.length() < 6 || msgToAnalyze.length() > 6) { // CHECK IF WORKS PROPERLY
-            chatbot.sendMessage("Nieprawidłowy kod pocztowy.");
-            return true; // TODO CHECK WHAT HAPPENS WHEN RETURNING FALSE
-
-        } else if (!analyzeMessage(msgToAnalyze)) {
-            chatbot.sendMessage("Nieprawidłowy kod pocztowy.");
+        if (match.equals(PYSZNE_HELP_REGEX)) {
+            chatbot.sendMessage("Po komendzie wpisz kod pocztowy w formacie XX-XXX");
             return true;
-        } else {
-            chatbot.sendMessage(getFinalMessage(messageBody));
-        }
+        } else if (match.equals(PYSZNE_ANY_REGEX) ) {
+            updateMatcher(messageBody);
 
-        for (String regex : regexList) {
-            if (match.equals(regex)) {
-                updateMatcher(messageBody);
-
-                if (isMatchFound()) {
+            if (isMatchFound()) {
+                if (analyzeMessage(messageBody)) {
                     chatbot.sendMessage(getFinalMessage(messageBody));
                     return true;
                 } else {
-                    throw new MalformedCommandException();
+                    chatbot.sendMessage("Nieprawidłowy kod pocztowy.");
+                    return true;
                 }
             }
         }
@@ -87,26 +71,27 @@ public class PyszneSearch extends SearchModuleBase {
     }
 
     private boolean analyzeMessage(String messageBody) {
-        return Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(0))).find()      // Yx-xxx
-                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(1))).find()  // xY-xxx
-                && (messageBody.charAt(2) == '-' && messageBody.charAt(2) == ' ')                      // - /spacja
-                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(3))).find()  // xx-Yxx
-                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(4))).find()  // xx-xYx
-                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(5))).find(); // xx-xxY
-//
-//        Pattern p = Pattern.compile(re1+re2+re3+re4+re5+re6,Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-//        Matcher m = p.matcher(txt);
-//        if (m.find())
-//        {
-//            String d1=m.group(1);
-//            String d2=m.group(2);
-//            String c1=m.group(3);
-//            String d3=m.group(4);
-//            String d4=m.group(5);
-//            String d5=m.group(6);
-//            System.out.print("("+d1.toString()+")"+"("+d2.toString()+")"+"("+c1.toString()+")"+"("+d3.toString()+")"+"("+d4.toString()+")"+"("+d5.toString()+")"+"\n");
-//        }
-//    }
+//        return Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(0))).find()      // Yx-xxx
+//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(1))).find()  // xY-xxx
+//                && (messageBody.charAt(2) == '-' && messageBody.charAt(2) == ' ')                      // - /spacja
+//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(3))).find()  // xx-Yxx
+//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(4))).find()  // xx-xYx
+//                && Pattern.compile("[0-9]").matcher(Character.toString(messageBody.charAt(5))).find(); // xx-xxY
+
+        String re1 = "(\\d)";    // Any Single Digit 1
+        String re2 = "(\\d)";    // Any Single Digit 2
+        String re3 = "(-)";    // Any Single Character 1
+        String re4 = "(\\d)";    // Any Single Digit 3
+        String re5 = "(\\d)";    // Any Single Digit 4
+        String re6 = "(\\d)";    // Any Single Digit 5
+
+        Pattern p = Pattern.compile(re1 + re2 + re3 + re4 + re5 + re6, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Matcher m = p.matcher(messageBody);
+        if (m.find()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
