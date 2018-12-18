@@ -1,29 +1,37 @@
 package bot.utils.gabe_modules.module_base;
 
-import bot.Chatbot;
-import bot.utils.bot.exceptions.MalformedCommandException;
-import bot.utils.bot.helper.helper_class.Message;
-import bot.utils.bot.helper.helper_interface.Util;
-import bot.utils.gabe_modules.util.BareModule;
-import bot.utils.gabe_modules.util.ModuleBase;
-import bot.utils.gabe_modules.util.MessageModule;
-import bot.utils.gabe_modules.util.ResourceModule;
-import bot.utils.gabe_modules.util.SingleMessageModule;
+import bot.core.Chatbot;
+import bot.core.exceptions.MalformedCommandException;
+import bot.core.helper.misc.Message;
+import bot.core.helper.interfaces.Util;
+import bot.utils.gabe_modules.util.module_library.MessageModule;
+import bot.utils.gabe_modules.util.module_library.ResourceModule;
+import bot.utils.gabe_modules.util.module_library.SimpleModule;
+import bot.utils.gabe_modules.util.module_library.SingleMessageModule;
 
 import java.util.ArrayList;
 
 /**
+ * Framework for creating modules. As of now, all code is a copy of hollandjake's {@link bot.core.helper.interfaces.Module}.<p>
+ *
  * If writing module from scratch, you have to implement this interface, otherwise the API will not be able to access it
  * when iterating over loaded modules.<p>
+ *
  * Each module that implements, as well as is created inside {@link Chatbot#loadModules()} method, will have it's
- * {@link #process(Message)} method called every time new message is grabbed.<p>
- * If a module wants to be able to react to trigger commands, they have to be "actionified" first, inside the constructor.
- * See {@link Util#ACTIONIFY(String)}.<p>
+ * {@link #process(Message)} method called every time new message is grabbed. If a module wants to be able to react
+ * to trigger commands, they have to be "actionified" first, inside the constructor. See {@link Util#ACTIONIFY(String)}.<p>
  *
- * See my concrete implementations for more info: {@link BareModule}, {@link ModuleBase}, {@link SingleMessageModule},
- * {@link MessageModule}, {@link ResourceModule}.
+ * Created for my own module implementation. I'm hoping to add more functionality, so this interface might change.
+ * All credit for making custom messenger bots possible, goes to hollandjake.<p>
  *
- * @author Gabe
+ * For more info, see my libraries: {@linkplain ModuleBase}, {@linkplain SimpleModule}, {@linkplain SingleMessageModule},
+ * {@linkplain MessageModule}, {@linkplain ResourceModule}.<p>
+ *
+ * @version 1.0
+ * @since 0.19
+ *
+ * @author hollandjake (https://hollandjake.com)
+ * @author Gabe (only javadocs)
  */
 public interface Module {
     /**
@@ -41,7 +49,7 @@ public interface Module {
      * return false;
      * }</pre>
      *
-     * @param message latest message, received from API gods themselves. Praise the sun.
+     * @param message latest thread message, received from API gods themselves. Praise the sun.
      * @return should return true if request has been successfully processed, false otherwise
      * @throws MalformedCommandException
      */
@@ -57,7 +65,7 @@ public interface Module {
     public String appendModulePath(String message);
 
     /**
-     * Use {@link Util#DEACTIONIFY(String)} on your commands when adding them to ArrayList to return.
+     * Use {@link Util#DEACTIONIFY(String)} on your commands when adding them to ArrayList.
      *
      * @return
      */
