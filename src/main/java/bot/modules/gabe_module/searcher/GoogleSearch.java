@@ -5,6 +5,7 @@ import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
 import bot.utils.gabe_modules.module_library.simple.SearchModuleBase;
+import bot.utils.gabe_modules.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +53,8 @@ public class GoogleSearch extends SearchModuleBase {
             return true;
         } else if (match.equals(G_HELP_REGEX)) {
             chatbot.sendMessage("Jak otrzymać link z tłumaczeniem?\n"
-                            + "!g <tekst> translate *język*\n"
-                            + "Języki: en, pl, ...");
+                    + "!g <tekst> translate *język*\n"
+                    + "Języki: en, pl, ...");
             return true;
         } else {
             return false;
@@ -73,7 +74,11 @@ public class GoogleSearch extends SearchModuleBase {
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
 
-        commands.add()
+        commands.add(Utils.deactionify(GOOGLE_REGEX));
+        commands.add(Utils.deactionify(G_REGEX));
+        commands.add(Utils.deactionify(GOOGLE_REGEX));
+        commands.add(Utils.deactionify(GOOGLE_REGEX));
+        return commands;
     }
 
     @Override

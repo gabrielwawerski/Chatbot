@@ -1,5 +1,8 @@
 package bot.utils.gabe_modules.util;
 
+import bot.core.helper.interfaces.Module;
+import bot.core.helper.interfaces.Util;
+
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -10,6 +13,8 @@ import java.util.Random;
  *
  * @since 0.30
  * @version 1.0
+ * @see Util
+ *
  * @author hollandjake (https://github.com/hollandjake)
  * @author gabrielwawerski (https://github.com/gabrielwawerski)
  */

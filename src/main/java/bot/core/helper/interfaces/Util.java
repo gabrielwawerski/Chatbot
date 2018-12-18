@@ -54,7 +54,7 @@ public interface Util {
             return Unirest.get(url).header("User-agent", "Dogbot Reborn").asString().getBody();
         } catch (UnirestException e) {
             System.out.println("Page doesn't exist");
-            return "Coś poszło nie tak.";
+            return "Coś poszło nie tak. GET_PAGE_SOURCE spowodował błąd.";
         }
     }
 }
