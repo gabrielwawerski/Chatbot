@@ -12,9 +12,9 @@ import java.util.List;
 public class KartaPulapka extends SimpleModule {
     private final Image kartaPulapka;
 
-    public KartaPulapka(Chatbot chatbot, List<String> commands) {
+    public KartaPulapka(Chatbot chatbot, List<String> commands, String fileName) {
         super(chatbot, commands);
-        kartaPulapka = new ImageIcon("modules/" + getClass().getSimpleName() + "/" + "kartapulapka.jpg").getImage();
+        kartaPulapka = new ImageIcon("modules/" + getClass().getSimpleName() + "/" + fileName).getImage();
         System.out.println("loaded");
     }
 
@@ -24,7 +24,7 @@ public class KartaPulapka extends SimpleModule {
 
         for (String command : regexList) {
             if (match.equals(command)) {
-                chatbot.sendImageWithMessage(kartaPulapka, "Wyciągam...");
+                chatbot.sendImageWithMessage(kartaPulapka, "");
                 return true;
             }
         }

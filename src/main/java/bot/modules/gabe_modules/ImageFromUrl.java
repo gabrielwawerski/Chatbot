@@ -21,7 +21,7 @@ public class ImageFromUrl extends SimpleUrlImageModule {
 
         for (String regex : regexList) {
             if (match.equals(regex)) {
-                chatbot.sendMessageWaitToLoad(new Message("https://i.imgur.com/s6q5qCG.jpg", null));
+                chatbot.sendImageUrlWaitToLoad("https://i.imgur.com/s6q5qCG.jpg");
                 return true;
             }
         }

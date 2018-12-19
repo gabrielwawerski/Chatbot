@@ -50,7 +50,7 @@ public class Chatbot {
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
         modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
 //        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
-        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "")));
+        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka"), "kartapulapka.jpg"));
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
         modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
@@ -171,6 +171,10 @@ public class Chatbot {
 
     public void sendImageWithMessage(Image image, String message) {
         webController.sendMessage(new Message(me, message, image));
+    }
+
+    public void sendImage(Image image) {
+
     }
 
     public void sendLoadedImage(Image image) {
