@@ -185,8 +185,8 @@ public class Chatbot {
         webController.sendMessage(message);
     }
 
-    public void sendMessageWaitToLoad(Message message) {
-        webController.sendMessageWaitToLoad(message);
+    public void sendImageUrlWaitToLoad(String imageUrl) {
+        webController.sendImageUrlWaitForLoad(imageUrl);
     }
 
     public String appendRootPath(String path) {
