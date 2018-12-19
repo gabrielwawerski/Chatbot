@@ -9,13 +9,13 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static bot.core.helper.interfaces.Util.CLIPBOARD;
 import static bot.core.helper.interfaces.Util.PASTE;
@@ -144,47 +144,37 @@ public class WebController {
     }
 
     /**
-     * Inputs message into message field, waits for 3 seconds (so it hopefully loads) and send the message afterwards
+     * Inputs image into message field and sends it as soon as it loads!!!
      *
-     * @param message
+     * @param imageUrl
      * @author gabrielwawerski
+     * @since 0.34
+     * @version 1.0
      */
-    public void sendMessageWaitToLoad(Message message) {
+    public void sendUrlImageWaitForLoad(String imageUrl) {
         int myMessageCount = getNumberOfMyMessagesDisplayed();
         WebElement inputBox = selectInputBox();
 
         /** {@link Message#sendMessage(WebElement, String)}  */
-        CLIPBOARD.setContents(new StringSelection((message.getMessage())), null);
+        // wkleja link do zdjęcia
+        CLIPBOARD.setContents(new StringSelection((imageUrl)), null);
 
-        waitUntilImageLoaded(inputBox);
+        // paste link
+        emulatePaste(inputBox, PASTE);
+        // waits until image fully loads as an attachment
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(REMOVE_BUTTON)));
 
-        ExpectedConditions.
-//        emulatePaste(inputBox, PASTE);
-//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(REMOVE_BUTTON)));
-//            try {
-//                Thread.sleep(imgLoadTime);
-//            } catch (InterruptedException e) {
-//            sendMessage("Nieoczekiwany błąd podczas oczekiwania na załadowanie obrazka.");
-//            e.printStackTrace();
-//        }
-        // == sendMessage
         emulateEnter(inputBox, Keys.ENTER);
 
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(MESSAGES_MINE),
                 myMessageCount));
-
     }
 
-    private void waitUntilImageLoaded(WebElement inputBox) {
-        emulatePaste(inputBox, PASTE);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(REMOVE_BUTTON)));
-    }
-
-    public void emulatePaste(WebElement webElement, String paste) {
+    private void emulatePaste(WebElement webElement, String paste) {
         webElement.sendKeys(paste);
     }
 
-    public void emulateEnter(WebElement webElement, Keys enter) {
+    private void emulateEnter(WebElement webElement, Keys enter) {
         webElement.sendKeys(enter);
     }
 

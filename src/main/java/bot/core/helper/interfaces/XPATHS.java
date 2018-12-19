@@ -8,7 +8,9 @@ public interface XPATHS {
     String LOGIN_BUTTON = "//button[@id='loginbutton']";
 
     // i maed this
-    String REMOVE_BUTTON = "//button[@id='Remove']";
+    String REMOVE_BUTTON = "//button[@class='_tij _50zy _50zz _50z- _5upp _42ft']";
+    String SEND_BUTTON = "//button[@class='_30yy _38lh _39bl']"; // no such element
+
     //endregion
 
     //region Inputs
