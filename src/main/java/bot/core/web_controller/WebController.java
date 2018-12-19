@@ -143,7 +143,7 @@ public class WebController {
     }
 
     /**
-     * Inputs image into message field and sends it as soon as it loads
+     * Pastes image url to input box and sends it as soon as it loads.
      *
      * @author hollandjake
      * @author gabrielwawerski
