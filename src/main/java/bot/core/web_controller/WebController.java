@@ -9,12 +9,16 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
 
+import static bot.core.helper.interfaces.Util.CLIPBOARD;
+import static bot.core.helper.interfaces.Util.PASTE;
 import static bot.core.helper.interfaces.XPATHS.*;
 
 public class WebController {
@@ -25,6 +29,8 @@ public class WebController {
     private final WebDriverWait wait;
     private final WebDriverWait messageWait;
     private final boolean debugMessages;
+
+    private final int imgLoadTime = 3000;
 
     public WebController(Chatbot chatbot, boolean debugMessages, boolean headless, boolean maximised) {
         this.chatbot = chatbot;
@@ -66,7 +72,10 @@ public class WebController {
         // TODO sposób na mniej crashy (hopefully)
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             e.printStackTrace();
-            sendMessage("Coś poszło nie tak.");
+            sendMessage("Coś poszło nie tak. Jebne restart.");
+
+            // TODO test - EXPERIMENTAL!!!!!!!!!!!
+            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
 //            quit(false);
         });
     }
@@ -104,6 +113,7 @@ public class WebController {
     //region Sending messages
     public void sendMessage(Message message) {
         int myMessageCount = getNumberOfMyMessagesDisplayed();
+        System.out.println("myMessageCount = " + myMessageCount);
         WebElement inputBox = selectInputBox();
         if (debugMessages) {
             message.sendDebugMessage(inputBox);
@@ -111,8 +121,71 @@ public class WebController {
             message.sendMessage(inputBox);
         }
         //Wait for message to be sent
+        // TODO check if can be removed for less errors
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(MESSAGES_MINE),
                 myMessageCount));
+    }
+
+    public void sendLoadedImage(Message message) {
+
+    }
+
+    private WebElement selectInputBox() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(INPUT_FIELD)));
+        WebElement inputBoxElement = webDriver.findElement(By.xpath(INPUT_FIELD));
+
+        try {
+            inputBoxElement.click();
+            return inputBoxElement;
+        } catch (WebDriverException e) {
+            webDriver.navigate().refresh();
+            return selectInputBox();
+        }
+    }
+
+    /**
+     * Inputs message into message field, waits for 3 seconds (so it hopefully loads) and send the message afterwards
+     *
+     * @param message
+     * @author gabrielwawerski
+     */
+    public void sendMessageWaitToLoad(Message message) {
+        int myMessageCount = getNumberOfMyMessagesDisplayed();
+        WebElement inputBox = selectInputBox();
+
+        /** {@link Message#sendMessage(WebElement, String)}  */
+        CLIPBOARD.setContents(new StringSelection((message.getMessage())), null);
+
+        waitUntilImageLoaded(inputBox);
+
+        ExpectedConditions.
+//        emulatePaste(inputBox, PASTE);
+//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(REMOVE_BUTTON)));
+//            try {
+//                Thread.sleep(imgLoadTime);
+//            } catch (InterruptedException e) {
+//            sendMessage("Nieoczekiwany błąd podczas oczekiwania na załadowanie obrazka.");
+//            e.printStackTrace();
+//        }
+        // == sendMessage
+        emulateEnter(inputBox, Keys.ENTER);
+
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(MESSAGES_MINE),
+                myMessageCount));
+
+    }
+
+    private void waitUntilImageLoaded(WebElement inputBox) {
+        emulatePaste(inputBox, PASTE);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(REMOVE_BUTTON)));
+    }
+
+    public void emulatePaste(WebElement webElement, String paste) {
+        webElement.sendKeys(paste);
+    }
+
+    public void emulateEnter(WebElement webElement, Keys enter) {
+        webElement.sendKeys(enter);
     }
 
     public void screenshot() {
@@ -133,19 +206,6 @@ public class WebController {
 
     public void sendImage(String image) {
         sendImageWithMessage(image, "");
-    }
-
-    private WebElement selectInputBox() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(INPUT_FIELD)));
-        WebElement inputBoxElement = webDriver.findElement(By.xpath(INPUT_FIELD));
-
-        try {
-            inputBoxElement.click();
-            return inputBoxElement;
-        } catch (WebDriverException e) {
-            webDriver.navigate().refresh();
-            return selectInputBox();
-        }
     }
     //endregion
 

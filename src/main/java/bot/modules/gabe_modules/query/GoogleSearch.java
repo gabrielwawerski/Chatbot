@@ -1,4 +1,4 @@
-package bot.modules.gabe_modules.searcher;
+package bot.modules.gabe_modules.query;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;

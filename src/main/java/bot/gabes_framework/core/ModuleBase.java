@@ -9,7 +9,7 @@ import bot.gabes_framework.message.SingleMessageModule;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
- * if you need to have absolute control over your module functionality.<p>
+ * if you need to have an absolute control over your module functionality.<p>
  *
  * If you're considering writing a module that will respond with a single message when specified trigger regex/es are
  * matched, see my library class: {@link SingleMessageModule}<p>

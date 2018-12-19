@@ -32,6 +32,12 @@ public class Message {
 
     private boolean containsCommand = false;
 
+    public Message(String message, Human me) {
+        this.sender = me;
+        this.message = message;
+        this.image = null;
+    }
+
     public Message(Human me, String message) {
         this.sender = me; //Sender is the bot
         this.message = unescapeHtml(message);
@@ -81,6 +87,7 @@ public class Message {
         }
     }
 
+    // TODO FUCKING MOST IMPORTANT METHOD HERE
     private static Image imageFromUrl(String url) {
         try {
             URL U = new URL(url);

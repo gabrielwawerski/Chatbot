@@ -6,6 +6,9 @@ public interface XPATHS {
     String LOGIN_EMAIL = "//input[@id='email']";
     String LOGIN_PASS = "//input[@id='pass']";
     String LOGIN_BUTTON = "//button[@id='loginbutton']";
+
+    // i maed this
+    String REMOVE_BUTTON = "//button[@id='Remove']";
     //endregion
 
     //region Inputs
@@ -14,6 +17,7 @@ public interface XPATHS {
 
     //region Loading
     String MESSAGE_CONTAINER = "//div[@aria-label='Messages']";
+    String REMOVE_CONTAINER = "//div[@aria-label='Remove']";
 
     String SETTINGS_COG = "//a[contains(@class,'_2fug')]";
     String SETTINGS_DROPDOWN = "//span[text()='Settings']";
@@ -34,6 +38,8 @@ public interface XPATHS {
 
     //region Requires MESSAGE ELEMENT
     /**
+     * Used for checking if received message contains an image
+     *
      * REQUIRES <strong>MESSAGE ELEMENT</strong>
      * <br><br>RETURNS -> @<strong>src</strong>
      */

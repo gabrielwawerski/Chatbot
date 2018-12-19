@@ -1,11 +1,11 @@
 package bot.core;
 
-import bot.modules.gabe_modules.searcher.AllegroSearch;
-import bot.modules.gabe_modules.searcher.GoogleSearch;
+import bot.modules.gabe_modules.query.AllegroSearch;
+import bot.modules.gabe_modules.query.GoogleSearch;
 import bot.modules.gabe_modules.Think;
 import bot.modules.gabe_modules.*;
-import bot.modules.gabe_modules.searcher.PyszneSearch;
-import bot.modules.gabe_modules.searcher.YoutubeSearch;
+import bot.modules.gabe_modules.query.PyszneSearch;
+import bot.modules.gabe_modules.query.YoutubeSearch;
 import bot.gabes_framework.core.libs.api.Module;
 import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
@@ -47,16 +47,21 @@ public class Chatbot {
         modules.put("Think", new Think(this));
 //        modules.put("Inspire", new Inspire(this));
         modules.put("Shutdown", new Shutdown(this));
-
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
         modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
 //        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
-        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk")));
+        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "")));
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
         modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
         modules.put("PyszneSearch", new PyszneSearch(this));
+        modules.put("ImageFromUrl", new ImageFromUrl(this, List.of("image"), "https://i.imgur.com/s6q5qCG.jpg", ""));
     }
+
+    public void reloadModules() {
+        loadModules();
+    }
+
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
         webController = new WebController(this, debugMessages, headless, maximised);
@@ -90,6 +95,10 @@ public class Chatbot {
         String username = config.getString("username");
         String password = config.getString("password");
 
+        run(username, password, threadId, debugMode, silentMode);
+    }
+
+    public void reRun(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
         run(username, password, threadId, debugMode, silentMode);
     }
 
@@ -164,12 +173,20 @@ public class Chatbot {
         webController.sendMessage(new Message(me, message, image));
     }
 
+    public void sendLoadedImage(Image image) {
+
+    }
+
     public void sendImageFromURLWithMessage(String url, String message) {
         webController.sendImageFromURLWithMessage(url, message);
     }
 
     public void sendMessage(Message message) {
         webController.sendMessage(message);
+    }
+
+    public void sendMessageWaitToLoad(Message message) {
+        webController.sendMessageWaitToLoad(message);
     }
 
     public String appendRootPath(String path) {

@@ -30,7 +30,7 @@ public class PcionBot extends Chatbot {
         String password = "lezetykurwo";
 
         boolean debugMode = false;      // debugs messages to console
-        boolean silentMode = false;    // does not greet itself
+        boolean silentMode = true;    // does not greet itself
         boolean debugMessages = false; // adds bot's full name before it's message, and a ":" after.
         boolean headless = false;
         boolean maximized = true;
@@ -46,7 +46,7 @@ public class PcionBot extends Chatbot {
                 username,
                 password,
 
-                GRUPKA_ID,
+                PATRO_ID,
 
                 debugMode,
                 silentMode,

@@ -24,7 +24,7 @@ public abstract class SearchModule extends SearchModuleBase {
     private String messageBody = "";
 
     /**
-     * Use this, if
+     * Use this, if ...
      * Be sure to call {@link #getMappedRegexList(List)} before doing anything else, otherwise your regexes won't trigger
      * the module logic!<p>
      *
