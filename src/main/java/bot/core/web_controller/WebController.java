@@ -143,12 +143,10 @@ public class WebController {
     }
 
     /**
-     * Inputs image into message field and sends it as soon as it loads!!!
+     * Inputs image into message field and sends it as soon as it loads
      *
-     * @param imageUrl
+     * @author hollandjake
      * @author gabrielwawerski
-     * @since 0.34
-     * @version 1.0
      */
     public void sendImageUrlWaitForLoad(String imageUrl) {
         int myMessageCount = getNumberOfMyMessagesDisplayed();
