@@ -42,6 +42,7 @@ public class Info extends SingleMessageModule {
         long diffMinutes = TimeUnit.MINUTES.convert(diff, TimeUnit.SECONDS) % 60;
         long diffHours = TimeUnit.HOURS.convert(diff, TimeUnit.SECONDS) % 24;
         long diffDays = TimeUnit.DAYS.convert(diff, TimeUnit.SECONDS);
+
         return "Online od " + DATE_TIME_FORMATTER.format(startupTime) + "\n[" +
                 (diffDays > 0 ? diffDays + " dni" + diffDays + " " : "") +
                 (diffHours > 0 ? diffHours + " godzin" + diffHours + " " : "") +
@@ -50,7 +51,7 @@ public class Info extends SingleMessageModule {
     }
 
     public String getMinifiedStats() {
-        return "pcionbot " + chatbot.getVersion() + "\n";
+        return "PcionBot " + chatbot.getVersion() + "\n";
     }
 
     private String getStats() {

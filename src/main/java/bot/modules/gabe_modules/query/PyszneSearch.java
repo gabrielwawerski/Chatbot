@@ -83,8 +83,6 @@ public class PyszneSearch extends SearchModuleBase {
 
         if (messageBody.matches(HELP_REGEX)) {
             return HELP_REGEX;
-        } else if (messageBody.matches(ANY_REGEX)) {
-            return ANY_REGEX;
         } else if (messageBody.matches(HAIANH_REGEX_1)) {
             return HAIANH_REGEX_1;
         } else if (messageBody.matches(HAIANH_REGEX_2)) {
@@ -99,6 +97,8 @@ public class PyszneSearch extends SearchModuleBase {
             return FOOTBALL_PIZZA_3;
         } else if (messageBody.matches(FOOTBALL_PIZZA_3)) {
             return FOOTBALL_PIZZA_3;
+        } else if (messageBody.matches(ANY_REGEX)) {
+            return ANY_REGEX;
         }
         return "";
     }
@@ -106,7 +106,6 @@ public class PyszneSearch extends SearchModuleBase {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.deactionify(ANY_REGEX));
         commands.add(Utils.deactionify(HAIANH_REGEX_1));
         commands.add(Utils.deactionify(HAIANH_REGEX_2));
         commands.add(Utils.deactionify(FOOTBALL_PIZZA_1));
@@ -114,6 +113,8 @@ public class PyszneSearch extends SearchModuleBase {
         commands.add(Utils.deactionify(FOOTBALL_PIZZA_3));
         commands.add(Utils.deactionify(MARIANO_ITALIANO_1));
         commands.add(Utils.deactionify(MARIANO_ITALIANO_2));
+        commands.add(Utils.deactionify(ANY_REGEX));
+        commands.add(Utils.deactionify(HELP_REGEX));
         return commands;
     }
 

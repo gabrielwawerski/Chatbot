@@ -16,30 +16,28 @@ public class Commands extends SingleMessageModule {
         message
                 = new StringBuilder() // instead of making an instance and assigning build String to message.
 
-                .append("```")
-                .append("\n")
                 .append("Dostępne komendy:")
                 .append("\n")
                 .append("==================")
                 .append("\n")
 
                 /** {@link  } */
-                .append("!info, !status")
+                .append("!info !status")
                 .append("\n")
 
                 /** {@link SimpleWeather} */
-                .append("!pogoda, !p, !w")
+                .append("!pogoda !p !w")
                 .append("\n")
 
-                /** {@link YoutubeSearch */
+                /** {@link YoutubeSearch} */
                 .append("!youtube... !yt...")
                 .append("\n")
 
-                /** {@link PyszneSearch */
+                /** {@link PyszneSearch} */
                 .append("!pyszne XX-XXX")
                 .append("\n")
 
-                /** {@link AllegroSearch */
+                /** {@link AllegroSearch} */
                 .append("!allegro...")
                 .append("\n")
 
@@ -53,7 +51,7 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 /** {@link RandomGroupPhoto */
-                .append("!random,  !r")
+                .append("!random !r")
                 .append("\n")
 
                 /** {@link EightBall} */
@@ -61,25 +59,22 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 /** {@link EightBall} */
-                .append("!roll, !roll <max>")
+                .append("!roll !roll <max>")
                 .append("\n")
 
                 /** {@link JebacLeze} */
-                .append("!jebacleze, !leze")
+                .append("!jebacleze !leze")
 
                 /** {@link LezeSpam} */
-                .append(", !spam")
+                .append(" !spam")
                 .append("\n")
 
                 /** {@link Think */
-                .append("!think, !think <liczba>")
+                .append("!think !think <liczba>")
                 .append("\n")
 
                 /** {@link KartaPulapka} */
-                .append("!kartapulapka, !myk")
-                .append("\n")
-
-                .append("```")
+                .append("!kartapulapka !myk")
 
                 .toString();
     }

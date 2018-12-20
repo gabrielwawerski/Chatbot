@@ -222,7 +222,6 @@ public class WebController {
         String name = webDriver.findElement(By.xpath(MY_REAL_NAME)).getText();
         webDriver.findElement(By.xpath(SETTINGS_DONE)).click();
         return name;
-
     }
     //endregion
 

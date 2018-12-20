@@ -70,54 +70,48 @@ public class SimpleWeather extends SimpleModule {
 //                            Character.toString(weatherResponse.getTemperatureUnit()));
 
                     // name of the city, weather description
-                    builder.append("*").append(weatherResponse.getCityName()).append("*")
+                    builder.append(weatherResponse.getCityName())
                             // current temperature
-                            .append("                   *")
+                            .append("                   ")
                             .append(new java.text.DecimalFormat("#").format(weatherResponse.getTemperature()))
                             .append(weatherResponse.getTemperatureUnit())
-                            .append("*")
                             .append(System.getProperty("line.separator"));
 
                     // current weather's brief description
-                    builder.append("_")
-                            .append(weatherResponse.getWeatherDescription().substring(0, 1).toUpperCase()
+                    builder.append(weatherResponse.getWeatherDescription().substring(0, 1).toUpperCase()
                                     // .substring(1) will throw an exception if getWeatherDescription() will be <1
                             + weatherResponse.getWeatherDescription().substring(1))
-                            .append("_")
                             .append(System.getProperty("line.separator"))
                             .append("==================")
                             .append(System.getProperty("line.separator"));
 
-                    builder.append("_Maksymalna_          *")
+                    builder.append("Maksymalna          ")
                             .append(new java.text.DecimalFormat("#").format(hourlyForecast.getMaximumTemperature()))
                             .append(weatherResponse.getWeatherInfo().getTemperatureUnit())
-                            .append("*")
                             .append(System.getProperty("line.separator"));
 
-                    builder.append("_Minimalna_            *")
+                    builder.append("Minimalna            ")
                             .append(new java.text.DecimalFormat("#").format(hourlyForecast.getMinimumTemperature()))
                             .append(weatherResponse.getWeatherInfo().getTemperatureUnit())
-                            .append("*")
                             .append(System.getProperty("line.separator"))
                             .append(System.getProperty("line.separator"));
 
-                    builder.append("_Wiatr_               *")
+                    builder.append("Wiatr               ")
                             .append(new java.text.DecimalFormat("###").format(weatherResponse.getWind().getSpeed() * 3.6f)).append(" km/h*")
                             .append(System.getProperty("line.separator"));
 
-                    builder.append("_Zachmurzenie_       *")
+                    builder.append("Zachmurzenie       ")
                             .append(weatherResponse.getClouds().getCloudiness())
                             .append("%*")
                             .append(System.getProperty("line.separator"))
                             .append(System.getProperty("line.separator"));
 
-                    builder.append("_Barometr_       *")
+                    builder.append("Barometr       ")
                             .append(weatherResponse.getPressure()).append(" ")
                             .append(weatherResponse.getPressureUnit())
-                            .append("*")
                             .append(System.getProperty("line.separator"));
 
-                    builder.append("_Wilgotność_             *")
+                    builder.append("Wilgotność             ")
                             .append(weatherResponse.getHumidityPercentage())
                             .append("%*")
                             .append(System.getProperty("line.separator"));
