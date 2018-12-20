@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 public abstract class SearchModuleBase extends ModuleBase {
     protected Matcher matcher;
 
+    // TODO move these to SimpleSearchModule
     protected final String SEARCH_URL;
     protected final String SEPARATOR;
 
@@ -104,8 +105,18 @@ public abstract class SearchModuleBase extends ModuleBase {
      * @param userMessage user message to be formatted
      * @return formatted user message, ready to be
      */
-    protected String toQuery(String userMessage) {
+    private String toQuery(String userMessage) {
         return getUserMessage().replaceAll("\\s+", SEPARATOR);
+    }
+
+    /**
+     * Replaces every space ( ) with {@link #SEPARATOR}.
+     *
+     * @param userMessage user message to be formatted
+     * @return formatted user message, ready to be
+     */
+    protected String toQuery(String userMessage, String separator) {
+        return getUserMessage().replaceAll("\\s+", separator);
     }
 
     /**
