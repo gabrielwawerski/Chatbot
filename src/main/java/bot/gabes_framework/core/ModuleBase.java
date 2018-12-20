@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.gabes_framework.core.libs.api.Module;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.message.MessageModule;
-import bot.gabes_framework.resource.ResourceModule;
+import bot.gabes_framework.resource.RandomResourceModule;
 import bot.gabes_framework.message.SingleMessageModule;
 
 /**
@@ -18,7 +18,7 @@ import bot.gabes_framework.message.SingleMessageModule;
  * see {@link MessageModule}<p>
  *
  * If you want to create a module that will respond with random message, taken from a .txt file, take a look at
- * {@link ResourceModule}
+ * {@link RandomResourceModule}
  *
  * @version 1.0
  * @since 0.29

@@ -20,6 +20,17 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>wykop.pl-java-sdk-mvn-repository</id>
+            <url>https://raw.github.com/Crozin/Wykop.pl-Java-SDK/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>commons-lang</groupId>

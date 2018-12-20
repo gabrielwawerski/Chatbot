@@ -22,6 +22,8 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
                 .append("==================")
                 .append("\n")
+
+                /** {@link  } */
                 .append("!info, !status")
                 .append("\n")
 

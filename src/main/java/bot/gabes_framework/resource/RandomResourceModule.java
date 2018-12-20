@@ -14,10 +14,10 @@ import java.util.List;
 /**
  * Extend if your module needs
  */
-public abstract class ResourceModule extends SimpleModule {
+public abstract class RandomResourceModule extends SimpleModule {
     protected List<String> resourceContent;
 
-    public ResourceModule(Chatbot chatbot, List<String> regexes) {
+    public RandomResourceModule(Chatbot chatbot, List<String> regexes) {
         super(chatbot, regexes);
     }
 
@@ -30,8 +30,9 @@ public abstract class ResourceModule extends SimpleModule {
      * @version 1.0
      * @since 0.29
      */
-    public ResourceModule(Chatbot chatbot, List<String> regexes, String resourceName) {
+    public RandomResourceModule(Chatbot chatbot, List<String> regexes, String resourceName) {
         super(chatbot, regexes);
+
         try {
             this.resourceContent
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
@@ -42,7 +43,7 @@ public abstract class ResourceModule extends SimpleModule {
         }
     }
 
-    public ResourceModule(Chatbot chatbot, String resourceName) {
+    public RandomResourceModule(Chatbot chatbot, String resourceName) {
         super(chatbot);
         try {
             this.resourceContent
@@ -66,16 +67,5 @@ public abstract class ResourceModule extends SimpleModule {
             }
         }
         return false;
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-        for (String regex : regexList) {
-            if (messageBody.matches(regex)) {
-                return regex;
-            }
-        }
-        return "";
     }
 }

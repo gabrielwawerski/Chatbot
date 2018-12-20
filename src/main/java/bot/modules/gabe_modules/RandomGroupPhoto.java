@@ -1,11 +1,16 @@
 package bot.modules.gabe_modules;
 
 import bot.core.Chatbot;
+import bot.core.PcionBot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
 import bot.gabes_framework.simple.SimpleModule;
+import com.github.imgur.ImgUr;
+import com.github.imgur.api.image.ImageResponse;
+import com.github.imgur.api.upload.UploadRequest;
 import org.openqa.selenium.WebElement;
+import org.scribe.builder.api.ImgUrApi;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +20,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RandomGroupPhoto extends SimpleModule {
-    protected ArrayList<File> files;
-    protected ImageIcon imageIcon;
+    private ArrayList<File> files;
+    private ImageIcon imageIcon;
+    private List<String> alreadySeen;
+
+    private final long TIMEOUT = 15000;
+
+    private final String PHOTOS_PATH = "D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\";
 
     public RandomGroupPhoto(Chatbot chatbot, List<String> regexes) {
         super(chatbot, regexes);
 
-        File f = new File("D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\");
+        File f = new File(PHOTOS_PATH);
         files = new ArrayList<File>(Arrays.asList(f.listFiles()));
     }
 

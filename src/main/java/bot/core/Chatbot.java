@@ -11,6 +11,8 @@ import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
+import bot.modules.gabe_modules.work_in_progress.Popcorn;
+import bot.modules.hollandjake.Inspire;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -45,17 +47,18 @@ public class Chatbot {
         modules.put("SimpleRoll", new SimpleRoll(this));
         modules.put("GoogleSearch", new GoogleSearch(this));
         modules.put("Think", new Think(this));
-//        modules.put("Inspire", new Inspire(this));
+        modules.put("Inspire", new Inspire(this));
         modules.put("Shutdown", new Shutdown(this));
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
         modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
-//        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
+        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
         modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka"), "kartapulapka.jpg"));
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
         modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
         modules.put("PyszneSearch", new PyszneSearch(this));
-        modules.put("ImageFromUrl", new ImageFromUrl(this, List.of("image"), "https://i.imgur.com/s6q5qCG.jpg", ""));
+        modules.put("ImageFromUrl", new ImageFromUrl(this, List.of("image"), "https://i.imgurProvider.com/s6q5qCG.jpg", ""));
+        modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
     }
 
     public void reloadModules() {

@@ -5,7 +5,7 @@ import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
 import bot.gabes_framework.core.ModuleBase;
 import bot.gabes_framework.message.MessageModule;
-import bot.gabes_framework.resource.ResourceModule;
+import bot.gabes_framework.resource.RandomResourceModule;
 import bot.gabes_framework.simple.SimpleModule;
 import bot.gabes_framework.message.SingleMessageModule;
 
@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * All credit for making custom messenger bots possible goes to hollandjake.<p>
  *
  * For more info, take a look at the rest of my framework: {@linkplain ModuleBase}, {@linkplain SimpleModule},
- * {@linkplain SingleMessageModule}, {@linkplain MessageModule}, {@linkplain ResourceModule}.<p>
+ * {@linkplain SingleMessageModule}, {@linkplain MessageModule}, {@linkplain RandomResourceModule}.<p>
  *
  * @version 1.0
  * @since 0.19

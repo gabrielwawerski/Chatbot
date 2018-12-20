@@ -156,12 +156,13 @@ public class WebController {
         // wkleja link do zdjęcia
         CLIPBOARD.setContents(new StringSelection((imageUrl)), null);
 
+        // TODO move some code to Message class where an object of it should be created
         // paste link
-        emulatePaste(inputBox, PASTE);
+        inputBox.sendKeys(PASTE);
         // waits until image fully loads as an attachment
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(REMOVE_BUTTON)));
 
-        emulateEnter(inputBox, Keys.ENTER);
+        inputBox.sendKeys(Keys.ENTER);
 
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(MESSAGES_MINE),
                 myMessageCount));

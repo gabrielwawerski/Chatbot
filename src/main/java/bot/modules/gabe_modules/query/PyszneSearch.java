@@ -18,11 +18,26 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String SEARCH_URL = "pyszne.pl/restauracja-lublin-lublin-";
     private static final String SEPARATOR = "-";
 
-    private final String PYSZNE_HELP_REGEX = makeRegex("pyszne help");
-    private final String PYSZNE_ANY_REGEX = makeRegex("pyszne (.*)");
+    private final String HELP_REGEX = makeRegex("pyszne help");
+    private final String ANY_REGEX = makeRegex("pyszne (.*)");
+
+    private final String HAIANH_REGEX_1 = makeRegex("pyszne haianhp");
+    private final String HAIANH_REGEX_2 = makeRegex("pyszne hai-anh");
+
+    private final String MARIANO_ITALIANO_1 = makeRegex("pyszne mariano");
+    private final String MARIANO_ITALIANO_2 = makeRegex("pyszne italiano");
+
+    private final String FOOTBALL_PIZZA_1 = makeRegex("pyszne football");
+    private final String FOOTBALL_PIZZA_2 = makeRegex("pyszne footbal");
+    private final String FOOTBALL_PIZZA_3 = makeRegex("pyszne footballpizza");
+
 
     public PyszneSearch(Chatbot chatbot) {
         super(chatbot);
+    }
+
+    private void sendMessage(String message) {
+        chatbot.sendMessage(getFinalMessage(message));
     }
 
     @Override
@@ -30,11 +45,24 @@ public class PyszneSearch extends SearchModuleBase {
         updateMatch(message);
         String messageBody = message.getMessage();
 
-        if (match.equals(PYSZNE_HELP_REGEX)) {
+        if (match.equals(HELP_REGEX)) {
             chatbot.sendMessage("Po komendzie wpisz kod pocztowy w formacie XX-XXX");
             return true;
-        } else if (match.equals(PYSZNE_ANY_REGEX) ) {
-            updateMatcher(messageBody);
+        } else if (match.equals(MARIANO_ITALIANO_1) || match.equals(MARIANO_ITALIANO_2)) {
+            sendMessage(messageBody);
+            return true;
+        } else if (match.equals(HAIANH_REGEX_1) || match.equals(HAIANH_REGEX_2)) {
+            sendMessage(messageBody);
+            return true;
+        } else if (match.equals(match.equals(FOOTBALL_PIZZA_1)) || match.equals(FOOTBALL_PIZZA_2) || match.equals(FOOTBALL_PIZZA_3)) {
+            sendMessage(messageBody);
+            return true;
+        }
+
+        System.out.println("false");
+        updateMatcher(messageBody);
+        if (match.equals(ANY_REGEX) ) {
+//            updateMatcher(messageBody);
 
             if (isMatchFound()) {
                 if (analyzeMessage(messageBody)) {
@@ -53,10 +81,24 @@ public class PyszneSearch extends SearchModuleBase {
     public String getMatch(Message message) {
         String messageBody = message.getMessage();
 
-        if (messageBody.matches(PYSZNE_HELP_REGEX)) {
-            return PYSZNE_HELP_REGEX;
-        } else if (messageBody.matches(PYSZNE_ANY_REGEX)) {
-            return PYSZNE_ANY_REGEX;
+        if (messageBody.matches(HELP_REGEX)) {
+            return HELP_REGEX;
+        } else if (messageBody.matches(ANY_REGEX)) {
+            return ANY_REGEX;
+        } else if (messageBody.matches(HAIANH_REGEX_1)) {
+            return HAIANH_REGEX_1;
+        } else if (messageBody.matches(HAIANH_REGEX_2)) {
+            return HAIANH_REGEX_2;
+        } else if (messageBody.matches(MARIANO_ITALIANO_1)) {
+            return MARIANO_ITALIANO_1;
+        } else if (messageBody.matches(MARIANO_ITALIANO_2)) {
+            return MARIANO_ITALIANO_2;
+        } else if (messageBody.matches(FOOTBALL_PIZZA_1)) {
+            return FOOTBALL_PIZZA_1;
+        } else if (messageBody.matches(FOOTBALL_PIZZA_2)) {
+            return FOOTBALL_PIZZA_3;
+        } else if (messageBody.matches(FOOTBALL_PIZZA_3)) {
+            return FOOTBALL_PIZZA_3;
         }
         return "";
     }
@@ -64,8 +106,14 @@ public class PyszneSearch extends SearchModuleBase {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.deactionify(PYSZNE_ANY_REGEX));
-        commands.add(Utils.deactionify(PYSZNE_HELP_REGEX));
+        commands.add(Utils.deactionify(ANY_REGEX));
+        commands.add(Utils.deactionify(HAIANH_REGEX_1));
+        commands.add(Utils.deactionify(HAIANH_REGEX_2));
+        commands.add(Utils.deactionify(FOOTBALL_PIZZA_1));
+        commands.add(Utils.deactionify(FOOTBALL_PIZZA_2));
+        commands.add(Utils.deactionify(FOOTBALL_PIZZA_3));
+        commands.add(Utils.deactionify(MARIANO_ITALIANO_1));
+        commands.add(Utils.deactionify(MARIANO_ITALIANO_2));
         return commands;
     }
 

@@ -21,7 +21,12 @@ public class Inspire extends SimpleModule {
         String match = getMatch(message);
         if (match.equals(INSPIRE_REGEX)) {
             String imgURL = GET_PAGE_SOURCE("http://inspirobot.me/api?generate=true");
-            chatbot.sendImageFromURLWithMessage(imgURL, "Inspiruje..");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            chatbot.sendImageUrlWaitToLoad(imgURL);
             return true;
         } else {
             return false;

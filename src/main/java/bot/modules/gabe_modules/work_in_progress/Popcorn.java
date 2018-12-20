@@ -17,7 +17,7 @@ public class Popcorn extends SimpleModule {
 
         for (String command : regexList) {
             if (match.equals(command)) {
-                chatbot.sendImageFromURLWithMessage("https://i.imgur.com/0hQyd5L.gif", "\uD83C\uDF7F");
+                chatbot.sendImageUrlWaitToLoad("https://media.giphy.com/media/pUeXcg80cO8I8/giphy.gif"); // TODO get gif direct url
                 return true;
             }
         }

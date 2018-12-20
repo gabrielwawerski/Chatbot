@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.gabes_framework.resource.ResourceModule;
+import bot.gabes_framework.resource.RandomResourceModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  *
  *
  */
-public class EightBall extends ResourceModule {
+public class EightBall extends RandomResourceModule {
     private final String EIGHT_BALL_REGEX = Util.ACTIONIFY("8ball (.*)");
     private final String ASK_REGEX = Util.ACTIONIFY("ask (.*)");
     private final String EIGHT_REGEX = Util.ACTIONIFY("8 (.*)");
