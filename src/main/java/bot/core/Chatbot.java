@@ -1,11 +1,8 @@
 package bot.core;
 
-import bot.modules.gabe_modules.query.AllegroSearch;
-import bot.modules.gabe_modules.query.GoogleSearch;
+import bot.modules.gabe_modules.query.*;
 import bot.modules.gabe_modules.Think;
 import bot.modules.gabe_modules.*;
-import bot.modules.gabe_modules.query.PyszneSearch;
-import bot.modules.gabe_modules.query.YoutubeSearch;
 import bot.gabes_framework.core.libs.api.Module;
 import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
@@ -38,7 +35,7 @@ public class Chatbot {
     private Human me;
 
     protected void loadModules() {
-        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p", "w")));
+        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
         modules.put("EightBall", new EightBall(this, "responses.txt"));
         modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
                 "responses.txt"));
@@ -56,6 +53,7 @@ public class Chatbot {
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
         modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
+        modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki", "w")));
         modules.put("PyszneSearch", new PyszneSearch(this));
         modules.put("ImageFromUrl", new ImageFromUrl(this, List.of("image"), "https://i.imgurProvider.com/s6q5qCG.jpg", ""));
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));

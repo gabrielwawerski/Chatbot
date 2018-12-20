@@ -7,13 +7,21 @@ import bot.gabes_framework.core.libs.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * @version 1.0
+ * Provides a quick way of creating modules which will return URL with user query. Extend if the process is as simple as
+ * adding the user query to predefined URL. Example of such URL: {@code https://www.google.com/search?q=}
+ *
+ * <p>You can change the default separator (see {@linkplain #DEFAULT_SEPARATOR}) by overriding {@link #setSeparator()}
+ * and setting it there.
+ *
+ * Replaces spaces between words with a plus sign.
  * @since 0.30
+ * @version 1.0
+ *
+ * @see SearchModuleBase
  */
 public abstract class SimpleSearchModule extends SearchModuleBase {
-    private List<String> regexList;
+    protected List<String> regexList;
 
     public SimpleSearchModule(Chatbot chatbot, List<String> regexList) {
         super(chatbot);
@@ -36,6 +44,11 @@ public abstract class SimpleSearchModule extends SearchModuleBase {
             }
         }
         return false;
+    }
+
+    @Override
+    protected String setSeparator() {
+        return DEFAULT_SEPARATOR;
     }
 
     @Override
