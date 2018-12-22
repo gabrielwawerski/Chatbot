@@ -23,6 +23,8 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String HAIANH_URL = "https://www.pyszne.pl/bar-azjatycki-hai-ahn";
 
     private final String HELP_REGEX = makeRegex("pyszne help");
+    private final String HELP_2_REGEX = makeRegex("pyszne");
+
     private final String SEARCH_REGEX = makeRegex("pyszne (.*)");
 
     // fixme all restaurants direct links are not working properly
@@ -61,8 +63,12 @@ public class PyszneSearch extends SearchModuleBase {
         updateMatch(message);
         String messageBody = message.getMessage();
 
-        if (match.equals(HELP_REGEX)) {
-            chatbot.sendMessage("Po komendzie wpisz kod pocztowy w formacie XX-XXX");
+        if (match.equals(HELP_REGEX) || match.equals(HELP_2_REGEX) ) {
+            chatbot.sendMessage("Restauracje dla kodu pocztowego. !pyszne kod pocztowy" +
+                    "\n!pyszne mariano  /" + " italiano" +
+                    "\n!pyszne football   /" + " footballpizza" +
+                    "\n!pyszne hai           /" + " hai-anh / haianh" +
+                    "\n\nFormat: 00-000 lub 00 000 lub 00000");
             return true;
         } else if (match.equals(MARIANO_ITALIANO_1) || match.equals(MARIANO_ITALIANO_2)) {
             sendMessage(messageBody);
@@ -78,7 +84,7 @@ public class PyszneSearch extends SearchModuleBase {
 
         System.out.println("false");
         updateMatcher(messageBody);
-        if (match.equals(SEARCH_REGEX) ) {
+        if (match.equals(SEARCH_REGEX)) {
 //            updateMatcher(messageBody);
 
             if (isMatchFound()) {
@@ -89,8 +95,8 @@ public class PyszneSearch extends SearchModuleBase {
                     chatbot.sendMessage("Nieprawidłowy kod pocztowy.");
                     return true;
                 }
-            }
         }
+    }
         return false;
     }
 
@@ -100,6 +106,8 @@ public class PyszneSearch extends SearchModuleBase {
 
         if (messageBody.matches(HELP_REGEX)) {
             return HELP_REGEX;
+        } else if (messageBody.matches(HELP_2_REGEX)) {
+            return HELP_2_REGEX;
         } else if (messageBody.matches(HAIANH_REGEX_1)) {
             return HAIANH_REGEX_1;
         } else if (messageBody.matches(HAIANH_REGEX_2)) {
@@ -132,23 +140,35 @@ public class PyszneSearch extends SearchModuleBase {
         commands.add(Utils.TO_COMMAND(MARIANO_ITALIANO_2));
         commands.add(Utils.TO_COMMAND(SEARCH_REGEX));
         commands.add(Utils.TO_COMMAND(HELP_REGEX));
+        commands.add(Utils.TO_COMMAND(HELP_2_REGEX));
         return commands;
     }
 
     private boolean analyzeMessage(String messageBody) {
-        String re1 = "(\\d)";    // Any Single Digit 1
-        String re2 = "(\\d)";    // Any Single Digit 2
-        String re3 = "(-)";    // Any Single Character 1
-        String re4 = "(\\d)";    // Any Single Digit 3
-        String re5 = "(\\d)";    // Any Single Digit 4
-        String re6 = "(\\d)";    // Any Single Digit 5
+        String nr = "(\\d)";    // Any Single Digit 1
+        String hyphen = "(-)";    // Any Single Character 1
+        String space = "( )";    // Any Single Character 1
 
-        Pattern p = Pattern.compile(re1 + re2 + re3 + re4 + re5 + re6, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-        Matcher m = p.matcher(messageBody);
-        if (m.find()) {
+        Pattern pattern1 = Pattern.compile(nr + nr + hyphen + nr + nr + nr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Pattern pattern2 = Pattern.compile(nr + nr + space + nr + nr + nr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Pattern pattern3 = Pattern.compile(nr + nr + nr + nr + nr + nr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+
+        Matcher matcher;
+
+        matcher = pattern1.matcher(messageBody);
+        if (matcher.find()) {
             return true;
-        } else {
-            return false;
         }
+
+        matcher = pattern2.matcher(messageBody);
+        if (matcher.find()) {
+            return true;
+        }
+
+        matcher = pattern3.matcher(messageBody);
+        if (matcher.find()) {
+            return true;
+        }
+        return false;
     }
 }
