@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static bot.gabes_framework.core.libs.Utils.TO_REGEX;
 import static bot.gabes_framework.core.libs.Utils.regexToList;
@@ -19,6 +20,8 @@ public class Mp3tube extends ModuleBase {
     protected HttpURLConnection connection;
 
     private static final String API_URL = "";
+    private static final String PREFIX = "https://lolyoutube.com/download/";
+    private static final String MP3 = "mp3";
 
     private static final String YTMP3_REGEX = TO_REGEX("ytmp3 (.*)");
     private static final String MP3_REGEX = TO_REGEX("mp3 (.*)");
@@ -38,13 +41,19 @@ public class Mp3tube extends ModuleBase {
         updateMatch(message);
 
         if (isOrOther(YTMP3_REGEX, MP3_REGEX)) {
-            Matcher matcher = getMatcher(message);
+//            Matcher matcher = Pattern.compile("");
             if (found(message)) {
                 url = getFinalUrl();
             }
         }
         return false;
     }
+
+    private String getMp3(String url) {
+        return url + "//todo mp3";
+    }
+
+
 
     private URL getFinalUrl() {
         return null;
