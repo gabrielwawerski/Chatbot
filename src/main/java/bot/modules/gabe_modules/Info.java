@@ -61,7 +61,8 @@ public class Info extends SingleMessageModule {
     private String getStats() {
         return getMinifiedStats()
                 + getUptime()
-                + "\n\nUnikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size()
+                + "\n\nModuły załadowane w bieżącej sesji: " + chatbot.getModulesOnline()
+                + "\nUnikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size()
                 + "\nWiadomości leze: " + lezeStats()
                 + "\n\n" + cmdInfo();
     }
@@ -81,8 +82,8 @@ public class Info extends SingleMessageModule {
         }
 
         if (lezeMessageCounter > 0) {
-            double lezeMsgPercent = lezeMessageCounter - messages.size();
-            NumberFormat format = new DecimalFormat("#0.0");
+            double lezeMsgPercent = (messages.size() - (lezeMessageCounter * messages.size())) / 100;
+            NumberFormat format = new DecimalFormat("#00.0");
 
             return format.format(lezeMsgPercent) + "%";
         } else {

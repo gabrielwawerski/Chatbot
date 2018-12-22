@@ -2,10 +2,7 @@ package bot.gabes_framework.resource;
 
 import bot.core.Chatbot;
 import bot.gabes_framework.core.ModuleBase;
-import bot.gabes_framework.simple.SimpleModule;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,9 +21,9 @@ public abstract class SaveResourceModule extends ModuleBase {
         try {
             this.file
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + fileName));
-            System.out.println(getClass().getSimpleName() + " online.");
+            setOnline(true);
         } catch (IOException e) { // TODO add global debugMessages field in Chatbot so this can be toggled.
-            System.out.println(getClass().getSimpleName() + " niedostępne w bieżącej sesji.");
+            setOnline(false);
             e.printStackTrace();
         }
         this.fileName = "modules/" + getClass().getSimpleName() + "/" + fileName;

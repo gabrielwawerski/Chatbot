@@ -35,7 +35,6 @@ public class SimpleWeather extends SimpleModule {
     public SimpleWeather(Chatbot chatbot, List<String> commands) {
         super(chatbot, commands);
         openWeatherManager = new OpenWeatherMapManager(API_KEY);
-        System.out.println(getClass().getSimpleName() + " online.");
     }
 
     @Override

@@ -5,18 +5,19 @@ import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.resource.SaveResourceModule;
-import bot.gabes_framework.simple.SimpleModule;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FeatureSuggest extends SaveResourceModule {
-    private final String INFO_MESSAGE = "Po komendzie !suggest opisz funkcjonalność którą chciałbyś u mnie zobaczyć!";
+    private final String INFO_MESSAGE = "Po !suggest podaj swój pomysł na funkcję!";
 
-    private final String SUGGEST_REGEX = Utils.TO_REGEX("suggest");
-    private final String SUGGESTION_REGEX = Utils.TO_REGEX("suggest (.*)");
+    private final String SUGGEST = Utils.TO_REGEX("suggest");
+    private final String POMYSL = Utils.TO_REGEX("pomysl");
+
+    private final String SUGGEST_ANY = Utils.TO_REGEX("suggest (.*)");
+    private final String POMYSL_ANY = Utils.TO_REGEX("pomysl (.*)");
 
     public FeatureSuggest(Chatbot chatbot, String fileName) {
         super(chatbot, fileName);
@@ -26,17 +27,17 @@ public class FeatureSuggest extends SaveResourceModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (match.equals(SUGGEST_REGEX)) {
+        if (match.equals(SUGGEST) || match.equals(POMYSL)) {
             chatbot.sendMessage(INFO_MESSAGE);
             return true;
-        } else if (match.equals(SUGGESTION_REGEX)) {
-            Matcher matcher = Pattern.compile(SUGGESTION_REGEX).matcher(message.getMessage());
+        } else if (match.equals(SUGGEST_ANY) || match.equals(POMYSL_ANY)) {
+            Matcher matcher = Pattern.compile(POMYSL_ANY).matcher(message.getMessage());
 
             if (matcher.find()) {
                 String msg = message.getMessage().substring(8);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage("Zapisano, dzięki!");
+                chatbot.sendMessage("U+1F5D2 Dzięki!");
                 return true;
             }
         }
@@ -46,10 +47,14 @@ public class FeatureSuggest extends SaveResourceModule {
     @Override
     public String getMatch(Message message) {
         String messageBody = message.getMessage();
-        if (messageBody.matches(SUGGEST_REGEX)) {
-            return SUGGEST_REGEX;
-        } else if (messageBody.matches(SUGGESTION_REGEX)) {
-            return SUGGESTION_REGEX;
+        if (messageBody.matches(SUGGEST)) {
+            return SUGGEST;
+        } else if (messageBody.matches(POMYSL)) {
+            return POMYSL;
+        } else if (messageBody.matches(SUGGEST_ANY)) {
+            return SUGGEST_ANY;
+        } else if (messageBody.matches(POMYSL_ANY)) {
+            return POMYSL_ANY;
         }
         return "";
     }
@@ -57,8 +62,10 @@ public class FeatureSuggest extends SaveResourceModule {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.TO_COMMAND(SUGGEST_REGEX));
-        commands.add(Utils.TO_COMMAND(SUGGESTION_REGEX));
+        commands.add(Utils.TO_COMMAND(SUGGEST));
+        commands.add(Utils.TO_COMMAND(POMYSL));
+        commands.add(Utils.TO_COMMAND(SUGGEST_ANY));
+        commands.add(Utils.TO_COMMAND(POMYSL_ANY));
         return commands;
     }
 }

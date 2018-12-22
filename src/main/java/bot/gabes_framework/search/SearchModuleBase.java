@@ -88,6 +88,8 @@ public abstract class SearchModuleBase extends ModuleBase {
         }
     }
 
+
+
     /**
      * Helper method. Sets {@link #matcher} to user query. Use when providing regexes inside the class, but if doing so,
      * remember to also override {@link #getMatch(Message)}, {@link #getCommands()} methods. Use after
@@ -137,7 +139,6 @@ public abstract class SearchModuleBase extends ModuleBase {
      * Returns regular expression with {@link #ANY_REGEX} appended to it.
      */
     private String addAnyToQuery(String regex) {
-        System.out.println("regex: " + regex + "\n" + regex + ANY_REGEX);
         return regex + ANY_REGEX;
     }
 }

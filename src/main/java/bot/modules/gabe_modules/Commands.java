@@ -25,56 +25,62 @@ public class Commands extends SingleMessageModule {
                 .append("!info !status")
                 .append("\n")
 
-                /** {@link SimpleWeather} */
-                .append("!pogoda !p !w")
+                .append("!suggest !pomysl")
                 .append("\n")
+
+
 
                 /** {@link YoutubeSearch} */
                 .append("!youtube... !yt...")
                 .append("\n")
 
                 /** {@link PyszneSearch} */
-                .append("!pyszne XX-XXX")
+                .append("!pyszne")
                 .append("\n")
 
                 /** {@link AllegroSearch} */
                 .append("!allegro...")
                 .append("\n")
 
-
                 /** {@link GoogleSearch} */
-                .append("!google... !g...")
-                .append("\n")
-                .append("!g help")
-                .append("\n")
-                .append("!g leze")
+                .append("!google !g ").append("!g help ").append("!g leze")
                 .append("\n")
 
                 /** {@link RandomGroupPhoto */
                 .append("!random !r")
                 .append("\n")
 
+                /** {@link SimpleWeather} */
+                .append("!pogoda !p")
+                .append("\n")
+
+                .append("!popcorn")
+                .append("\n")
+
+                /** {@link KartaPulapka} */
+                .append("!karta !kartapulapka !myk")
+                .append("\n")
+
                 /** {@link EightBall} */
                 .append("!8ball... !ask... !8... ")
                 .append("\n")
 
-                /** {@link EightBall} */
+                /** {@link Roll} */
                 .append("!roll !roll <max>")
                 .append("\n")
 
                 /** {@link JebacLeze} */
-                .append("!jebacleze !leze")
-
-                /** {@link LezeSpam} */
-                .append(" !spam")
+                .append("!jebacleze !leze ").append("!spam")
                 .append("\n")
 
                 /** {@link Think */
                 .append("!think !think <liczba>")
                 .append("\n")
 
-                /** {@link KartaPulapka} */
-                .append("!kartapulapka !myk")
+
+                .append("\n")
+                .append("!sylwester")
+                .append("\n")
 
                 .toString();
     }

@@ -16,7 +16,7 @@ import java.util.List;
 import static bot.modules.hollandjake.Reddit.loadSubreddits;
 import static bot.core.helper.interfaces.Util.*;
 
-public class Dogs implements Module {
+public class Dogs implements RedditModule {
     //region Constants
     private final String DOG_REGEX = ACTIONIFY("dog");
     private final String DOGGO_REGEX = ACTIONIFY("doggo");

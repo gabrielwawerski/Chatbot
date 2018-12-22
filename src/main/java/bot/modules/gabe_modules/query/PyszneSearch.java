@@ -9,6 +9,9 @@ import bot.gabes_framework.core.libs.Utils;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static bot.gabes_framework.core.libs.Utils.TO_REGEX;
+
 /**
  * @version 1.0
 
@@ -22,22 +25,22 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String MARIANO_ITALIANO_URL = "https://www.pyszne.pl/pizzeria-mariano-italiano";
     private static final String HAIANH_URL = "https://www.pyszne.pl/bar-azjatycki-hai-ahn";
 
-    private final String HELP_REGEX = makeRegex("pyszne help");
-    private final String HELP_2_REGEX = makeRegex("pyszne");
+    private final String HELP_REGEX = TO_REGEX("pyszne help");
+    private final String HELP_2_REGEX = TO_REGEX("pyszne");
 
-    private final String SEARCH_REGEX = makeRegex("pyszne (.*)");
+    private final String SEARCH_REGEX = TO_REGEX("pyszne (.*)");
 
     // fixme all restaurants direct links are not working properly
-    private final String HAIANH_REGEX_1 = makeRegex("pyszne haianh");
-    private final String HAIANH_REGEX_2 = makeRegex("pyszne hai-anh");
-    private final String HAIANH_REGEX_3 = makeRegex("pyszne hai");
+    private final String HAIANH_REGEX_1 = TO_REGEX("pyszne haianh");
+    private final String HAIANH_REGEX_2 = TO_REGEX("pyszne hai-anh");
+    private final String HAIANH_REGEX_3 = TO_REGEX("pyszne hai");
 
-    private final String MARIANO_ITALIANO_1 = makeRegex("pyszne mariano");
-    private final String MARIANO_ITALIANO_2 = makeRegex("pyszne italiano");
+    private final String MARIANO_ITALIANO_1 = TO_REGEX("pyszne mariano");
+    private final String MARIANO_ITALIANO_2 = TO_REGEX("pyszne italiano");
 
-    private final String FOOTBALL_PIZZA_1 = makeRegex("pyszne football");
-    private final String FOOTBALL_PIZZA_2 = makeRegex("pyszne footbal");
-    private final String FOOTBALL_PIZZA_3 = makeRegex("pyszne footballpizza");
+    private final String FOOTBALL_PIZZA_1 = TO_REGEX("pyszne football");
+    private final String FOOTBALL_PIZZA_2 = TO_REGEX("pyszne footbal");
+    private final String FOOTBALL_PIZZA_3 = TO_REGEX("pyszne footballpizza");
 
 
     public PyszneSearch(Chatbot chatbot) {
@@ -64,25 +67,31 @@ public class PyszneSearch extends SearchModuleBase {
         String messageBody = message.getMessage();
 
         if (match.equals(HELP_REGEX) || match.equals(HELP_2_REGEX) ) {
-            chatbot.sendMessage("Restauracje dla kodu pocztowego. !pyszne kod pocztowy" +
-                    "\n!pyszne mariano  /" + " italiano" +
-                    "\n!pyszne football   /" + " footballpizza" +
-                    "\n!pyszne hai           /" + " hai-anh / haianh" +
-                    "\n\nFormat: 00-000 lub 00 000 lub 00000");
+            chatbot.sendMessage(
+                    "Restauracje dla kodu pocztowego."
+                            + "\n!pyszne kod pocztowy"
+                            + "\n!pyszne mariano  /" + " italiano"
+                            + "\n!pyszne football   /" + " footballpizza"
+                            + "\n!pyszne hai           /" + " hai-anh / haianh"
+                            + "\nFormat: 00-000 lub 00 000 lub 00000"
+                            + "\n---\n"
+                            + "AT THE GABES"
+                            + "\npyszne.pl/restauracja-lublin-lublin-20-455");
             return true;
+
         } else if (match.equals(MARIANO_ITALIANO_1) || match.equals(MARIANO_ITALIANO_2)) {
-            sendMessage(messageBody);
+            chatbot.sendMessage("pyszne.pl/pizzeria-mariano-italiano");
             return true;
-        } else if (match.equals(HAIANH_REGEX_1) || match.equals(HAIANH_REGEX_2)) {
-            sendMessage(messageBody);
+        } else if (match.equals(HAIANH_REGEX_1) || match.equals(HAIANH_REGEX_2)
+                || match.equals(HAIANH_REGEX_3)) {
+            chatbot.sendMessage("pyszne.pl/bar-azjatycki-hai-ahn");
             return true;
-        } else if (match.equals(match.equals(FOOTBALL_PIZZA_1))
-                || match.equals(FOOTBALL_PIZZA_2) || match.equals(FOOTBALL_PIZZA_3)) {
-            sendMessage(messageBody);
+        } else if (match.equals(FOOTBALL_PIZZA_1) || match.equals(FOOTBALL_PIZZA_2)
+                || match.equals(FOOTBALL_PIZZA_3)) {
+            chatbot.sendMessage("pyszne.pl/football-pizza");
             return true;
         }
 
-        System.out.println("false");
         updateMatcher(messageBody);
         if (match.equals(SEARCH_REGEX)) {
 //            updateMatcher(messageBody);
@@ -112,6 +121,8 @@ public class PyszneSearch extends SearchModuleBase {
             return HAIANH_REGEX_1;
         } else if (messageBody.matches(HAIANH_REGEX_2)) {
             return HAIANH_REGEX_2;
+        } else if (messageBody.matches(HAIANH_REGEX_3)) {
+            return HAIANH_REGEX_3;
         } else if (messageBody.matches(MARIANO_ITALIANO_1)) {
             return MARIANO_ITALIANO_1;
         } else if (messageBody.matches(MARIANO_ITALIANO_2)) {
@@ -133,14 +144,15 @@ public class PyszneSearch extends SearchModuleBase {
         ArrayList<String> commands = new ArrayList<>();
         commands.add(Utils.TO_COMMAND(HAIANH_REGEX_1));
         commands.add(Utils.TO_COMMAND(HAIANH_REGEX_2));
+        commands.add(Utils.TO_COMMAND(HAIANH_REGEX_3));
         commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_1));
         commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_2));
         commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_3));
         commands.add(Utils.TO_COMMAND(MARIANO_ITALIANO_1));
         commands.add(Utils.TO_COMMAND(MARIANO_ITALIANO_2));
-        commands.add(Utils.TO_COMMAND(SEARCH_REGEX));
         commands.add(Utils.TO_COMMAND(HELP_REGEX));
         commands.add(Utils.TO_COMMAND(HELP_2_REGEX));
+        commands.add(Utils.TO_COMMAND(SEARCH_REGEX));
         return commands;
     }
 

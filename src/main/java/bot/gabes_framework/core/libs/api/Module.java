@@ -63,6 +63,14 @@ public interface Module {
     public boolean process(Message message) throws MalformedCommandException;
 
     /**
+     * @return true if module has been <b>succesfully loaded</b>, false otherwise.
+     * @since 0.3014
+     */
+    public boolean isOnline();
+
+    public void echoOnline();
+
+    /**
      * Should make an attempt to match your regexes against latest received message.
      * @param message
      * @return

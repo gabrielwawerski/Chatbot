@@ -9,7 +9,7 @@ import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
 import bot.modules.gabe_modules.work_in_progress.Popcorn;
-import bot.modules.hollandjake.Inspire;
+import bot.modules.gabe_modules.Inspire;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String version = "v0.34";
+    private final String version = "v0.3014";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -33,40 +33,45 @@ public class Chatbot {
     private boolean running = true;
     private String threadId;
     private Human me;
+    private int modulesOnline;
 
     protected void loadModules() {
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
         modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
         modules.put("Shutdown", new Shutdown(this));
-        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
+        modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
+        modules.put("FeatureSuggest", new FeatureSuggest(this, "sugestie.txt")); // TODO add info
 
         modules.put("GoogleSearch", new GoogleSearch(this));
-        modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
         modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki", "w")));
+        modules.put("MultiTorrentSearch", new MultiTorrentSearch(this));
+        modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("PyszneSearch", new PyszneSearch(this));
 
+        modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
+        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
+        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
+        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk"), "kartapulapka.jpg"));
+        modules.put("Inspire", new Inspire(this));
         modules.put("Roll", new Roll(this));
         modules.put("Think", new Think(this));
+
         modules.put("EightBall", new EightBall(this, "responses.txt"));
         modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
                 "responses.txt"));
         modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
                 "responses.txt"));
-        modules.put("Inspire", new Inspire(this));
-        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
-        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka"), "kartapulapka.jpg"));
-        modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
+
 
 
 //        modules.put("ImageFromUrl", new ImageFromUrl(this));
-        modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
 //        modules.put("TorrentSearch", new TorrentSearch(this));
-//        modules.put("TorrentTest", new TorrentTest(this));
-        modules.put("FeatureSuggest", new FeatureSuggest(this, "sugestie.txt")); // TODO add info
 //        modules.put("Memes", new Memes(this));
 
 //        modules.put("Dogs", new Dogs(this));
+
+//        modules.put("PollCreate", new PollCreate(this)); // work in progress
     }
 
     public void reloadModules() {
@@ -114,24 +119,61 @@ public class Chatbot {
     }
 
     private void run(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
-        //Output Shutdown code
-        System.out.println("Shutdown code: " + shutdownCode);
-
         this.threadId = threadId;
+
+        // Output Shutdown code
+        System.out.println("PcionBot " + version);
+        System.out.println("Shutdown: " + shutdownCode);
+        System.out.println("-----------------");
+        System.out.println("Ładowanie modułów...");
         loadModules();
+
+        int totalModules = modules.size();
+        modulesOnline = 0;
+        List<String> modulesOffline = null;
+
+        for (Module module : modules.values()) {
+            if (module.isOnline()) {
+                module.echoOnline();
+                modulesOnline++;
+            } else {
+                if (modulesOffline == null) {
+                    modulesOffline = List.of(module.getClass().getSimpleName());
+                }
+                modulesOffline.add(module.getClass().getSimpleName());
+            }
+        }
+
+        if (modulesOnline == totalModules) {
+            System.out.println("Wszystkie " + totalModules + " moduły pomyślnie załadowane.");
+        } else {
+            System.out.print("\nNie wszystkie moduły zostały pomyślnie załadowane."
+                    + "\nModuły niedostępne w bieżącej sesji: ");
+            for (String module : modulesOffline) {
+                System.out.print(module.getClass().getSimpleName() + " ");
+            }
+            System.out.println();
+            System.out.println(modulesOnline + " / " + totalModules + "(" + (double)(totalModules - (modulesOnline *  totalModules)) / 100 + "%)");
+        }
+
+        System.out.println("-----------------");
 
         //Run setup
         webController.login(username, password);
+        System.out.println("Messenger - zalogowano.");
         webController.gotoFacebookThread(threadId);
+        System.out.println("Przełączam na wątek nr. " + threadId);
 
         //Wait until messages have loaded
         webController.waitForMessagesToLoad();
+        System.out.println("Wiadomości załadowane.");
 
         //Init message
         if (!silentMode) {
             initMessage();
         }
-        System.out.println("System is running");
+        System.out.println("-----------------\n");
+        System.out.println("PCIONBOT ONLINE");
 
         while (running) {
             try {
@@ -169,7 +211,15 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " online!\nWpisz !cmd aby zobaczyć listę komend");
+        webController.sendMessage("PcionBot " + getVersion() + " online!"
+                + "\nZaładowane moduły: " + modulesOnline
+                + "\n\n!suggest"
+                + "\nWpisz !cmd aby zobaczyć listę komend");
+        System.out.println();
+    }
+
+    public int getModulesOnline() {
+        return modulesOnline;
     }
 
     public void sendMessage(String message) {

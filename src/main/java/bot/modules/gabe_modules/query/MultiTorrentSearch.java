@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TorrentTest extends ModuleBase {
+public class MultiTorrentSearch extends ModuleBase {
     private final String TORRENT_REGEX = Utils.TO_REGEX("torrent (.*)");
     private final String T_REGEX = Utils.TO_REGEX("t (.*)");
 
@@ -23,7 +23,7 @@ public class TorrentTest extends ModuleBase {
 
     private static final String TORRENTZ_URL = "https://torrentz2.eu/search?f=";
 
-    public TorrentTest(Chatbot chatbot) {
+    public MultiTorrentSearch(Chatbot chatbot) {
         super(chatbot);
     }
 

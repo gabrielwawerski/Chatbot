@@ -61,6 +61,16 @@ public class Memes implements Module {
     }
 
     @Override
+    public boolean isOnline() {
+        return true;
+    }
+
+    @Override
+    public void echoOnline() {
+        System.out.println(getClass().getSimpleName() + " online");
+    }
+
+    @Override
     @SuppressWarnings("Duplicates")
     public String getMatch(Message message) {
         String messageBody = message.getMessage();

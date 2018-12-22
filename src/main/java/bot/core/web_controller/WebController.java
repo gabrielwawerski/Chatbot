@@ -75,8 +75,8 @@ public class WebController {
             sendMessage("Coś poszło nie tak. Jebne restart.");
 
             // TODO test - EXPERIMENTAL!!!!!!!!!!!
-            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
-//            quit(false);
+//            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
+            quit(false);
         });
     }
 

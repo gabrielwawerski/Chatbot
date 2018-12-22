@@ -1,4 +1,4 @@
-package bot.modules.hollandjake;
+package bot.modules.gabe_modules;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;

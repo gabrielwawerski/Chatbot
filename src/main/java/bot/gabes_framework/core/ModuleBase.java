@@ -25,6 +25,7 @@ import bot.gabes_framework.message.SingleMessageModule;
  */
 public abstract class ModuleBase implements Module {
     protected final Chatbot chatbot;
+
     /** Needs to be assigned to the latest received {@code message}'s value. After overriding {@link Module#process(Message)}
      * method, call {@link #updateMatch(Message)} inside it first, which takes care of the assigning for you. Although
      * this field and it's corresponding method are not necessary, they aim to make writing modules less error prone.<br>
@@ -33,8 +34,29 @@ public abstract class ModuleBase implements Module {
      * {@link #process(Message)} */
     protected String match;
 
+    protected boolean online;
+
     public ModuleBase(Chatbot chatbot) {
         this.chatbot = chatbot;
+        online = true;
+    }
+
+    @Override
+    public boolean isOnline() {
+        return online;
+    }
+
+    @Override
+    public void echoOnline() {
+        if (online) {
+            System.out.println(getClass().getSimpleName() + " online.");
+        } else {
+            System.out.println(getClass().getSimpleName() + " niedostępny w bieżącej sesji.");
+        }
+    }
+
+    protected void setOnline(boolean online) {
+        this.online = online;
     }
 
     /**
