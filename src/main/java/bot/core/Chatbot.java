@@ -11,8 +11,7 @@ import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
 import bot.modules.gabe_modules.Popcorn;
 import bot.modules.gabe_modules.Inspire;
-import bot.modules.gabe_modules.work_in_progress.ImageFromUrl;
-import bot.modules.gabe_modules.work_in_progress.Memes;
+import bot.modules.gabe_modules.work_in_progress.RandomKwejk;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -23,7 +22,7 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String version = "v0.3014";
+    private final String version = "v0.31";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -57,7 +56,7 @@ public class Chatbot {
         modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
         modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
         modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk"), "kartapulapka.jpg"));
-        modules.put("Inspire", new Inspire(this));
+//        modules.put("Inspire", new Inspire(this));
         modules.put("Roll", new Roll(this));
         modules.put("Think", new Think(this));
         modules.put("EightBall", new EightBall(this, "responses.txt"));
@@ -65,9 +64,8 @@ public class Chatbot {
                 "responses.txt"));
         modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
                 "responses.txt"));
-
-//        modules.put("ImageFromUrl", new ImageFromUrl(this));
-        modules.put("Memes", new Memes(this));
+        modules.put("RandomKwejk", new RandomKwejk(this));
+//        modules.put("Memes", new Memes(this));
 
 //        modules.put("Dogs", new Dogs(this));
 
@@ -213,7 +211,8 @@ public class Chatbot {
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " online!\n"
                 + "Załadowane moduły:  " + Utils.EMOJI_NEW_BUTTON + " " + modulesOnline + "/" + totalModules
-                + "\nWpisz !cmd aby zobaczyć listę komend. !suggest");
+                + "\nWpisz !cmd aby zobaczyć listę komend."
+                + "\n!suggest");
     }
 
     public String getModulesOnline() {

@@ -22,6 +22,9 @@ public class Commands extends SingleMessageModule {
                 .append("==================")
                 .append("\n")
 
+                .append("\uD83D\uDE02")
+                .append(EMOJI_NEW_BUTTON).append("!kwejk !kw").append("\n")
+
                 .append(EMOJI_INFRMATION)
                 .append(EMOJI_NEW_BUTTON).append("!sylwester").append("\n")
 
@@ -35,7 +38,7 @@ public class Commands extends SingleMessageModule {
                 .append(EMOJI_NEW_BUTTON).append("!pyszne football").append("\n")
 
                 .append(EMOJI_RIGHT_ARRW)
-                .append(EMOJI_NEW_BUTTON).append("!pyszne hai").append("\n")
+                .append(EMOJI_NEW_BUTTON).append("!pyszne haianh").append("\n")
 
                 .append(EMOJI_MAGNIFYING)
                 .append(EMOJI_NEW_BUTTON).append("!torrent").append("\n")

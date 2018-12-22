@@ -9,6 +9,7 @@ public interface XPATHS {
 
     // i maed this
     String REMOVE_BUTTON = "//button[@class='_tij _50zy _50zz _50z- _5upp _42ft']";
+    String LOADED_THUMBNAIL = "//div[@class='_52kr']";
     String SEND_BUTTON = "//button[@class='_30yy _38lh _39bl']"; // no such element
 
     //endregion

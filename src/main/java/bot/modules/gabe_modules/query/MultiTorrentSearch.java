@@ -5,8 +5,6 @@ import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.core.ModuleBase;
 import bot.gabes_framework.core.libs.Utils;
-import fr.plaisance.bitly.Bit;
-import fr.plaisance.bitly.Bitly;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
