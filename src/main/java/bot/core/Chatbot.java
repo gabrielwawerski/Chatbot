@@ -59,6 +59,7 @@ public class Chatbot {
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
 //        modules.put("TorrentSearch", new TorrentSearch(this));
         modules.put("TorrentTest", new TorrentTest(this));
+        modules.put("SuggestFeature", new SuggestFeature(this, "sugestie.txt"));
     }
 
     public void reloadModules() {
