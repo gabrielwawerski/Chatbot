@@ -30,14 +30,17 @@ public class PollCreate extends ModuleBase {
             return true;
         } else if (match.equals(POLL_1)) {
             Matcher matcher = Pattern.compile(POLL_1).matcher(message.getMessage());
+            if (matcher.find()) {
 
-            String question = matcher.group(1);
-            String answer1 = matcher.group(2);
-            String answer2 = matcher.group(3);
-            System.out.println(question + "\n" + answer1 + "\n" +  answer2);
 
-            chatbot.sendMessage(question + "\n" + answer1 + "\n" +  answer2);
-            return true;
+                String question = matcher.group(1);
+                String answer1 = matcher.group(2);
+                String answer2 = matcher.group(3);
+                System.out.println(question + "\n" + answer1 + "\n" + answer2);
+
+                chatbot.sendMessage(question + "\n" + answer1 + "\n" + answer2);
+                return true;
+            }
         }
         return false;
     }

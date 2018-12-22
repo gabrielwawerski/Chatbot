@@ -7,6 +7,12 @@ import bot.gabes_framework.message.MessageModule;
 import bot.gabes_framework.resource.RandomResourceModule;
 import bot.gabes_framework.message.SingleMessageModule;
 
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static bot.gabes_framework.core.libs.Utils.TO_COMMAND;
+
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
  * if you need to have an absolute control over your module functionality.<p>
@@ -78,5 +84,33 @@ public abstract class ModuleBase implements Module {
     @Override
     public String appendModulePath(String message) {
         return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
+    }
+
+    protected boolean isOrOther(String REGEX, String OTHER) {
+        return match.equals(REGEX) || match.equals(OTHER);
+    }
+
+    protected boolean isA(String REGEX) {
+        return match.equals(REGEX);
+    }
+
+    protected boolean found(Message message) {
+        Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
+        return matcher.find();
+    }
+
+    protected Matcher getMatcher(Message message) {
+        return Pattern.compile(match).matcher(message.getMessage());
+    }
+
+    protected String findMatch(Message message, String... commands) {
+        String messageBody = message.getMessage();
+
+        for (String command : commands) {
+            if (messageBody.matches(command)) {
+                return command;
+            }
+        }
+        return "";
     }
 }

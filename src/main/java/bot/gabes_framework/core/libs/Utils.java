@@ -61,6 +61,15 @@ public final class Utils {
         return (ArrayList<String>) regexList.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
     }
 
+    public static ArrayList<String> regexToList(String... commands) {
+        ArrayList<String> returnList = new ArrayList<>(commands.length);
+
+        for (String x : commands) {
+            returnList.add(TO_COMMAND(x));
+        }
+        return returnList;
+    }
+
     /**
      * Always make sure to "TO_REGEX"
      *
