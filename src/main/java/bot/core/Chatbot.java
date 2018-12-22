@@ -8,6 +8,7 @@ import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
+import bot.modules.gabe_modules.work_in_progress.Memes;
 import bot.modules.gabe_modules.work_in_progress.Popcorn;
 import bot.modules.hollandjake.Inspire;
 import org.openqa.selenium.TimeoutException;
@@ -60,6 +61,7 @@ public class Chatbot {
 //        modules.put("TorrentSearch", new TorrentSearch(this));
         modules.put("TorrentTest", new TorrentTest(this));
         modules.put("SuggestFeature", new SuggestFeature(this, "sugestie.txt"));
+        modules.put("Memes", new Memes(this));
     }
 
     public void reloadModules() {
