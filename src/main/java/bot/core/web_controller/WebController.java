@@ -14,8 +14,6 @@ import org.openqa.selenium.support.ui.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import static bot.core.helper.interfaces.Util.CLIPBOARD;
 import static bot.core.helper.interfaces.Util.PASTE;
@@ -74,7 +72,7 @@ public class WebController {
             System.out.println("Coś poszło nie tak:");
             e.printStackTrace();
 
-            // TODO test - EXPERIMENTAL!!!!!!!!!!!
+//             TODO test - EXPERIMENTAL!!!!!!!!!!!
 //            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
             quit(true);
         });
@@ -82,7 +80,7 @@ public class WebController {
 
     public void quit(boolean withMessage) {
         if (withMessage) {
-            sendMessage("Przechodzę offline");
+            sendMessage("Przechodzę offline.");
         }
         webDriver.quit();
         System.exit(0);

@@ -46,38 +46,14 @@ public abstract class Reddit implements Module {
     public static String getSubredditPictureUrl(List<String> subreddits) {
         while (subreddits != null) {
             //Pick subreddit
-            String subreddit = GET_RANDOM(subreddits);
+            String randSubreddit = GET_RANDOM(subreddits);
             //Get reddit path
-            String redditPath = "https://www.reddit.com/r/" + subreddit + "/random.json";
-            String data = GET_PAGE_SOURCE(redditPath);
+            String redditUrl = "https://www.reddit.com/r/" + randSubreddit + "/random.json";
+            String data = GET_PAGE_SOURCE(redditUrl);
             Matcher matcher = Pattern.compile("https://i\\.redd\\.it/\\S+?\\.jpg").matcher(data);
             try {
                 if (matcher.find()) {
                     return new URL(matcher.group()).getPath();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    public static Image getSubredditPicture(List<String> subreddits) {
-        while (subreddits != null) {
-            //Pick subreddit
-            String subreddit = GET_RANDOM(subreddits);
-            //Get reddit path
-            String redditPath = "https://www.reddit.com/r/" + subreddit + "/random.json";
-
-            try {
-                String data = GET_PAGE_SOURCE(redditPath);
-                Matcher matcher = Pattern.compile("https://i\\.redd\\.it/\\S+?\\.jpg").matcher(data);
-                if (matcher.find()) {
-                    BufferedImage image = ImageIO.read(new URL(matcher.group()));
-                    int size = image.getData().getDataBuffer().getSize();
-                    if (size < 25000000) {
-                        return image;
-                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

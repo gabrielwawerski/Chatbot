@@ -9,8 +9,10 @@ import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
-import bot.modules.gabe_modules.work_in_progress.Popcorn;
+import bot.modules.gabe_modules.Popcorn;
 import bot.modules.gabe_modules.Inspire;
+import bot.modules.gabe_modules.work_in_progress.ImageFromUrl;
+import bot.modules.gabe_modules.work_in_progress.Memes;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -58,18 +60,14 @@ public class Chatbot {
         modules.put("Inspire", new Inspire(this));
         modules.put("Roll", new Roll(this));
         modules.put("Think", new Think(this));
-
         modules.put("EightBall", new EightBall(this, "responses.txt"));
         modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
                 "responses.txt"));
         modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
                 "responses.txt"));
 
-
-
 //        modules.put("ImageFromUrl", new ImageFromUrl(this));
-//        modules.put("TorrentSearch", new TorrentSearch(this));
-//        modules.put("Memes", new Memes(this));
+        modules.put("Memes", new Memes(this));
 
 //        modules.put("Dogs", new Dogs(this));
 
@@ -175,9 +173,10 @@ public class Chatbot {
             initMessage();
         }
         System.out.print("-----------------\n");
+        System.out.println("PCIONBOT ONLINE");
+
         while (running) {
             try {
-                System.out.println("PCIONBOT ONLINE");
                 webController.waitForNewMessage();
                 Message newMessage = webController.getLatestMessage();
                 messageLog.add(newMessage);
@@ -213,8 +212,8 @@ public class Chatbot {
 
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " online!\n"
-                + "Załadowane moduły: " + modulesOnline + "/" + totalModules + " " + Utils.EMOJI_NEW_BUTTON
-                + "\n\nWpisz !cmd aby zobaczyć listę komend. !suggest");
+                + "Załadowane moduły:  " + Utils.EMOJI_NEW_BUTTON + " " + modulesOnline + "/" + totalModules
+                + "\nWpisz !cmd aby zobaczyć listę komend. !suggest");
     }
 
     public String getModulesOnline() {

@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
  * @author gabrielwawerski (https://github.com/gabrielwawerski)
  */
 public final class Utils {
+    public static final String EMOJI_PENCIL = "\u270f\ufe0f";
+    public static final String EMOJI_THINK = "\uD83E\uDD14";
+    public static final String EMOJI_CAMERA = "\uD83D\uDCF8";
     private static final Random RANDOM = new Random();
 
     public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yy");
@@ -36,6 +39,7 @@ public final class Utils {
     public static final String EMOJI_HOURGLASS = "\u23f3";             // ⏳
     public static final String EMOJI_EXCLAM_MRK = "\u2757";      // ❗
     public static final String EMOJI_POPCORN = "\uD83C\uDF7F";      // 🍿
+    public static final String EMOJI_RIGHT_ARRW = "\u27a1\ufe0f";
 
     public static String getMatch(Message message, List<String> regexList) {
         String messageBody = message.getMessage();

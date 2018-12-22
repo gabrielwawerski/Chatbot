@@ -48,16 +48,13 @@ public interface Util {
     static <T> T GET_RANDOM(List<T> list) {
         System.out.println(list.size());
         int random = RANDOM.nextInt(list.size());
-        if (random >= 0 ) {
-            return list.get(random);
-        } else {
-            return list.get(-random);
-        }
+
+        return list.get(random);
     }
 
     static String GET_PAGE_SOURCE(String url) {
         try {
-            return Unirest.get(url).header("User-agent", "Dogbot Reborn").asString().getBody();
+            return Unirest.get(url).header("User-agent", "application/json").asString().getBody();
         } catch (UnirestException e) {
             System.out.println("Page doesn't exist");
             e.printStackTrace();

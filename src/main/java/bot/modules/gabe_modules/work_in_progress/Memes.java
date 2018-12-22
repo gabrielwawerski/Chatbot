@@ -1,17 +1,11 @@
 package bot.modules.gabe_modules.work_in_progress;
 
 import bot.core.Chatbot;
-import bot.core.exceptions.MalformedCommandException;
-import bot.core.helper.interfaces.RedditModule;
-import bot.core.helper.interfaces.Util;
 import bot.core.helper.misc.Message;
-import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.core.libs.api.Module;
-import bot.gabes_framework.simple.SimpleModule;
-import bot.modules.hollandjake.Reddit;
+import bot.gabes_framework.reddit.Reddit;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,7 +18,7 @@ import static bot.core.helper.interfaces.Util.DEACTIONIFY;
 public class Memes implements Module {
     private final Chatbot chatbot;
     private List<String> subreddits;
-    private Image preloadedImage;
+    private String preloadedUrl;
 
     private final String DOG_REGEX = ACTIONIFY("test");
     private final String DOGGO_REGEX = ACTIONIFY("t");
@@ -40,7 +34,7 @@ public class Memes implements Module {
             e.printStackTrace();
         }
 
-        preloadedImage = bot.gabes_framework.reddit.Reddit.getSubredditPicture(subreddits);
+        preloadedUrl = Reddit.getSubredditPictureUrl(subreddits);
         // HighResNSFW
         // gonewild
         // nsfwpics
@@ -52,8 +46,9 @@ public class Memes implements Module {
     public boolean process(Message message) {
         String match = getMatch(message);
         if (match.equals(DOG_REGEX) || match.equals(DOGGO_REGEX)) {
-            chatbot.sendImageWithMessage(preloadedImage, "");
-            preloadedImage = Reddit.getSubredditPicture(subreddits);
+            System.out.println(preloadedUrl);
+            chatbot.sendImageUrlWaitToLoad(preloadedUrl);
+            preloadedUrl = Reddit.getSubredditPictureUrl(subreddits);
             return true;
         } else {
             return false;
