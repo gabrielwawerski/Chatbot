@@ -15,14 +15,14 @@ import static bot.core.helper.interfaces.Util.DEACTIONIFY;
 /**
  * @author Gabe
  */
-public class SimpleRoll extends ModuleBase {
+public class Roll extends ModuleBase {
     private final String ROLL_PRESET_REGEX = ACTIONIFY("roll");
     private final String ROLL_REGEX = ACTIONIFY("roll (\\d+)");
 
     private final int MIN_ROLL = 3;
     private final int MAX_ROLL = 100 + 1;
 
-    public SimpleRoll(Chatbot chatbot) {
+    public Roll(Chatbot chatbot) {
         super(chatbot);
     }
 

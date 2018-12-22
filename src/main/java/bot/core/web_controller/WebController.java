@@ -161,11 +161,13 @@ public class WebController {
         inputBox.sendKeys(PASTE);
         // waits until image fully loads as an attachment
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(REMOVE_BUTTON)));
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        // if above call isn't performing well, uncomment to make sure attachment loads
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         inputBox.sendKeys(Keys.ENTER);
 

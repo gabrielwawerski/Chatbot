@@ -3,6 +3,7 @@ package bot.modules.hollandjake;
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.RedditModule;
+import bot.gabes_framework.core.libs.api.Module;
 
 import java.awt.*;
 import java.io.File;
@@ -15,7 +16,7 @@ import java.util.List;
 import static bot.modules.hollandjake.Reddit.loadSubreddits;
 import static bot.core.helper.interfaces.Util.*;
 
-public class Dogs implements RedditModule {
+public class Dogs implements Module {
     //region Constants
     private final String DOG_REGEX = ACTIONIFY("dog");
     private final String DOGGO_REGEX = ACTIONIFY("doggo");
@@ -40,7 +41,8 @@ public class Dogs implements RedditModule {
         } catch (IOException e) {
             System.out.println("Dog quotes/images are not available this session");
         }
-        preloadedImage = Reddit.getSubredditPicture(subreddits);
+        String imagePath = GET_RANDOM(subreddits);
+//        preloadedImage =
     }
 
     //region Overrides

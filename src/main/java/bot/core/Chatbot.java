@@ -8,8 +8,6 @@ import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
-import bot.modules.gabe_modules.work_in_progress.ImageFromUrl;
-import bot.modules.gabe_modules.work_in_progress.Memes;
 import bot.modules.gabe_modules.work_in_progress.Popcorn;
 import bot.modules.hollandjake.Inspire;
 import org.openqa.selenium.TimeoutException;
@@ -37,32 +35,38 @@ public class Chatbot {
     private Human me;
 
     protected void loadModules() {
+        modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
+        modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
+        modules.put("Shutdown", new Shutdown(this));
         modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
+
+        modules.put("GoogleSearch", new GoogleSearch(this));
+        modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
+        modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
+        modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki", "w")));
+        modules.put("PyszneSearch", new PyszneSearch(this));
+
+        modules.put("Roll", new Roll(this));
+        modules.put("Think", new Think(this));
         modules.put("EightBall", new EightBall(this, "responses.txt"));
         modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
                 "responses.txt"));
         modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
                 "responses.txt"));
-        modules.put("SimpleRoll", new SimpleRoll(this));
-        modules.put("GoogleSearch", new GoogleSearch(this));
-        modules.put("Think", new Think(this));
         modules.put("Inspire", new Inspire(this));
-        modules.put("Shutdown", new Shutdown(this));
-        modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
-        modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
         modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
         modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka"), "kartapulapka.jpg"));
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
-        modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
-        modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
-        modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki", "w")));
-        modules.put("PyszneSearch", new PyszneSearch(this));
-        modules.put("ImageFromUrl", new ImageFromUrl(this));
+
+
+//        modules.put("ImageFromUrl", new ImageFromUrl(this));
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
 //        modules.put("TorrentSearch", new TorrentSearch(this));
-        modules.put("TorrentTest", new TorrentTest(this));
-        modules.put("SuggestFeature", new SuggestFeature(this, "sugestie.txt"));
-        modules.put("Memes", new Memes(this));
+//        modules.put("TorrentTest", new TorrentTest(this));
+        modules.put("FeatureSuggest", new FeatureSuggest(this, "sugestie.txt")); // TODO add info
+//        modules.put("Memes", new Memes(this));
+
+//        modules.put("Dogs", new Dogs(this));
     }
 
     public void reloadModules() {

@@ -27,7 +27,7 @@ public interface Util {
     DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
     //endregion
 
-    static final Random RANDOM = new Random();
+    Random RANDOM = new Random();
 
     static String ACTIONIFY(String arg) {
         return "(?i)^!\\s*" + arg + "$";
@@ -46,7 +46,13 @@ public interface Util {
     }
 
     static <T> T GET_RANDOM(List<T> list) {
-        return list.get(RANDOM.nextInt(list.size()));
+        System.out.println(list.size());
+        int random = RANDOM.nextInt(list.size());
+        if (random >= 0 ) {
+            return list.get(random);
+        } else {
+            return list.get(-random);
+        }
     }
 
     static String GET_PAGE_SOURCE(String url) {

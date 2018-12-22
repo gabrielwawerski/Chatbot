@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Sylwester extends SaveResourceModule {
-    private final String INFO_MESSAGE = "Po komendzie !sylwester podaj link do piosenki, którą chcesz usłyszeć w sylwestra.";
+    private final String INFO_MESSAGE = "Link do piosenki którą chcesz usłyszeć w sylwestra! !sylwester link";
 
     private final String INFO_REGEX = Utils.TO_REGEX("sylwester");
     private final String PIOSENKA_REGEX = Utils.TO_REGEX("sylwester (.*)");

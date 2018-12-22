@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SuggestFeature extends SaveResourceModule {
-    private final String INFO_MESSAGE = "Po komendzie !suggest opisz funkcjonalność którą chciałbyś u mnie zobaczyć.";
+public class FeatureSuggest extends SaveResourceModule {
+    private final String INFO_MESSAGE = "Po komendzie !suggest opisz funkcjonalność którą chciałbyś u mnie zobaczyć!";
 
     private final String SUGGEST_REGEX = Utils.TO_REGEX("suggest");
     private final String SUGGESTION_REGEX = Utils.TO_REGEX("suggest (.*)");
 
-    public SuggestFeature(Chatbot chatbot, String fileName) {
+    public FeatureSuggest(Chatbot chatbot, String fileName) {
         super(chatbot, fileName);
     }
 

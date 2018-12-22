@@ -25,6 +25,7 @@ public class PyszneSearch extends SearchModuleBase {
     private final String HELP_REGEX = makeRegex("pyszne help");
     private final String SEARCH_REGEX = makeRegex("pyszne (.*)");
 
+    // fixme all restaurants direct links are not working properly
     private final String HAIANH_REGEX_1 = makeRegex("pyszne haianh");
     private final String HAIANH_REGEX_2 = makeRegex("pyszne hai-anh");
     private final String HAIANH_REGEX_3 = makeRegex("pyszne hai");
