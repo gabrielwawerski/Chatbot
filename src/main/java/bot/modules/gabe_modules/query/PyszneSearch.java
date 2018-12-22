@@ -5,7 +5,6 @@ import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.search.SearchModuleBase;
 import bot.gabes_framework.core.libs.Utils;
-import bot.gabes_framework.search.SimpleSearchModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -19,11 +18,16 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String SEARCH_URL = "pyszne.pl/restauracja-lublin-lublin-";
     private static final String SEPARATOR = "-";
 
+    private static final String FOOTBALL_PIZZA_URL = "https://www.pyszne.pl/football-pizza";
+    private static final String MARIANO_ITALIANO_URL = "https://www.pyszne.pl/pizzeria-mariano-italiano";
+    private static final String HAIANH_URL = "https://www.pyszne.pl/bar-azjatycki-hai-ahn";
+
     private final String HELP_REGEX = makeRegex("pyszne help");
     private final String ANY_REGEX = makeRegex("pyszne (.*)");
 
-    private final String HAIANH_REGEX_1 = makeRegex("pyszne haianhp");
+    private final String HAIANH_REGEX_1 = makeRegex("pyszne haianh");
     private final String HAIANH_REGEX_2 = makeRegex("pyszne hai-anh");
+    private final String HAIANH_REGEX_3 = makeRegex("pyszne hai");
 
     private final String MARIANO_ITALIANO_1 = makeRegex("pyszne mariano");
     private final String MARIANO_ITALIANO_2 = makeRegex("pyszne italiano");
@@ -35,6 +39,16 @@ public class PyszneSearch extends SearchModuleBase {
 
     public PyszneSearch(Chatbot chatbot) {
         super(chatbot);
+    }
+
+    @Override
+    protected String setSearchUrl() {
+        return SEARCH_URL;
+    }
+
+    @Override
+    protected String setSeparator() {
+        return SEPARATOR;
     }
 
     private void sendMessage(String message) {
@@ -107,15 +121,15 @@ public class PyszneSearch extends SearchModuleBase {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.deactionify(HAIANH_REGEX_1));
-        commands.add(Utils.deactionify(HAIANH_REGEX_2));
-        commands.add(Utils.deactionify(FOOTBALL_PIZZA_1));
-        commands.add(Utils.deactionify(FOOTBALL_PIZZA_2));
-        commands.add(Utils.deactionify(FOOTBALL_PIZZA_3));
-        commands.add(Utils.deactionify(MARIANO_ITALIANO_1));
-        commands.add(Utils.deactionify(MARIANO_ITALIANO_2));
-        commands.add(Utils.deactionify(ANY_REGEX));
-        commands.add(Utils.deactionify(HELP_REGEX));
+        commands.add(Utils.DEACTIONIFY(HAIANH_REGEX_1));
+        commands.add(Utils.DEACTIONIFY(HAIANH_REGEX_2));
+        commands.add(Utils.DEACTIONIFY(FOOTBALL_PIZZA_1));
+        commands.add(Utils.DEACTIONIFY(FOOTBALL_PIZZA_2));
+        commands.add(Utils.DEACTIONIFY(FOOTBALL_PIZZA_3));
+        commands.add(Utils.DEACTIONIFY(MARIANO_ITALIANO_1));
+        commands.add(Utils.DEACTIONIFY(MARIANO_ITALIANO_2));
+        commands.add(Utils.DEACTIONIFY(ANY_REGEX));
+        commands.add(Utils.DEACTIONIFY(HELP_REGEX));
         return commands;
     }
 
@@ -134,15 +148,5 @@ public class PyszneSearch extends SearchModuleBase {
         } else {
             return false;
         }
-    }
-
-    @Override
-    protected String setSearchUrl() {
-        return SEARCH_URL;
-    }
-
-    @Override
-    protected String setSeparator() {
-        return SEPARATOR;
     }
 }

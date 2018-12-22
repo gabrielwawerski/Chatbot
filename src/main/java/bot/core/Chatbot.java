@@ -57,6 +57,8 @@ public class Chatbot {
         modules.put("PyszneSearch", new PyszneSearch(this));
         modules.put("ImageFromUrl", new ImageFromUrl(this, List.of("image"), "https://i.imgurProvider.com/s6q5qCG.jpg", ""));
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
+        modules.put("TorrentSearch", new TorrentSearch(this));
+        modules.put("TorrentTest", new TorrentTest(this, List.of("torrent")));
     }
 
     public void reloadModules() {

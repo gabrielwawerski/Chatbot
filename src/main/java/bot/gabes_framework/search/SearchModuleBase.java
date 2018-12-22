@@ -105,18 +105,8 @@ public abstract class SearchModuleBase extends ModuleBase {
      * @param userMessage user message to be formatted
      * @return formatted user message, ready to be
      */
-    private String toQuery(String userMessage) {
+    public String toQuery(String userMessage) {
         return getUserMessage().replaceAll("\\s+", SEPARATOR);
-    }
-
-    /**
-     * Replaces every space ( ) with {@link #SEPARATOR}.
-     *
-     * @param userMessage user message to be formatted
-     * @return formatted user message, ready to be
-     */
-    protected String toQuery(String userMessage, String separator) {
-        return getUserMessage().replaceAll("\\s+", separator);
     }
 
     /**
@@ -133,7 +123,7 @@ public abstract class SearchModuleBase extends ModuleBase {
     }
 
     protected static String makeRegex(String regex) {
-        return Utils.actionify(regex);
+        return Utils.ACTIONIFY(regex);
     }
 
     /**

@@ -9,7 +9,7 @@ import bot.gabes_framework.simple.SimpleUrlImageModule;
 import java.util.List;
 
 public class ImageFromUrl extends SimpleUrlImageModule {
-    private static final String TEST_REGEX = Utils.actionify("test");
+    private static final String TEST_REGEX = Utils.ACTIONIFY("test");
 
     public ImageFromUrl(Chatbot chatbot, List<String> regexList, String url, String message) {
         super(chatbot, regexList, url, message);

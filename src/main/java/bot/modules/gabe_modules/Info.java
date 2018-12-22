@@ -5,6 +5,8 @@ import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.message.SingleMessageModule;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -62,18 +64,25 @@ public class Info extends SingleMessageModule {
                 + "\n\n" + cmdInfo();
     }
 
-    private int lezeStats() {
-        int counter = 0;
-        if (Objects.isNull(chatbot.getMessageLog())) {
-            return 0;
-        }
+    private String lezeStats() {
+        double lezeMessageCounter = 0;
         ArrayList<Message> messages = chatbot.getMessageLog();
+
+        if (Objects.isNull(chatbot.getMessageLog())) {
+            return "błąd";
+        }
+
         for (Message msg : messages) {
             if (msg.getSender().getName().equals("Jakub Smolak")) {
-                counter++;
+                lezeMessageCounter++;
             }
         }
-        return counter;
+
+        double lezeMsgPercent = lezeMessageCounter - messages.size();
+
+        NumberFormat format = new DecimalFormat("#0.0");
+
+        return format.format(lezeMsgPercent);
     }
 
     private String cmdInfo() {

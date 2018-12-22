@@ -13,7 +13,7 @@ import java.util.List;
  * @since 0.30
  */
 public abstract class SimpleSearchModule extends SearchModuleBase {
-    private List<String> regexList;
+    protected List<String> regexList;
 
     public SimpleSearchModule(Chatbot chatbot, List<String> regexList) {
         super(chatbot);

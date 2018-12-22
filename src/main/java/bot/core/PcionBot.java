@@ -44,8 +44,6 @@ public class PcionBot extends Chatbot {
         String GRZAGSOFT_ID = "1506449319457834";
         String PATRO_ID = "2275107775897967";
 
-
-
         pcionbot = new Chatbot(
                 username,
                 password,
