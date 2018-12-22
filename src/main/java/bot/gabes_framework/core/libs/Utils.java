@@ -31,6 +31,8 @@ public final class Utils {
     public static final String EMOJI_NEW_BUTTON = "\uD83C\uDD95";
     /** 🆕 */
     public static final String EMOJI_OK_BUTTON = "\uD83C\uDD97";
+    /** 📌 */
+    public static final String EMOJI_PUSHPIN = "\uD83D\uDCCC";
 
     public static String getMatch(Message message, List<String> regexList) {
         String messageBody = message.getMessage();

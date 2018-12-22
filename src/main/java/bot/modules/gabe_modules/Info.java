@@ -60,7 +60,8 @@ public class Info extends SingleMessageModule {
 
     private String getStats() {
         return getMinifiedStats()
-                + "\nZaładowane moduły: " + chatbot.getModulesOnline()
+                + "Załadowane moduły: " + chatbot.getModulesOnline()
+                + "\n"
                 + getUptime()
                 + "\n\nUnikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size()
                 + "\nWiadomości leze: " + lezeStats()
@@ -92,6 +93,6 @@ public class Info extends SingleMessageModule {
     }
 
     private String cmdInfo() {
-        return "Wpisz !cmd aby zobaczyć listę komend";
+        return "Wpisz !cmd aby zobaczyć listę komend. !suggest";
     }
 }

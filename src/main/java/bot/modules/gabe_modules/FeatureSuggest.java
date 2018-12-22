@@ -7,6 +7,7 @@ import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.resource.SaveResourceModule;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,22 +28,31 @@ public class FeatureSuggest extends SaveResourceModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
+        Matcher matcher = null;
         if (match.equals(SUGGEST) || match.equals(POMYSL)) {
             chatbot.sendMessage(INFO_MESSAGE);
             return true;
-        } else if (match.equals(SUGGEST_ANY) || match.equals(POMYSL_ANY)) {
-            Matcher matcher = Pattern.compile(POMYSL_ANY).matcher(message.getMessage());
+        } else if (match.equals(SUGGEST_ANY)) {
+            matcher = Pattern.compile(SUGGEST_ANY).matcher(message.getMessage());
 
             if (matcher.find()) {
-                String msg = message.getMessage().substring(8);
+                String msg = message.getMessage().substring(7);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage("Dzięki! \uD83D\uDD2C");
-                // TODO List<String> randomRespones;
-                //
-                 String uruchamiamAi = "Dzięki! \uD83D\uDD2C";
-
-                // randomRespones = List.of(
+                chatbot.sendMessage("Zapisano!  " + Utils.EMOJI_PUSHPIN);
+                return true;
+            }
+        } else if (match.equals(POMYSL_ANY)) {
+            matcher = Pattern.compile(POMYSL_ANY).matcher(message.getMessage());
+            if (matcher.find()) {
+                String msg = message.getMessage().substring(7);
+                msg = message.getSender().getName() + " " + msg;
+                appendStringToFile(msg);
+                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + "\nZapisano!");
+//                 TODO random responses each time
+//                List<String> randomRespones;
+//                String uruchamiamAi = "Dzięki! \uD83D\uDD2C";
+//                randomRespones = List.of(uruchamiamAi, );
                 return true;
             }
         }
