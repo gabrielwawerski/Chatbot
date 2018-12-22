@@ -21,6 +21,7 @@ import java.util.List;
 
 public class RandomGroupPhoto extends SimpleModule {
     private ArrayList<File> files;
+    Image image;
     private ImageIcon imageIcon;
     private List<String> alreadySeen;
 
@@ -30,24 +31,28 @@ public class RandomGroupPhoto extends SimpleModule {
 
     public RandomGroupPhoto(Chatbot chatbot, List<String> regexes) {
         super(chatbot, regexes);
-
         File f = new File(PHOTOS_PATH);
         files = new ArrayList<File>(Arrays.asList(f.listFiles()));
+
+        imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
+        image = imageIcon.getImage();
     }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
-        imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
-        Image image = imageIcon.getImage();
 
         for (String regex : regexList) {
             if (match.equals(regex)) {
+                imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
+                image = imageIcon.getImage();
+
                 chatbot.sendImageWithMessage(image, "Losuję...");
                 /** {@link Message#sendMessageWithImage(WebElement, String, Image)}  */ // TODO try to run on new thread, trace calls and decide where to do it
                 return true;
             }
         }
+        image = imageIcon.getImage();
         return false;
     }
 }

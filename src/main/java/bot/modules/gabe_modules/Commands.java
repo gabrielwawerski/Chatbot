@@ -24,31 +24,33 @@ public class Commands extends SingleMessageModule {
                 .append("!info !status")
                 .append("\n")
 
-                .append(Utils.EMOJI_NEW_BUTTON).append("!suggest !pomysl")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!suggest ... !pomysl ...")
                 .append("\n")
 
                 /** {@link MultiTorrentSearch} */
-                .append(Utils.EMOJI_NEW_BUTTON).append("!torrent")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!torrent ...")
                 .append("\n")
 
                 /** {@link WikipediaSearch} */
-                .append(Utils.EMOJI_NEW_BUTTON).append("!wiki")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!wiki ...")
                 .append("\n")
 
                 /** {@link YoutubeSearch} */
                 .append("    ")
-                .append("!youtube !yt")
+                .append("!youtube ... !yt ...")
                 .append("\n")
 
                 /** {@link GoogleSearch} */
                 .append("    ")
-                .append("!google !g")
+                .append("!google ... !g ...")
                 .append("\n")
+                .append("    ")
                 .append("!g help ").append("!g leze")
                 .append("\n")
 
                 /** {@link PyszneSearch} */
-                .append("!pyszne ")
+                .append("    ")
+                .append("!pyszne")
                 .append("\n")
                 .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne mariano")
                 .append("\n")
@@ -58,14 +60,17 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 /** {@link AllegroSearch} */
-                .append("!allegro...")
+                .append("    ")
+                .append("!allegro ...")
                 .append("\n")
 
                 /** {@link RandomGroupPhoto */
+                .append("    ")
                 .append("!random !r")
                 .append("\n")
 
                 /** {@link SimpleWeather} */
+                .append("    ")
                 .append("!pogoda !p")
                 .append("\n")
 
@@ -73,22 +78,27 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 /** {@link KartaPulapka} */
+                .append("    ")
                 .append("!karta !kartapulapka !myk")
                 .append("\n")
 
                 /** {@link EightBall} */
-                .append("!8ball... !ask... !8... ")
+                .append("    ")
+                .append("!8ball ... !ask ... !8 ... ")
                 .append("\n")
 
                 /** {@link Roll} */
+                .append("    ")
                 .append("!roll !roll <max>")
                 .append("\n")
 
                 /** {@link JebacLeze} */
+                .append("    ")
                 .append("!jebacleze !leze ").append("!spam")
                 .append("\n")
 
                 /** {@link Think */
+                .append("    ")
                 .append("!think !think <liczba>")
                 .append("\n")
 

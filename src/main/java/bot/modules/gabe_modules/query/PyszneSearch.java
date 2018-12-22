@@ -69,10 +69,9 @@ public class PyszneSearch extends SearchModuleBase {
         if (match.equals(HELP_REGEX) || match.equals(HELP_2_REGEX) ) {
             chatbot.sendMessage(
                     "Restauracje dla kodu pocztowego."
-                            + "\n---\n"
-                            + "AT THE GABES"
+                            + "\nAT THE GABES:"
                             + "\npyszne.pl/restauracja-lublin-lublin-20-455"
-                            + "\n---\n"
+                            + "\n---"
                             + "\n!pyszne mariano  /" + " italiano"
                             + "\n!pyszne football   /" + " footballpizza"
                             + "\n!pyszne hai           /" + " hai-anh / haianh"
