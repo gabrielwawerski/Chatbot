@@ -4,14 +4,16 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.core.ModuleBase;
-import bot.gabes_framework.core.libs.Utils;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static bot.gabes_framework.core.libs.Utils.TO_REGEX;
+import static bot.gabes_framework.core.libs.Utils.TO_COMMAND;
+
 public class TorrentSearch extends ModuleBase {
-    private final String SEARCH_REGEX = Utils.ACTIONIFY("torrent (.*)");
+    private final String SEARCH_REGEX = TO_REGEX("torrent (.*)");
 
     private static final String SEPARATOR = "+";
 
@@ -61,7 +63,7 @@ public class TorrentSearch extends ModuleBase {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.DEACTIONIFY(SEARCH_REGEX));
+        commands.add(TO_COMMAND(SEARCH_REGEX));
         return commands;
     }
 }

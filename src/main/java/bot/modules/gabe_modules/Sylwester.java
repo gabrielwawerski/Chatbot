@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 public class Sylwester extends SaveResourceModule {
     private final String INFO_MESSAGE = "Po komendzie !sylwester podaj link do piosenki, którą chcesz usłyszeć w sylwestra.";
 
-    private final String INFO_REGEX = Utils.ACTIONIFY("sylwester");
-    private final String PIOSENKA_REGEX = Utils.ACTIONIFY("sylwester (.*)");
+    private final String INFO_REGEX = Utils.TO_REGEX("sylwester");
+    private final String PIOSENKA_REGEX = Utils.TO_REGEX("sylwester (.*)");
 
     public Sylwester(Chatbot chatbot, String fileName) {
         super(chatbot, fileName);
@@ -54,8 +54,8 @@ public class Sylwester extends SaveResourceModule {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.DEACTIONIFY(INFO_REGEX));
-        commands.add(Utils.DEACTIONIFY(PIOSENKA_REGEX));
+        commands.add(Utils.TO_COMMAND(INFO_REGEX));
+        commands.add(Utils.TO_COMMAND(PIOSENKA_REGEX));
         return commands;
     }
 

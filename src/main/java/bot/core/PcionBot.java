@@ -48,7 +48,7 @@ public class PcionBot extends Chatbot {
                 username,
                 password,
 
-                GRUPKA_ID,
+                PATRO_ID,
 
                 debugMode,
                 silentMode,

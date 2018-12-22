@@ -123,7 +123,7 @@ public abstract class SearchModuleBase extends ModuleBase {
     }
 
     protected static String makeRegex(String regex) {
-        return Utils.ACTIONIFY(regex);
+        return Utils.TO_REGEX(regex);
     }
 
     /**

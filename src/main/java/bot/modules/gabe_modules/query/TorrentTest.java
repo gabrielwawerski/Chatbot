@@ -3,31 +3,47 @@ package bot.modules.gabe_modules.query;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
+import bot.gabes_framework.core.ModuleBase;
 import bot.gabes_framework.core.libs.Utils;
-import bot.gabes_framework.search.SearchModuleBase;
+import fr.plaisance.bitly.Bit;
+import fr.plaisance.bitly.Bitly;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class TorrentTest extends SearchModuleBase {
-    private static final String SEARCH_URL = "rarbg.to/torrents.php?search=";
+public class TorrentTest extends ModuleBase {
+    private static final String X1337_URL = "1337x.to/search/";
+//    private static final String X1337_URL = "rarbg.to/torrents.php?search=";
     private static final String POSTFIX = "/1/";
-    private final String TORRENT_REGEX = Utils.ACTIONIFY("torrent (.*)");
 
-    public TorrentTest(Chatbot chatbot, List<String> regexList) {
+    private static final String TORRENTZ_URL = "https://torrentz2.eu/search?f=";
+
+    private final String SEARCH_REGEX = Utils.TO_REGEX("torrent (.*)");
+    private final Bitly bitly;
+
+    private static final String BITLY_ACCESS_TOKEN = "ccbb8945fa671a57a48645c181466d9ad5619749";
+
+    public TorrentTest(Chatbot chatbot) {
         super(chatbot);
+
+        bitly = Bit.ly(BITLY_ACCESS_TOKEN);
     }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
         String messageBody = message.getMessage();
-        updateMatcher(messageBody);
 
-        if (match.equals(TORRENT_REGEX)) {
-                if (isMatchFound()) {
-                    messageBody = matcher.group(1).replaceAll("\\s+", SEPARATOR);
-                    chatbot.sendMessage(SEARCH_URL + messageBody + POSTFIX);
+        if (match.equals(SEARCH_REGEX)) {
+            Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
+
+            if (matcher.find()) {
+                String userQuery = matcher.group(1).replaceAll("\\s+", "+");
+                String messageToSend = X1337_URL + userQuery + POSTFIX
+                            + "\n" + TORRENTZ_URL + userQuery;
+
+                    chatbot.sendMessage(messageToSend);
                     return true;
                 } else {
                     chatbot.sendMessage("Coś żeś pojebał");
@@ -41,8 +57,8 @@ public class TorrentTest extends SearchModuleBase {
     public String getMatch(Message message) {
         String messageBody = message.getMessage();
 
-        if (messageBody.equals(TORRENT_REGEX)) {
-            return TORRENT_REGEX;
+        if (messageBody.matches(SEARCH_REGEX)) {
+            return SEARCH_REGEX;
         }
         return "";
     }
@@ -50,22 +66,7 @@ public class TorrentTest extends SearchModuleBase {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.DEACTIONIFY(TORRENT_REGEX));
+        commands.add(Utils.TO_COMMAND(SEARCH_REGEX));
         return commands;
-    }
-
-    @Override
-    protected String getFinalMessage(String messageBody) {
-        return SEARCH_URL + toQuery(messageBody) + POSTFIX;
-    }
-
-    @Override
-    protected String setSearchUrl() {
-        return SEARCH_URL;
-    }
-
-    @Override
-    protected String setSeparator() {
-        return DEFAULT_SEPARATOR;
     }
 }

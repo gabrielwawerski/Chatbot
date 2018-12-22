@@ -9,8 +9,8 @@ import org.apache.commons.lang.WordUtils;
 import java.util.List;
 
 public class WikipediaSearch extends SimpleSearchModule {
-    private static final String SEARCH_URL = "https://pl.wikipedia.org/wiki/";
-    private static final String SEPARATOR = "_";
+    protected static final String SEARCH_URL = "https://pl.wikipedia.org/wiki/";
+    protected static final String SEPARATOR = "_";
 
     public WikipediaSearch(Chatbot chatbot, List<String> regexList) {
         super(chatbot, regexList);

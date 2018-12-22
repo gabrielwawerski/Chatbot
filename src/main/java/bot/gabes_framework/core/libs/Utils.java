@@ -48,16 +48,16 @@ public final class Utils {
     }
 
     /**
-     * Always make sure to "ACTIONIFY"
+     * Always make sure to "TO_REGEX"
      *
      * @param arg
      * @return
      */
-    public static final String ACTIONIFY(String arg) {
+    public static final String TO_REGEX(String arg) {
         return "(?i)^!\\s*" + arg + "$";
     }
 
-    public static final String DEACTIONIFY(String regex) {
+    public static final String TO_COMMAND(String regex) {
         return regex.replaceAll("\\(\\?i\\)\\^!\\\\\\\\s\\*(\\S+?)\\$", "$1");
     }
 

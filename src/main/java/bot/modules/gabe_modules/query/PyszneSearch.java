@@ -23,7 +23,7 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String HAIANH_URL = "https://www.pyszne.pl/bar-azjatycki-hai-ahn";
 
     private final String HELP_REGEX = makeRegex("pyszne help");
-    private final String ANY_REGEX = makeRegex("pyszne (.*)");
+    private final String SEARCH_REGEX = makeRegex("pyszne (.*)");
 
     private final String HAIANH_REGEX_1 = makeRegex("pyszne haianh");
     private final String HAIANH_REGEX_2 = makeRegex("pyszne hai-anh");
@@ -69,14 +69,15 @@ public class PyszneSearch extends SearchModuleBase {
         } else if (match.equals(HAIANH_REGEX_1) || match.equals(HAIANH_REGEX_2)) {
             sendMessage(messageBody);
             return true;
-        } else if (match.equals(match.equals(FOOTBALL_PIZZA_1)) || match.equals(FOOTBALL_PIZZA_2) || match.equals(FOOTBALL_PIZZA_3)) {
+        } else if (match.equals(match.equals(FOOTBALL_PIZZA_1))
+                || match.equals(FOOTBALL_PIZZA_2) || match.equals(FOOTBALL_PIZZA_3)) {
             sendMessage(messageBody);
             return true;
         }
 
         System.out.println("false");
         updateMatcher(messageBody);
-        if (match.equals(ANY_REGEX) ) {
+        if (match.equals(SEARCH_REGEX) ) {
 //            updateMatcher(messageBody);
 
             if (isMatchFound()) {
@@ -112,8 +113,8 @@ public class PyszneSearch extends SearchModuleBase {
             return FOOTBALL_PIZZA_3;
         } else if (messageBody.matches(FOOTBALL_PIZZA_3)) {
             return FOOTBALL_PIZZA_3;
-        } else if (messageBody.matches(ANY_REGEX)) {
-            return ANY_REGEX;
+        } else if (messageBody.matches(SEARCH_REGEX)) {
+            return SEARCH_REGEX;
         }
         return "";
     }
@@ -121,15 +122,15 @@ public class PyszneSearch extends SearchModuleBase {
     @Override
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.DEACTIONIFY(HAIANH_REGEX_1));
-        commands.add(Utils.DEACTIONIFY(HAIANH_REGEX_2));
-        commands.add(Utils.DEACTIONIFY(FOOTBALL_PIZZA_1));
-        commands.add(Utils.DEACTIONIFY(FOOTBALL_PIZZA_2));
-        commands.add(Utils.DEACTIONIFY(FOOTBALL_PIZZA_3));
-        commands.add(Utils.DEACTIONIFY(MARIANO_ITALIANO_1));
-        commands.add(Utils.DEACTIONIFY(MARIANO_ITALIANO_2));
-        commands.add(Utils.DEACTIONIFY(ANY_REGEX));
-        commands.add(Utils.DEACTIONIFY(HELP_REGEX));
+        commands.add(Utils.TO_COMMAND(HAIANH_REGEX_1));
+        commands.add(Utils.TO_COMMAND(HAIANH_REGEX_2));
+        commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_1));
+        commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_2));
+        commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_3));
+        commands.add(Utils.TO_COMMAND(MARIANO_ITALIANO_1));
+        commands.add(Utils.TO_COMMAND(MARIANO_ITALIANO_2));
+        commands.add(Utils.TO_COMMAND(SEARCH_REGEX));
+        commands.add(Utils.TO_COMMAND(HELP_REGEX));
         return commands;
     }
 

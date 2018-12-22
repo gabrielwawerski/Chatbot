@@ -84,10 +84,10 @@ public class GoogleSearch extends SearchModuleBase {
     public ArrayList<String> getCommands() {
         ArrayList<String> commands = new ArrayList<>();
 
-        commands.add(Utils.DEACTIONIFY(GOOGLE_REGEX));
-        commands.add(Utils.DEACTIONIFY(G_REGEX));
-        commands.add(Utils.DEACTIONIFY(GOOGLE_REGEX));
-        commands.add(Utils.DEACTIONIFY(GOOGLE_REGEX));
+        commands.add(Utils.TO_COMMAND(GOOGLE_REGEX));
+        commands.add(Utils.TO_COMMAND(G_REGEX));
+        commands.add(Utils.TO_COMMAND(GOOGLE_REGEX));
+        commands.add(Utils.TO_COMMAND(GOOGLE_REGEX));
         return commands;
     }
 
