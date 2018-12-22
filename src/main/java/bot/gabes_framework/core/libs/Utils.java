@@ -27,6 +27,11 @@ public final class Utils {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss");
     public static final DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
 
+    /** 🆗 */
+    public static final String EMOJI_NEW_BUTTON = "\uD83C\uDD95";
+    /** 🆕 */
+    public static final String EMOJI_OK_BUTTON = "\uD83C\uDD97";
+
     public static String getMatch(Message message, List<String> regexList) {
         String messageBody = message.getMessage();
         for (String regex : regexList) {

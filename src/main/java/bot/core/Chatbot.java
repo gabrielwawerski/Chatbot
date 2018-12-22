@@ -1,5 +1,6 @@
 package bot.core;
 
+import bot.gabes_framework.core.libs.Utils;
 import bot.modules.gabe_modules.query.*;
 import bot.modules.gabe_modules.Think;
 import bot.modules.gabe_modules.*;
@@ -34,6 +35,7 @@ public class Chatbot {
     private String threadId;
     private Human me;
     private int modulesOnline;
+    private int totalModules;
 
     protected void loadModules() {
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
@@ -42,10 +44,10 @@ public class Chatbot {
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
         modules.put("FeatureSuggest", new FeatureSuggest(this, "sugestie.txt")); // TODO add info
 
-        modules.put("GoogleSearch", new GoogleSearch(this));
-        modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
-        modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki", "w")));
         modules.put("MultiTorrentSearch", new MultiTorrentSearch(this));
+        modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki")));
+        modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
+        modules.put("GoogleSearch", new GoogleSearch(this));
         modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("PyszneSearch", new PyszneSearch(this));
 
@@ -128,7 +130,7 @@ public class Chatbot {
         System.out.println("Ładowanie modułów...");
         loadModules();
 
-        int totalModules = modules.size();
+        totalModules = modules.size();
         modulesOnline = 0;
         List<String> modulesOffline = null;
 
@@ -153,7 +155,7 @@ public class Chatbot {
                 System.out.print(module.getClass().getSimpleName() + " ");
             }
             System.out.println();
-            System.out.println(modulesOnline + " / " + totalModules + "(" + (double)(totalModules - (modulesOnline *  totalModules)) / 100 + "%)");
+            System.out.println(modulesOnline + " / " + totalModules + "(" + (double)(totalModules - (modulesOnline * totalModules)) / 100 + "%)");
         }
 
         System.out.println("-----------------");
@@ -172,8 +174,9 @@ public class Chatbot {
         if (!silentMode) {
             initMessage();
         }
-        System.out.println("-----------------\n");
+        System.out.print("-----------------\n");
         System.out.println("PCIONBOT ONLINE");
+        System.out.println();
 
         while (running) {
             try {
@@ -211,15 +214,14 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " online!"
-                + "\nZaładowane moduły: " + modulesOnline
-                + "\n\n!suggest"
-                + "\nWpisz !cmd aby zobaczyć listę komend");
-        System.out.println();
+        webController.sendMessage("PcionBot " + getVersion() + " online!\n"
+                + "Załadowane moduły: " + modulesOnline + "/" + totalModules + Utils.EMOJI_NEW_BUTTON
+                + "\n\nWpisz !cmd aby zobaczyć listę komend. !suggest");
     }
 
-    public int getModulesOnline() {
-        return modulesOnline;
+    public String getModulesOnline() {
+        String string = Integer.toString(modulesOnline) + " / " + Integer.toString(totalModules);
+        return string;
     }
 
     public void sendMessage(String message) {

@@ -69,14 +69,15 @@ public class PyszneSearch extends SearchModuleBase {
         if (match.equals(HELP_REGEX) || match.equals(HELP_2_REGEX) ) {
             chatbot.sendMessage(
                     "Restauracje dla kodu pocztowego."
-                            + "\n!pyszne kod pocztowy"
+                            + "\n---\n"
+                            + "AT THE GABES"
+                            + "\npyszne.pl/restauracja-lublin-lublin-20-455"
+                            + "\n---\n"
                             + "\n!pyszne mariano  /" + " italiano"
                             + "\n!pyszne football   /" + " footballpizza"
                             + "\n!pyszne hai           /" + " hai-anh / haianh"
-                            + "\nFormat: 00-000 lub 00 000 lub 00000"
-                            + "\n---\n"
-                            + "AT THE GABES"
-                            + "\npyszne.pl/restauracja-lublin-lublin-20-455");
+                            + "\n\n!pyszne kod pocztowy"
+                            + "\nFormat: 00-000 lub 00 000 lub 00000");
             return true;
 
         } else if (match.equals(MARIANO_ITALIANO_1) || match.equals(MARIANO_ITALIANO_2)) {

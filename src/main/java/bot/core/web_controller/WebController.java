@@ -71,12 +71,12 @@ public class WebController {
 
         // TODO sposób na mniej crashy (hopefully)
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
+            System.out.println("Coś poszło nie tak:");
             e.printStackTrace();
-            sendMessage("Coś poszło nie tak. Jebne restart.");
 
             // TODO test - EXPERIMENTAL!!!!!!!!!!!
 //            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
-            quit(false);
+            quit(true);
         });
     }
 
@@ -113,7 +113,7 @@ public class WebController {
     //region Sending messages
     public void sendMessage(Message message) {
         int myMessageCount = getNumberOfMyMessagesDisplayed();
-        System.out.println("myMessageCount = " + myMessageCount);
+
         WebElement inputBox = selectInputBox();
         if (debugMessages) {
             message.sendDebugMessage(inputBox);

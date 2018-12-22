@@ -76,11 +76,21 @@ public class SimpleWeather extends SimpleModule {
                             .append(weatherResponse.getTemperatureUnit())
                             .append(System.getProperty("line.separator"));
 
-                    // current weather's brief description
-                    builder.append(weatherResponse.getWeatherDescription().substring(0, 1).toUpperCase()
-                                    // .substring(1) will throw an exception if getWeatherDescription() will be <1
-                            + weatherResponse.getWeatherDescription().substring(1))
-                            .append(System.getProperty("line.separator"))
+                    String weatherDesc
+                            = weatherResponse.getWeatherDescription().substring(0, 1).toUpperCase()
+                            + weatherResponse.getWeatherDescription().substring(1);
+
+                    if (weatherDesc.equals("Lekkie zachmurzenie")) {
+                        String desc = weatherDesc + " \uD83C\uDF25";
+                        builder.append(desc);
+                    } else {
+                        // current weather's brief description
+                        builder.append(weatherResponse.getWeatherDescription().substring(0, 1).toUpperCase()
+                                // .substring(1) will throw an exception if getWeatherDescription() will be <1
+                                + weatherResponse.getWeatherDescription().substring(1));
+                    }
+
+                    builder.append(System.getProperty("line.separator"))
                             .append("==================")
                             .append(System.getProperty("line.separator"));
 

@@ -37,7 +37,12 @@ public class FeatureSuggest extends SaveResourceModule {
                 String msg = message.getMessage().substring(8);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage("U+1F5D2 Dzięki!");
+                chatbot.sendMessage("Dzięki! \uD83D\uDD2C");
+                // TODO List<String> randomRespones;
+                //
+                 String uruchamiamAi = "Dzięki! \uD83D\uDD2C";
+
+                // randomRespones = List.of(
                 return true;
             }
         }

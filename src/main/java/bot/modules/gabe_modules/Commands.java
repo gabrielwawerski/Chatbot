@@ -1,11 +1,9 @@
 package bot.modules.gabe_modules;
 
 import bot.core.Chatbot;
-import bot.modules.gabe_modules.query.AllegroSearch;
-import bot.modules.gabe_modules.query.GoogleSearch;
+import bot.gabes_framework.core.libs.Utils;
+import bot.modules.gabe_modules.query.*;
 import bot.gabes_framework.message.SingleMessageModule;
-import bot.modules.gabe_modules.query.PyszneSearch;
-import bot.modules.gabe_modules.query.YoutubeSearch;
 
 import java.util.List;
 
@@ -22,28 +20,45 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 /** {@link  } */
+                .append("    ")
                 .append("!info !status")
                 .append("\n")
 
-                .append("!suggest !pomysl")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!suggest !pomysl")
                 .append("\n")
 
+                /** {@link MultiTorrentSearch} */
+                .append(Utils.EMOJI_NEW_BUTTON).append("!torrent")
+                .append("\n")
 
+                /** {@link WikipediaSearch} */
+                .append(Utils.EMOJI_NEW_BUTTON).append("!wiki")
+                .append("\n")
 
                 /** {@link YoutubeSearch} */
-                .append("!youtube... !yt...")
+                .append("    ")
+                .append("!youtube !yt")
+                .append("\n")
+
+                /** {@link GoogleSearch} */
+                .append("    ")
+                .append("!google !g")
+                .append("\n")
+                .append("!g help ").append("!g leze")
                 .append("\n")
 
                 /** {@link PyszneSearch} */
-                .append("!pyszne")
+                .append("!pyszne ")
+                .append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne mariano")
+                .append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne football")
+                .append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne hai")
                 .append("\n")
 
                 /** {@link AllegroSearch} */
                 .append("!allegro...")
-                .append("\n")
-
-                /** {@link GoogleSearch} */
-                .append("!google !g ").append("!g help ").append("!g leze")
                 .append("\n")
 
                 /** {@link RandomGroupPhoto */
@@ -54,7 +69,7 @@ public class Commands extends SingleMessageModule {
                 .append("!pogoda !p")
                 .append("\n")
 
-                .append("!popcorn")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!popcorn")
                 .append("\n")
 
                 /** {@link KartaPulapka} */
@@ -79,7 +94,7 @@ public class Commands extends SingleMessageModule {
 
 
                 .append("\n")
-                .append("!sylwester")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!sylwester")
                 .append("\n")
 
                 .toString();
