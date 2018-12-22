@@ -57,7 +57,7 @@ public class Chatbot {
         modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
         modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki", "w")));
         modules.put("PyszneSearch", new PyszneSearch(this));
-        modules.put("ImageFromUrl", new ImageFromUrl(this, List.of("i"), "https://i.imgurProvider.com/s6q5qCG.jpg", ""));
+        modules.put("ImageFromUrl", new ImageFromUrl(this));
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
 //        modules.put("TorrentSearch", new TorrentSearch(this));
         modules.put("TorrentTest", new TorrentTest(this));

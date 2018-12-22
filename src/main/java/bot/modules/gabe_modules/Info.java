@@ -40,16 +40,18 @@ public class Info extends SingleMessageModule {
         LocalDateTime startupTime = chatbot.getStartupTime();
         LocalDateTime now = LocalDateTime.now();
         long diff = now.toEpochSecond(ZoneOffset.UTC) - startupTime.toEpochSecond(ZoneOffset.UTC);
+
         long diffSeconds = TimeUnit.SECONDS.convert(diff, TimeUnit.SECONDS) % 60;
         long diffMinutes = TimeUnit.MINUTES.convert(diff, TimeUnit.SECONDS) % 60;
         long diffHours = TimeUnit.HOURS.convert(diff, TimeUnit.SECONDS) % 24;
         long diffDays = TimeUnit.DAYS.convert(diff, TimeUnit.SECONDS);
 
-        return "Online od " + DATE_TIME_FORMATTER.format(startupTime) + "\n[" +
-                (diffDays > 0 ? diffDays + " dni" + diffDays + " " : "") +
-                (diffHours > 0 ? diffHours + " godzin" + diffHours + " " : "") +
-                (diffMinutes > 0 ? diffMinutes + " minut" + diffMinutes + " " : "") +
-                diffSeconds + " sekund" + "]";
+        return "Online od " + DATE_TIME_FORMATTER.format(startupTime)
+                + "\n["
+                + (diffDays > 0 ? diffDays + " dni" + " " : "")
+                + (diffHours > 0 ? diffHours + " godzin" + " " : "")
+                + (diffMinutes > 0 ? diffMinutes + " minut" + " " : "")
+                + diffSeconds + " sekund" + "]";
     }
 
     public String getMinifiedStats() {
@@ -78,11 +80,14 @@ public class Info extends SingleMessageModule {
             }
         }
 
-        double lezeMsgPercent = lezeMessageCounter - messages.size();
+        if (lezeMessageCounter > 0) {
+            double lezeMsgPercent = lezeMessageCounter - messages.size();
+            NumberFormat format = new DecimalFormat("#0.0");
 
-        NumberFormat format = new DecimalFormat("#0.0");
-
-        return format.format(lezeMsgPercent);
+            return format.format(lezeMsgPercent) + "%";
+        } else {
+            return "0%";
+        }
     }
 
     private String cmdInfo() {

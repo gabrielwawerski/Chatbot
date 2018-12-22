@@ -3,20 +3,26 @@ package bot.modules.gabe_modules.work_in_progress;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
+import bot.gabes_framework.core.ModuleBase;
 import bot.gabes_framework.simple.SimpleUrlImageModule;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import static bot.core.helper.interfaces.Util.GET_RANDOM;
+import static bot.core.helper.interfaces.Util.*;
 
-public class ImageFromUrl extends SimpleUrlImageModule {
+public class ImageFromUrl extends ModuleBase {
     private List<String> subreddits;
 
-    public ImageFromUrl(Chatbot chatbot, List<String> regexList, String url, String message) {
-        super(chatbot, regexList, url, message);
+    private final String MEMES_URL = ACTIONIFY("a");
+
+    public ImageFromUrl(Chatbot chatbot) {
+        super(chatbot);
         try {
             this.subreddits
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + "subreddits.txt"));
@@ -31,15 +37,37 @@ public class ImageFromUrl extends SimpleUrlImageModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String regex : regexList) {
-            if (match.equals(regex)) {
-                String subreddit = GET_RANDOM(subreddits);
+        if (match.equals(MEMES_URL)) {
+//            String redditPath = "https://www.reddit.com/r/" + GET_RANDOM(subreddits) + "/random.json";
+            String redditPath = "https://www.reddit.com/r/" + "cats" + "/random.json";
+            String data = GET_PAGE_SOURCE(redditPath);
+            System.out.println(data);
+            Matcher matcher = Pattern.compile("https://i\\.redd\\.it/\\S+?\\.jpg").matcher(redditPath);
+            System.out.println(matcher);
 
-
-                chatbot.sendImageUrlWaitToLoad("https://i.imgur.com/yKAXiyl.jpg");
-                return true;
-            }
+//            if (matcher.find()) {
+//                chatbot.sendImageUrlWaitToLoad(matcher.group());
+//                    chatbot.sendImageUrlWaitToLoad("https://i.imgur.com/yKAXiyl.jpg");
+//                return true;
+//            }
         }
         return false;
+    }
+
+    @Override
+    public String getMatch(Message message) {
+        String messageBody = message.getMessage();
+        if (messageBody.matches(MEMES_URL)) {
+            return MEMES_URL;
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public ArrayList<String> getCommands() {
+        ArrayList<String> commands = new ArrayList<>();
+        commands.add(DEACTIONIFY(MEMES_URL));
+        return commands;
     }
 }
