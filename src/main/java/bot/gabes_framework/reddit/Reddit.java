@@ -51,13 +51,12 @@ public abstract class Reddit implements Module {
             String redditPath = "https://www.reddit.com/r/" + subreddit + "/random.json";
             String data = GET_PAGE_SOURCE(redditPath);
             Matcher matcher = Pattern.compile("https://i\\.redd\\.it/\\S+?\\.jpg").matcher(data);
-
-            if (matcher.find()) {
-                try {
-                    return ImageIO.read(new URL(matcher.group())).toString();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            try {
+                if (matcher.find()) {
+                    return new URL(matcher.group()).getPath();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         return null;
