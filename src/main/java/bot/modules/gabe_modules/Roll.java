@@ -4,6 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.core.ModuleBase;
+import bot.gabes_framework.core.libs.Utils;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -39,7 +40,7 @@ public class Roll extends ModuleBase {
             if (matcher.find()) {
                 try {
                     int roll = roll(MIN_ROLL, Integer.parseInt(matcher.group(1)));
-                    chatbot.sendMessage("Twój los: " + roll);
+                    chatbot.sendMessage("Twój los: " + roll + " " + Utils.EMOJI_HOURGLASS);
                 } catch (NumberFormatException e) {
                     chatbot.sendMessage("Coś poszło nie tak... gdzie jest moje gabe?");
                     throw new MalformedCommandException();

@@ -1,5 +1,7 @@
 package bot.core;
 
+import bot.gabes_framework.core.libs.Utils;
+
 public class PcionBot extends Chatbot {
     // to do:
     // !restart
@@ -43,6 +45,44 @@ public class PcionBot extends Chatbot {
         String GRUPKA_ID = "1158615960915822";
         String GRZAGSOFT_ID = "1506449319457834";
         String PATRO_ID = "2275107775897967";
+
+        String message
+                = new StringBuilder() // instead of making an instance and assigning build String to message.
+
+                .append("Dostępne komendy:")
+                .append("\n")
+                .append("==================")
+                .append("\n")
+
+                /** {@link  } */
+                .append("\n").append(Utils.EMOJI_INFRMATION).append("!sylwester").append("\n")
+                .append(Utils.EMOJI_PUSHPIN).append("!suggest ... !pomysl ...").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!popcorn").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON)
+                .append(Utils.EMOJI_MAGNIFYING).append("!torrent").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!wiki").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!youtube !yt ").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!google !g ").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!allegro").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!pyszne").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne mariano").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne football").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne hai").append("\n")
+                .append(Utils.EMOJI_INFRMATION).append("!g help ").append("\n")
+                .append("\u2601\ufe0f").append("!pogoda !p").append("\n")
+                .append(Utils.EMOJI_INFRMATION).append("!info !status").append("\n")
+                .append("\uD83D\uDD00").append("!random !r").append("\n")
+                .append("     ").append("!karta !kartapulapka !myk").append("\n")
+                .append("\u2754").append("!8ball ... !ask ... !8 ... ").append("\n")
+                .append(Utils.EMOJI_HOURGLASS).append("!roll !roll <max>").append("\n")
+                .append(Utils.EMOJI_EXCLAM_MRK).append("!jebacleze !leze ").append("!spam").append("\n")
+                .append("\u2757").append("!g leze").append("\n")
+                .append("\uD83E\uDD14").append("!think !think <liczba>").append("\n")
+
+
+                .toString();
+
+        System.out.println(message);
 
         pcionbot = new Chatbot(username, password,
                 PATRO_ID,

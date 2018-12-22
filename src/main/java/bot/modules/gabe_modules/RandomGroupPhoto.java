@@ -5,6 +5,7 @@ import bot.core.PcionBot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
+import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.simple.SimpleModule;
 import com.github.imgur.ImgUr;
 import com.github.imgur.api.image.ImageResponse;
@@ -47,7 +48,7 @@ public class RandomGroupPhoto extends SimpleModule {
                 imageIcon = new ImageIcon(Util.GET_RANDOM(files).getPath());
                 image = imageIcon.getImage();
 
-                chatbot.sendImageWithMessage(image, "Losuję...");
+                chatbot.sendImageWithMessage(image, Utils.EMOJI_SHUFFLE + " Losuję...");
                 /** {@link Message#sendMessageWithImage(WebElement, String, Image)}  */ // TODO try to run on new thread, trace calls and decide where to do it
                 return true;
             }

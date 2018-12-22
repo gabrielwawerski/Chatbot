@@ -36,19 +36,19 @@ public class FeatureSuggest extends SaveResourceModule {
             matcher = Pattern.compile(SUGGEST_ANY).matcher(message.getMessage());
 
             if (matcher.find()) {
-                String msg = message.getMessage().substring(7);
+                String msg = message.getMessage().substring(9);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage("Zapisano!  " + Utils.EMOJI_PUSHPIN);
+                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
                 return true;
             }
         } else if (match.equals(POMYSL_ANY)) {
             matcher = Pattern.compile(POMYSL_ANY).matcher(message.getMessage());
             if (matcher.find()) {
-                String msg = message.getMessage().substring(7);
+                String msg = message.getMessage().substring(8);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + "\nZapisano!");
+                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
 //                 TODO random responses each time
 //                List<String> randomRespones;
 //                String uruchamiamAi = "Dzięki! \uD83D\uDD2C";

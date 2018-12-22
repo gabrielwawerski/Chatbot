@@ -2,7 +2,6 @@ package bot.modules.gabe_modules;
 
 import bot.core.Chatbot;
 import bot.gabes_framework.core.libs.Utils;
-import bot.modules.gabe_modules.query.*;
 import bot.gabes_framework.message.SingleMessageModule;
 
 import java.util.List;
@@ -20,92 +19,30 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 /** {@link  } */
-                .append("    ")
-                .append("!info !status")
-                .append("\n")
+                .append("\n").append(Utils.EMOJI_INFRMATION).append("!sylwester").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!suggest ... !pomysl ...").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!torrent").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!wiki").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON)
+                .append(Utils.EMOJI_MAGNIFYING).append("!pyszne mariano").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne football").append("\n")
+                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne hai").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!youtube !yt ").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!google !g ").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!pyszne").append("\n")
+                .append(Utils.EMOJI_MAGNIFYING).append("!allegro").append("\n")
+                .append(Utils.EMOJI_INFRMATION).append("!info !status").append("\n")
+                .append(Utils.EMOJI_INFRMATION).append("!g help ").append("\n")
+                .append("\uD83D\uDD00").append("!random !r").append("\n")
+                .append("\u2601\ufe0f").append("!pogoda !p").append("\n")
+                .append(Utils.EMOJI_POPCORN).append("!popcorn").append("\n")
+                .append("\u2754").append("!8ball !ask !8 ").append("\n")
+                .append(Utils.EMOJI_HOURGLASS).append("!roll !roll <max>").append("\n")
+                .append("\uD83E\uDD14").append("!think !think <liczba>").append("\n")
+                .append("     ").append("!karta !kartapulapka !myk").append("\n")
+                .append(Utils.EMOJI_EXCLAM_MRK).append("!jebacleze !leze ").append("!spam").append("\n")
+                .append("\u2757").append("!g leze").append("\n")
 
-                .append(Utils.EMOJI_NEW_BUTTON).append("!suggest ... !pomysl ...")
-                .append("\n")
-
-                /** {@link MultiTorrentSearch} */
-                .append(Utils.EMOJI_NEW_BUTTON).append("!torrent ...")
-                .append("\n")
-
-                /** {@link WikipediaSearch} */
-                .append(Utils.EMOJI_NEW_BUTTON).append("!wiki ...")
-                .append("\n")
-
-                /** {@link YoutubeSearch} */
-                .append("    ")
-                .append("!youtube ... !yt ...")
-                .append("\n")
-
-                /** {@link GoogleSearch} */
-                .append("    ")
-                .append("!google ... !g ...")
-                .append("\n")
-                .append("    ")
-                .append("!g help ").append("!g leze")
-                .append("\n")
-
-                /** {@link PyszneSearch} */
-                .append("    ")
-                .append("!pyszne")
-                .append("\n")
-                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne mariano")
-                .append("\n")
-                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne football")
-                .append("\n")
-                .append(Utils.EMOJI_NEW_BUTTON).append("!pyszne hai")
-                .append("\n")
-
-                /** {@link AllegroSearch} */
-                .append("    ")
-                .append("!allegro ...")
-                .append("\n")
-
-                /** {@link RandomGroupPhoto */
-                .append("    ")
-                .append("!random !r")
-                .append("\n")
-
-                /** {@link SimpleWeather} */
-                .append("    ")
-                .append("!pogoda !p")
-                .append("\n")
-
-                .append(Utils.EMOJI_NEW_BUTTON).append("!popcorn")
-                .append("\n")
-
-                /** {@link KartaPulapka} */
-                .append("    ")
-                .append("!karta !kartapulapka !myk")
-                .append("\n")
-
-                /** {@link EightBall} */
-                .append("    ")
-                .append("!8ball ... !ask ... !8 ... ")
-                .append("\n")
-
-                /** {@link Roll} */
-                .append("    ")
-                .append("!roll !roll <max>")
-                .append("\n")
-
-                /** {@link JebacLeze} */
-                .append("    ")
-                .append("!jebacleze !leze ").append("!spam")
-                .append("\n")
-
-                /** {@link Think */
-                .append("    ")
-                .append("!think !think <liczba>")
-                .append("\n")
-
-
-                .append("\n")
-                .append(Utils.EMOJI_NEW_BUTTON).append("!sylwester")
-                .append("\n")
 
                 .toString();
     }

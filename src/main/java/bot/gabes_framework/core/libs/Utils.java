@@ -27,12 +27,15 @@ public final class Utils {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss");
     public static final DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
 
-    /** 🆗 */
-    public static final String EMOJI_NEW_BUTTON = "\uD83C\uDD95";
-    /** 🆕 */
-    public static final String EMOJI_OK_BUTTON = "\uD83C\uDD97";
-    /** 📌 */
-    public static final String EMOJI_PUSHPIN = "\uD83D\uDCCC";
+    public static final String EMOJI_NEW_BUTTON = "\uD83C\uDD95";       // 🆕
+    public static final String EMOJI_OK_BUTTON = "\uD83C\uDD97";        // 🆗
+    public static final String EMOJI_PUSHPIN = "\uD83D\uDCCC";          // 📌
+    public static final String EMOJI_SHUFFLE = "\uD83D\uDD00";          // 🔀
+    public static final String EMOJI_INFRMATION = "\u2139\ufe0f";             // ℹ️
+    public static final String EMOJI_MAGNIFYING = "\uD83D\uDD0E"; // 🔎️
+    public static final String EMOJI_HOURGLASS = "\u23f3";             // ⏳
+    public static final String EMOJI_EXCLAM_MRK = "\u2757";      // ❗
+    public static final String EMOJI_POPCORN = "\uD83C\uDF7F";      // 🍿
 
     public static String getMatch(Message message, List<String> regexList) {
         String messageBody = message.getMessage();

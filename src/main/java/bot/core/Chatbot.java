@@ -175,11 +175,9 @@ public class Chatbot {
             initMessage();
         }
         System.out.print("-----------------\n");
-        System.out.println("PCIONBOT ONLINE");
-        System.out.println();
-
         while (running) {
             try {
+                System.out.println("PCIONBOT ONLINE");
                 webController.waitForNewMessage();
                 Message newMessage = webController.getLatestMessage();
                 messageLog.add(newMessage);
@@ -215,7 +213,7 @@ public class Chatbot {
 
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " online!\n"
-                + "Załadowane moduły: " + modulesOnline + "/" + totalModules + Utils.EMOJI_NEW_BUTTON
+                + "Załadowane moduły: " + modulesOnline + "/" + totalModules + " " + Utils.EMOJI_NEW_BUTTON
                 + "\n\nWpisz !cmd aby zobaczyć listę komend. !suggest");
     }
 
