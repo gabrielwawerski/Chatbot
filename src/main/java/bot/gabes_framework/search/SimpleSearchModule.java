@@ -45,6 +45,6 @@ public abstract class SimpleSearchModule extends SearchModuleBase {
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.getCommands(regexList);
+        return Utils.regexToList(regexList);
     }
 }

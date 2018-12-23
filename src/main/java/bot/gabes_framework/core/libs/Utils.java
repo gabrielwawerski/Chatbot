@@ -57,7 +57,7 @@ public final class Utils {
      * @param regexList
      * @author hollandjake
      */
-    public static ArrayList<String> getCommands(List<String> regexList) {
+    public static ArrayList<String> regexToList(List<String> regexList) {
         return (ArrayList<String>) regexList.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
     }
 
