@@ -38,7 +38,7 @@ public class RandomGroupPhoto extends ModuleBase {
         File f = new File(PHOTOS_PATH);
         files = new ArrayList<>(Arrays.asList(f.listFiles()));
         now = LocalTime.now();
-
+        timeoutRelease = LocalTime.of(now.getHour(), now.getMinute(), now.getSecond() + MESSAGE_TIMEOUT - 1);
         newRandomImage();
     }
 
@@ -55,7 +55,7 @@ public class RandomGroupPhoto extends ModuleBase {
                 chatbot.sendMessage("Musisz chwilę poczekać.");
                 return false;
             } else {
-                chatbot.sendImageWithMessage(image, Utils.EMOJI_SHUFFLE + " Losuję...");
+                chatbot.sendImageWithMessage(image, Utils.SHUFFLE_EMOJI + " Losuję...");
                 /** {@link Message#sendMessageWithImage(WebElement, String, Image)}  */ // TODO try to run on new thread, trace calls and decide where to do it
                 timeoutRelease = LocalTime.of(now.getHour(), now.getMinute(), now.getSecond() + MESSAGE_TIMEOUT - 1);
                 newRandomImage();

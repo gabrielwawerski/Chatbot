@@ -21,25 +21,25 @@ import java.util.stream.Collectors;
  * @author gabrielwawerski (https://github.com/gabrielwawerski)
  */
 public final class Utils {
-    public static final String EMOJI_PENCIL = "\u270f\ufe0f";
-    public static final String EMOJI_THINK = "\uD83E\uDD14";
-    public static final String EMOJI_CAMERA = "\uD83D\uDCF8";
     private static final Random RANDOM = new Random();
 
     public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("dd.MM.yy");
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss");
     public static final DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
 
-    public static final String EMOJI_NEW_BUTTON = "\uD83C\uDD95";       // 🆕
-    public static final String EMOJI_OK_BUTTON = "\uD83C\uDD97";        // 🆗
-    public static final String EMOJI_PUSHPIN = "\uD83D\uDCCC";          // 📌
-    public static final String EMOJI_SHUFFLE = "\uD83D\uDD00";          // 🔀
-    public static final String EMOJI_INFRMATION = "\u2139\ufe0f";             // ℹ️
-    public static final String EMOJI_MAGNIFYING = "\uD83D\uDD0E"; // 🔎️
-    public static final String EMOJI_HOURGLASS = "\u23f3";             // ⏳
-    public static final String EMOJI_EXCLAM_MRK = "\u2757";      // ❗
-    public static final String EMOJI_POPCORN = "\uD83C\uDF7F";      // 🍿
-    public static final String EMOJI_RIGHT_ARRW = "\u27a1\ufe0f";
+    public static final String NEW_BUTTON_EMOJI = "\uD83C\uDD95"; // 🆕
+    public static final String OK_BUTTON_EMOJI = "\uD83C\uDD97"; // 🆗
+    public static final String PUSHPIN_EMOJI = "\uD83D\uDCCC"; // 📌
+    public static final String SHUFFLE_EMOJI = "\uD83D\uDD00"; // 🔀
+    public static final String INFRMATION_EMOJI = "\u2139\ufe0f"; // ℹ️
+    public static final String MAGNIFYING_EMOJI = "\uD83D\uDD0E"; // 🔎️
+    public static final String HOURGLASS_EMOJI = "\u23f3"; // ⏳
+    public static final String EXCLAM_MRK_EMOJI = "\u2757"; // ❗
+    public static final String POPCORN_EMOJI = "\uD83C\uDF7F"; // 🍿
+    public static final String RIGHT_ARRW_EMOJI = "\u27a1\ufe0f";
+    public static final String PENCIL_EMOJI = "\u270f\ufe0f";
+    public static final String THINK_EMOJI = "\uD83E\uDD14";
+    public static final String CAMERA_EMOJI = "\uD83D\uDCF8";
 
     public static String getMatch(Message message, List<String> regexList) {
         String messageBody = message.getMessage();

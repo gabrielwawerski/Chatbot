@@ -7,7 +7,6 @@ import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.resource.SaveResourceModule;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +38,7 @@ public class FeatureSuggest extends SaveResourceModule {
                 String msg = message.getMessage().substring(9);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
+                chatbot.sendMessage(Utils.PUSHPIN_EMOJI + " Dzięki!");
                 return true;
             }
         } else if (match.equals(POMYSL_ANY)) {
@@ -48,7 +47,7 @@ public class FeatureSuggest extends SaveResourceModule {
                 String msg = message.getMessage().substring(8);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
+                chatbot.sendMessage(Utils.PUSHPIN_EMOJI + " Dzięki!");
 //                 TODO random responses each time
 //                List<String> randomRespones;
 //                String uruchamiamAi = "Dzięki! \uD83D\uDD2C";

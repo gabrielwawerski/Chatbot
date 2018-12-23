@@ -10,8 +10,7 @@ import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
 import bot.modules.gabe_modules.Popcorn;
-import bot.modules.gabe_modules.Inspire;
-import bot.modules.gabe_modules.work_in_progress.RandomKwejk;
+import bot.modules.gabe_modules.RandomKwejk;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -52,7 +51,7 @@ public class Chatbot {
         modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
         modules.put("PyszneSearch", new PyszneSearch(this));
 
-        modules.put("RandomGroupPhoto", new RandomGroupPhoto(this, List.of("random", "r")));
+        modules.put("RandomGroupPhoto", new RandomGroupPhoto(this));
         modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
         modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
         modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk"), "kartapulapka.jpg"));
@@ -210,7 +209,7 @@ public class Chatbot {
 
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " online!\n"
-                + "Załadowane moduły:  " + Utils.EMOJI_NEW_BUTTON + " " + modulesOnline + "/" + totalModules
+                + "Załadowane moduły:  " + Utils.NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
                 + "\nWpisz !cmd aby zobaczyć listę komend."
                 + "\n!suggest");
     }

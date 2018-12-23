@@ -1,4 +1,4 @@
-package bot.modules;
+package bot.modules.gabe_modules.work_in_progress;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
@@ -33,9 +33,9 @@ public class PollCreate extends ModuleBase {
             if (matcher.find()) {
 
 
-                String question = matcher.group(1);
-                String answer1 = matcher.group(2);
-                String answer2 = matcher.group(3);
+                String question = matcher.group(0);
+                String answer1 = matcher.group(1);
+                String answer2 = matcher.group(2);
                 System.out.println(question + "\n" + answer1 + "\n" + answer2);
 
                 chatbot.sendMessage(question + "\n" + answer1 + "\n" + answer2);

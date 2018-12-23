@@ -1,4 +1,4 @@
-package bot.modules.gabe_modules.work_in_progress;
+package bot.modules.gabe_modules;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
