@@ -59,7 +59,7 @@ public class Chatbot {
         modules.put("Roll", new Roll(this));
         modules.put("Think", new Think(this));
         modules.put("EightBall", new EightBall(this, "responses.txt"));
-        modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze"),
+        modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze", "jebac leze", "jebac"),
                 "responses.txt"));
         modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
                 "responses.txt"));
@@ -120,7 +120,6 @@ public class Chatbot {
 
         // Output Shutdown code
         System.out.println("PcionBot " + version);
-        System.out.println("Shutdown: " + shutdownCode);
         System.out.println("-----------------");
         System.out.println("Ładowanie modułów...");
         loadModules();
@@ -149,7 +148,6 @@ public class Chatbot {
             for (String module : modulesOffline) {
                 System.out.print(module.getClass().getSimpleName() + " ");
             }
-            System.out.println();
             System.out.println(modulesOnline + " / " + totalModules + "(" + (double)(totalModules - (modulesOnline * totalModules)) / 100 + "%)");
         }
 
@@ -165,12 +163,15 @@ public class Chatbot {
         webController.waitForMessagesToLoad();
         System.out.println("Wiadomości załadowane.");
 
+        System.out.println("Shutdown: " + shutdownCode);
+
         //Init message
         if (!silentMode) {
             initMessage();
         }
         System.out.print("-----------------\n");
         System.out.println("PCIONBOT ONLINE");
+        System.out.println("-----------------");
 
         while (running) {
             try {
@@ -208,7 +209,7 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " online!\n"
+        webController.sendMessage("PcionBot " + getVersion() + " online\n"
                 + "Załadowane moduły:  " + Utils.NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
                 + "\nWpisz !cmd aby zobaczyć listę komend."
                 + "\n!suggest");

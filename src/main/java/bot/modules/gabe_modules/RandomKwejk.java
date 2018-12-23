@@ -4,6 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.core.ModuleBase;
+import bot.gabes_framework.core.libs.Utils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -34,7 +35,7 @@ public class RandomKwejk extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (match.equals(KW_REGEX) || match.equals(KWEJK_REGEX)) {
+        if (isOrOther(KWEJK_REGEX, KW_REGEX)) {
             chatbot.sendImageUrlWaitToLoad(currentImageUrl);
             getNextMeme();
             return true;
@@ -73,22 +74,11 @@ public class RandomKwejk extends ModuleBase {
 
     @Override
     public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-
-        if (messageBody.matches(KWEJK_REGEX)) {
-            return KWEJK_REGEX;
-        } else if (messageBody.matches(KW_REGEX)) {
-            return KW_REGEX;
-        } else {
-            return "";
-        }
+        return findMatch(message, KWEJK_REGEX, KW_REGEX);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(DEACTIONIFY(KWEJK_REGEX));
-        commands.add(DEACTIONIFY(KW_REGEX));
-        return commands;
+        return Utils.regexToList(KWEJK_REGEX, KW_REGEX);
     }
 }

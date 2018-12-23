@@ -47,20 +47,20 @@ public class RandomGroupPhoto extends ModuleBase {
         updateMatch(message);
 
         if (isOrOther(RANDOM_REGEX, R_REGEX)) {
-            if (now.isBefore(timeoutRelease)) {
-//                    List<String> randomResponses
-//                            = List.of("Musisz jeszcze poczekać.",
-//                            "nie spamuj leze",
-//                            "bo cie zaraz kasprzak wypierdoli");
-                chatbot.sendMessage("Musisz chwilę poczekać.");
-                return false;
-            } else {
+//            if (now.isBefore(timeoutRelease)) {
+////                    List<String> randomResponses
+////                            = List.of("Musisz jeszcze poczekać.",
+////                            "nie spamuj leze",
+////                            "bo cie zaraz kasprzak wypierdoli");
+//                chatbot.sendMessage("Musisz chwilę poczekać.");
+//                return false;
+//            } else {
                 chatbot.sendImageWithMessage(image, Utils.SHUFFLE_EMOJI + " Losuję...");
                 /** {@link Message#sendMessageWithImage(WebElement, String, Image)}  */ // TODO try to run on new thread, trace calls and decide where to do it
                 timeoutRelease = LocalTime.of(now.getHour(), now.getMinute(), now.getSecond() + MESSAGE_TIMEOUT - 1);
                 newRandomImage();
                 return true;
-            }
+//            }
         }
         return false;
     }
