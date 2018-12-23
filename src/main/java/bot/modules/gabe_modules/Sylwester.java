@@ -58,6 +58,4 @@ public class Sylwester extends SaveResourceModule {
         commands.add(Utils.TO_COMMAND(PIOSENKA_REGEX));
         return commands;
     }
-
-
 }
