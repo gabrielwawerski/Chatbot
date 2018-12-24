@@ -3,7 +3,8 @@ package bot.modules.gabe_modules;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
-import bot.gabes_framework.message.SingleMessageModule;
+import bot.gabes_framework.core.ModuleBase;
+import bot.gabes_framework.core.libs.Utils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -16,22 +17,32 @@ import java.util.concurrent.TimeUnit;
 
 import static bot.core.helper.interfaces.Util.*;
 
-public class Info extends SingleMessageModule {
-    public Info(Chatbot chatbot, List<String> commands) {
-        super(chatbot, commands);
-        message = getStats();
+public class Info extends ModuleBase {
+    private final String ECHO_COMMAND = "echo";
+    private final String INFO_REGEX = Utils.TO_REGEX("info");
+    private final String STATS_REGEX = Utils.TO_REGEX("stats");
+    private final String UPTIME_REGEX = Utils.TO_REGEX("uptime");
+
+    public Info(Chatbot chatbot) {
+        super(chatbot);
     }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String command : regexList) {
-            if (match.equals(command)) {
-                this.message = getStats();
-                chatbot.sendMessage(this.message);
-                return true;
-            }
+        if (is(INFO_REGEX)) {
+            chatbot.sendMessage(getInfo());
+            return true;
+        } else if (is(STATS_REGEX)) {
+            chatbot.sendMessage(getStats());
+            return true;
+        } else if (is(UPTIME_REGEX)) {
+            chatbot.sendMessage(getUptime());
+            return true;
+        } else if (is(ECHO_COMMAND)) {
+            chatbot.sendMessage(getMinifiedStats());
+            return true;
         }
         return false;
     }
@@ -55,44 +66,64 @@ public class Info extends SingleMessageModule {
     }
 
     public String getMinifiedStats() {
-        return "PcionBot " + chatbot.getVersion() + "\n";
+        return "PcionBot " + chatbot.getVersion();
+    }
+
+    private String getInfo() {
+        return getMinifiedStats()
+                + "\n"
+                + getUptime()
+                + "\n\n"
+
+                + getStats()
+                + "\n\n"
+
+                + cmdInfo();
     }
 
     private String getStats() {
-        return getMinifiedStats()
-                + getUptime()
+        return "Załadowane moduły: " + chatbot.getModulesOnline()
                 + "\n"
-                + "Załadowane moduły: " + chatbot.getModulesOnline()
-                + "\n\nUnikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size()
-//                + "\nWiadomości leze: " + lezeStats()
-                + "\n\n" + cmdInfo();
-    }
-
-    private String lezeStats() {
-        double lezeMessageCounter = 0;
-        ArrayList<Message> messages = chatbot.getMessageLog();
-
-        if (Objects.isNull(chatbot.getMessageLog())) {
-            return "błąd";
-        }
-
-        for (Message msg : messages) {
-            if (msg.getSender().getName().equals("Jakub Smolak")) { // fixme
-                lezeMessageCounter++;
-            }
-        }
-
-        if (lezeMessageCounter > 0) {
-            double lezeMsgPercent = (messages.size() - (lezeMessageCounter * messages.size())) / 100;
-            NumberFormat format = new DecimalFormat("#00.0");
-
-            return format.format(lezeMsgPercent) + "%";
-        } else {
-            return "0%";
-        }
+                + "Unikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size()
+                + "\n"
+                + "Wiadomości leze: " + lezeStats();
     }
 
     private String cmdInfo() {
         return "Wpisz !cmd aby zobaczyć listę komend.";
+    }
+
+    private String lezeStats() {
+        double lezeMsgCount = 0;
+        ArrayList<Message> messages = chatbot.getMessageLog();
+
+        if (Objects.isNull(chatbot.getMessageLog())) {
+            return "";
+        } else {
+            for (Message msg : messages) {
+                if (msg.getSender().getName().equals("Jakub Smolak")) { // fixme
+                    lezeMsgCount++;
+                }
+            }
+
+            if (lezeMsgCount > 0) {
+                double lezeMsgPercent = (messages.size() - (lezeMsgCount * messages.size())) / 100;
+                NumberFormat format = new DecimalFormat("#00.0");
+
+                return lezeMsgCount + "(" + format.format(lezeMsgPercent) + "%)";
+            } else {
+                return "0";
+            }
+        }
+    }
+
+    @Override
+    public String getMatch(Message message) {
+        return findMatch(message, INFO_REGEX, STATS_REGEX, UPTIME_REGEX, ECHO_COMMAND);
+    }
+
+    @Override
+    public ArrayList<String> getCommands() {
+        return Utils.getCommands(INFO_REGEX, STATS_REGEX, UPTIME_REGEX, ECHO_COMMAND);
     }
 }

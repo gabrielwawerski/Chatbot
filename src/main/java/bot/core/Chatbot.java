@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String version = "v0.31";
+    private final String version = "v0.3201";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -40,7 +40,7 @@ public class Chatbot {
 
     protected void loadModules() {
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
-        modules.put("Info", new Info(this, List.of("info", "uptime", "status")));
+        modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
         modules.put("FeatureSuggest", new FeatureSuggest(this, "sugestie.txt")); // TODO add info

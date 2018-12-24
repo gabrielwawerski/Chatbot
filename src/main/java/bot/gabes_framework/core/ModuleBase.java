@@ -1,6 +1,7 @@
 package bot.gabes_framework.core;
 
 import bot.core.Chatbot;
+import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.core.libs.api.Module;
 import bot.core.helper.misc.Message;
 import bot.gabes_framework.message.MessageModule;
@@ -96,18 +97,9 @@ public abstract class ModuleBase implements Module {
         return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
     }
 
-    protected boolean isOr(List<String> regexes) {
-        for (String cmd : regexes) {
-            if (match.equalsIgnoreCase(cmd)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     protected boolean isOr(String... regexes) {
         for (String regex : regexes) {
-            if (match.equalsIgnoreCase(regex)) {
+            if (match.equals(regex)) {
                 return true;
             }
         }
@@ -134,11 +126,9 @@ public abstract class ModuleBase implements Module {
     protected String findMatch(Message message, List<String> commands) {
         String messageBody = message.getMessage();
 
-        for (String cmd : commands.stream().map(String::toLowerCase).collect(Collectors.toList())) {
-            cmd = cmd.toLowerCase();
-
-            if (messageBody.matches(cmd)) {
-                return cmd;
+        for (String command : commands) {
+            if (commands.contains(command)) {
+                return command;
             }
         }
         return "";

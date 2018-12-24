@@ -51,12 +51,6 @@ public final class Utils {
         return "";
     }
 
-    /**
-     * Returns an ArrayList, containing regexes with their original form. (i think)
-     *
-     * @param regexList
-     * @author hollandjake
-     */
     public static ArrayList<String> getCommands(List<String> regexList) {
         return (ArrayList<String>) regexList.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
     }
@@ -70,12 +64,6 @@ public final class Utils {
         return returnList;
     }
 
-    /**
-     * Always make sure to "TO_REGEX"
-     *
-     * @param arg
-     * @return
-     */
     public static final String TO_REGEX(String arg) {
         return "(?i)^!\\s*" + arg + "$";
     }
