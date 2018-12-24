@@ -4,10 +4,10 @@ import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
 import bot.gabes_framework.core.ModuleBase;
-import bot.gabes_framework.message.MessageModule;
-import bot.gabes_framework.resource.RandomResourceModule;
-import bot.gabes_framework.simple.SimpleModule;
-import bot.gabes_framework.message.SingleMessageModule;
+import bot.gabes_framework.util.message.MessageModule;
+import bot.gabes_framework.util.resource.RandomResourceModule;
+import bot.gabes_framework.util.simple.SimpleModule;
+import bot.gabes_framework.util.message.SingleMessageModule;
 
 import java.util.ArrayList;
 

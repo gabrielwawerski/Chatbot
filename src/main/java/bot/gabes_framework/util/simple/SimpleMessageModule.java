@@ -1,4 +1,4 @@
-package bot.gabes_framework.simple;
+package bot.gabes_framework.util.simple;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;

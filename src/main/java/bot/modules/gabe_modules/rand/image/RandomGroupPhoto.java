@@ -1,4 +1,4 @@
-package bot.modules.gabe_modules.random.rand_image;
+package bot.modules.gabe_modules.rand.image;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;

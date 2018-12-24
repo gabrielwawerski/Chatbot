@@ -1,10 +1,10 @@
-package bot.modules.gabe_modules.random.rand_text;
+package bot.modules.gabe_modules.rand.text;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.gabes_framework.resource.RandomResourceModule;
+import bot.gabes_framework.util.resource.RandomResourceModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

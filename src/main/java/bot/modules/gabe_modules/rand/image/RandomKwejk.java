@@ -1,4 +1,4 @@
-package bot.modules.gabe_modules.random.rand_image;
+package bot.modules.gabe_modules.rand.image;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
@@ -28,7 +28,6 @@ public class RandomKwejk extends ModuleBase {
 
     public RandomKwejk(Chatbot chatbot) {
         super(chatbot);
-        getNextMeme();
     }
 
     @Override
@@ -36,8 +35,8 @@ public class RandomKwejk extends ModuleBase {
         updateMatch(message);
 
         if (isOr(KWEJK_REGEX, KW_REGEX)) {
-            chatbot.sendImageUrlWaitToLoad(currentImageUrl);
             getNextMeme();
+            chatbot.sendImageUrlWaitToLoad(currentImageUrl);
             return true;
         }
         return false;

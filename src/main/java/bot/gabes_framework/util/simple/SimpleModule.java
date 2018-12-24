@@ -1,13 +1,13 @@
-package bot.gabes_framework.simple;
+package bot.gabes_framework.util.simple;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
 import bot.gabes_framework.core.ModuleBase;
 import bot.gabes_framework.core.libs.api.Module;
-import bot.gabes_framework.message.MessageModule;
-import bot.gabes_framework.message.SingleMessageModule;
-import bot.gabes_framework.resource.RandomResourceModule;
+import bot.gabes_framework.util.message.MessageModule;
+import bot.gabes_framework.util.message.SingleMessageModule;
+import bot.gabes_framework.util.resource.RandomResourceModule;
 import bot.gabes_framework.core.libs.Utils;
 
 import java.util.ArrayList;

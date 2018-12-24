@@ -1,9 +1,9 @@
 package bot.core;
 
 import bot.gabes_framework.core.libs.Utils;
-import bot.modules.gabe_modules.Sylwester;
+import bot.modules.gabe_modules.util.Sylwester;
 import bot.modules.gabe_modules.image.KartaPulapka;
-import bot.modules.gabe_modules.random.rand_text.EightBall;
+import bot.modules.gabe_modules.rand.text.EightBall;
 import bot.modules.gabe_modules.search.*;
 import bot.modules.gabe_modules.util.*;
 import bot.modules.gabe_modules.text.Think;
@@ -13,10 +13,10 @@ import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
 import bot.modules.gabe_modules.image.Popcorn;
-import bot.modules.gabe_modules.random.rand_image.RandomGroupPhoto;
-import bot.modules.gabe_modules.random.rand_image.RandomKwejk;
-import bot.modules.gabe_modules.random.rand_text.JebacLeze;
-import bot.modules.gabe_modules.random.rand_text.LezeSpam;
+import bot.modules.gabe_modules.rand.image.RandomGroupPhoto;
+import bot.modules.gabe_modules.rand.image.RandomKwejk;
+import bot.modules.gabe_modules.rand.text.JebacLeze;
+import bot.modules.gabe_modules.rand.text.LezeSpam;
 import bot.modules.gabe_modules.util.info.Commands;
 import bot.modules.gabe_modules.util.info.Info;
 import bot.modules.gabe_modules.util.twitchemotes.TwitchEmotes;

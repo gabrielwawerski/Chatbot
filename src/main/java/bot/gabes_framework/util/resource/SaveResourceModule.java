@@ -1,4 +1,4 @@
-package bot.gabes_framework.resource;
+package bot.gabes_framework.util.resource;
 
 import bot.core.Chatbot;
 import bot.gabes_framework.core.ModuleBase;

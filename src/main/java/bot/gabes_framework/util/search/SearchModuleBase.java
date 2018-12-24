@@ -1,4 +1,4 @@
-package bot.gabes_framework.search;
+package bot.gabes_framework.util.search;
 
 import bot.core.Chatbot;
 import bot.core.helper.interfaces.Util;

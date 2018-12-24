@@ -2,6 +2,7 @@ package bot.gabes_framework.core.libs;
 
 import bot.core.helper.interfaces.Util;
 import bot.core.helper.misc.Message;
+import bot.gabes_framework.core.point_system.User;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -49,6 +50,10 @@ public final class Utils {
             }
         }
         return "";
+    }
+
+    public static boolean isBy(Message message, User user) {
+        return message.getSender().getName().equals(user.name());
     }
 
     public static ArrayList<String> getCommands(List<String> regexList) {

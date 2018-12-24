@@ -3,7 +3,7 @@ package bot.modules.gabe_modules.text;
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
 import bot.core.exceptions.MalformedCommandException;
-import bot.gabes_framework.simple.SimpleModule;
+import bot.gabes_framework.util.simple.SimpleModule;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

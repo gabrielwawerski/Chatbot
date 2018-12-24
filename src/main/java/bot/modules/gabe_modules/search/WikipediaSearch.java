@@ -3,7 +3,7 @@ package bot.modules.gabe_modules.search;
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
-import bot.gabes_framework.search.SimpleSearchModule;
+import bot.gabes_framework.util.search.SimpleSearchModule;
 import org.apache.commons.lang.WordUtils;
 
 import java.util.List;

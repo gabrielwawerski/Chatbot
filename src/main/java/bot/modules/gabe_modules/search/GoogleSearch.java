@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.Util;
-import bot.gabes_framework.search.SearchModuleBase;
+import bot.gabes_framework.util.search.SearchModuleBase;
 import bot.gabes_framework.core.libs.Utils;
 
 import java.util.ArrayList;

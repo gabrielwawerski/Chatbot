@@ -1,20 +1,15 @@
 package bot.gabes_framework.core;
 
 import bot.core.Chatbot;
-import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.core.libs.api.Module;
 import bot.core.helper.misc.Message;
-import bot.gabes_framework.message.MessageModule;
-import bot.gabes_framework.resource.RandomResourceModule;
-import bot.gabes_framework.message.SingleMessageModule;
+import bot.gabes_framework.util.message.MessageModule;
+import bot.gabes_framework.util.resource.RandomResourceModule;
+import bot.gabes_framework.util.message.SingleMessageModule;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import static bot.gabes_framework.core.libs.Utils.TO_COMMAND;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
@@ -127,8 +122,7 @@ public abstract class ModuleBase implements Module {
         String messageBody = message.getMessage();
 
         for (String command : commands) {
-            if (commands.contains(command)) {
-                System.out.println(command);
+            if (messageBody.matches(command)) {
                 return commands.get(commands.indexOf(command));
             }
         }

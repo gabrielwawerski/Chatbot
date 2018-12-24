@@ -2,7 +2,7 @@ package bot.modules.gabe_modules.image;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;
-import bot.gabes_framework.simple.SimpleModule;
+import bot.gabes_framework.util.simple.SimpleModule;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.ScreenshotUtil;
-import bot.gabes_framework.core.libs.User;
+import bot.gabes_framework.core.point_system.User;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
