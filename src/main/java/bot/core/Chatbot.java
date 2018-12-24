@@ -1,17 +1,25 @@
 package bot.core;
 
 import bot.gabes_framework.core.libs.Utils;
-import bot.modules.gabe_modules.query.*;
-import bot.modules.gabe_modules.Think;
-import bot.modules.gabe_modules.*;
+import bot.modules.gabe_modules.Sylwester;
+import bot.modules.gabe_modules.image.KartaPulapka;
+import bot.modules.gabe_modules.random.rand_text.EightBall;
+import bot.modules.gabe_modules.search.*;
+import bot.modules.gabe_modules.util.*;
+import bot.modules.gabe_modules.text.Think;
 import bot.gabes_framework.core.libs.api.Module;
 import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
 import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
-import bot.modules.gabe_modules.Popcorn;
-import bot.modules.gabe_modules.RandomKwejk;
-import bot.modules.gabe_modules.work_in_progress.TwitchEmotes;
+import bot.modules.gabe_modules.image.Popcorn;
+import bot.modules.gabe_modules.random.rand_image.RandomGroupPhoto;
+import bot.modules.gabe_modules.random.rand_image.RandomKwejk;
+import bot.modules.gabe_modules.random.rand_text.JebacLeze;
+import bot.modules.gabe_modules.random.rand_text.LezeSpam;
+import bot.modules.gabe_modules.util.info.Commands;
+import bot.modules.gabe_modules.util.info.Info;
+import bot.modules.gabe_modules.util.twitchemotes.TwitchEmotes;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 

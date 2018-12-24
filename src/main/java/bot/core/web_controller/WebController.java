@@ -4,6 +4,7 @@ import bot.core.Chatbot;
 import bot.core.helper.misc.Human;
 import bot.core.helper.misc.Message;
 import bot.core.helper.interfaces.ScreenshotUtil;
+import bot.gabes_framework.core.libs.User;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -172,6 +173,21 @@ public class WebController {
 
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(MESSAGES_MINE),
                 myMessageCount));
+    }
+
+    /**
+     * @see User
+     */
+    public void sendMentionMessage(String USER, String message) {
+        WebElement inputBox = selectInputBox();
+        setClipboardContents("@ " + USER);
+        inputBox.sendKeys(Keys.ENTER, Keys.SPACE);
+        setClipboardContents(message);
+        inputBox.sendKeys(PASTE, Keys.ENTER);
+    }
+
+    protected void setClipboardContents(String contents) {
+        CLIPBOARD.setContents(new StringSelection(contents), null);
     }
 
     private void emulatePaste(WebElement webElement, String paste) {

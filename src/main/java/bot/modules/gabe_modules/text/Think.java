@@ -1,4 +1,4 @@
-package bot.modules.gabe_modules;
+package bot.modules.gabe_modules.text;
 
 import bot.core.Chatbot;
 import bot.core.helper.misc.Message;

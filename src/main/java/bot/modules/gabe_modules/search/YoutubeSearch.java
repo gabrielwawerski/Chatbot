@@ -1,15 +1,15 @@
-package bot.modules.gabe_modules.query;
+package bot.modules.gabe_modules.search;
 
 import bot.core.Chatbot;
 import bot.gabes_framework.search.SimpleSearchModule;
 
 import java.util.List;
 
-public class FilmwebSearch extends SimpleSearchModule {
-    private static final String SEARCH_URL = "filmweb.pl/search?q=";
+public class YoutubeSearch extends SimpleSearchModule {
+    private static final String SEARCH_URL = "youtube.com/results?search_query=";
 
-    public FilmwebSearch(Chatbot chatbot, List<String> regexList) {
-        super(chatbot, regexList);
+    public YoutubeSearch(Chatbot chatbot, List<String> regexes) {
+        super(chatbot, regexes);
     }
 
     @Override

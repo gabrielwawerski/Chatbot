@@ -128,7 +128,8 @@ public abstract class ModuleBase implements Module {
 
         for (String command : commands) {
             if (commands.contains(command)) {
-                return command;
+                System.out.println(command);
+                return commands.get(commands.indexOf(command));
             }
         }
         return "";

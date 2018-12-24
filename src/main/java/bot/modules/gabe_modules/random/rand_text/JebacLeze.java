@@ -1,4 +1,4 @@
-package bot.modules.gabe_modules;
+package bot.modules.gabe_modules.random.rand_text;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
@@ -7,7 +7,6 @@ import bot.gabes_framework.core.libs.Utils;
 import bot.gabes_framework.resource.RandomResourceModule;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class JebacLeze extends RandomResourceModule {
     private final String JEBAC_LEZE = "jebac leze";

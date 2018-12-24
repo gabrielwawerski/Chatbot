@@ -1,4 +1,4 @@
-package bot.modules.gabe_modules;
+package bot.modules.gabe_modules.random.rand_image;
 
 import bot.core.Chatbot;
 import bot.core.exceptions.MalformedCommandException;
@@ -29,7 +29,7 @@ public class RandomGroupPhoto extends ModuleBase {
     private final String PHOTOS_PATH = "D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\";
     private final int MESSAGE_TIMEOUT = 5;
 
-    private final String RANDOM_REGEX = TO_REGEX("random");
+    private final String RANDOM_REGEX = TO_REGEX("andom");
     private final String R_REGEX = TO_REGEX("r");
     private final String R = ("r");
 
