@@ -36,9 +36,9 @@ public abstract class RandomResourceModule extends SimpleModule {
         try {
             this.resourceContent
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
-            setOnline(true);
+            setOnline();
         } catch (IOException e) { // TODO add global debugMessages field in Chatbot so this can be toggled.
-            setOnline(false);
+            setOffline();
             e.printStackTrace();
         }
     }
@@ -48,11 +48,15 @@ public abstract class RandomResourceModule extends SimpleModule {
         try {
             this.resourceContent
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
-            setOnline(true);
+            setOnline();
         } catch (IOException e) {
-            setOnline(false);
+            setOffline();
             e.printStackTrace();
         }
+    }
+
+    protected String getRandomMessage() {
+        return Util.GET_RANDOM(resourceContent);
     }
 
     @Override

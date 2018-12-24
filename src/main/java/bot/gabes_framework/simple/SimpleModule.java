@@ -71,6 +71,6 @@ public abstract class SimpleModule extends ModuleBase {
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.regexToList(regexList);
+        return Utils.getCommands(regexList);
     }
 }

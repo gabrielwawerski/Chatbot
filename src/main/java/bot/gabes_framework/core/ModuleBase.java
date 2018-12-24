@@ -8,8 +8,10 @@ import bot.gabes_framework.resource.RandomResourceModule;
 import bot.gabes_framework.message.SingleMessageModule;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static bot.gabes_framework.core.libs.Utils.TO_COMMAND;
 
@@ -44,7 +46,7 @@ public abstract class ModuleBase implements Module {
 
     public ModuleBase(Chatbot chatbot) {
         this.chatbot = chatbot;
-        online = true;
+        setOnline();
     }
 
     @Override
@@ -61,8 +63,16 @@ public abstract class ModuleBase implements Module {
         }
     }
 
-    protected void setOnline(boolean online) {
+    protected void setStatus(boolean online) {
         this.online = online;
+    }
+
+    protected void setOnline() {
+        online = true;
+    }
+
+    protected void setOffline() {
+        online = false;
     }
 
     /**
@@ -86,11 +96,29 @@ public abstract class ModuleBase implements Module {
         return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
     }
 
-    protected boolean isOrOther(String REGEX, String OTHER) {
+    protected boolean isOr(List<String> regexes) {
+        for (String cmd : regexes) {
+            if (match.equalsIgnoreCase(cmd)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean isOr(String... regexes) {
+        for (String regex : regexes) {
+            if (match.equalsIgnoreCase(regex)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    protected boolean isOr(String REGEX, String OTHER) {
         return match.equals(REGEX) || match.equals(OTHER);
     }
 
-    protected boolean isA(String REGEX) {
+    protected boolean is(String REGEX) {
         return match.equals(REGEX);
     }
 
@@ -101,6 +129,19 @@ public abstract class ModuleBase implements Module {
 
     protected Matcher getMatcher(Message message) {
         return Pattern.compile(match).matcher(message.getMessage());
+    }
+
+    protected String findMatch(Message message, List<String> commands) {
+        String messageBody = message.getMessage();
+
+        for (String cmd : commands.stream().map(String::toLowerCase).collect(Collectors.toList())) {
+            cmd = cmd.toLowerCase();
+
+            if (messageBody.matches(cmd)) {
+                return cmd;
+            }
+        }
+        return "";
     }
 
     protected String findMatch(Message message, String... commands) {

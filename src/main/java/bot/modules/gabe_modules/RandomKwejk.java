@@ -35,7 +35,7 @@ public class RandomKwejk extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (isOrOther(KWEJK_REGEX, KW_REGEX)) {
+        if (isOr(KWEJK_REGEX, KW_REGEX)) {
             chatbot.sendImageUrlWaitToLoad(currentImageUrl);
             getNextMeme();
             return true;
@@ -79,6 +79,6 @@ public class RandomKwejk extends ModuleBase {
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.regexToList(KWEJK_REGEX, KW_REGEX);
+        return Utils.getCommands(KWEJK_REGEX, KW_REGEX);
     }
 }

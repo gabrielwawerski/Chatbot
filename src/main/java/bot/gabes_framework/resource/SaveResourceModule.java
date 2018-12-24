@@ -21,9 +21,9 @@ public abstract class SaveResourceModule extends ModuleBase {
         try {
             this.file
                     = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + fileName));
-            setOnline(true);
+            setStatus(true);
         } catch (IOException e) { // TODO add global debugMessages field in Chatbot so this can be toggled.
-            setOnline(false);
+            setStatus(false);
             e.printStackTrace();
         }
         this.fileName = "modules/" + getClass().getSimpleName() + "/" + fileName;

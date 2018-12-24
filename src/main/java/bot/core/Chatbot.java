@@ -11,6 +11,7 @@ import bot.core.web_controller.WebController;
 import bot.core.exceptions.MalformedCommandException;
 import bot.modules.gabe_modules.Popcorn;
 import bot.modules.gabe_modules.RandomKwejk;
+import bot.modules.gabe_modules.work_in_progress.TwitchEmotes;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -59,11 +60,12 @@ public class Chatbot {
         modules.put("Roll", new Roll(this));
         modules.put("Think", new Think(this));
         modules.put("EightBall", new EightBall(this, "responses.txt"));
-        modules.put("JebacLeze", new JebacLeze(this, List.of("jebacleze", "leze", "jebac leze", "jebac"),
+        modules.put("JebacLeze", new JebacLeze(this,
                 "responses.txt"));
         modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
                 "responses.txt"));
         modules.put("RandomKwejk", new RandomKwejk(this));
+        modules.put("TwitchEmotes", new TwitchEmotes(this));
 //        modules.put("Memes", new Memes(this));
 
 //        modules.put("Dogs", new Dogs(this));

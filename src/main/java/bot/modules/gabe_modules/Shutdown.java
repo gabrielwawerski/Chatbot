@@ -23,6 +23,11 @@ public class Shutdown extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         String match = getMatch(message);
         if (match.equals(SHUTDOWN_REGEX)) {
+            if (message.getSender().getName().equals("Gabriel Wawerski")) {
+                chatbot.quit();
+                return true;
+            }
+
             Matcher matcher = Pattern.compile(SHUTDOWN_REGEX).matcher(message.getMessage());
             if (matcher.find() && matcher.group(1).equals(chatbot.getShutdownCode())) {
                 chatbot.quit();

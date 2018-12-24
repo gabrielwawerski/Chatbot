@@ -57,11 +57,11 @@ public final class Utils {
      * @param regexList
      * @author hollandjake
      */
-    public static ArrayList<String> regexToList(List<String> regexList) {
+    public static ArrayList<String> getCommands(List<String> regexList) {
         return (ArrayList<String>) regexList.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
     }
 
-    public static ArrayList<String> regexToList(String... commands) {
+    public static ArrayList<String> getCommands(String... commands) {
         ArrayList<String> returnList = new ArrayList<>(commands.length);
 
         for (String x : commands) {

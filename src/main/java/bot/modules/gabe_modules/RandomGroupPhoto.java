@@ -26,19 +26,31 @@ public class RandomGroupPhoto extends ModuleBase {
     private LocalTime now;
     private LocalTime timeoutRelease;
 
+    private List<String> regexes;
+
     private final String PHOTOS_PATH = "D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\";
     private final int MESSAGE_TIMEOUT = 5;
 
     private static final String RANDOM_REGEX = TO_REGEX("random");
     private static final String R_REGEX = TO_REGEX("r");
+    private static final String R = ("r");
 
 
     public RandomGroupPhoto(Chatbot chatbot) {
         super(chatbot);
+
         File f = new File(PHOTOS_PATH);
         files = new ArrayList<>(Arrays.asList(f.listFiles()));
         now = LocalTime.now();
-        timeoutRelease = LocalTime.of(now.getHour(), now.getMinute(), now.getSecond() + MESSAGE_TIMEOUT - 1);
+        int seconds;
+        regexes = List.of(RANDOM_REGEX, R_REGEX, R);
+
+        if (now.getSecond() + (MESSAGE_TIMEOUT - 1) > 59) {
+            seconds = 59;
+        } else {
+            seconds = now.getSecond() + (MESSAGE_TIMEOUT - 1);
+        }
+        timeoutRelease = LocalTime.of(now.getHour(), now.getMinute(), seconds);
         newRandomImage();
     }
 
@@ -46,7 +58,7 @@ public class RandomGroupPhoto extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (isOrOther(RANDOM_REGEX, R_REGEX)) {
+        if (isOr(RANDOM_REGEX, R_REGEX)) {
 //            if (now.isBefore(timeoutRelease)) {
 ////                    List<String> randomResponses
 ////                            = List.of("Musisz jeszcze poczekać.",
@@ -72,11 +84,11 @@ public class RandomGroupPhoto extends ModuleBase {
 
     @Override
     public String getMatch(Message message) {
-        return findMatch(message, RANDOM_REGEX, R_REGEX);
+        return findMatch(message, regexes);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.regexToList(List.of(RANDOM_REGEX, R_REGEX));
+        return Utils.getCommands(regexes);
     }
 }
