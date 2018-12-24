@@ -124,9 +124,6 @@ public class WebController {
                 myMessageCount));
     }
 
-    public void sendLoadedImage(Message message) {
-    }
-
     private WebElement selectInputBox() {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(INPUT_FIELD)));
         WebElement inputBoxElement = webDriver.findElement(By.xpath(INPUT_FIELD));
@@ -160,12 +157,16 @@ public class WebController {
         // waits until image fully loads as an attachment
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOADED_THUMBNAIL))).isDisplayed();
 
+        // clear input box
+        inputBox.sendKeys(Keys.CONTROL + "a");
+        inputBox.sendKeys(Keys.DELETE);
+
         // if above call isn't performing well, uncomment to make sure attachment loads
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         inputBox.sendKeys(Keys.ENTER);
 
