@@ -36,17 +36,17 @@ public class PcionBot extends Chatbot {
         String username = "ezelbot66@gmail.com";
         String password = "lezetykurwo";
 
-        boolean debugMode = true;      // debugs messages to console
+        boolean debugMode = false;      // debugs messages to console
         boolean silentMode = true;    // does not greet itself
         boolean debugMessages = false; // adds bot's full name before it's message, and a ":" after.
         boolean headless = false;
         boolean maximized = true;
 
-        String GRUPKA_ID = "1158615960915822";
-        String GRZAGSOFT_ID = "1506449319457834";
-        String PATRO_ID = "2275107775897967";
+        String ID_GRUPKA = "1158615960915822";
+        String ID_GRZAGSOFT = "1506449319457834";
+        String ID_PATRO = "2275107775897967";
 
-        pcionbot = new Chatbot(username, password, GRUPKA_ID,
+        pcionbot = new Chatbot(username, password, ID_PATRO,
                 debugMode,
                 silentMode,
                 debugMessages,

@@ -60,11 +60,11 @@ public class Info extends SingleMessageModule {
 
     private String getStats() {
         return getMinifiedStats()
-                + "Załadowane moduły: " + chatbot.getModulesOnline()
-                + "\n"
                 + getUptime()
+                + "\n"
+                + "Załadowane moduły: " + chatbot.getModulesOnline()
                 + "\n\nUnikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size()
-                + "\nWiadomości leze: " + lezeStats()
+//                + "\nWiadomości leze: " + lezeStats()
                 + "\n\n" + cmdInfo();
     }
 
@@ -77,7 +77,7 @@ public class Info extends SingleMessageModule {
         }
 
         for (Message msg : messages) {
-            if (msg.getSender().getName().equals("Jakub Smolak")) {
+            if (msg.getSender().getName().equals("Jakub Smolak")) { // fixme
                 lezeMessageCounter++;
             }
         }
@@ -93,6 +93,6 @@ public class Info extends SingleMessageModule {
     }
 
     private String cmdInfo() {
-        return "Wpisz !cmd aby zobaczyć listę komend. !suggest";
+        return "Wpisz !cmd aby zobaczyć listę komend.";
     }
 }
