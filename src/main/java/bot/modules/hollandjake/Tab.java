@@ -1,15 +1,15 @@
 package bot.modules.hollandjake;
 
 import bot.core.Chatbot;
-import bot.core.helper.misc.Message;
-import bot.core.helper.interfaces.Module;
+import bot.core.hollandjake_api.helper.misc.Message;
+import bot.core.hollandjake_api.helper.interfaces.Module;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static bot.core.helper.interfaces.Util.ACTIONIFY;
-import static bot.core.helper.interfaces.Util.DEACTIONIFY;
+import static bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY;
+import static bot.core.hollandjake_api.helper.interfaces.Util.DEACTIONIFY;
 
 public class Tab implements Module {
     //region Constants

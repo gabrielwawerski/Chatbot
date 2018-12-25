@@ -1,25 +1,26 @@
 package bot.core;
 
-import bot.gabes_framework.core.libs.Utils;
-import bot.modules.gabe_modules.util.Sylwester;
-import bot.modules.gabe_modules.image.KartaPulapka;
-import bot.modules.gabe_modules.rand.text.EightBall;
-import bot.modules.gabe_modules.search.*;
-import bot.modules.gabe_modules.util.*;
-import bot.modules.gabe_modules.text.Think;
-import bot.gabes_framework.core.libs.api.Module;
-import bot.core.helper.misc.Human;
-import bot.core.helper.misc.Message;
-import bot.core.web_controller.WebController;
-import bot.core.exceptions.MalformedCommandException;
-import bot.modules.gabe_modules.image.Popcorn;
-import bot.modules.gabe_modules.rand.image.RandomGroupPhoto;
-import bot.modules.gabe_modules.rand.image.RandomKwejk;
-import bot.modules.gabe_modules.rand.text.JebacLeze;
-import bot.modules.gabe_modules.rand.text.LezeSpam;
-import bot.modules.gabe_modules.util.info.Commands;
-import bot.modules.gabe_modules.util.info.Info;
-import bot.modules.gabe_modules.util.twitchemotes.TwitchEmotes;
+import bot.core.gabes_framework.core.libs.Utils;
+import bot.modules.gabe.text.rand.Roll;
+import bot.modules.gabe.util.Sylwester;
+import bot.modules.gabe.image.KartaPulapka;
+import bot.modules.gabe.text.rand.EightBall;
+import bot.modules.gabe.search.*;
+import bot.modules.gabe.util.*;
+import bot.modules.gabe.image.Think;
+import bot.core.gabes_framework.core.libs.api.Module;
+import bot.core.hollandjake_api.helper.misc.Human;
+import bot.core.hollandjake_api.helper.misc.Message;
+import bot.core.hollandjake_api.web_controller.WebController;
+import bot.core.hollandjake_api.exceptions.MalformedCommandException;
+import bot.modules.gabe.image.Popcorn;
+import bot.modules.gabe.image.rand.RandomGroupPhoto;
+import bot.modules.gabe.image.rand.RandomKwejk;
+import bot.modules.gabe.text.rand.JebacLeze;
+import bot.modules.gabe.text.rand.LezeSpam;
+import bot.modules.gabe.util.info.Commands;
+import bot.modules.gabe.util.info.Info;
+import bot.modules.gabe.twitchemotes.TwitchEmotes;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -125,63 +126,94 @@ public class Chatbot {
         run(username, password, threadId, debugMode, silentMode);
     }
 
-    private void run(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
-        this.threadId = threadId;
+    private void init(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
+        System.out.println("Initializing...");
 
-        // Output Shutdown code
-        System.out.println("PcionBot " + version);
-        System.out.println("-----------------");
-        System.out.println("Ładowanie modułów...");
+        System.out.println("Loading modules...");
         loadModules();
+        System.out.println("Finished loading modules.");
+        System.out.println("Echo modules...");
 
         totalModules = modules.size();
         modulesOnline = 0;
-        List<String> modulesOffline = null;
+        ArrayList<String> modulesOffline = new ArrayList<>();
 
         for (Module module : modules.values()) {
             if (module.isOnline()) {
                 module.echoOnline();
                 modulesOnline++;
             } else {
-                if (modulesOffline == null) {
-                    modulesOffline = List.of(module.getClass().getSimpleName());
-                }
                 modulesOffline.add(module.getClass().getSimpleName());
             }
         }
 
-        if (modulesOnline == totalModules) {
-            System.out.println("Wszystkie " + totalModules + " moduły pomyślnie załadowane.");
-        } else {
-            System.out.print("\nNie wszystkie moduły zostały pomyślnie załadowane."
-                    + "\nModuły niedostępne w bieżącej sesji: ");
+        if (modulesOnline < totalModules) {
+            System.out.println("Not all modules have been successfully loaded.");
+            System.out.print("Modules unavailable this session: ");
             for (String module : modulesOffline) {
-                System.out.print(module.getClass().getSimpleName() + " ");
+                System.out.print(module.getClass().getSimpleName() + ", ");
             }
-            System.out.println(modulesOnline + " / " + totalModules + "(" + (double)(totalModules - (modulesOnline * totalModules)) / 100 + "%)");
+            System.out.println(modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
+        } else {
+            System.out.println(modulesOnline + "/" + totalModules);
         }
-
         System.out.println("-----------------");
 
+
+        System.out.println("Initializing platform...");
+        System.out.println("Logging in...");
         //Run setup
         webController.login(username, password);
-        System.out.println("Messenger - zalogowano.");
+        System.out.println("Logged in successfully.");
+        System.out.println("Target ID: " + threadId);
+        System.out.print("Loading favourites... ");
+        String msg = "";
+        if (threadId.equals(PcionBot.ID_GRUPKA)) {
+            System.out.print("found.\n");
+            msg += "Grupka (" + threadId + ")";
+        } else if (threadId.equals(PcionBot.ID_GRZAGSOFT)) {
+            System.out.print("found.\n");
+            msg += "Grzagsoft (" + threadId + ")";
+        } else if (threadId.equals(PcionBot.ID_PATRO)) {
+            System.out.print("found.\n");
+            msg += "Patro (" + threadId + ")";
+        } else {
+            System.out.print("not found.\n");
+            msg += threadId;
+        }
+
+        // TODO send thread name in PcionBot class
+        System.out.println("Switching to: " + msg + "...");
         webController.gotoFacebookThread(threadId);
-        System.out.println("Przełączam na wątek nr. " + threadId);
+        System.out.println("Switched to : " + msg + ".");
 
         //Wait until messages have loaded
+        System.out.println("Waiting for messages to load...");
         webController.waitForMessagesToLoad();
-        System.out.println("Wiadomości załadowane.");
+        System.out.println("Messages loaded.");
 
-        System.out.println("Shutdown: " + shutdownCode);
+        System.out.println("Finished loading.");
+        System.out.print("PcionBot successfully loaded, ");
+        System.out.print("running from config:\n");
+        System.out.println("max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.");
+        System.out.println("poll sleep time: " + getRefreshRate() + " millisec." );
 
+
+        System.out.println("-----------------");
+        System.out.println("PcionBot " + version);
+        System.out.println("Shutdown:  " + shutdownCode);
+        System.out.println("-----------------");
+        System.out.println("PCIONBOT ONLINE");
+        System.out.println("-----------------");
         //Init message
         if (!silentMode) {
             initMessage();
         }
-        System.out.print("-----------------\n");
-        System.out.println("PCIONBOT ONLINE");
-        System.out.println("-----------------");
+    }
+
+    private void run(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
+        this.threadId = threadId;
+        init(username, password, threadId, debugMode, silentMode);
 
         while (running) {
             try {

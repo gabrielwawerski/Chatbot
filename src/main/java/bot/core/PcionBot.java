@@ -1,7 +1,5 @@
 package bot.core;
 
-import bot.gabes_framework.core.libs.Utils;
-
 public class PcionBot extends Chatbot {
     // to do:
     // !restart
@@ -30,6 +28,10 @@ public class PcionBot extends Chatbot {
     public static final String yandexApiKey = "trnsl.1.1.20181218T072725Z.426c8360e3601118.ce0d07709d8e3173e8005a6e6e266a65090c04fe";
     public static final String newsapiKey = "14a5cf3980a1408e9a4e78b002c2b3cd";
 
+    public static final String ID_GRUPKA = "1158615960915822";
+    public static final String ID_GRZAGSOFT = "1506449319457834";
+    public static final String ID_PATRO = "2275107775897967";
+
     public static void main(String[] args) {
         System.out.println(args.toString());
         Chatbot pcionbot;
@@ -42,11 +44,7 @@ public class PcionBot extends Chatbot {
         boolean headless = false;
         boolean maximized = true;
 
-        String ID_GRUPKA = "1158615960915822";
-        String ID_GRZAGSOFT = "1506449319457834";
-        String ID_PATRO = "2275107775897967";
-
-        pcionbot = new Chatbot(username, password, ID_GRUPKA,
+        pcionbot = new Chatbot(username, password, ID_PATRO,
                 debugMode,
                 silentMode,
                 debugMessages,

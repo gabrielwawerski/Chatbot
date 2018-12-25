@@ -1,8 +1,8 @@
 package bot.modules.hollandjake;
 
 import bot.core.Chatbot;
-import bot.core.helper.misc.Message;
-import bot.core.helper.interfaces.Module;
+import bot.core.hollandjake_api.helper.misc.Message;
+import bot.core.hollandjake_api.helper.interfaces.Module;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -13,13 +13,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static bot.core.helper.interfaces.Util.*;
+import static bot.core.hollandjake_api.helper.interfaces.Util.*;
 
 public class Reddit implements Module {
     private final String REDDITS_REGEX = ACTIONIFY("reddits");

@@ -1,16 +1,16 @@
 package bot.modules.hollandjake;
 
 import bot.core.Chatbot;
-import bot.core.helper.misc.Message;
-import bot.core.helper.interfaces.Module;
-import bot.core.exceptions.MalformedCommandException;
+import bot.core.hollandjake_api.helper.misc.Message;
+import bot.core.hollandjake_api.helper.interfaces.Module;
+import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.helper.interfaces.Util.*;
+import static bot.core.hollandjake_api.helper.interfaces.Util.*;
 
 public class XKCD implements Module {
     //region Constants

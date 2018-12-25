@@ -1,9 +1,8 @@
 package bot.modules.hollandjake;
 
 import bot.core.Chatbot;
-import bot.core.helper.misc.Message;
-import bot.core.helper.interfaces.RedditModule;
-import bot.gabes_framework.core.libs.api.Module;
+import bot.core.hollandjake_api.helper.misc.Message;
+import bot.core.hollandjake_api.helper.interfaces.RedditModule;
 
 import java.awt.*;
 import java.io.File;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static bot.modules.hollandjake.Reddit.loadSubreddits;
-import static bot.core.helper.interfaces.Util.*;
+import static bot.core.hollandjake_api.helper.interfaces.Util.*;
 
 public class Dogs implements RedditModule {
     //region Constants
