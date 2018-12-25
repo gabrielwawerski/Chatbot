@@ -1,8 +1,8 @@
 package bot.core.gabes_framework.core.libs;
 
+import bot.core.gabes_framework.core.point_system.Users;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.core.point_system.User;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
@@ -52,7 +52,7 @@ public final class Utils {
         return "";
     }
 
-    public static boolean msgIsBy(Message message, User user) {
+    public static boolean msgIsBy(Message message, Users user) {
         return message.getSender().getName().equals(user.name());
     }
 

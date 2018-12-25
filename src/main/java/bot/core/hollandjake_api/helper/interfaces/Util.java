@@ -53,7 +53,7 @@ public interface Util {
 
     static String GET_PAGE_SOURCE(String url) {
         try {
-            return Unirest.get(url).header("User-agent", "Dogbot Reborn").asString().getBody();
+            return Unirest.get(url).header("Users-agent", "Dogbot Reborn").asString().getBody();
         } catch (UnirestException e) {
             System.out.println("Page doesn't exist");
             e.printStackTrace();

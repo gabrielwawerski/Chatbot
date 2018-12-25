@@ -126,12 +126,43 @@ public class Chatbot {
         run(username, password, threadId, debugMode, silentMode);
     }
 
-    private void init(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
-        System.out.println("Initializing...");
+    private void log(boolean noFreeSpace) {
+        Date dateNow = new Date();
+        String timeNow = dateNow.toString();
+        int dateLength = timeNow.length();
+        final int datePostfix = 9;
 
+        timeNow = timeNow.substring(0, dateLength - datePostfix);
+        System.out.print("\n");
+        System.out.println(timeNow);
+        if (noFreeSpace) {
+            System.out.println("  ");
+            return;
+        } else {
+            System.out.println("\n");
+        }
+    }
+
+    private void log() {
+        Date dateNow = new Date();
+        String timeNow = dateNow.toString();
+        int dateLength = timeNow.length();
+        final int datePostfix = 9;
+
+        timeNow = timeNow.substring(0, dateLength - datePostfix);
+        System.out.print("\n");
+        System.out.print(timeNow);
+        System.out.print("\n- ");
+    }
+    private void init(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
+        log();
+        System.out.println("Initializing...");
+        log();
         System.out.println("Loading modules...");
         loadModules();
+        log();
         System.out.println("Finished loading modules.");
+        log();
         System.out.println("Echo modules...");
 
         totalModules = modules.size();
@@ -159,14 +190,15 @@ public class Chatbot {
         }
         System.out.println("-----------------");
 
-
+        log();
         System.out.println("Initializing platform...");
+        log();
         System.out.println("Logging in...");
-        //Run setup
         webController.login(username, password);
-        System.out.println("Logged in successfully.");
+        log();
+        System.out.println("Successfully logged in.");
         System.out.println("Target ID: " + threadId);
-        System.out.print("Loading favourites... ");
+        System.out.print("Looking for favourites... ");
         String msg = "";
         if (threadId.equals(PcionBot.ID_GRUPKA)) {
             System.out.print("found.\n");
@@ -182,28 +214,30 @@ public class Chatbot {
             msg += threadId;
         }
 
-        // TODO send thread name in PcionBot class
-        System.out.println("Switching to: " + msg + "...");
+        log();
+        System.out.println("Switching to " + msg + "...");
         webController.gotoFacebookThread(threadId);
-        System.out.println("Switched to : " + msg + ".");
-
-        //Wait until messages have loaded
+        log();
+        System.out.println("Successfully switched to " + msg + ".");
+        log();
         System.out.println("Waiting for messages to load...");
         webController.waitForMessagesToLoad();
+        log();
         System.out.println("Messages loaded.");
-
+        log();
         System.out.println("Finished loading.");
+        log();
         System.out.print("PcionBot successfully loaded, ");
         System.out.print("running from config:\n");
         System.out.println("max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.");
         System.out.println("poll sleep time: " + getRefreshRate() + " millisec." );
 
-
+        log(true);
         System.out.println("-----------------");
         System.out.println("PcionBot " + version);
-        System.out.println("Shutdown:  " + shutdownCode);
+        System.out.println("shutdown:  " + shutdownCode);
+        log();
         System.out.println("-----------------");
-        System.out.println("PCIONBOT ONLINE");
         System.out.println("-----------------");
         //Init message
         if (!silentMode) {

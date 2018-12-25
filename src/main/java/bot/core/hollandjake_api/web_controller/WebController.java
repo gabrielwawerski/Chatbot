@@ -1,10 +1,10 @@
 package bot.core.hollandjake_api.web_controller;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.point_system.Users;
 import bot.core.hollandjake_api.helper.misc.Human;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.helper.interfaces.ScreenshotUtil;
-import bot.core.gabes_framework.core.point_system.User;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -177,7 +177,7 @@ public class WebController {
     }
 
     /**
-     * @see User
+     * @see Users
      */
     public void sendMentionMessage(String USER, String message) {
         WebElement inputBox = selectInputBox();
