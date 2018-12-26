@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * If you want to write a module that responds with random message if any of the trigger regex/es are detected,
  * see {@link MessageModule}<p>
  *
- * If you want to create a module that will respond with random message, taken from a .txt file, take a look at
+ * If you want to createUser a module that will respond with random message, taken from a .txt file, take a look at
  * {@link RandomResourceModule}
  *
  * @version 1.0

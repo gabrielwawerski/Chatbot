@@ -1,7 +1,7 @@
 package bot.core.hollandjake_api.web_controller;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.point_system.Users;
+import bot.core.gabes_framework.core.database.Database;
 import bot.core.hollandjake_api.helper.misc.Human;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.helper.interfaces.ScreenshotUtil;
@@ -29,11 +29,13 @@ public class WebController {
     private final WebDriverWait wait;
     private final WebDriverWait messageWait;
     private final boolean debugMessages;
+    private final Database database;
 
     private final int imgLoadTime = 3000;
 
-    public WebController(Chatbot chatbot, boolean debugMessages, boolean headless, boolean maximised) {
+    public WebController(Chatbot chatbot, boolean debugMessages, boolean headless, boolean maximised, Database database) {
         this.chatbot = chatbot;
+        this.database = database;
         this.debugMessages = debugMessages;
 
         ClassLoader classLoader = getClass().getClassLoader();
@@ -72,6 +74,7 @@ public class WebController {
         // TODO sposób na mniej crashy (hopefully)
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             System.out.println("Coś poszło nie tak:");
+            this.database.close();
             e.printStackTrace();
 
 //             TODO test - EXPERIMENTAL!!!!!!!!!!!
@@ -84,6 +87,7 @@ public class WebController {
         if (withMessage) {
             sendMessage("Przechodzę offline.");
         }
+        database.close();
         webDriver.quit();
         System.exit(0);
     }
@@ -176,9 +180,6 @@ public class WebController {
                 myMessageCount));
     }
 
-    /**
-     * @see Users
-     */
     public void sendMentionMessage(String USER, String message) {
         WebElement inputBox = selectInputBox();
         setClipboardContents("@ " + USER);

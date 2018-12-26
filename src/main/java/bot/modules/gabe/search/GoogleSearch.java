@@ -5,7 +5,7 @@ import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.gabes_framework.util.search.SearchModuleBase;
-import bot.core.gabes_framework.core.libs.Utils;
+import bot.core.gabes_framework.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

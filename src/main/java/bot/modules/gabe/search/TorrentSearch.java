@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.libs.Utils.TO_REGEX;
-import static bot.core.gabes_framework.core.libs.Utils.TO_COMMAND;
+import static bot.core.gabes_framework.util.Utils.TO_REGEX;
+import static bot.core.gabes_framework.util.Utils.TO_COMMAND;
 
 public class TorrentSearch extends ModuleBase {
     private final String SEARCH_REGEX = TO_REGEX("torrent (.*)");

@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.libs.Utils;
+import bot.core.gabes_framework.util.Utils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.libs.Utils.TO_REGEX;
-import static bot.core.gabes_framework.core.libs.Utils.getCommands;
+import static bot.core.gabes_framework.util.Utils.TO_REGEX;
+import static bot.core.gabes_framework.util.Utils.getCommands;
 
 public class Mp3tube extends ModuleBase {
     private String url;

@@ -31,6 +31,7 @@ public class PcionBot extends Chatbot {
     public static final String ID_GRUPKA = "1158615960915822";
     public static final String ID_GRZAGSOFT = "1506449319457834";
     public static final String ID_PATRO = "2275107775897967";
+    public static final String ID_MOONSHINERS = "1771365296265469";
 
     public static void main(String[] args) {
         System.out.println(args.toString());
@@ -39,7 +40,7 @@ public class PcionBot extends Chatbot {
         String password = "lezetykurwo";
 
         boolean debugMode = false;      // debugs messages to console
-        boolean silentMode = false;    // does not greet itself
+        boolean silentMode = true;    // does not greet itself
         boolean debugMessages = false; // adds bot's full name before it's message, and a ":" after.
         boolean headless = false;
         boolean maximized = true;

@@ -1,16 +1,16 @@
 package bot.modules.gabe.twitchemotes;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.point_system.Users;
+import bot.core.gabes_framework.core.point_system.UserEntry;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.libs.Utils;
+import bot.core.gabes_framework.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static bot.core.gabes_framework.core.libs.Utils.msgIsBy;
+import static bot.core.gabes_framework.util.Utils.msgIsBy;
 import static bot.modules.gabe.twitchemotes.Emote.*;
 
 /**
@@ -53,15 +53,15 @@ public class TwitchEmotes extends ModuleBase {
         if (isOr(INFO_REGEX, INFO)) {
             chatbot.sendMessage(emotesInfo);
             return true;
-        } else if (is(SIZE_1_REGEX) && msgIsBy(message, Users.GABE)) {
+        } else if (is(SIZE_1_REGEX) && msgIsBy(message, UserEntry.Gabe)) {
             setEmotesSize(1);
             chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
-        } else if (is(SIZE_2_REGEX) && msgIsBy(message, Users.GABE)) {
+        } else if (is(SIZE_2_REGEX) && msgIsBy(message, UserEntry.Gabe)) {
             setEmotesSize(2);
             chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
-        } else if (is(SIZE_3_REGEX) && msgIsBy(message, Users.GABE)) {
+        } else if (is(SIZE_3_REGEX) && msgIsBy(message, UserEntry.Gabe)) {
             setEmotesSize(3);
             chatbot.sendMessage("Rozmiar zmieniony.");
             return true;

@@ -8,14 +8,14 @@ import bot.core.gabes_framework.core.libs.api.Module;
 import bot.core.gabes_framework.util.message.MessageModule;
 import bot.core.gabes_framework.util.message.SingleMessageModule;
 import bot.core.gabes_framework.util.resource.RandomResourceModule;
-import bot.core.gabes_framework.core.libs.Utils;
+import bot.core.gabes_framework.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Offers a simple way to create modules. Does not provide messaging capabilities. If you need your module to be able to
+ * Offers a simple way to createUser modules. Does not provide messaging capabilities. If you need your module to be able to
  * communicate back, see {@link MessageModule}, {@link RandomResourceModule}, {@link SingleMessageModule} libraries. If these
  * do not satisfy your needs, you can extend "lower" level classes, such as this one, or {@link ModuleBase} class, which
  * gives you only basic connection to the chatbot's API. You can of course implement {@link Module} interface and

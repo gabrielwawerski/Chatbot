@@ -1,6 +1,6 @@
-package bot.core.gabes_framework.core.libs;
+package bot.core.gabes_framework.util;
 
-import bot.core.gabes_framework.core.point_system.Users;
+import bot.core.gabes_framework.core.point_system.UserEntry;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
 
@@ -41,6 +41,7 @@ public final class Utils {
     public static final String PENCIL_EMOJI = "\u270f\ufe0f";
     public static final String THINK_EMOJI = "\uD83E\uDD14";
     public static final String CAMERA_EMOJI = "\uD83D\uDCF8";
+    public static final String B_EMOJI = "\uD83C\uDD71️";
 
     public static String getMatch(Message message, List<String> regexList) {
         String messageBody = message.getMessage();
@@ -52,8 +53,8 @@ public final class Utils {
         return "";
     }
 
-    public static boolean msgIsBy(Message message, Users user) {
-        return message.getSender().getName().equals(user.name());
+    public static boolean msgIsBy(Message message, UserEntry userEntry) {
+        return message.getSender().getName().equals(userEntry.getUserName());
     }
 
     public static ArrayList<String> getCommands(List<String> regexList) {

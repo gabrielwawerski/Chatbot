@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.libs.Utils;
+import bot.core.gabes_framework.util.Utils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -19,7 +19,7 @@ import static bot.core.hollandjake_api.helper.interfaces.Util.*;
 public class Info extends ModuleBase {
     private final String ECHO_COMMAND = "echo";
     private final String INFO_REGEX = Utils.TO_REGEX("info");
-    private final String STATS_REGEX = Utils.TO_REGEX("stats");
+    private final String STATS_REGEX = Utils.TO_REGEX("staty");
     private final String UPTIME_REGEX = Utils.TO_REGEX("uptime");
 
     public Info(Chatbot chatbot) {

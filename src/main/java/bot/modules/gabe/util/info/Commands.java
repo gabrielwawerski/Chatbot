@@ -5,7 +5,7 @@ import bot.core.gabes_framework.util.message.SingleMessageModule;
 
 import java.util.List;
 
-import static bot.core.gabes_framework.core.libs.Utils.*;
+import static bot.core.gabes_framework.util.Utils.*;
 
 public class Commands extends SingleMessageModule {
     public Commands(Chatbot chatbot, List<String> commands) {
@@ -21,7 +21,8 @@ public class Commands extends SingleMessageModule {
                 .append("==================")
                 .append("\n")
 
-                .append(NEW_BUTTON_EMOJI)
+                .append(INFRMATION_EMOJI)
+                .append(NEW_BUTTON_EMOJI).append("!stats").append("\n")
                 .append("\uD83D\uDE03").append("!emotes").append("\n")
                 .append(INFRMATION_EMOJI).append("!sylwester").append("\n")
                 .append(PENCIL_EMOJI).append("!suggest  !pomysl").append("\n")

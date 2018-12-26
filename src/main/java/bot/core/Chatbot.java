@@ -1,6 +1,8 @@
 package bot.core;
 
-import bot.core.gabes_framework.core.libs.Utils;
+import bot.core.gabes_framework.core.database.Database;
+import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.point_system.PointStats;
 import bot.modules.gabe.text.rand.Roll;
 import bot.modules.gabe.util.Sylwester;
 import bot.modules.gabe.image.KartaPulapka;
@@ -31,7 +33,7 @@ import java.util.*;
 import java.util.List;
 
 public class Chatbot {
-    private final String version = "v0.3201";
+    private final String version = "v0.3301";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -40,6 +42,7 @@ public class Chatbot {
     private final LocalDateTime startupTime = LocalDateTime.now();
     private final Duration messageTimeout = Duration.ofMinutes(1);
     private final long refreshRate = 100;
+    private Database database;
 
     private boolean running = true;
     private String threadId;
@@ -75,11 +78,7 @@ public class Chatbot {
                 "responses.txt"));
         modules.put("RandomKwejk", new RandomKwejk(this));
         modules.put("TwitchEmotes", new TwitchEmotes(this));
-//        modules.put("Memes", new Memes(this));
-
-//        modules.put("Dogs", new Dogs(this));
-
-//        modules.put("PollCreate", new PollCreate(this)); // work in progress
+        modules.put("PointStats", new PointStats(this, database));
     }
 
     public void reloadModules() {
@@ -88,22 +87,22 @@ public class Chatbot {
 
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
-        webController = new WebController(this, debugMessages, headless, maximised);
+        webController = new WebController(this, debugMessages, headless, maximised, database);
         run(username, password, threadId, debugMode, silentMode);
     }
 
     public Chatbot(String configName, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
-        webController = new WebController(this, debugMessages, headless, maximised);
+        webController = new WebController(this, debugMessages, headless, maximised, database);
         runFromConfigWithThreadId(configName, threadId, debugMode, silentMode);
     }
 
     public Chatbot(String configName, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
-        webController = new WebController(this, debugMessages, headless, maximised);
+        webController = new WebController(this, debugMessages, headless, maximised, database);
         runFromConfig(configName, debugMode, silentMode);
     }
 
     public Chatbot() {
-        webController = new WebController(this, false, false, false);
+        webController = new WebController(this, false, false, false, database);
         runFromConfig("config", false, false);
     }
 
@@ -126,34 +125,6 @@ public class Chatbot {
         run(username, password, threadId, debugMode, silentMode);
     }
 
-    private void log(boolean noFreeSpace) {
-        Date dateNow = new Date();
-        String timeNow = dateNow.toString();
-        int dateLength = timeNow.length();
-        final int datePostfix = 9;
-
-        timeNow = timeNow.substring(0, dateLength - datePostfix);
-        System.out.print("\n");
-        System.out.println(timeNow);
-        if (noFreeSpace) {
-            System.out.println("  ");
-            return;
-        } else {
-            System.out.println("\n");
-        }
-    }
-
-    private void log() {
-        Date dateNow = new Date();
-        String timeNow = dateNow.toString();
-        int dateLength = timeNow.length();
-        final int datePostfix = 9;
-
-        timeNow = timeNow.substring(0, dateLength - datePostfix);
-        System.out.print("\n");
-        System.out.print(timeNow);
-        System.out.print("\n- ");
-    }
     private void init(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
         log();
         System.out.println("Initializing...");
@@ -231,22 +202,50 @@ public class Chatbot {
         System.out.print("running from config:\n");
         System.out.println("max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.");
         System.out.println("poll sleep time: " + getRefreshRate() + " millisec." );
-
         log(true);
         System.out.println("-----------------");
         System.out.println("PcionBot " + version);
         System.out.println("shutdown:  " + shutdownCode);
-        log();
         System.out.println("-----------------");
-        System.out.println("-----------------");
+
         //Init message
         if (!silentMode) {
             initMessage();
         }
     }
 
+    private void log() {
+        Date dateNow = new Date();
+        String timeNow = dateNow.toString();
+        int dateLength = timeNow.length();
+        final int datePostfix = 9;
+
+        timeNow = timeNow.substring(0, dateLength - datePostfix);
+        System.out.print("\n");
+        System.out.print("- " + timeNow);
+        System.out.print("\n");
+    }
+
+    private void log(boolean noFreeSpace) {
+        Date dateNow = new Date();
+        String timeNow = dateNow.toString();
+        int dateLength = timeNow.length();
+        final int datePostfix = 9;
+
+        timeNow = timeNow.substring(0, dateLength - datePostfix);
+        System.out.print("\n");
+        System.out.println(timeNow);
+        if (noFreeSpace) {
+            System.out.println("  ");
+            return;
+        } else {
+            System.out.println("\n");
+        }
+    }
+
     private void run(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
         this.threadId = threadId;
+        database = new Database();
         init(username, password, threadId, debugMode, silentMode);
 
         while (running) {
@@ -309,11 +308,9 @@ public class Chatbot {
     }
 
     public void sendImage(Image image) {
-
     }
 
     public void sendLoadedImage(Image image) {
-
     }
 
     public void sendImageFromURLWithMessage(String url, String message) {

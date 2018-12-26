@@ -10,7 +10,7 @@ import java.util.List;
 import static bot.core.hollandjake_api.helper.interfaces.Util.GET_RANDOM;
 
 /**
- * Easily create new modules if you only need following functionality: preset trigger regexes and a single resource
+ * Easily createUser new modules if you only need following functionality: preset trigger regexes and a single resource
  * file that. Takes care of API backend, if you only need mentioned functionality.<p>
  *
  * Simply extend from this class if above-mentioned features satisfy your needs, provide a list of regexes and a resource
