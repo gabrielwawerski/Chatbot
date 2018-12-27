@@ -35,7 +35,8 @@ public final class Utils {
     public static final String INFRMATION_EMOJI = "\u2139\ufe0f"; // ℹ️
     public static final String MAGNIFYING_EMOJI = "\uD83D\uDD0E"; // 🔎️
     public static final String HOURGLASS_EMOJI = "\u23f3"; // ⏳
-    public static final String EXCLAM_MRK_EMOJI = "\u2757"; // ❗
+    public static final String EXCL_MARK_RED_EMOJI = "\u2757"; // ❗
+    public static final String EXCL_MARK_WHITE_EMOJI = "\u2755"; // ❕
     public static final String POPCORN_EMOJI = "\uD83C\uDF7F"; // 🍿
     public static final String RIGHT_ARRW_EMOJI = "\u27a1\ufe0f";
     public static final String PENCIL_EMOJI = "\u270f\ufe0f";

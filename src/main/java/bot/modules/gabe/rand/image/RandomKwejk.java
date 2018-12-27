@@ -1,4 +1,4 @@
-package bot.modules.gabe.random.image;
+package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
@@ -16,6 +16,10 @@ import java.util.regex.Pattern;
 
 import static bot.core.hollandjake_api.helper.interfaces.Util.*;
 
+/**
+ * @version 1.0
+ * @since v0.31
+ */
 public class RandomKwejk extends ModuleBase {
     private String currentImageUrl;
     private Document doc;

@@ -19,13 +19,12 @@ import static bot.core.gabes_framework.core.Utils.getCommands;
 
 public class Mp3Tube extends ModuleBase {
     private String url;
-    protected HttpURLConnection connection;
     private Date timestamp;
 
     private static final String PREFIX = "https://lolyoutube.com/download/mp3/";
 
-    private static final String MP3_REGEX = TO_REGEX("mp3 (.*)");
-    private static final String REGEX = ("mp3");
+    private final String MP3_REGEX = TO_REGEX("mp3 (.*)");
+    private final String INFO_REGEX = TO_REGEX("mp3");
 
     public Mp3Tube(Chatbot chatbot) {
         super(chatbot);
@@ -41,7 +40,10 @@ public class Mp3Tube extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (isOr(MP3_REGEX, REGEX)) {
+        if (is(INFO_REGEX)) {
+            chatbot.sendMessage(Utils.INFRMATION_EMOJI + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
+                    + Utils.EXCL_MARK_RED_EMOJI + " Link musi kończyć się ID filmu.");
+        } else if (is(MP3_REGEX)) {
             if (found(message)) {
                 String id = getId(message.getMessage());
                 System.out.println("id = " + id);
@@ -59,7 +61,7 @@ public class Mp3Tube extends ModuleBase {
 
     private String getUrl(String id) {
         timestamp = new Date();
-        return "\u2935 Link do pobrania\n" + PREFIX + id + "/" + timestamp.getTime();
+        return "\u2935Pobierz:\n" + PREFIX + id + "/" + timestamp.getTime();
     }
 
     // obsluguje proste linki: https://www.youtube.com/watch?v=xxx
@@ -76,11 +78,11 @@ public class Mp3Tube extends ModuleBase {
 
     @Override
     public String getMatch(Message message) {
-        return findMatch(message, MP3_REGEX, REGEX);
+        return findMatch(message, MP3_REGEX, INFO_REGEX);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.getCommands(MP3_REGEX, REGEX);
+        return Utils.getCommands(MP3_REGEX, INFO_REGEX);
     }
 }

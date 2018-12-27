@@ -5,10 +5,10 @@ import bot.core.gabes_framework.core.Utils;
 import bot.modules.gabe.util.info.FeatureSuggest;
 import bot.modules.gabe.util.info.Shutdown;
 import bot.modules.gabe.util.point_system.PointSystem;
-import bot.modules.gabe.random.Roll;
+import bot.modules.gabe.rand.Roll;
 import bot.modules.gabe.util.Sylwester;
 import bot.modules.gabe.image.KartaPulapka;
-import bot.modules.gabe.random.EightBall;
+import bot.modules.gabe.rand.EightBall;
 import bot.modules.gabe.search.*;
 import bot.modules.gabe.util.*;
 import bot.modules.gabe.image.Think;
@@ -18,10 +18,10 @@ import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.web_controller.WebController;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.modules.gabe.image.Popcorn;
-import bot.modules.gabe.random.image.RandomGroupPhoto;
-import bot.modules.gabe.random.image.RandomKwejk;
-import bot.modules.gabe.random.JebacLeze;
-import bot.modules.gabe.random.LezeSpam;
+import bot.modules.gabe.rand.image.RandomGroupPhoto;
+import bot.modules.gabe.rand.image.RandomKwejk;
+import bot.modules.gabe.rand.JebacLeze;
+import bot.modules.gabe.rand.LezeSpam;
 import bot.modules.gabe.util.info.Commands;
 import bot.modules.gabe.util.info.Info;
 import bot.modules.gabe.twitch_emotes.TwitchEmotes;
@@ -35,8 +35,10 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
+import static bot.core.gabes_framework.core.Utils.*;
+
 public class Chatbot {
-    private final String version = "v0.3301";
+    private final String version = "v0.3309";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -144,7 +146,7 @@ public class Chatbot {
         log();
         System.out.println("Finished loading modules.");
         log();
-        System.out.println("Echo modules...");
+        System.out.println("Echo modules...\n");
 
         totalModules = modules.size();
         modulesOnline = 0;
@@ -165,9 +167,9 @@ public class Chatbot {
             for (String module : modulesOffline) {
                 System.out.print(module.getClass().getSimpleName() + ", ");
             }
-            System.out.println("ONLINE |" + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
+            System.out.println("ONLINE | " + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
         } else {
-            System.out.println("ONLINE |" + modulesOnline + "/" + totalModules);
+            System.out.println("ONLINE | " + modulesOnline + "/" + totalModules);
         }
         System.out.println("-----------------");
 
@@ -293,12 +295,15 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " online.\n"
-                + "Załadowane moduły:  " + Utils.NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
-                + "\n!ladder"
-                + "\n!b <tekst>"
-                + "\n!mp3 <youtube link> generuje link do pobrania!"
-                + "\n\nWpisz !cmd aby zobaczyć listę komend.");
+        webController.sendMessage("PcionBot " + getVersion() + " online \u2705\n"
+                + "Załadowane moduły:  " + NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
+                + "\n" + NEW_BUTTON_EMOJI + "!ladder !ladder msg "
+                + "\n" + NEW_BUTTON_EMOJI + "!stats !stats <imie>"
+                + "\n" + NEW_BUTTON_EMOJI + "!roulette"
+                + "\n" + NEW_BUTTON_EMOJI + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
+                + "\n"
+                + "\n" + "\uD83D\uDCAF Od teraz !r wysyła tylko url, ze zdjęciem jako załącznik!"
+                + "\n" + Utils.INFRMATION_EMOJI + " Wpisz !cmd aby zobaczyć listę komend.");
     }
 
     public String getModulesOnline() {

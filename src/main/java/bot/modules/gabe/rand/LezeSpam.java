@@ -1,4 +1,4 @@
-package bot.modules.gabe.random;
+package bot.modules.gabe.rand;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.util.resource.RandomResourceModule;

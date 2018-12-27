@@ -1,4 +1,4 @@
-package bot.modules.gabe.random.image;
+package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.helper.misc.Message;

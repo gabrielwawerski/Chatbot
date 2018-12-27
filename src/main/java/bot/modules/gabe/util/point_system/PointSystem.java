@@ -14,7 +14,16 @@ import java.util.regex.Pattern;
 
 import static java.util.Objects.isNull;
 
+// TODO make more modular. If some module wants to use the system, find a way to pass it
+// PointSystem system = PointSystem.getInstance() ?
 /**
+ * Main class for anything that uses points.
+ *
+ * <p><p>v0.2
+ * <br>- added !ladder
+ * <br>- added !roulette, !roulette all
+ *
+ * @version 0.2
  * @since v0.3201
  */
 public class PointSystem extends ModuleBase {
@@ -27,8 +36,10 @@ public class PointSystem extends ModuleBase {
 
     private final String STATS_REGEX = Utils.TO_REGEX("stats");
     private final String STATS_ANY_REGEX = Utils.TO_REGEX("stats (.*)");
+    private final String STATS_MENTION_ANY_REGEX = Utils.TO_REGEX("stats @(.*)");
 
     private final String LADDER_REGEX = Utils.TO_REGEX("ladder");
+    private final String MSG_REGEX = Utils.TO_REGEX("ladder msg");
 
     private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
     private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette (\\d+)");
@@ -49,9 +60,9 @@ public class PointSystem extends ModuleBase {
     }
 
     private String getLadderMsg() {
-        System.out.println("generating ladder..");
+        System.out.println("Generating ladder...");
         Ladder ladder = Ladder.getLadder(users);
-        System.out.println("ladder generated. returning");
+        System.out.println("Ladder generated");
         return ladder.toString();
     }
 
@@ -68,16 +79,18 @@ public class PointSystem extends ModuleBase {
         updateMatch(message);
         refreshUsers();
         // if msg isn't a command, process msg and return
-        if (!is(STATS_REGEX) && !is(LADDER_REGEX) && !is(ROULETTE_ALL_REGEX) && !is(ROULETTE_REGEX)) {
+        if (!is(STATS_REGEX) && !is(LADDER_REGEX)
+                && !is(ROULETTE_ALL_REGEX) && !is(ROULETTE_REGEX)
+                && !is(MSG_REGEX) && !is(STATS_ANY_REGEX) && !is(STATS_MENTION_ANY_REGEX)) {
+
             processMessage(user, message);
             System.out.println("is not regex");
             return false;
         }
-        addMessageCount(user);
 
+        addMessageCount(user);
         // stat check, we don't add points here
         if (is(STATS_REGEX)) {
-            System.out.println("stats regex!");
             String msg = user.getName()
                     + "\nPunkty: " + user.getPoints()
                     + "\nWiadomości: " + user.getMessageCount();
@@ -85,9 +98,42 @@ public class PointSystem extends ModuleBase {
             chatbot.sendMessage(msg);
             return true;
 
+        } else if (isOr(STATS_ANY_REGEX, STATS_MENTION_ANY_REGEX)) {
+            Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
+            if (matcher.find()) {
+                String desiredUser = matcher.group(1);
+
+                // remove @ tag if user used messenger's mention feature
+                if (desiredUser.charAt(0) == '@') {
+                    desiredUser = desiredUser.substring(1);
+                }
+
+                User wantedUser = null;
+                for (User usr : users) {
+                    if (usr.getName().equalsIgnoreCase(desiredUser)) {
+                        wantedUser = usr;
+                    }
+                } if (wantedUser == null) {
+                    update(user);
+                    chatbot.sendMessage("Użytkownik nie istnieje w bazie danych.");
+                    return false;
+                }
+                String msg = wantedUser.getName()
+                        + "\nPunkty: " + wantedUser.getPoints()
+                        + "\nWiadomości: " + wantedUser.getMessageCount();
+                update(user);
+                chatbot.sendMessage(msg);
+                return true;
+            }
+
         } else if (is(LADDER_REGEX)) {
             update(user);
             chatbot.sendMessage(getLadderMsg());
+            return true;
+
+        } else if (is(MSG_REGEX)) {
+            update(user);
+            chatbot.sendMessage(Ladder.getMsgLadder(users).toString());
             return true;
 
         } else if (is(ROULETTE_REGEX)) {
@@ -159,21 +205,6 @@ public class PointSystem extends ModuleBase {
         return false;
     }
 
-    private boolean getFiftyFifty() {
-        int min = 0;
-        int max = 1;
-        int range = (max - min) + 1;
-
-        int result = (int) (Math.random() * range) + min;
-        if (result == 1) {
-            System.out.println("wygrana");
-            return true;
-        } else {
-            System.out.println("przegrana");
-            return false;
-        }
-    }
-
     private void processMessage(User user, Message message) {
         User currUser = user;
         String messageBody = message.getMessage();
@@ -211,6 +242,21 @@ public class PointSystem extends ModuleBase {
 
         addMessageCount(currUser);
         update(currUser);
+    }
+
+    private boolean getFiftyFifty() {
+        int min = 0;
+        int max = 1;
+        int range = (max - min) + 1;
+
+        int result = (int) (Math.random() * range) + min;
+        if (result == 1) {
+            System.out.println("wygrana");
+            return true;
+        } else {
+            System.out.println("przegrana");
+            return false;
+        }
     }
 
     private void addMessage(User user, Message message) {
@@ -257,12 +303,12 @@ public class PointSystem extends ModuleBase {
 
     @Override
     public String getMatch(Message message) {
-        return findMatch(message, STATS_REGEX, LADDER_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
+        return findMatch(message, STATS_REGEX, STATS_ANY_REGEX, STATS_MENTION_ANY_REGEX, LADDER_REGEX, MSG_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.getCommands(STATS_REGEX, LADDER_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
+        return Utils.getCommands(STATS_REGEX, STATS_ANY_REGEX, STATS_MENTION_ANY_REGEX, LADDER_REGEX, MSG_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
     }
 
     private void addUser(Message message) {
