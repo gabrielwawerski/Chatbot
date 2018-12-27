@@ -1,8 +1,8 @@
-package bot.modules.gabe.twitch_emotes;
+package bot.modules.gabe.util.twitch_emotes;
 
 import java.util.List;
 
-import static bot.modules.gabe.twitch_emotes.Emote.Src.*;
+import static bot.modules.gabe.util.twitch_emotes.Emote.Src.*;
 
 public class Emote {
     private String command;

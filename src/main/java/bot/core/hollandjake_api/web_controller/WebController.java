@@ -192,14 +192,6 @@ public class WebController {
         CLIPBOARD.setContents(new StringSelection(contents), null);
     }
 
-    private void emulatePaste(WebElement webElement, String paste) {
-        webElement.sendKeys(paste);
-    }
-
-    private void emulateEnter(WebElement webElement, Keys enter) {
-        webElement.sendKeys(enter);
-    }
-
     public void screenshot() {
         ScreenshotUtil.capture(webDriver);
     }

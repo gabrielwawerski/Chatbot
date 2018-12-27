@@ -1,4 +1,4 @@
-package bot.modules.gabe.twitch_emotes;
+package bot.modules.gabe.util.twitch_emotes;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.Users;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static bot.core.gabes_framework.core.Utils.msgBy;
-import static bot.modules.gabe.twitch_emotes.Emote.*;
+import static bot.modules.gabe.util.twitch_emotes.Emote.*;
 
 /**
  * @since v0.3201

@@ -1,4 +1,4 @@
-package bot.modules.gabe.util;
+package bot.modules.gabe.text;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.util.ModuleBase;

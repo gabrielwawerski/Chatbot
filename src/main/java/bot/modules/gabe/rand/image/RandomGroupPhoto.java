@@ -19,9 +19,11 @@ import static bot.core.gabes_framework.core.Utils.TO_REGEX;
 /**
  * <p><p>v1.1
  * <br>- added timeout for rolling new image
- * <br>- files are now uploaded to Cloudinary - bot message is now only an image attachment
  *
- * @version 1.1
+ * <p>v2.0
+ * <br>- files are now uploaded to Cloudinary - message is now only an attachment with image!
+ *
+ * @version 2.0
  * @since 0.30
  */
 public class RandomGroupPhoto extends ModuleBase {
@@ -42,9 +44,9 @@ public class RandomGroupPhoto extends ModuleBase {
             "Musisz jeszcze poczekać.", "Leze nie spamuj.",
             "Bo cie kaspe zaraz wypierdoli.", "Musisz chwilę poczekać.",
             "Poczekaj chwilę.", "Chwila...", "Bo mnie przegrzejesz!",
-            "Nie bądź taki hop.");
+            "Nie bądź taki hop.", "Jebneee", "Bo się przegrzeje!");
 
-    private final String RANDOM_REGEX = TO_REGEX("andom");
+    private final String RANDOM_REGEX = TO_REGEX("random");
     private final String R_REGEX = TO_REGEX("r");
     private final String R = ("r");
 
@@ -82,8 +84,8 @@ public class RandomGroupPhoto extends ModuleBase {
                 return false;
             } else {
                 chatbot.sendImageUrlWaitToLoad(currentFileUrl);
-                timeoutRelease = new Date().getTime() + TIMEOUT;
                 currentFileUrl = uploadFile();
+                timeoutRelease = new Date().getTime() + TIMEOUT;
                 return true;
             }
         }

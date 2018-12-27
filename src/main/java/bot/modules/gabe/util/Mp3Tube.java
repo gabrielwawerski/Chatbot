@@ -41,7 +41,7 @@ public class Mp3Tube extends ModuleBase {
         updateMatch(message);
 
         if (is(INFO_REGEX)) {
-            chatbot.sendMessage(Utils.INFRMATION_EMOJI + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
+            chatbot.sendMessage(Utils.INFO_EMOJI + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
                     + Utils.EXCL_MARK_RED_EMOJI + " Link musi kończyć się ID filmu.");
         } else if (is(MP3_REGEX)) {
             if (found(message)) {
@@ -61,7 +61,7 @@ public class Mp3Tube extends ModuleBase {
 
     private String getUrl(String id) {
         timestamp = new Date();
-        return "\u2935Pobierz:\n" + PREFIX + id + "/" + timestamp.getTime();
+        return "\u2935Link do pobrania:\n" + PREFIX + id + "/" + timestamp.getTime();
     }
 
     // obsluguje proste linki: https://www.youtube.com/watch?v=xxx

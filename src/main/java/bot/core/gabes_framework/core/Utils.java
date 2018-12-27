@@ -32,7 +32,7 @@ public final class Utils {
     public static final String OK_BUTTON_EMOJI = "\uD83C\uDD97"; // 🆗
     public static final String PUSHPIN_EMOJI = "\uD83D\uDCCC"; // 📌
     public static final String SHUFFLE_EMOJI = "\uD83D\uDD00"; // 🔀
-    public static final String INFRMATION_EMOJI = "\u2139\ufe0f"; // ℹ️
+    public static final String INFO_EMOJI = "\u2139\ufe0f"; // ℹ️
     public static final String MAGNIFYING_EMOJI = "\uD83D\uDD0E"; // 🔎️
     public static final String HOURGLASS_EMOJI = "\u23f3"; // ⏳
     public static final String EXCL_MARK_RED_EMOJI = "\u2757"; // ❗
@@ -71,11 +71,11 @@ public final class Utils {
         return returnList;
     }
 
-    public static final String TO_REGEX(String arg) {
+    public static String TO_REGEX(String arg) {
         return "(?i)^!\\s*" + arg + "$";
     }
 
-    public static final String TO_COMMAND(String regex) {
+    public static String TO_COMMAND(String regex) {
         return regex.replaceAll("\\(\\?i\\)\\^!\\\\\\\\s\\*(\\S+?)\\$", "$1");
     }
 

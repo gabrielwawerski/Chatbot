@@ -7,21 +7,9 @@ public class PcionBot extends Chatbot {
     //      wersja pcionbot
     //      uptime
     //      top 3 ladder
-
     // !stats:
     //     statystyki (unikatowe wiadomosci, etc.)
     //     top 3 ladder
-
-    // !ladder
-    // ranking wszystkich na grupce
-
-    // !uptime
-    // czas dzialania bota
-
-    // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
-
-    // !roulette <punkty>
-    // !roulette all
 
     public static final String imgurSecret = "c7aae8e29fbd8eff21c742648125667abdcd579e";
     public static final String imgurId = "ba98f25f45c4ac9";
@@ -41,11 +29,11 @@ public class PcionBot extends Chatbot {
 
         boolean debugMode = false;      // debugs messages to console
         boolean silentMode = false;    // does not greet itself
-        boolean debugMessages = false; // adds bot's full name before it's message, and a ":" after.
+        boolean debugMessages = false; // adds bot name before it's message and " : " after.
         boolean headless = false;
         boolean maximized = true;
 
-        pcionbot = new Chatbot(username, password, ID_PATRO,
+        pcionbot = new Chatbot(username, password, ID_GRUPKA,
                 debugMode,
                 silentMode,
                 debugMessages,

@@ -110,6 +110,15 @@ public abstract class ModuleBase implements Module {
         return match.equals(REGEX);
     }
 
+    protected boolean is(List<String> REGEXES) {
+        for (String regex : REGEXES) {
+            if (match.equals(regex)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected boolean found(Message message) {
         Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
         return matcher.find();

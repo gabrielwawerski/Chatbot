@@ -65,7 +65,7 @@ public class Info extends ModuleBase {
     }
 
     public String getMinifiedStats() {
-        return "PcionBot " + chatbot.getVersion();
+        return "PcionBot " + chatbot.getVersion() + " \u2705";
     }
 
     private String getInfo() {

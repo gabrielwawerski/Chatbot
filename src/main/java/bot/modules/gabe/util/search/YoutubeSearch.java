@@ -1,4 +1,4 @@
-package bot.modules.gabe.search;
+package bot.modules.gabe.util.search;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.util.simple.SimpleSearchModule;

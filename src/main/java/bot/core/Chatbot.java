@@ -2,14 +2,15 @@ package bot.core;
 
 import bot.core.gabes_framework.core.database.Database;
 import bot.core.gabes_framework.core.Utils;
+import bot.modules.gabe.text.B;
 import bot.modules.gabe.util.info.FeatureSuggest;
 import bot.modules.gabe.util.info.Shutdown;
 import bot.modules.gabe.util.point_system.PointSystem;
 import bot.modules.gabe.rand.Roll;
-import bot.modules.gabe.util.Sylwester;
+import bot.modules.gabe.util.info.Sylwester;
 import bot.modules.gabe.image.KartaPulapka;
 import bot.modules.gabe.rand.EightBall;
-import bot.modules.gabe.search.*;
+import bot.modules.gabe.util.search.*;
 import bot.modules.gabe.util.*;
 import bot.modules.gabe.image.Think;
 import bot.core.gabes_framework.core.api.Module;
@@ -24,8 +25,11 @@ import bot.modules.gabe.rand.JebacLeze;
 import bot.modules.gabe.rand.LezeSpam;
 import bot.modules.gabe.util.info.Commands;
 import bot.modules.gabe.util.info.Info;
-import bot.modules.gabe.twitch_emotes.TwitchEmotes;
+import bot.modules.gabe.util.twitch_emotes.TwitchEmotes;
 import bot.modules.gabe.util.Mp3Tube;
+import bot.modules.gabe.util.info.ATG;
+import bot.modules.gabe.rand.image.RandomWTF;
+import bot.modules.gabe.rand.image.RandomWykop;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -38,7 +42,7 @@ import java.util.List;
 import static bot.core.gabes_framework.core.Utils.*;
 
 public class Chatbot {
-    private final String version = "v0.3309";
+    private final String version = "v0.3312";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -87,6 +91,9 @@ public class Chatbot {
         modules.put("PointSystem", new PointSystem(this, database));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
+        modules.put("ATG", new ATG(this, List.of("atg"), "\u274c CLOSED")); // ✅ OPEN ❌ CLOSED
+        modules.put("RandomWykop", new RandomWykop(this));
+        modules.put("RandomWTF", new RandomWTF(this));
     }
 
     public void reloadModules() {
@@ -269,6 +276,9 @@ public class Chatbot {
                     System.out.println(newMessage);
                 }
 
+                if (newMessage.getMessage().length() > 400) {
+
+                }
                 //Handle options
                 try {
                     for (Module module : modules.values()) {
@@ -295,15 +305,16 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " online \u2705\n"
+        webController.sendMessage("PcionBot " + getVersion() + " - ONLINE \u2705\n"
                 + "Załadowane moduły:  " + NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
-                + "\n" + NEW_BUTTON_EMOJI + "!ladder !ladder msg "
-                + "\n" + NEW_BUTTON_EMOJI + "!stats !stats <imie>"
-                + "\n" + NEW_BUTTON_EMOJI + "!roulette"
+                + "\n" + NEW_BUTTON_EMOJI + "!ladder !ladder msg !stats !stats <user>"
+                + "\n" + NEW_BUTTON_EMOJI + "!roulette !roulette all"
+                + "\n" + NEW_BUTTON_EMOJI + "!wtf"
+                + "\n" + NEW_BUTTON_EMOJI + "!wykop !wy"
                 + "\n" + NEW_BUTTON_EMOJI + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
                 + "\n"
-                + "\n" + "\uD83D\uDCAF Od teraz !r wysyła tylko url, ze zdjęciem jako załącznik!"
-                + "\n" + Utils.INFRMATION_EMOJI + " Wpisz !cmd aby zobaczyć listę komend.");
+                + "\n" + "\uD83D\uDCAF Od teraz !r wysyła tylko URL, ze zdjęciem jako załącznik!"
+                + "\n" + Utils.INFO_EMOJI + " Wpisz !cmd aby zobaczyć listę komend.");
     }
 
     public String getModulesOnline() {

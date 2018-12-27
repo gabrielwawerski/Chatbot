@@ -11,7 +11,9 @@ class Ladder {
         StringBuilder ladder = new StringBuilder();
         users.sort(Comparator.comparing(User::getMessageCount));
 
-        ladder.append("Ranking wiadomości:\n");
+        ladder.append("Ranking wiadomości:\n")
+                .append("=============")
+                .append("\n");
         for (int i = 0; i < users.size(); i++) {
             User currUser = users.get(users.size() - 1 - i);
             int currUserMsgs = currUser.getMessageCount();
@@ -37,6 +39,7 @@ class Ladder {
             } else if (i + 1 == 10) {
                 ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3");
             }
+
             if (i + 1 == 10) {
                 // do nothing - we don't need extra spaces, so ladder aligns
             } else if (currUserMsgs <= 9) {
@@ -63,7 +66,8 @@ class Ladder {
         // sorts users by their points (ascending)
         users.sort(Comparator.comparing(User::getPoints));
 
-        ladder.append("Ranking:")
+        ladder.append("Ranking wg punktów:\n")
+                .append("=============")
                 .append("\n");
 
         for (int i = 0; i < users.size(); i++) {
