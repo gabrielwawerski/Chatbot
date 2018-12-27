@@ -1,4 +1,4 @@
-package bot.modules.gabe.util.point_stats;
+package bot.modules.gabe.util.point_system;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.Database;
@@ -17,7 +17,7 @@ import static java.util.Objects.isNull;
 /**
  * @since v0.3201
  */
-public class PointStats extends ModuleBase {
+public class PointSystem extends ModuleBase {
     private Database db;
     private ArrayList<User> users;
     private Ladder ladder;
@@ -33,7 +33,9 @@ public class PointStats extends ModuleBase {
     private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
     private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette (\\d+)");
 
-    public PointStats(Chatbot chatbot, Database db) {
+    private final String BET_REGEX = Utils.TO_REGEX("bet (\\d+) (.*)"); // TODO
+
+    public PointSystem(Chatbot chatbot, Database db) {
         super(chatbot);
         this.db = db;
         initialize();
@@ -90,46 +92,48 @@ public class PointStats extends ModuleBase {
 
         } else if (is(ROULETTE_REGEX)) {
             Matcher matcher = Pattern.compile(ROULETTE_REGEX).matcher(message.getMessage());
-
             if (matcher.find()) {
-                int userRoll = Integer.parseInt(matcher.group(1));
-                System.out.println("user input: " + userRoll);
+                int desiredRoll = Integer.parseInt(matcher.group(1));
+                System.out.println("user input: " + desiredRoll);
 
-                if (user.getPoints() == 0) {
+                if (desiredRoll <= 0) {
+                    chatbot.sendMessage("Nieprawidłowa komenda.");
+                    update(user);
+                    return false;
+                } else if (user.getPoints() == 0) {
                     chatbot.sendMessage("Nie masz punktów.");
-
-                    return false;
-                } else if (userRoll > user.getPoints()) {
                     update(user);
+                    return false;
+                } else if (desiredRoll > user.getPoints()) {
                     chatbot.sendMessage("Nie masz tylu punktów!");
-
-                    return false;
-                } else if (userRoll < 0) {
                     update(user);
-                    chatbot.sendMessage("Nie da rady.");
-
                     return false;
                 }
-                boolean result = getResult();
+                boolean result = getFiftyFifty();
+                System.out.println("pts before: " + user.getPoints());
 
                 if (result) {
-                    user.addPoints(userRoll * 2);
+                    user.addPoints(desiredRoll * 2);
                     update(user);
-                    chatbot.sendMessage("Wygrałeś " + userRoll * 2 + " pkt!");
-
+                    chatbot.sendMessage("Wygrałeś " + desiredRoll * 2 + " pkt!");
                     return true;
                 } else {
-                    if (user.getPoints() - (userRoll * 2) < 0) {
-                        user.setPoints(0);
+                    if (user.getPoints() - desiredRoll >= 0) {
+                        user.subPoints(desiredRoll);
+                        update(user);
+                        System.out.println("pts after: " + user.getPoints());
+                        chatbot.sendMessage("Przejebałeś " + desiredRoll + " pkt.");
+                        return true;
                     } else {
-                        user.subPoints(userRoll * 2);
+                        System.out.println("also here!!!");
+                        user.setPoints(0);
+                        update(user);
+                        chatbot.sendMessage("Przejebałeś wszystkie punkty. Brawo!");
+                        return true;
                     }
-                    update(user);
-                    chatbot.sendMessage("Przejebałeś " + userRoll * 2 + " pkt.");
-
-                    return true;
                 }
             } // matcher.find()
+            return false;
         } // ROULETTE_REGEX
         else if (is(ROULETTE_ALL_REGEX)) {
             int userPoints = user.getPoints();
@@ -138,13 +142,14 @@ public class PointStats extends ModuleBase {
                 return true;
             }
 
-            boolean result = getResult();
+            boolean result = getFiftyFifty();
             if (result) {
-                user.setPoints(user.getPoints() * 2);
+                user.setPoints(userPoints * 2);
                 update(user);
                 chatbot.sendMessage("Wygrałeś " + userPoints + " pkt!");
                 return true;
             } else {
+                System.out.println("tu jestesmy?");
                 user.setPoints(0);
                 update(user);
                 chatbot.sendMessage(userPoints + " pkt poszło się jebać. Brawo!");
@@ -154,16 +159,17 @@ public class PointStats extends ModuleBase {
         return false;
     }
 
-    private boolean getResult() {
+    private boolean getFiftyFifty() {
         int min = 0;
         int max = 1;
         int range = (max - min) + 1;
 
         int result = (int) (Math.random() * range) + min;
-        System.out.println("wynik losowania: " + result);
         if (result == 1) {
+            System.out.println("wygrana");
             return true;
         } else {
+            System.out.println("przegrana");
             return false;
         }
     }

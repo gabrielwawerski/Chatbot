@@ -1,7 +1,6 @@
-package bot.modules.gabe.util.point_stats;
+package bot.modules.gabe.util.point_system;
 
 import bot.core.gabes_framework.core.database.User;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
 

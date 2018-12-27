@@ -1,4 +1,4 @@
-package bot.modules.gabe.util;
+package bot.modules.gabe.util.info;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FeatureSuggest extends SaveResourceModule {
-    private final String INFO_MESSAGE = "Po !suggest podaj swój pomysł na funkcję!";
+    private final String INFO_MESSAGE = "Po !suggest opisz swój pomysł na nową funkcję!";
 
     private final String SUGGEST = Utils.TO_REGEX("suggest");
     private final String POMYSL = Utils.TO_REGEX("pomysl");
@@ -26,8 +26,8 @@ public class FeatureSuggest extends SaveResourceModule {
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
-
         Matcher matcher = null;
+
         if (match.equals(SUGGEST) || match.equals(POMYSL)) {
             chatbot.sendMessage(INFO_MESSAGE);
             return true;

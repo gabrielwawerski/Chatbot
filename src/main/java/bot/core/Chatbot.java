@@ -2,11 +2,13 @@ package bot.core;
 
 import bot.core.gabes_framework.core.database.Database;
 import bot.core.gabes_framework.core.Utils;
-import bot.modules.gabe.util.point_stats.PointStats;
-import bot.modules.gabe.text.rand.Roll;
+import bot.modules.gabe.util.info.FeatureSuggest;
+import bot.modules.gabe.util.info.Shutdown;
+import bot.modules.gabe.util.point_system.PointSystem;
+import bot.modules.gabe.random.Roll;
 import bot.modules.gabe.util.Sylwester;
 import bot.modules.gabe.image.KartaPulapka;
-import bot.modules.gabe.text.rand.EightBall;
+import bot.modules.gabe.random.EightBall;
 import bot.modules.gabe.search.*;
 import bot.modules.gabe.util.*;
 import bot.modules.gabe.image.Think;
@@ -16,14 +18,14 @@ import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.web_controller.WebController;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.modules.gabe.image.Popcorn;
-import bot.modules.gabe.image.rand.RandomGroupPhoto;
-import bot.modules.gabe.image.rand.RandomKwejk;
-import bot.modules.gabe.text.rand.JebacLeze;
-import bot.modules.gabe.text.rand.LezeSpam;
+import bot.modules.gabe.random.image.RandomGroupPhoto;
+import bot.modules.gabe.random.image.RandomKwejk;
+import bot.modules.gabe.random.JebacLeze;
+import bot.modules.gabe.random.LezeSpam;
 import bot.modules.gabe.util.info.Commands;
 import bot.modules.gabe.util.info.Info;
-import bot.modules.gabe.twitchemotes.TwitchEmotes;
-import bot.modules.gabe.work_in_progress.Mp3Tube;
+import bot.modules.gabe.twitch_emotes.TwitchEmotes;
+import bot.modules.gabe.util.Mp3Tube;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -52,6 +54,7 @@ public class Chatbot {
     private int totalModules;
 
     protected void loadModules() {
+        // TODO List with all regexes for PointSystem to receive in constructor.
         modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
         modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
@@ -79,7 +82,7 @@ public class Chatbot {
                 "responses.txt"));
         modules.put("RandomKwejk", new RandomKwejk(this));
         modules.put("TwitchEmotes", new TwitchEmotes(this));
-        modules.put("PointStats", new PointStats(this, database));
+        modules.put("PointSystem", new PointSystem(this, database));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
     }
@@ -162,9 +165,9 @@ public class Chatbot {
             for (String module : modulesOffline) {
                 System.out.print(module.getClass().getSimpleName() + ", ");
             }
-            System.out.println(modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
+            System.out.println("ONLINE |" + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
         } else {
-            System.out.println(modulesOnline + "/" + totalModules);
+            System.out.println("ONLINE |" + modulesOnline + "/" + totalModules);
         }
         System.out.println("-----------------");
 
@@ -208,7 +211,7 @@ public class Chatbot {
         System.out.print("PcionBot successfully loaded, ");
         System.out.print("running from config:\n");
         System.out.println("max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.");
-        System.out.println("poll sleep time: " + getRefreshRate() + " millisec." );
+        System.out.println("poll sleep time: " + getRefreshRate() + " millis." );
         log(true);
         System.out.println("-----------------");
         System.out.println("PcionBot " + version);
@@ -293,8 +296,8 @@ public class Chatbot {
         webController.sendMessage("PcionBot " + getVersion() + " online.\n"
                 + "Załadowane moduły:  " + Utils.NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
                 + "\n!ladder"
-                + "\n!mp3 <youtube link> generuje link do pobrania!"
                 + "\n!b <tekst>"
+                + "\n!mp3 <youtube link> generuje link do pobrania!"
                 + "\n\nWpisz !cmd aby zobaczyć listę komend.");
     }
 

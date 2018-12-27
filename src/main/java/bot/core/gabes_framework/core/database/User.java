@@ -68,11 +68,7 @@ public class User {
     }
 
     public void subPoints(int value) {
-        if (value < points) {
-            points = 0;
-        } else {
-            this.points -= value;
-        }
+        this.points -= value;
     }
 
     public int getMessageCount() {

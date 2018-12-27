@@ -1,4 +1,4 @@
-package bot.modules.gabe.work_in_progress;
+package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;

@@ -53,9 +53,9 @@ public abstract class ModuleBase implements Module {
     public void echoOnline() {
         String msg = "";
         if (online) {
-            msg += "ONLINE | " + getClass().getSimpleName();
+            msg += "ONLINE| " + getClass().getSimpleName();
         } else {
-            msg += "OFFLINE| " + getClass().getSimpleName();
+            msg += "OFFLINE|" + getClass().getSimpleName();
         }
         System.out.println(msg);
     }

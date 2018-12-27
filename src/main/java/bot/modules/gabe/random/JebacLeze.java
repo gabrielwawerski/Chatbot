@@ -1,4 +1,4 @@
-package bot.modules.gabe.text.rand;
+package bot.modules.gabe.random;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
