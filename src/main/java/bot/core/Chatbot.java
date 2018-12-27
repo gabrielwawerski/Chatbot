@@ -38,6 +38,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static bot.core.gabes_framework.core.Utils.*;
 
@@ -61,7 +62,7 @@ public class Chatbot {
 
     protected void loadModules() {
         // TODO List with all regexes for PointSystem to receive in constructor.
-        modules.put("Commands", new Commands(this, List.of("cmd", "help", "regexList")));
+        modules.put("Commands", new Commands(this, List.of("cmd", "help")));
         modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
         modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
@@ -88,12 +89,22 @@ public class Chatbot {
                 "responses.txt"));
         modules.put("RandomKwejk", new RandomKwejk(this));
         modules.put("TwitchEmotes", new TwitchEmotes(this));
-        modules.put("PointSystem", new PointSystem(this, database));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
         modules.put("ATG", new ATG(this, List.of("atg"), "\u274c CLOSED")); // ✅ OPEN ❌ CLOSED
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
+        modules.put("PointSystem", new PointSystem(this, database));
+    }
+
+    public List<String> getRegexes() {
+        List<String> list = List.of("cmd", "help", "regexList", "info", "staty", "uptime", "echo", "shutdown", "sylwester", "suggest", "pomysl", "wiki (.*)",
+                "youtube (.*)", "yt (.*)", "google (.*)", "g (.*)", "g help", "g leze", "google", "g", "allegro (.*)", "pyszne help", "pyszne",
+                "pyszne (.*)", "pyszne haianh", "pyszne hai-anh", "pyszne hai", "pyszne mariano", "pyszne italiano", "pyszne football", "pyszne footbal",
+                "pyszne footballpizza", "r", "random", "pogoda", "p", "popcorn", "rajza", "karta", "kartapulapka", "myk", "roll", "roll (\\d+)",
+                "think", "think (\\d+)", "8ball (.*)", "ask (.*)", "8 (.*)", "jebacleze", "jebac leze", "spam", "kurwa", "kwejk", "kw", "mp3 (.*)", "mp3",
+                "b (.*)", "atg", "wykop", "wy", "wtf");
+        return list.stream().map(Utils::TO_REGEX).collect(Collectors.toList());
     }
 
     public void reloadModules() {
@@ -270,15 +281,17 @@ public class Chatbot {
             try {
                 webController.waitForNewMessage();
                 Message newMessage = webController.getLatestMessage();
+
+                if (newMessage.getMessage().length() > 1000) {
+                    System.out.println("Message too long, ignoring...");
+                    continue;
+                }
                 messageLog.add(newMessage);
 
                 if (debugMode) {
                     System.out.println(newMessage);
                 }
 
-                if (newMessage.getMessage().length() > 400) {
-
-                }
                 //Handle options
                 try {
                     for (Module module : modules.values()) {
@@ -305,7 +318,7 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " - ONLINE \u2705\n"
+        webController.sendMessage("PcionBot " + getVersion() + " ONLINE \u2705\n"
                 + "Załadowane moduły:  " + NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
                 + "\n" + NEW_BUTTON_EMOJI + "!ladder !ladder msg !stats !stats <user>"
                 + "\n" + NEW_BUTTON_EMOJI + "!roulette !roulette all"

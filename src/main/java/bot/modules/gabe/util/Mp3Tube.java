@@ -61,7 +61,7 @@ public class Mp3Tube extends ModuleBase {
 
     private String getUrl(String id) {
         timestamp = new Date();
-        return "\u2935Link do pobrania:\n" + PREFIX + id + "/" + timestamp.getTime();
+        return "\u2935 Link do pobrania:\n" + PREFIX + id + "/" + timestamp.getTime();
     }
 
     // obsluguje proste linki: https://www.youtube.com/watch?v=xxx

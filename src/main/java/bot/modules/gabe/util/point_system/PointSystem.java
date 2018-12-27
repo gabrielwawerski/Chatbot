@@ -30,8 +30,9 @@ import static java.util.Objects.isNull;
  */
 public class PointSystem extends ModuleBase {
     private Database db;
-    private ArrayList<User> users;
     private Ladder ladder;
+    private ArrayList<User> users;
+    private ArrayList<Duel> activeDuels;
 
     private boolean userFound = false;
     private Matcher matcher;
@@ -49,15 +50,23 @@ public class PointSystem extends ModuleBase {
     private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette (\\d+)");
     private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
     // TODO add these
-    private final String RO_REGEX = Utils.TO_REGEX("ro (\\d+)");
-    private final String RO_ALL_REGEX = Utils.TO_REGEX("ro (\\d+)");
+//    private final String RO_REGEX = Utils.TO_REGEX("ro (\\d+)");
+//    private final String RO_ALL_REGEX = Utils.TO_REGEX("ro all");
+
+
+    private final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet >(\\d+) (.*)");
+    private final String BET_FEWER_THAN_REGEX = Utils.TO_REGEX("bet <(\\d+) (.*)");
 
     // BET
-    private final String BET_REGEX = Utils.TO_REGEX("bet (\\d+) (.*)"); // TODO
-    String DUEL_ANY_REGEX = ("duel (\\d+)"); // TODO
-    String DUEL_REGEX = ("duel (\\d+) (.*)"); // TODO
-    // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
+    private final String DUEL_REGEX = Utils.TO_REGEX("duel (\\d+) (.*)"); // TODO
+    private final String DUEL_ANY_REGEX = Utils.TO_REGEX("duel (\\d+)"); // TODO
 
+    private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
+    private final String DUEL_ACCEPT_SIMPLE = "y";
+    private final String DUEL_REFUSE_REGEX = Utils.TO_REGEX("n");
+    private final String DUEL_REFUSE_SIMPLE = "n";
+
+    // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
     private final List<String> REGEXES;
 
     public PointSystem(Chatbot chatbot, Database db) {
@@ -65,14 +74,24 @@ public class PointSystem extends ModuleBase {
         this.db = db;
         initialize();
         REGEXES = List.of(
-                STATS_REGEX, STATS_ANY_REGEX, STATS_MENTION_ANY_REGEX,
-                LADDER_REGEX, LADDER_MSG_REGEX,
-                ROULETTE_REGEX, ROULETTE_ALL_REGEX,
-                BET_REGEX);
+                STATS_REGEX,
+                STATS_ANY_REGEX,
+                STATS_MENTION_ANY_REGEX,
+                LADDER_REGEX,
+                LADDER_MSG_REGEX,
+                ROULETTE_REGEX,
+                ROULETTE_ALL_REGEX,
+                DUEL_REGEX,
+                DUEL_ANY_REGEX,
+                DUEL_ACCEPT_REGEX,
+                DUEL_ACCEPT_SIMPLE,
+                DUEL_REFUSE_REGEX,
+                DUEL_REFUSE_SIMPLE);
     }
 
     private void initialize() {
         users = new ArrayList<>();
+        activeDuels = new ArrayList<>();
         System.out.println("Fetching users from database...");
         users = db.getUsers();
         System.out.println("Users fetched.");
@@ -85,22 +104,61 @@ public class PointSystem extends ModuleBase {
         return ladder.toString();
     }
 
+    private Duel getIfActiveDuel(User user) {
+        for (Duel duel : activeDuels) {
+            if (duel.getOpponent() == user) {
+                return duel;
+            }
+        }
+        return null;
+    }
+
+//    private void updateDuels(long now) {
+//        for (Duel duel : activeDuels) {
+//            activeDuels.
+//        }
+//    }
+
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         User user = null;
 
         if (!isNull(message) && !isNull(message.getSender())) {
             user = getUser(message);
+            update(user);
         } else {
             return false;
         }
 
         updateMatch(message);
-        refreshUsers();
         // if msg isn't a command, process msg and return
         if (!is(REGEXES)) {
+            System.out.println(message.getMessage() + " not regex.");
             processMessage(user, message);
             return true;
+        }
+
+        Duel duel = null;
+        if ((duel = getIfActiveDuel(user)) != null) {
+            System.out.println("found active duel!");
+            if (isOr(DUEL_REFUSE_REGEX, DUEL_REFUSE_SIMPLE)) {
+                chatbot.sendMessage(user.getName()
+                        + " odrzucił wyzwanie użytkownika " + duel.getInitiator().getName());
+                activeDuels.remove(duel);
+                return true;
+            } else if (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
+                duel.resolve();
+
+                duel.getWinner().addPoints(duel.getBet() * 2);
+                duel.getLoser().subPoints(duel.getBet() * 2);
+
+                update(duel.getWinner());
+                update(duel.getLoser());
+                chatbot.sendMessage(duel.getWinner().getName()
+                        + " wygrywa pojedynek i zdobywa " + duel.getBet() * 2 + " pkt!");
+                activeDuels.remove(duel);
+                return true;
+            }
         }
 
         addMessageCount(user);
@@ -195,6 +253,7 @@ public class PointSystem extends ModuleBase {
             } // matcher.find()
             return false;
         } // ROULETTE_REGEX
+
         else if (is(ROULETTE_ALL_REGEX)) {
             int userPoints = user.getPoints();
             if (userPoints == 0) {
@@ -213,6 +272,45 @@ public class PointSystem extends ModuleBase {
                 chatbot.sendMessage(userPoints + " pkt poszło się jebać. Gratulacje!");
                 return true;
             }
+        } // ROULETTE_ALL_REGEX
+
+        else if (is(DUEL_REGEX)) {
+            Matcher matcher = Pattern.compile(DUEL_REGEX).matcher(message.getMessage());
+
+            if (matcher.find()) {
+                String desiredUser = matcher.group(2);
+                int bet = Integer.parseInt(matcher.group(1));
+                System.out.println("bet: " + bet + "\nopponent: " + desiredUser);
+                User opponent;
+
+                if (desiredUser.charAt(0) == '@') {
+                    desiredUser = desiredUser.substring(1);
+                }
+
+                System.out.println("user.getPoints(): " + user.getPoints());
+                if (user.getPoints() < bet) {
+                    chatbot.sendMessage("Nie masz tylu punktów!");
+                    update(user);
+                    return false;
+                }
+
+                if ((opponent = getUser(desiredUser)) != null) {
+                    if (opponent.getPoints() < bet) {
+                        chatbot.sendMessage("Przeciwnik nie ma tylu punktów!");
+                        update(user);
+                        return false;
+                    }
+                } else {
+                    chatbot.sendMessage("Brak użytkownika w bazie danych.");
+                    update(user);
+                    return false;
+                }
+
+                activeDuels.add(new Duel(user, opponent, bet));
+                chatbot.sendMessage("Czekam na odpowiedź przeciwnika. (y/n)");
+                return true;
+            }
+            return false;
         }
         return false;
     }
@@ -221,6 +319,11 @@ public class PointSystem extends ModuleBase {
         User currUser = user;
         String messageBody = message.getMessage();
         int msgLength = messageBody.length();
+
+        if (is(chatbot.getRegexes())) {
+            update(currUser);
+            return;
+        }
 
         if (message.getImage() != null) {
             user.addPoints(2);
@@ -251,12 +354,11 @@ public class PointSystem extends ModuleBase {
             System.out.println("+10 PTS " + user.getName());
         }
 
-
         addMessageCount(currUser);
         update(currUser);
     }
 
-    private boolean getFiftyFifty() {
+    public static boolean getFiftyFifty() {
         int min = 0;
         int max = 1;
         int range = (max - min) + 1;
@@ -296,6 +398,15 @@ public class PointSystem extends ModuleBase {
         return false;
     }
 
+    private User getUser(String str) {
+        for (User user : users) {
+            if (user.getName().equals(str)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     private User getUser(Message message) {
         String sender = message.getSender().getName();
 
@@ -313,13 +424,11 @@ public class PointSystem extends ModuleBase {
 
     @Override
     public String getMatch(Message message) {
-//        return findMatch(message, STATS_REGEX, STATS_ANY_REGEX, STATS_MENTION_ANY_REGEX, LADDER_REGEX, LADDER_MSG_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
         return findMatch(message, REGEXES);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-//        return Utils.getCommands(STATS_REGEX, STATS_ANY_REGEX, STATS_MENTION_ANY_REGEX, LADDER_REGEX, LADDER_MSG_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
         return Utils.getCommands(REGEXES);
     }
 
