@@ -1,6 +1,6 @@
-package bot.core.gabes_framework.util;
+package bot.core.gabes_framework.core;
 
-import bot.core.gabes_framework.core.point_system.UserEntry;
+import bot.core.gabes_framework.core.Users;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  *
  * @since 0.30
  * @version 1.0
- * @see Util
+ * @see bot.core.hollandjake_api.helper.interfaces.Util
  *
  * @author hollandjake (https://github.com/hollandjake)
  * @author gabrielwawerski (https://github.com/gabrielwawerski)
@@ -53,12 +53,12 @@ public final class Utils {
         return "";
     }
 
-    public static boolean msgIsBy(Message message, UserEntry userEntry) {
-        return message.getSender().getName().equals(userEntry.getUserName());
+    public static boolean msgIsBy(Message message, Users users) {
+        return message.getSender().getName().equals(users.getUserName());
     }
 
     public static ArrayList<String> getCommands(List<String> regexList) {
-        return (ArrayList<String>) regexList.stream().map(Util::DEACTIONIFY).collect(Collectors.toList());
+        return (ArrayList<String>) regexList.stream().map(bot.core.hollandjake_api.helper.interfaces.Util::DEACTIONIFY).collect(Collectors.toList());
     }
 
     public static ArrayList<String> getCommands(String... commands) {

@@ -4,13 +4,13 @@ import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.search.SearchModuleBase;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.util.Utils.TO_REGEX;
+import static bot.core.gabes_framework.core.Utils.TO_REGEX;
 
 /**
  * @version 1.0

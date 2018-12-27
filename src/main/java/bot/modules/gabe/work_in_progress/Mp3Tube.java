@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -14,23 +14,20 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.util.Utils.TO_REGEX;
-import static bot.core.gabes_framework.util.Utils.getCommands;
+import static bot.core.gabes_framework.core.Utils.TO_REGEX;
+import static bot.core.gabes_framework.core.Utils.getCommands;
 
-public class Mp3tube extends ModuleBase {
+public class Mp3Tube extends ModuleBase {
     private String url;
     protected HttpURLConnection connection;
-
-    private static final String API_URL = "";
-    private static final String PREFIX = "https://lolyoutube.com/download/";
-    private static final String MP3 = "mp3";
     private Date timestamp;
 
-    private static final String YTMP3_REGEX = TO_REGEX("ytmp3 (.*)");
+    private static final String PREFIX = "https://lolyoutube.com/download/mp3/";
+
     private static final String MP3_REGEX = TO_REGEX("mp3 (.*)");
     private static final String REGEX = ("mp3");
 
-    public Mp3tube(Chatbot chatbot) {
+    public Mp3Tube(Chatbot chatbot) {
         super(chatbot);
     }
 
@@ -44,38 +41,43 @@ public class Mp3tube extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (isOr(YTMP3_REGEX, MP3_REGEX) || match.equals(REGEX)) {
-            Matcher matcher = Pattern.compile("v=").matcher(message.getMessage());
+        if (isOr(MP3_REGEX, REGEX)) {
             if (found(message)) {
-//                url = getFinalUrl(message.getMessage());
+                String id = getId(message.getMessage());
+                System.out.println("id = " + id);
+                if (id != null) {
+                    chatbot.sendMessage(getUrl(id));
+                    return true;
+                } else {
+                    chatbot.sendMessage("Nieprawidłowy link.");
+                    return false;
+                }
             }
         }
         return false;
     }
 
-    private String getMp3(String url) {
-        return MP3;
-    }
-
-
-
-    private String getFinalUrl(String messageBody) {
+    private String getUrl(String id) {
         timestamp = new Date();
-        return PREFIX + getId(messageBody) + timestamp.toString();
+        return PREFIX + id + "/" + timestamp.getTime();
     }
 
     private String getId(String messageBody) {
-//        Matcher matcher = Pattern.compile("");
-        return null;
+        Matcher matcher = Pattern.compile("v=(.*)").matcher(messageBody);
+        if (matcher.find()) {
+            return matcher.group().substring(2);
+        } else {
+            return null;
+        }
     }
 
     @Override
     public String getMatch(Message message) {
-        return findMatch(message, YTMP3_REGEX, MP3_REGEX);
+        return findMatch(message, MP3_REGEX, REGEX);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.getCommands(YTMP3_REGEX, MP3_REGEX);
+        return Utils.getCommands(MP3_REGEX, REGEX);
     }
 }

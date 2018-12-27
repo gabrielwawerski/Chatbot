@@ -3,9 +3,8 @@ package bot.modules.gabe.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.gabes_framework.util.search.SearchModuleBase;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +17,14 @@ public class GoogleSearch extends SearchModuleBase {
     private static final String SEARCH_URL = "https://www.google.com/search?q=";
     private static final String SEPARATOR = "+";
 
-    private final String GOOGLE_REGEX = Util.ACTIONIFY("google");
-    private final String G_REGEX = Util.ACTIONIFY("g");
+    private final String GOOGLE_REGEX = bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY("google");
+    private final String G_REGEX = bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY("g");
 
-    private final String G_HELP_REGEX = Util.ACTIONIFY("g help");
-    private final String G_LEZE_REGEX = Util.ACTIONIFY("g leze");
+    private final String G_HELP_REGEX = bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY("g help");
+    private final String G_LEZE_REGEX = bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY("g leze");
 
-    private final String GOOGLE_ANY_REGEX = Util.ACTIONIFY("google (.*)");
-    private final String G_ANY_REGEX = Util.ACTIONIFY("g (.*)");
+    private final String GOOGLE_ANY_REGEX = bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY("google (.*)");
+    private final String G_ANY_REGEX = bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY("g (.*)");
 
     public GoogleSearch(Chatbot chatbot) {
         super(chatbot);
@@ -49,7 +48,7 @@ public class GoogleSearch extends SearchModuleBase {
                     "No kurwa, łeze, poszukaj",
                     "KKUUUUUUURRRRRRWWW",
                     "Ty ulana łysa lebiodo");
-            chatbot.sendMessage(Util.GET_RANDOM(list) +
+            chatbot.sendMessage(bot.core.hollandjake_api.helper.interfaces.Util.GET_RANDOM(list) +
                     "\nhttps://www.google.com/");
             return true;
 

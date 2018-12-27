@@ -2,13 +2,12 @@ package bot.core.gabes_framework.util.simple;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.libs.api.Module;
+import bot.core.gabes_framework.core.api.Module;
 import bot.core.gabes_framework.util.message.MessageModule;
 import bot.core.gabes_framework.util.message.SingleMessageModule;
 import bot.core.gabes_framework.util.resource.RandomResourceModule;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public abstract class SimpleModule extends ModuleBase {
      */
     public SimpleModule(Chatbot chatbot, List<String> regexList) {
         super(chatbot);
-        this.regexList = regexList.stream().map(Util::ACTIONIFY).collect(Collectors.toList());
+        this.regexList = regexList.stream().map(bot.core.hollandjake_api.helper.interfaces.Util::ACTIONIFY).collect(Collectors.toList());
     }
 
     public SimpleModule(Chatbot chatbot) {

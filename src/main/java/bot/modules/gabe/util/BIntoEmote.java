@@ -2,7 +2,7 @@ package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 

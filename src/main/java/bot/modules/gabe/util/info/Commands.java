@@ -1,12 +1,11 @@
 package bot.modules.gabe.util.info;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.util.Utils;
 import bot.core.gabes_framework.util.message.SingleMessageModule;
 
 import java.util.List;
 
-import static bot.core.gabes_framework.util.Utils.*;
+import static bot.core.gabes_framework.core.Utils.*;
 
 public class Commands extends SingleMessageModule {
     public Commands(Chatbot chatbot, List<String> commands) {
@@ -22,14 +21,18 @@ public class Commands extends SingleMessageModule {
                 .append("==================")
                 .append("\n")
 
+                .append()
+                .append(NEW_BUTTON_EMOJI).append("!mp3").append("\n")
+
                 .append(INFRMATION_EMOJI)
                 .append(NEW_BUTTON_EMOJI).append("!ladder").append("\n")
+
                 .append(INFRMATION_EMOJI).append("!stats").append("\n")
                 .append("\uD83D\uDE03").append("!emotes").append("\n")
                 .append(INFRMATION_EMOJI).append("!sylwester").append("\n")
                 .append(PENCIL_EMOJI).append("!suggest  !pomysl").append("\n")
                 .append(MAGNIFYING_EMOJI).append("!torrent").append("\n")
-                .append(MAGNIFYING_EMOJI).append("!wiki").append("\n")
+                .append("\uD83C\uDF10").append("!wiki").append("\n")
                 .append(MAGNIFYING_EMOJI).append("!youtube !yt ").append("\n")
                 .append(MAGNIFYING_EMOJI).append("!google   !g ").append("\n")
                 .append(MAGNIFYING_EMOJI).append("!allegro").append("\n")
@@ -40,14 +43,14 @@ public class Commands extends SingleMessageModule {
 
                 .append("\uD83D\uDD00").append("!random !r").append("\n")
                 .append("\uD83D\uDE02").append("!kwejk !kw").append("\n")
-                .append("\u2601\ufe0f").append("!pogoda !p").append("\n")
-                .append("\u2754").append("!8ball !ask !8 ").append("\n")
+                .append("\u2601\ufe0f").append("!pogoda | !p").append("\n")
+                .append("\u2754").append("!8ball | !ask | !8 ").append("\n")
                 .append(HOURGLASS_EMOJI).append("!roll !roll <max>").append("\n")
-                .append(THINK_EMOJI).append("!think !think <liczba>").append("\n")
-                .append(CAMERA_EMOJI).append("!karta !kartapulapka !myk").append("\n")
+                .append(THINK_EMOJI).append("!think | !think <liczba>").append("\n")
+                .append(CAMERA_EMOJI).append("!karta | !kartapulapka !myk").append("\n")
                 .append(POPCORN_EMOJI).append("!popcorn").append("\n")
                 .append(EXCLAM_MRK_EMOJI).append("!g leze").append("\n")
-                .append(EXCLAM_MRK_EMOJI).append("!jebacleze !leze ").append("!spam").append("\n")
+                .append(EXCLAM_MRK_EMOJI).append("!jebacleze | !leze | !spam").append("\n")
 
                 .append(INFRMATION_EMOJI).append("!info").append("\n")
                 .append(INFRMATION_EMOJI).append("!stats").append("\n")

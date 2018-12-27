@@ -1,4 +1,4 @@
-package bot.core.gabes_framework.core.libs.api;
+package bot.core.gabes_framework.core.api;
 
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;

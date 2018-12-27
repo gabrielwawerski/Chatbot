@@ -1,7 +1,7 @@
 package bot.core.gabes_framework.util;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.libs.api.Module;
+import bot.core.gabes_framework.core.api.Module;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.message.MessageModule;
 import bot.core.gabes_framework.util.resource.RandomResourceModule;

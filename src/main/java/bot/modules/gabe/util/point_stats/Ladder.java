@@ -20,11 +20,10 @@ public class Ladder {
                 .append("\n");
 
         for (int i = 0; i < users.size(); i++) {
-//            System.out.println(i + " " + users.get(i).getPoints());
             User currUser = users.get(users.size() - 1 - i);
             int currUserPts = currUser.getPoints();
 
-            if (i != users.size() - 1) {
+            if (i < 9) {
                 ladder.append(i + 1).append(". ");
             } else {
                 ladder.append(i + 1).append(".");

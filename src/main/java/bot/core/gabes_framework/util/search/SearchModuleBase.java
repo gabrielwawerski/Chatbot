@@ -2,10 +2,9 @@ package bot.core.gabes_framework.util.search;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.util.simple.SimpleSearchModule;
-import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -115,13 +114,13 @@ public abstract class SearchModuleBase extends ModuleBase {
     /**
      * Must be called when using {@link SearchModule#SearchModule(Chatbot)} constructor, after adding your regexes! Firstly applies
      * regular expression to each list element, via {@link #addAnyToQuery(String)} and then "actionifies" them, with
-     * {@link Util#ACTIONIFY(String)}.
+     * {@link bot.core.hollandjake_api.helper.interfaces.Util#ACTIONIFY(String)}.
      */
     // TODO think of a better name
     protected List<String> getMappedRegexList(List<String> regexList) {
         return regexList.stream() // test if working correctly
                 .map(this::addAnyToQuery)
-                .map(Util::ACTIONIFY)
+                .map(bot.core.hollandjake_api.helper.interfaces.Util::ACTIONIFY)
                 .collect(Collectors.toList());
     }
 

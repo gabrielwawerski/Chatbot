@@ -3,7 +3,7 @@ package bot.modules.gabe.util.point_stats;
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.Database;
 import bot.core.gabes_framework.core.database.User;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 import bot.core.gabes_framework.util.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;

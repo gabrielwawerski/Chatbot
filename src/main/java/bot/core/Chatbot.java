@@ -1,7 +1,7 @@
 package bot.core;
 
 import bot.core.gabes_framework.core.database.Database;
-import bot.core.gabes_framework.util.Utils;
+import bot.core.gabes_framework.core.Utils;
 import bot.modules.gabe.util.point_stats.PointStats;
 import bot.modules.gabe.text.rand.Roll;
 import bot.modules.gabe.util.Sylwester;
@@ -10,7 +10,7 @@ import bot.modules.gabe.text.rand.EightBall;
 import bot.modules.gabe.search.*;
 import bot.modules.gabe.util.*;
 import bot.modules.gabe.image.Think;
-import bot.core.gabes_framework.core.libs.api.Module;
+import bot.core.gabes_framework.core.api.Module;
 import bot.core.hollandjake_api.helper.misc.Human;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.web_controller.WebController;
@@ -23,6 +23,7 @@ import bot.modules.gabe.text.rand.LezeSpam;
 import bot.modules.gabe.util.info.Commands;
 import bot.modules.gabe.util.info.Info;
 import bot.modules.gabe.twitchemotes.TwitchEmotes;
+import bot.modules.gabe.work_in_progress.Mp3Tube;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -79,6 +80,7 @@ public class Chatbot {
         modules.put("RandomKwejk", new RandomKwejk(this));
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("PointStats", new PointStats(this, database));
+        modules.put("Mp3Tube", new Mp3Tube(this));
 //        modules.put("BIntoEmote", new BIntoEmote(this));
     }
 
@@ -288,7 +290,7 @@ public class Chatbot {
         webController.sendMessage("PcionBot " + getVersion() + " online\n"
                 + "Załadowane moduły:  " + Utils.NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
                 + "\nWpisz !cmd aby zobaczyć listę komend."
-                + "\n!suggest");
+                + "\n!ladder | !stats | !suggest");
     }
 
     public String getModulesOnline() {
