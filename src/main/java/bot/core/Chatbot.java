@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 import static bot.core.gabes_framework.core.Utils.*;
 
 public class Chatbot {
-    private final String version = "v0.3312";
+    private final String version = "v0.3313";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -321,7 +321,7 @@ public class Chatbot {
         webController.sendMessage("PcionBot " + getVersion() + " ONLINE \u2705\n"
                 + "Załadowane moduły:  " + NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
                 + "\n" + NEW_BUTTON_EMOJI + "!ladder !ladder msg !stats !stats <user>"
-                + "\n" + NEW_BUTTON_EMOJI + "!roulette !roulette all"
+                + "\n" + NEW_BUTTON_EMOJI + "!roulette <liczba> !roulette all"
                 + "\n" + NEW_BUTTON_EMOJI + "!wtf"
                 + "\n" + NEW_BUTTON_EMOJI + "!wykop !wy"
                 + "\n" + NEW_BUTTON_EMOJI + "!mp3 !mp3 <youtube url> generuje link do pobrania!"

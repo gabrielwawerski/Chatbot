@@ -21,13 +21,19 @@ public class Duel {
         timeStarted = new Date().getTime();
     }
 
-    public void resolve() {
+    public boolean resolve() {
+        if (initiator.getPoints() < bet || opponent.getPoints() < bet) {
+            return false;
+        }
+
         if (PointSystem.getFiftyFifty()) {
             winner = initiator;
             loser = opponent;
+            return true;
         } else {
             winner = opponent;
             loser = initiator;
+            return true;
         }
     }
 

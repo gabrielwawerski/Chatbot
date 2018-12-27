@@ -9,6 +9,7 @@ import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -104,8 +105,14 @@ public class PointSystem extends ModuleBase {
         return ladder.toString();
     }
 
-    private Duel getIfActiveDuel(User user) {
+    private Duel getDuelIfActive(User user) {
+        long now = new Date().getTime();
+
         for (Duel duel : activeDuels) {
+            if (now - duel.getTimeStarted() > 60000) {
+                return null;
+            }
+
             if (duel.getOpponent() == user) {
                 return duel;
             }
@@ -113,14 +120,22 @@ public class PointSystem extends ModuleBase {
         return null;
     }
 
-//    private void updateDuels(long now) {
-//        for (Duel duel : activeDuels) {
-//            activeDuels.
-//        }
-//    }
+    private void updateDuels() {
+        if (!activeDuels.isEmpty()) {
+            long now = new Date().getTime();
+            for (int i = 0; i < activeDuels.size(); i++) {
+                if (now - activeDuels.get(i).getTimeStarted() > 60000) {
+                    activeDuels.remove(i);
+                }
+            }
+        } else {
+            return;
+        }
+    }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
+        refreshUsers();
         User user = null;
 
         if (!isNull(message) && !isNull(message.getSender())) {
@@ -138,8 +153,9 @@ public class PointSystem extends ModuleBase {
             return true;
         }
 
+        updateDuels();
         Duel duel = null;
-        if ((duel = getIfActiveDuel(user)) != null) {
+        if ((duel = getDuelIfActive(user)) != null) {
             System.out.println("found active duel!");
             if (isOr(DUEL_REFUSE_REGEX, DUEL_REFUSE_SIMPLE)) {
                 chatbot.sendMessage(user.getName()
@@ -147,7 +163,9 @@ public class PointSystem extends ModuleBase {
                 activeDuels.remove(duel);
                 return true;
             } else if (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
-                duel.resolve();
+                if (!duel.resolve()) {
+                    chatbot.sendMessage("Wasze punkty uległy zmianie. Pojedynek anulowany.");
+                }
 
                 duel.getWinner().addPoints(duel.getBet() * 2);
                 duel.getLoser().subPoints(duel.getBet() * 2);
@@ -155,7 +173,7 @@ public class PointSystem extends ModuleBase {
                 update(duel.getWinner());
                 update(duel.getLoser());
                 chatbot.sendMessage(duel.getWinner().getName()
-                        + " wygrywa pojedynek i zdobywa " + duel.getBet() * 2 + " pkt!");
+                        + " wygrywa pojedynek i zdobywa " + duel.getBet() * 2 + " pkt! (" + user.getPoints() + ")");
                 activeDuels.remove(duel);
                 return true;
             }
@@ -212,6 +230,11 @@ public class PointSystem extends ModuleBase {
             return true;
 
         } else if (is(ROULETTE_REGEX)) {
+            if (message.getMessage().length() > 16) {
+                update(user);
+                chatbot.sendMessage("Podałeś zbyt dużą liczbę!");
+                return false;
+            }
             Matcher matcher = Pattern.compile(ROULETTE_REGEX).matcher(message.getMessage());
             if (matcher.find()) {
                 int desiredRoll = Integer.parseInt(matcher.group(1));
@@ -235,13 +258,13 @@ public class PointSystem extends ModuleBase {
                 if (getFiftyFifty()) {
                     user.addPoints(desiredRoll);
                     update(user);
-                    chatbot.sendMessage("Wygrałeś " + desiredRoll + " pkt!\nTwoje punkty: " + user.getPoints());
+                    chatbot.sendMessage("Wygrałeś " + desiredRoll + " pkt! (" + user.getPoints() + ")");
                     return true;
                 } else {
                     if (user.getPoints() - desiredRoll >= 0) {
                         user.subPoints(desiredRoll);
                         update(user);
-                        chatbot.sendMessage("Przejebałeś " + desiredRoll + " pkt.\nTwoje punkty: " + user.getPoints());
+                        chatbot.sendMessage("Przejebałeś " + desiredRoll + " pkt. (" + user.getPoints() + ")");
                         return true;
                     } else {
                         user.setPoints(0);
@@ -264,7 +287,7 @@ public class PointSystem extends ModuleBase {
             if (getFiftyFifty()) {
                 user.addPoints(userPoints);
                 update(user);
-                chatbot.sendMessage("Wygrałeś " + userPoints + " pkt!\nTwoje punkty: " + user.getPoints());
+                chatbot.sendMessage("Wygrałeś " + userPoints + " (" + user.getPoints() + ")");
                 return true;
             } else {
                 user.setPoints(0);
@@ -301,7 +324,7 @@ public class PointSystem extends ModuleBase {
                         return false;
                     }
                 } else {
-                    chatbot.sendMessage("Brak użytkownika w bazie danych.");
+                    chatbot.sendMessage("Użytkownik nie istnieje w bazie danych.");
                     update(user);
                     return false;
                 }
