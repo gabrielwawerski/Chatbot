@@ -83,9 +83,9 @@ public class Info extends ModuleBase {
     private String getStats() {
         return "Załadowane moduły: " + chatbot.getModulesOnline()
                 + "\n"
-                + "Unikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size()
-                + "\n"
-                + "Wiadomości leze: " + lezeStats();
+                + "Unikatowe wiadomości bieżącej sesji: " + chatbot.getMessageLog().size();
+//                + "\n"
+//                + "Wiadomości leze: " + lezeStats();
     }
 
     private String cmdInfo() {

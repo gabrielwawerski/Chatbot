@@ -21,6 +21,9 @@ public class PcionBot extends Chatbot {
     public static final String ID_PATRO = "2275107775897967";
     public static final String ID_MOONSHINERS = "1771365296265469";
 
+    public static final boolean SILENT_MODE = true; // does not greet itself or send msg when exception occurs
+    public static final boolean LOG_MODE = false;    // doesn't respond to commands - updates database only.
+
     public static void main(String[] args) {
         System.out.println(args.toString());
         Chatbot pcionbot;
@@ -28,17 +31,17 @@ public class PcionBot extends Chatbot {
         String password = "lezetykurwo";
 
         boolean debugMode = false;      // debugs messages to console
-        boolean silentMode = true;    // does not greet itself
         boolean debugMessages = false; // adds bot name before it's message and " : " after.
         boolean headless = false;
         boolean maximized = true;
 
         pcionbot = new Chatbot(username, password, ID_GRUPKA,
                 debugMode,
-                silentMode,
+                SILENT_MODE,
                 debugMessages,
                 headless,
-                maximized
+                maximized,
+                LOG_MODE
         );
     }
 

@@ -1,6 +1,7 @@
 package bot.core.hollandjake_api.web_controller;
 
 import bot.core.Chatbot;
+import bot.core.PcionBot;
 import bot.core.gabes_framework.core.database.Database;
 import bot.core.hollandjake_api.helper.misc.Human;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -79,7 +80,11 @@ public class WebController {
 
 //             TODO test - EXPERIMENTAL!!!!!!!!!!!
 //            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
-            quit(true);
+            if (PcionBot.SILENT_MODE || PcionBot.LOG_MODE) {
+                quit(false);
+            } else {
+                quit(true);
+            }
         });
     }
 

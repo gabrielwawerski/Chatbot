@@ -133,6 +133,18 @@ public class PointSystem extends ModuleBase {
         }
     }
 
+    public void logOnly(Message message) {
+        refreshUsers();
+        User user = null;
+
+        if (!isNull(message) && !isNull(message.getSender())) {
+            user = getUser(message);
+            processMessage(user, message);
+        } else {
+            return;
+        }
+    }
+
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         refreshUsers();
@@ -140,7 +152,6 @@ public class PointSystem extends ModuleBase {
 
         if (!isNull(message) && !isNull(message.getSender())) {
             user = getUser(message);
-            update(user);
         } else {
             return false;
         }
@@ -148,7 +159,6 @@ public class PointSystem extends ModuleBase {
         updateMatch(message);
         // if msg isn't a command, process msg and return
         if (!is(REGEXES)) {
-            System.out.println(message.getMessage() + " not regex.");
             processMessage(user, message);
             return true;
         }
@@ -287,7 +297,7 @@ public class PointSystem extends ModuleBase {
             if (getFiftyFifty()) {
                 user.addPoints(userPoints);
                 update(user);
-                chatbot.sendMessage("Wygrałeś " + userPoints + " (" + user.getPoints() + ")");
+                chatbot.sendMessage("Wygrałeś " + userPoints + "pkt! (" + user.getPoints() + ")");
                 return true;
             } else {
                 user.setPoints(0);
@@ -303,14 +313,13 @@ public class PointSystem extends ModuleBase {
             if (matcher.find()) {
                 String desiredUser = matcher.group(2);
                 int bet = Integer.parseInt(matcher.group(1));
-                System.out.println("bet: " + bet + "\nopponent: " + desiredUser);
                 User opponent;
 
                 if (desiredUser.charAt(0) == '@') {
                     desiredUser = desiredUser.substring(1);
                 }
 
-                System.out.println("user.getPoints(): " + user.getPoints());
+                System.out.println("bet: " + bet + "\nopponent: " + desiredUser);
                 if (user.getPoints() < bet) {
                     chatbot.sendMessage("Nie masz tylu punktów!");
                     update(user);
@@ -339,46 +348,50 @@ public class PointSystem extends ModuleBase {
     }
 
     private void processMessage(User user, Message message) {
-        User currUser = user;
         String messageBody = message.getMessage();
         int msgLength = messageBody.length();
+        db.refresh(user);
 
-        if (is(chatbot.getRegexes())) {
-            update(currUser);
+        if (is(chatbot.getRegexes()) || is(REGEXES)) {
+            addMessageCount(user);
+            addPoints(user, 1);
+            System.out.println("(+1)(CMD)");
             return;
+        } else {
+            System.out.println("- NOT REGEX: " + messageBody);
         }
 
         if (message.getImage() != null) {
-            user.addPoints(2);
-            System.out.println("+2 PTS (IMG) " + user.getName());
+            user.addPoints(3);
+            System.out.println("(+3)(IMG) " + user.getName());
         }
 
         // if message is a url, no points are added.
         if (messageBody.contains("http") || messageBody.contains("www.") || messageBody.contains("//")) {
-            addMessageCount(currUser);
-            update(currUser);
+            addMessageCount(user);
+            update(user);
             return;
         }
 
         if (msgLength <= 20 && msgLength >= 3) {
             user.addPoints(1);
-            System.out.println("+1 PTS " + user.getName());
+            System.out.println("(+1) " + user.getName());
 
         } else if (msgLength <= 60 && msgLength > 20) {
             user.addPoints(2);
-            System.out.println("+2 PTS " + user.getName());
+            System.out.println("(+2) " + user.getName());
 
         } else if (msgLength <= 100 && msgLength > 60) {
             user.addPoints(5);
-            System.out.println("+5 PTS " + user.getName());
+            System.out.println("(+5) " + user.getName());
 
-        } else if (msgLength > 100) {
+        } else if (msgLength > 100 && msgLength < 300) {
             user.addPoints(10);
-            System.out.println("+10 PTS " + user.getName());
+            System.out.println("(+10) " + user.getName());
         }
 
-        addMessageCount(currUser);
-        update(currUser);
+        addMessageCount(user);
+        update(user);
     }
 
     public static boolean getFiftyFifty() {
@@ -405,7 +418,7 @@ public class PointSystem extends ModuleBase {
 
     private void addMessageCount(User user) {
         user.addMessagecount(1);
-        System.out.print("  +1 MSG " + user.getName().substring(0, 8) + "\n");
+        System.out.print("(+1 MSG) " + user.getName().substring(0, 8) + "\n");
     }
 
     private void update(User user) {

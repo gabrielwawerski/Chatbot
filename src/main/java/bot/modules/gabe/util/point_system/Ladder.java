@@ -37,7 +37,7 @@ class Ladder {
             } else if (i + 1 == 9) {
                 ladder.append("9\ufe0f\u20e3 ");
             } else if (i + 1 == 10) {
-                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3");
+                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3 ");
             }
 
             if (i + 1 == 10) {
@@ -93,7 +93,7 @@ class Ladder {
             } else if (i + 1 == 9) {
                 ladder.append("9\ufe0f\u20e3 ");
             } else if (i + 1 == 10) {
-                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3");
+                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3 ");
             }
 
 //            // simple ordering. USE IF YOU FUCK SHIT UP WITH EMOJI ORDERING!!!

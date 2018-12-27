@@ -24,7 +24,7 @@ public class KartaPulapka extends SimpleModule {
 
         for (String command : regexList) {
             if (match.equals(command)) {
-                chatbot.sendImageWithMessage(kartaPulapka, "");
+                chatbot.sendImageWithMessage(kartaPulapka, ""); // FIXME URL Z SERWERA!!!!!!!!!
                 return true;
             }
         }

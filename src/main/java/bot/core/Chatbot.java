@@ -59,6 +59,9 @@ public class Chatbot {
     private Human me;
     private int modulesOnline;
     private int totalModules;
+    private boolean logMode = false;
+
+    private PointSystem pointSystem;
 
     protected void loadModules() {
         // TODO List with all regexes for PointSystem to receive in constructor.
@@ -94,16 +97,19 @@ public class Chatbot {
         modules.put("ATG", new ATG(this, List.of("atg"), "\u274c CLOSED")); // ✅ OPEN ❌ CLOSED
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
-        modules.put("PointSystem", new PointSystem(this, database));
+        modules.put("PointSystem", pointSystem = new PointSystem(this, database));
     }
 
     public List<String> getRegexes() {
-        List<String> list = List.of("cmd", "help", "regexList", "info", "staty", "uptime", "echo", "shutdown", "sylwester", "suggest", "pomysl", "wiki (.*)",
-                "youtube (.*)", "yt (.*)", "google (.*)", "g (.*)", "g help", "g leze", "google", "g", "allegro (.*)", "pyszne help", "pyszne",
-                "pyszne (.*)", "pyszne haianh", "pyszne hai-anh", "pyszne hai", "pyszne mariano", "pyszne italiano", "pyszne football", "pyszne footbal",
-                "pyszne footballpizza", "r", "random", "pogoda", "p", "popcorn", "rajza", "karta", "kartapulapka", "myk", "roll", "roll (\\d+)",
-                "think", "think (\\d+)", "8ball (.*)", "ask (.*)", "8 (.*)", "jebacleze", "jebac leze", "spam", "kurwa", "kwejk", "kw", "mp3 (.*)", "mp3",
-                "b (.*)", "atg", "wykop", "wy", "wtf");
+        List<String> list
+                = List.of("cmd", "help", "info", "staty", "uptime", "echo", "shutdown", "sylwester", "suggest",
+                "pomysl", "suggest (.*)", "pomysl (.*)", "torrent (.*)", "t (.*)", "wiki (.*)", "youtube (.*)",
+                "yt (.*)", "google (.*)", "g (.*)", "g help", "g leze", "google", "g", "allegro (.*)", "pyszne help",
+                "pyszne", "pyszne (.*)", "pyszne haianh", "pyszne hai-anh", "pyszne hai", "pyszne mariano",
+                "pyszne italiano", "pyszne football", "pyszne footbal", "pyszne footballpizza", "r", "random", "pogoda",
+                "p", "popcorn", "rajza", "karta", "kartapulapka", "myk", "roll", "roll (\\d+)", "think", "think (\\d+)",
+                "8ball (.*)", "ask (.*)", "8 (.*)", "jebacleze", "jebac leze", "spam", "kurwa", "kwejk", "kw",
+                "mp3 (.*)", "mp3", "b (.*)", "atg", "wykop", "wy", "wtf");
         return list.stream().map(Utils::TO_REGEX).collect(Collectors.toList());
     }
 
@@ -111,9 +117,15 @@ public class Chatbot {
         loadModules();
     }
 
-
-    public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
+    public Chatbot(String username, String password,
+                   String threadId, boolean debugMode,
+                   boolean silentMode, boolean debugMessages,
+                   boolean headless, boolean maximised,
+                   boolean logMode) {
         database = new Database();
+        if (logMode) {
+            this.logMode = true;
+        }
         webController = new WebController(this, debugMessages, headless, maximised, database);
         run(username, password, threadId, debugMode, silentMode);
     }
@@ -231,7 +243,7 @@ public class Chatbot {
         System.out.print("PcionBot successfully loaded, ");
         System.out.print("running from config:\n");
         System.out.println("max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.");
-        System.out.println("poll sleep time: " + getRefreshRate() + " millis." );
+        System.out.println("poll sleep time: " + getRefreshRate() + " millis.");
         log(true);
         System.out.println("-----------------");
         System.out.println("PcionBot " + version);
@@ -292,13 +304,17 @@ public class Chatbot {
                     System.out.println(newMessage);
                 }
 
-                //Handle options
-                try {
-                    for (Module module : modules.values()) {
-                        module.process(newMessage);
+                if (logMode) {
+                    pointSystem.logOnly(newMessage);
+                } else {
+                    //Handle options
+                    try {
+                        for (Module module : modules.values()) {
+                            module.process(newMessage);
+                        }
+                    } catch (MalformedCommandException e) {
+                        sendMessage("There seems to be an issue with your command");
                     }
-                } catch (MalformedCommandException e) {
-                    sendMessage("There seems to be an issue with your command");
                 }
             } catch (TimeoutException e) {
                 if (debugMode) {
@@ -310,6 +326,7 @@ public class Chatbot {
                 webController.quit(true);
                 System.exit(1);
             }
+
         }
     }
 
@@ -320,8 +337,7 @@ public class Chatbot {
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " ONLINE \u2705\n"
                 + "Załadowane moduły:  " + NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
-                + "\n" + NEW_BUTTON_EMOJI + "!ladder !ladder msg !stats !stats <user>"
-                + "\n" + NEW_BUTTON_EMOJI + "!roulette <liczba> !roulette all"
+                + "\n" + NEW_BUTTON_EMOJI + "!duel <pkt> <imie nazwisko>"
                 + "\n" + NEW_BUTTON_EMOJI + "!wtf"
                 + "\n" + NEW_BUTTON_EMOJI + "!wykop !wy"
                 + "\n" + NEW_BUTTON_EMOJI + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
