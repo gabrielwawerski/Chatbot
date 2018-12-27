@@ -22,7 +22,7 @@ public class PcionBot extends Chatbot {
     public static final String ID_MOONSHINERS = "1771365296265469";
     public static final String PCIONBOT_ID = "2388008607938113";
 
-    public static final boolean SILENT_MODE = false; // does not greet itself or send msg when exception occurs
+    public static final boolean SILENT_MODE = true; // does not greet itself or send msg when exception occurs
     public static final boolean LOG_MODE = false;    // doesn't respond to commands - updates database only.
 
     public static void main(String[] args) {
