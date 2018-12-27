@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.point_system;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.database.Database;
+import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
 import bot.core.gabes_framework.core.Utils;
 import bot.core.gabes_framework.util.ModuleBase;
@@ -30,7 +30,7 @@ import static java.util.Objects.isNull;
  * @since v0.3201
  */
 public class PointSystem extends ModuleBase {
-    private Database db;
+    private DBConnection db;
     private Ladder ladder;
     private ArrayList<User> users;
     private ArrayList<Duel> activeDuels;
@@ -71,7 +71,7 @@ public class PointSystem extends ModuleBase {
     // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
     private final List<String> REGEXES;
 
-    public PointSystem(Chatbot chatbot, Database db) {
+    public PointSystem(Chatbot chatbot, DBConnection db) {
         super(chatbot);
         this.db = db;
         initialize();
@@ -267,7 +267,7 @@ public class PointSystem extends ModuleBase {
                     return false;
 
                 } else if (desiredRoll > user.getPoints()) {
-                    chatbot.sendMessage("Nie masz tylu punktów!");
+                    chatbot.sendMessage("Nie masz tylu punktów! (" + user.getPoints() + ")");
                     update(user);
                     return false;
                 }
@@ -328,14 +328,14 @@ public class PointSystem extends ModuleBase {
 
                 System.out.println("bet: " + bet + "\nopponent: " + desiredUser);
                 if (user.getPoints() < bet) {
-                    chatbot.sendMessage("\u274c Nie masz tylu punktów!");
+                    chatbot.sendMessage("\u274c Nie masz tylu punktów! (" + user.getPoints() + ")");
                     update(user);
                     return false;
                 }
 
                 if ((opponent = getUser(desiredUser)) != null) {
                     if (opponent.getPoints() < bet) {
-                        chatbot.sendMessage("\u274c Przeciwnik nie ma tylu punktów!");
+                        chatbot.sendMessage("\u274c Przeciwnik nie ma tylu punktów! (" + opponent.getPoints() + ")");
                         update(user);
                         return false;
                     }
@@ -373,7 +373,6 @@ public class PointSystem extends ModuleBase {
             System.out.println("(+1)(CMD)");
             return;
         } else {
-            System.out.println("- NOT REGEX: " + messageBody);
         }
 
         if (message.getImage() != null) {
@@ -489,7 +488,7 @@ public class PointSystem extends ModuleBase {
         users.add(user);
     }
 
-    public void createUsers() {
+    private void createUsers() {
         User Gabe = new User("Gabriel Wawerski");
         User Bot = new User("BOT");
         User Hube = new User("Hubert Hubert");

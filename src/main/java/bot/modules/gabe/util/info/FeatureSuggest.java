@@ -36,6 +36,10 @@ public class FeatureSuggest extends SaveResourceModule {
 
             if (matcher.find()) {
                 String msg = message.getMessage().substring(9);
+                if (msg.length() > 300) {
+                    chatbot.sendMessage("Wiadomość za długa.");
+                    return false;
+                }
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
                 chatbot.sendMessage(Utils.PUSHPIN_EMOJI + " Dzięki!");

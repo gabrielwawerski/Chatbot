@@ -10,14 +10,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Database {
-    private ConnectionSource connectionSource;
-    Dao<User, String> userDao;
-    Dao<MessageLog, String> messageDao;
+public class DBConnection {
+    private static ConnectionSource connectionSource;
+    private static Dao<User, String> userDao;
+    private static Dao<MessageLog, String> messageDao;
+
+    private static DBConnection instance;
 
     private static final String URL = "jdbc:hsqldb:file:E:/IntelliJProjekty/libGDX/Chatbot/PcionDB/PcionDatabase";
 
-    public Database() {
+    public static DBConnection getInstance() {
+        if (instance == null) {
+            instance = new DBConnection();
+        }
+        return instance;
+    }
+
+    private DBConnection() {
         try {
             connectionSource = new JdbcConnectionSource(URL);
             ((JdbcConnectionSource) connectionSource).setUsername("gabe");
@@ -86,6 +95,5 @@ public class Database {
     }
 
     public void addMessage(User user, Message message) {
-
     }
 }

@@ -38,7 +38,6 @@ public abstract class ModuleBase implements Module {
      * <pre>{@code match = getMatch(message)}</pre> See also {@link #updateMatch(Message)}, {@link #getMatch(Message)},
      * {@link #process(Message)} */
     protected String match;
-
     protected boolean online;
 
     public ModuleBase(Chatbot chatbot) {

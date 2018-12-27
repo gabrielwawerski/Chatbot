@@ -1,6 +1,6 @@
 package bot.core;
 
-import bot.core.gabes_framework.core.database.Database;
+import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.Utils;
 import bot.modules.gabe.text.B;
 import bot.modules.gabe.util.info.FeatureSuggest;
@@ -52,7 +52,7 @@ public class Chatbot {
     private final LocalDateTime startupTime = LocalDateTime.now();
     private final Duration messageTimeout = Duration.ofMinutes(1);
     private final long refreshRate = 100;
-    private Database database;
+    private DBConnection dbConnection;
 
     private boolean running = true;
     private String threadId;
@@ -101,7 +101,7 @@ public class Chatbot {
         modules.put("ATG", new ATG(this, List.of("atg"), "\u2705 OPEN\n1 slot left.")); // ✅ OPEN ❌ CLOSED
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
-        pointSystem = new PointSystem(this, database);
+        pointSystem = new PointSystem(this, dbConnection);
         modules.put("PointSystem", pointSystem);
     }
 
@@ -127,29 +127,29 @@ public class Chatbot {
                    boolean silentMode, boolean debugMessages,
                    boolean headless, boolean maximised,
                    boolean logMode) {
-        database = new Database();
+        dbConnection = DBConnection.getInstance();
         if (logMode) {
             this.logMode = true;
         }
-        webController = new WebController(this, debugMessages, headless, maximised, database);
+        webController = new WebController(this, debugMessages, headless, maximised, dbConnection);
         run(username, password, threadId, debugMode, silentMode);
     }
 
     public Chatbot(String configName, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
-        database = new Database();
-        webController = new WebController(this, debugMessages, headless, maximised, database);
+        dbConnection = DBConnection.getInstance();
+        webController = new WebController(this, debugMessages, headless, maximised, dbConnection);
         runFromConfigWithThreadId(configName, threadId, debugMode, silentMode);
     }
 
     public Chatbot(String configName, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
-        database = new Database();
-        webController = new WebController(this, debugMessages, headless, maximised, database);
+        dbConnection = DBConnection.getInstance();
+        webController = new WebController(this, debugMessages, headless, maximised, dbConnection);
         runFromConfig(configName, debugMode, silentMode);
     }
 
     public Chatbot() {
-        database = new Database();
-        webController = new WebController(this, false, false, false, database);
+        dbConnection = DBConnection.getInstance();
+        webController = new WebController(this, false, false, false, dbConnection);
         runFromConfig("config", false, false);
     }
 
