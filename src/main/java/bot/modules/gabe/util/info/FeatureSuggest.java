@@ -29,12 +29,14 @@ public class FeatureSuggest extends SaveResourceModule {
         Matcher matcher = null;
 
         if (match.equals(SUGGEST) || match.equals(POMYSL)) {
+            addPoints(message, 1);
             chatbot.sendMessage(INFO_MESSAGE);
             return true;
         } else if (match.equals(SUGGEST_ANY)) {
             matcher = Pattern.compile(SUGGEST_ANY).matcher(message.getMessage());
 
             if (matcher.find()) {
+                addPoints(message, 2);
                 String msg = message.getMessage().substring(9);
                 if (msg.length() > 300) {
                     chatbot.sendMessage("Wiadomość za długa.");
@@ -48,6 +50,7 @@ public class FeatureSuggest extends SaveResourceModule {
         } else if (match.equals(POMYSL_ANY)) {
             matcher = Pattern.compile(POMYSL_ANY).matcher(message.getMessage());
             if (matcher.find()) {
+                addPoints(message, 2);
                 String msg = message.getMessage().substring(8);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);

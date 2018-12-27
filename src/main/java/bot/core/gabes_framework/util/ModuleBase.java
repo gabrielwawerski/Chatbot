@@ -1,8 +1,9 @@
 package bot.core.gabes_framework.util;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.Utils;
 import bot.core.gabes_framework.core.api.Module;
+import bot.core.gabes_framework.core.database.DBConnection;
+import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.message.MessageModule;
 import bot.core.gabes_framework.util.resource.RandomResourceModule;
@@ -11,7 +12,6 @@ import bot.core.gabes_framework.util.message.SingleMessageModule;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
@@ -40,9 +40,12 @@ public abstract class ModuleBase implements Module {
     protected String match;
     protected boolean online;
 
+    protected DBConnection db;
+
     public ModuleBase(Chatbot chatbot) {
         this.chatbot = chatbot;
         setOnline();
+        db = DBConnection.getInstance();
     }
 
     @Override
@@ -59,6 +62,14 @@ public abstract class ModuleBase implements Module {
             msg += "OFFLINE| " + getClass().getSimpleName();
         }
         System.out.println(msg);
+    }
+
+    protected void addPoints(Message message, int points) {
+        User user = db.getUser(message);
+        user.addPoints(points);
+        user.addMessagecount(1);
+        db.update(user);
+        System.out.println("(+1) " + user.getName());
     }
 
     protected void setStatus(boolean online) {

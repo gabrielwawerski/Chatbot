@@ -1,6 +1,8 @@
 package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.database.DBConnection;
+import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.ModuleBase;
@@ -41,10 +43,17 @@ public class Mp3Tube extends ModuleBase {
         updateMatch(message);
 
         if (is(INFO_REGEX)) {
+            User user = db.getUser(message);
+            user.addPoints(1);
+            db.update(user);
+            System.out.println("(+2) " + user.getName());
             chatbot.sendMessage(Utils.INFO_EMOJI + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
                     + Utils.EXCL_MARK_RED_EMOJI + " Link musi kończyć się ID filmu.");
         } else if (is(MP3_REGEX)) {
             if (found(message)) {
+                User user = db.getUser(message);
+                user.addPoints(2);
+                db.update(user);
                 String id = getId(message.getMessage());
                 System.out.println("id = " + id);
                 if (id != null) {

@@ -36,7 +36,7 @@ public class PcionBot extends Chatbot {
         boolean headless = false;
         boolean maximized = true;
 
-        pcionbot = new Chatbot(username, password, PCIONBOT_ID,
+        pcionbot = new Chatbot(username, password, ID_GRUPKA,
                 debugMode,
                 SILENT_MODE,
                 debugMessages,

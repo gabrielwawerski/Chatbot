@@ -34,6 +34,7 @@ public class MultiTorrentSearch extends ModuleBase {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
 
             if (matcher.find()) {
+                addPoints(message, 2);
                 String userQuery = matcher.group(1).replaceAll("\\s+", "+");
                 String messageToSend = X1337_URL + userQuery + X1337_POSTFIX
                             + "\n\n" + TORRENTZ_URL + userQuery;

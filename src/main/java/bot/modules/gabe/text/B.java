@@ -27,11 +27,13 @@ public class B extends ModuleBase {
         String temp;
 
         if (is(INFO_REGEX)) {
+            addPoints(message, 1);
             chatbot.sendMessage("Podaj tekst do transformacji.");
             return true;
         } else if (is(B_ANY_REGEX)) {
             Matcher matcher = Pattern.compile(match).matcher(messageBody);
             if (matcher.find()) {
+                addPoints(message, 1);
                 temp = matcher.group(1);
                 for (int i = 0; i < messageBody.length(); i++) {
                     temp = temp

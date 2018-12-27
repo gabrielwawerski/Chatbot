@@ -30,13 +30,16 @@ import static java.util.Objects.isNull;
  * @since v0.3201
  */
 public class PointSystem extends ModuleBase {
-    private DBConnection db;
     private Ladder ladder;
     private ArrayList<User> users;
     private ArrayList<Duel> activeDuels;
 
     private boolean userFound = false;
     private Matcher matcher;
+
+    private long now;
+    private long timeoutRelease;
+    private static final long TIMEOUT = 650;
 
     // STATS
     private final String STATS_REGEX = Utils.TO_REGEX("stats");
@@ -71,9 +74,8 @@ public class PointSystem extends ModuleBase {
     // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
     private final List<String> REGEXES;
 
-    public PointSystem(Chatbot chatbot, DBConnection db) {
+    public PointSystem(Chatbot chatbot) {
         super(chatbot);
-        this.db = db;
         initialize();
         REGEXES = List.of(
                 STATS_REGEX,
@@ -88,6 +90,9 @@ public class PointSystem extends ModuleBase {
                 DUEL_ACCEPT_SIMPLE,
                 DUEL_REFUSE_REGEX,
                 DUEL_REFUSE_SIMPLE);
+
+        now = new Date().getTime();
+        timeoutRelease = getTimeoutRelease();;
     }
 
     private void initialize() {
@@ -345,6 +350,7 @@ public class PointSystem extends ModuleBase {
                     return false;
                 }
 
+                addPoints(user, 2);
                 activeDuels.add(new Duel(user, opponent, bet));
                 chatbot.sendMessage(user.getName() + " \u2694\ufe0f wyzywa \uD83D\uDEE1 " + opponent.getName() + " na pojedynek!"
                         + "\n\u23f3 Czekam 60s. na odpowiedź przeciwnika. (y/n)");
@@ -363,12 +369,18 @@ public class PointSystem extends ModuleBase {
     }
 
     private void processMessage(User user, Message message) {
+        now = new Date().getTime();
+        if (now < timeoutRelease) {
+            addMessageCount(user);
+            update(user);
+            return;
+        }
+        long now = new Date().getTime();
         String messageBody = message.getMessage();
         int msgLength = messageBody.length();
         db.refresh(user);
 
         if (isCmd(message, chatbot.getRegexes()) || isCmd(message, REGEXES)) {
-            addMessageCount(user);
             addPoints(user, 1);
             System.out.println("(+1)(CMD)");
             return;
@@ -404,8 +416,13 @@ public class PointSystem extends ModuleBase {
             System.out.println("(+10) " + user.getName());
         }
 
+        timeoutRelease = getTimeoutRelease();
         addMessageCount(user);
         update(user);
+    }
+
+    private long getTimeoutRelease() {
+        return new Date().getTime() + TIMEOUT;
     }
 
     public static boolean getFiftyFifty() {
@@ -427,7 +444,9 @@ public class PointSystem extends ModuleBase {
 
     private void addPoints(User user, int points) {
         user.addPoints(points);
+        user.addMessagecount(1);
         db.update(user);
+        System.out.println("(+1) " + user.getName());
     }
 
     private void addMessageCount(User user) {

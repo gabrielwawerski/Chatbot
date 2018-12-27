@@ -58,6 +58,15 @@ public class DBConnection {
         }
     }
 
+    public User getUser(Message message) {
+        for (User user : userDao) {
+            if (message.getSender().getName().equals(user.getName())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
         for (User user : userDao) {

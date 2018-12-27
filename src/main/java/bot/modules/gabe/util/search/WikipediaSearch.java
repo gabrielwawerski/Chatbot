@@ -26,6 +26,7 @@ public class WikipediaSearch extends SimpleSearchModule {
                 updateMatcher(messageBody);
 
                 if (isMatchFound()) {
+                    addPoints(message, 2);
                     // capitalizes each word - wiki responds to that query better it seems
                     chatbot.sendMessage(getFinalMessage(WordUtils.capitalizeFully(messageBody)));
                     return true;

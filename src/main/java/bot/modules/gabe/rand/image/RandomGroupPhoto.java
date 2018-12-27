@@ -1,6 +1,8 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.database.DBConnection;
+import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -35,8 +37,7 @@ public class RandomGroupPhoto extends ModuleBase {
 
     private long now;
     private long timeoutRelease;
-    private static final long TIMEOUT = 0;
-
+    private static final long TIMEOUT = 6000;
 
     // napisać algorytm (ai?) z pomoca  regexow
 
@@ -48,10 +49,12 @@ public class RandomGroupPhoto extends ModuleBase {
             "Poczekaj chwilę.", "Chwila...", "Bo mnie przegrzejesz!",
             "Nie bądź taki hop.", "Jebneee", "Bo się przegrzeje!");
 
+    private static final List<String> FAILED_ROULETTE_NORMAL = List.of("Przejebałeś "
+            + "Straciłeś " + "Odjąłem ci " + "");
+
     private final String RANDOM_REGEX = TO_REGEX("random");
     private final String R_REGEX = TO_REGEX("r");
     private final String R = ("r");
-
 
     public RandomGroupPhoto(Chatbot chatbot) {
         super(chatbot);
@@ -85,6 +88,7 @@ public class RandomGroupPhoto extends ModuleBase {
                 chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
                 return false;
             } else {
+                addPoints(message, 1);
                 chatbot.sendImageUrlWaitToLoad(currentFileUrl);
                 currentFileUrl = uploadFile();
                 timeoutRelease = new Date().getTime() + TIMEOUT;

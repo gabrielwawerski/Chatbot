@@ -36,6 +36,7 @@ public class EightBall extends RandomResourceModule {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
 
             if (matcher.find() && !matcher.group(1).isEmpty()) {
+                addPoints(message, 1);
                 chatbot.sendMessage(Util.GET_RANDOM(resourceContent));
             } else {
                 throw new MalformedCommandException();

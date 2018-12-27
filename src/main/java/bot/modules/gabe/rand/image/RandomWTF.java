@@ -36,6 +36,7 @@ public class RandomWTF extends ModuleBase {
         updateMatch(message);
 
         if (is(WTF_REGEX)) {
+            addPoints(message, 2);
             chatbot.sendImageUrlWaitToLoad(currUrl);
             currUrl = getNextMeme();
             return true;

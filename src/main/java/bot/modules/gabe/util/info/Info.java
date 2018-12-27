@@ -31,15 +31,19 @@ public class Info extends ModuleBase {
         updateMatch(message);
 
         if (is(INFO_REGEX)) {
+            addPoints(message, 1);
             chatbot.sendMessage(getInfo());
             return true;
         } else if (is(STATS_REGEX)) {
+            addPoints(message, 1);
             chatbot.sendMessage(getStats());
             return true;
         } else if (is(UPTIME_REGEX)) {
+            addPoints(message, 1);
             chatbot.sendMessage(getUptime());
             return true;
         } else if (is(ECHO_COMMAND)) {
+            addPoints(message, 0);
             chatbot.sendMessage(getMinifiedStats());
             return true;
         }

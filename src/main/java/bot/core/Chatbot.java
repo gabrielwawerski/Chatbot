@@ -98,10 +98,11 @@ public class Chatbot {
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
-        modules.put("ATG", new ATG(this, List.of("atg"), "\u2705 OPEN\n1 slot left.")); // ✅ OPEN ❌ CLOSED
+        modules.put("ATG", new ATG(this, List.of("atg"), "\u274c CLOSED")); // ✅ OPEN ❌ CLOSED
+        // !atg taxi numery telefonow
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
-        pointSystem = new PointSystem(this, dbConnection);
+        pointSystem = new PointSystem(this);
         modules.put("PointSystem", pointSystem);
     }
 
@@ -265,11 +266,21 @@ public class Chatbot {
         System.out.print("\n");
     }
 
+    private void weather() {
+
+    }
+
     private void run(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
         this.threadId = threadId;
         init(username, password, threadId, debugMode, silentMode);
+        Calendar now = Calendar.getInstance();
+
 
         while (running) {
+            // todo weather every 6 hours
+            // Weather now 12:00 (Today) 01.02.18
+            // Next weather forecast at: 16:00 (Today) 01.02.18
+//            now.
             try {
                 webController.waitForNewMessage();
                 Message newMessage = webController.getLatestMessage();

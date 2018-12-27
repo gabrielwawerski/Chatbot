@@ -44,6 +44,7 @@ public class SimpleWeather extends SimpleModule {
         for (String command : regexList) {
             if (match.equals(command)) {
                 try {
+                    addPoints(message, 2);
                     Weather weatherResponse = new Weather();
                     StringBuilder builder = new StringBuilder();
                     hourlyRequester = openWeatherManager.getHourlyForecastRequester();

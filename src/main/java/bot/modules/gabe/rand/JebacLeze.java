@@ -7,25 +7,37 @@ import bot.core.gabes_framework.core.Utils;
 import bot.core.gabes_framework.util.resource.RandomResourceModule;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JebacLeze extends RandomResourceModule {
     private final String JEBAC_LEZE = "jebac leze";
     private final String JEBACLEZE = "jebacleze";
+    private final String JEBAiC_LEZE = "jebać leze";
+    private final String JEBAiC_iLEZE = "jebać łeze";
 
     private final String JEBACLEZE_REGEX = Utils.TO_REGEX("jebacleze");
+    private final String JEBAiC_LEZE_REGEX = Utils.TO_REGEX("jebać leze");
+    private final String JEBAiC_iLEZE_REGEX = Utils.TO_REGEX("jebać łeze");
     private final String LEZE_REGEX = Utils.TO_REGEX("leze");
     private final String JEBAC_LEZE_REGEX = Utils.TO_REGEX("jebac leze");
     private final String JEBAC_REGEX = Utils.TO_REGEX("jebac");
 
+    private final List<String> regexes;
+
     public JebacLeze(Chatbot chatbot, String resourceName) {
         super(chatbot, resourceName);
+        regexes = List.of(JEBAC_LEZE, JEBACLEZE, JEBACLEZE_REGEX,
+                LEZE_REGEX, JEBAC_LEZE_REGEX, JEBAC_REGEX,
+                JEBAiC_LEZE, JEBAiC_iLEZE, JEBAiC_LEZE_REGEX,
+                JEBAiC_iLEZE_REGEX);
     }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (isOr(JEBACLEZE_REGEX, LEZE_REGEX, JEBAC_LEZE_REGEX, JEBAC_REGEX, JEBAC_LEZE, JEBACLEZE)) {
+        if (is(regexes)) {
+            addPoints(message, 1);
             chatbot.sendMessage(getRandomMessage());
             return true;
         }
@@ -34,11 +46,11 @@ public class JebacLeze extends RandomResourceModule {
 
     @Override
     public String getMatch(Message message) {
-        return findMatch(message, JEBACLEZE_REGEX, LEZE_REGEX, JEBAC_LEZE_REGEX, JEBAC_REGEX, JEBAC_LEZE, JEBACLEZE);
+        return findMatch(message, regexes);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.getCommands(JEBACLEZE_REGEX, LEZE_REGEX, JEBAC_LEZE_REGEX, JEBAC_REGEX, JEBAC_LEZE, JEBACLEZE);
+        return Utils.getCommands(regexes);
     }
 }
