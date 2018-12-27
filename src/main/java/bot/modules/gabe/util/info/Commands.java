@@ -18,7 +18,7 @@ public class Commands extends SingleMessageModule {
                 .append("=============")
                 .append("\n")
 
-                .append(NEW_BUTTON_EMOJI).append("!duel <pkt> <imie nazwisko>").append("\n")
+                .append(NEW_BUTTON_EMOJI).append("!duel <imie nazwisko> <pkt>").append("\n")
 
 //                .append("\u2935")
                 .append(NEW_BUTTON_EMOJI).append("!mp3 !mp3 <yt link>").append("\n")

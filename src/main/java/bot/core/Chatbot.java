@@ -68,8 +68,10 @@ public class Chatbot {
         modules.put("Commands", new Commands(this, List.of("cmd", "help")));
         modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
-        modules.put("Sylwester", new Sylwester(this, "piosenki.txt"));
-        modules.put("FeatureSuggest", new FeatureSuggest(this, "sugestie.txt")); // TODO add info
+        modules.put("Sylwester", new Sylwester(this,
+                "piosenki.txt"));
+        modules.put("FeatureSuggest", new FeatureSuggest(this,
+                "sugestie.txt"));
 
         modules.put("MultiTorrentSearch", new MultiTorrentSearch(this));
         modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki")));
@@ -81,11 +83,13 @@ public class Chatbot {
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this));
         modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
         modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
-        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk"), "kartapulapka.jpg"));
+        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk"),
+                "kartapulapka.jpg"));
 //        modules.put("Inspire", new Inspire(this));
         modules.put("Roll", new Roll(this));
         modules.put("Think", new Think(this));
-        modules.put("EightBall", new EightBall(this, "responses.txt"));
+        modules.put("EightBall", new EightBall(this,
+                "responses.txt"));
         modules.put("JebacLeze", new JebacLeze(this,
                 "responses.txt"));
         modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
@@ -94,10 +98,11 @@ public class Chatbot {
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
-        modules.put("ATG", new ATG(this, List.of("atg"), "\u274c CLOSED")); // ✅ OPEN ❌ CLOSED
+        modules.put("ATG", new ATG(this, List.of("atg"), "\u2705 OPEN\n1 slot left.")); // ✅ OPEN ❌ CLOSED
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
-        modules.put("PointSystem", pointSystem = new PointSystem(this, database));
+        pointSystem = new PointSystem(this, database);
+        modules.put("PointSystem", pointSystem);
     }
 
     public List<String> getRegexes() {
@@ -174,7 +179,7 @@ public class Chatbot {
         loadModules();
 
         log("Finished loading modules.");
-        log("Echo modules...\n");
+        log("Echo modules...");
 
         totalModules = modules.size();
         modulesOnline = 0;
@@ -190,14 +195,14 @@ public class Chatbot {
         }
 
         if (modulesOnline < totalModules) {
-            log("Not all modules have been successfully loaded.");
-            log("Modules unavailable this session: ");
+            System.out.println("Not all modules have been successfully loaded.");
+            System.out.println("Modules unavailable this session: ");
             for (String module : modulesOffline) {
                 System.out.print(module.getClass().getSimpleName() + ", ");
             }
-            log("ONLINE | " + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
+            System.out.println("ONLINE | " + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
         } else {
-            log("ONLINE | " + modulesOnline + "/" + totalModules);
+            System.out.println("ONLINE | " + modulesOnline + "/" + totalModules);
         }
         System.out.println("-----------------");
 
@@ -205,24 +210,21 @@ public class Chatbot {
         log("Logging in...");
         webController.login(username, password);
 
-        log("Successfully logged in."
-                + "\n"
-                + "Target ID: " + threadId
-                + "\n"
-                + "Looking for favourites... ");
+        log("Successfully logged in.\nTarget ID: " + threadId);
+        System.out.print("Looking for favourites... ");
 
         String msg = "";
         if (threadId.equals(PcionBot.ID_GRUPKA)) {
-            System.out.print("found.\n");
+            System.out.print("found.\n\n");
             msg += "Grupka (" + threadId + ")";
         } else if (threadId.equals(PcionBot.ID_GRZAGSOFT)) {
-            System.out.print("found.\n");
+            System.out.print("found.\n\n");
             msg += "Grzagsoft (" + threadId + ")";
         } else if (threadId.equals(PcionBot.ID_PATRO)) {
-            System.out.print("found.\n");
+            System.out.print("found.\n\n");
             msg += "Patro (" + threadId + ")";
         } else {
-            System.out.print("not found.\n");
+            System.out.print("not found.\n\n");
             msg += threadId;
         }
 
@@ -240,7 +242,6 @@ public class Chatbot {
                 + "max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.\n"
                 + "poll sleep time:" + getRefreshRate() + " millis.");
 
-        System.out.println();
         System.out.println("-----------------");
         System.out.println("PcionBot " + version);
         System.out.println("Shutdown:  " + shutdownCode);
@@ -259,8 +260,7 @@ public class Chatbot {
         final int datePostfix = 9;
 
         timeNow = timeNow.substring(0, dateLength - datePostfix);
-        System.out.print("\n");
-        System.out.print("- " + timeNow);
+        System.out.print("- " + timeNow + "\n");
         System.out.println(message);
         System.out.print("\n");
     }

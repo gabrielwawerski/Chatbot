@@ -54,18 +54,19 @@ public class PointSystem extends ModuleBase {
 //    private final String RO_REGEX = Utils.TO_REGEX("ro (\\d+)");
 //    private final String RO_ALL_REGEX = Utils.TO_REGEX("ro all");
 
-
-    private final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet >(\\d+) (.*)");
-    private final String BET_FEWER_THAN_REGEX = Utils.TO_REGEX("bet <(\\d+) (.*)");
-
     // BET
-    private final String DUEL_REGEX = Utils.TO_REGEX("duel (\\d+) (.*)"); // TODO
+    private final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)"); // TODO
+//    private final String DUEL_REGEX = Utils.TO_REGEX("duel (\\d+) (.*)"); // TODO
+
     private final String DUEL_ANY_REGEX = Utils.TO_REGEX("duel (\\d+)"); // TODO
 
     private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
     private final String DUEL_ACCEPT_SIMPLE = "y";
     private final String DUEL_REFUSE_REGEX = Utils.TO_REGEX("n");
     private final String DUEL_REFUSE_SIMPLE = "n";
+
+    private final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet >(\\d+) (.*)");
+    private final String BET_FEWER_THAN_REGEX = Utils.TO_REGEX("bet <(\\d+) (.*)");
 
     // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
     private final List<String> REGEXES;
@@ -83,7 +84,6 @@ public class PointSystem extends ModuleBase {
                 ROULETTE_REGEX,
                 ROULETTE_ALL_REGEX,
                 DUEL_REGEX,
-                DUEL_ANY_REGEX,
                 DUEL_ACCEPT_REGEX,
                 DUEL_ACCEPT_SIMPLE,
                 DUEL_REFUSE_REGEX,
@@ -169,21 +169,28 @@ public class PointSystem extends ModuleBase {
             System.out.println("found active duel!");
             if (isOr(DUEL_REFUSE_REGEX, DUEL_REFUSE_SIMPLE)) {
                 chatbot.sendMessage(user.getName()
-                        + " odrzucił wyzwanie użytkownika " + duel.getInitiator().getName());
+                        + " odrzucił wyzwanie " + duel.getInitiator().getName());
                 activeDuels.remove(duel);
                 return true;
             } else if (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
+                db.refresh(duel.getWinner());
+                db.refresh(duel.getLoser());
                 if (!duel.resolve()) {
-                    chatbot.sendMessage("Wasze punkty uległy zmianie. Pojedynek anulowany.");
+                    chatbot.sendMessage("\u274c Wasze punkty uległy zmianie. Pojedynek anulowany.");
                 }
 
                 duel.getWinner().addPoints(duel.getBet() * 2);
+                // TODO winner steals points up to 0 if loser doesn't have enough
                 duel.getLoser().subPoints(duel.getBet() * 2);
 
                 update(duel.getWinner());
                 update(duel.getLoser());
-                chatbot.sendMessage(duel.getWinner().getName()
-                        + " wygrywa pojedynek i zdobywa " + duel.getBet() * 2 + " pkt! (" + user.getPoints() + ")");
+                chatbot.sendMessage(duel.getInitiator().getName() + " \uD83C\uDD9A " + duel.getOpponent().getName()
+                        + "\n"
+                        + duel.getWinner().getName() + " wygrywa pojedynek i zdobywa " + duel.getBet() * 2 + " pkt! (" + duel.getWinner().getPoints() + ")"
+                        + "\n"
+                        + duel.getLoser().getName() + " traci " + duel.getBet() * 2 + " pkt. (" + duel.getLoser().getPoints() + ")");
+
                 activeDuels.remove(duel);
                 return true;
             }
@@ -268,7 +275,7 @@ public class PointSystem extends ModuleBase {
                 if (getFiftyFifty()) {
                     user.addPoints(desiredRoll);
                     update(user);
-                    chatbot.sendMessage("Wygrałeś " + desiredRoll + " pkt! (" + user.getPoints() + ")");
+                    chatbot.sendMessage("\uD83D\uDE4F Wygrałeś " + desiredRoll + " pkt! (" + user.getPoints() + ")");
                     return true;
                 } else {
                     if (user.getPoints() - desiredRoll >= 0) {
@@ -279,7 +286,7 @@ public class PointSystem extends ModuleBase {
                     } else {
                         user.setPoints(0);
                         update(user);
-                        chatbot.sendMessage("Przejebałeś wszystkie punkty. Brawo!");
+                        chatbot.sendMessage("\uD83C\uDD7E️ Przejebałeś wszystkie punkty. Brawo!");
                         return true;
                     }
                 }
@@ -297,7 +304,7 @@ public class PointSystem extends ModuleBase {
             if (getFiftyFifty()) {
                 user.addPoints(userPoints);
                 update(user);
-                chatbot.sendMessage("Wygrałeś " + userPoints + "pkt! (" + user.getPoints() + ")");
+                chatbot.sendMessage("\uD83D\uDCAF Wygrałeś " + userPoints + " pkt! (" + user.getPoints() + ")");
                 return true;
             } else {
                 user.setPoints(0);
@@ -311,8 +318,8 @@ public class PointSystem extends ModuleBase {
             Matcher matcher = Pattern.compile(DUEL_REGEX).matcher(message.getMessage());
 
             if (matcher.find()) {
-                String desiredUser = matcher.group(2);
-                int bet = Integer.parseInt(matcher.group(1));
+                String desiredUser = matcher.group(1);
+                int bet = Integer.parseInt(matcher.group(2));
                 User opponent;
 
                 if (desiredUser.charAt(0) == '@') {
@@ -321,29 +328,37 @@ public class PointSystem extends ModuleBase {
 
                 System.out.println("bet: " + bet + "\nopponent: " + desiredUser);
                 if (user.getPoints() < bet) {
-                    chatbot.sendMessage("Nie masz tylu punktów!");
+                    chatbot.sendMessage("\u274c Nie masz tylu punktów!");
                     update(user);
                     return false;
                 }
 
                 if ((opponent = getUser(desiredUser)) != null) {
                     if (opponent.getPoints() < bet) {
-                        chatbot.sendMessage("Przeciwnik nie ma tylu punktów!");
+                        chatbot.sendMessage("\u274c Przeciwnik nie ma tylu punktów!");
                         update(user);
                         return false;
                     }
                 } else {
-                    chatbot.sendMessage("Użytkownik nie istnieje w bazie danych.");
+                    chatbot.sendMessage("\u274c Użytkownik nie istnieje w bazie danych.");
                     update(user);
                     return false;
                 }
 
                 activeDuels.add(new Duel(user, opponent, bet));
-                chatbot.sendMessage("Czekam na odpowiedź przeciwnika. (y/n)");
+                chatbot.sendMessage(user.getName() + " \u2694\ufe0f wyzywa \uD83D\uDEE1 " + opponent.getName() + " na pojedynek!"
+                        + "\n\u23f3 Czekam 60s. na odpowiedź przeciwnika. (y/n)");
                 return true;
             }
             return false;
         }
+//        else if (is(DUEL_ANY_REGEX)) {
+//            Matcher matcher = Pattern.compile(DUEL_REGEX).matcher(message.getMessage());
+//            if (matcher.find()) {
+//                int bet = Integer.parseInt(matcher.group(1));
+//            }
+//
+//        }
         return false;
     }
 

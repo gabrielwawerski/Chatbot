@@ -7,59 +7,6 @@ import java.util.*;
 class Ladder {
     private final String ladder;
 
-    static Ladder getMsgLadder(ArrayList<User> users) {
-        StringBuilder ladder = new StringBuilder();
-        users.sort(Comparator.comparing(User::getMessageCount));
-
-        ladder.append("Ranking wiadomości:\n")
-                .append("=============")
-                .append("\n");
-        for (int i = 0; i < users.size(); i++) {
-            User currUser = users.get(users.size() - 1 - i);
-            int currUserMsgs = currUser.getMessageCount();
-
-            if (i + 1 == 1) {
-                ladder.append("1\ufe0f\u20e3 ");
-            } else if (i + 1 == 2) {
-                ladder.append("2\ufe0f\u20e3 ");
-            } else if (i + 1 == 3) {
-                ladder.append("3\ufe0f\u20e3 ");
-            } else if (i + 1 == 4) {
-                ladder.append("4\ufe0f\u20e3 ");
-            } else if (i + 1 == 5) {
-                ladder.append("5\ufe0f\u20e3 ");
-            } else if (i + 1 == 6) {
-                ladder.append("6\ufe0f\u20e3 ");
-            } else if (i + 1 == 7) {
-                ladder.append("7\ufe0f\u20e3 ");
-            } else if (i + 1 == 8) {
-                ladder.append("8\ufe0f\u20e3 ");
-            } else if (i + 1 == 9) {
-                ladder.append("9\ufe0f\u20e3 ");
-            } else if (i + 1 == 10) {
-                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3 ");
-            }
-
-            if (i + 1 == 10) {
-                // do nothing - we don't need extra spaces, so ladder aligns
-            } else if (currUserMsgs <= 9) {
-                ladder.append("    ");
-            } else if (currUserMsgs <= 99) {
-                ladder.append("  ");
-            }
-
-            if (i != 10) {
-                ladder.append("(").append(currUserMsgs).append(") | ");
-            } else {
-                ladder.append("(").append(currUserMsgs).append(") | ");
-            }
-
-            ladder.append(currUser.getName())
-                    .append("\n");
-        }
-        return new Ladder(ladder.toString());
-    }
-
     static Ladder getLadder(ArrayList<User> users) {
         StringBuilder ladder = new StringBuilder();
 
@@ -93,7 +40,7 @@ class Ladder {
             } else if (i + 1 == 9) {
                 ladder.append("9\ufe0f\u20e3 ");
             } else if (i + 1 == 10) {
-                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3 ");
+                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3");
             }
 
 //            // simple ordering. USE IF YOU FUCK SHIT UP WITH EMOJI ORDERING!!!
@@ -120,6 +67,59 @@ class Ladder {
             ladder.append(currUser.getName())
                     .append("\n");
 
+        }
+        return new Ladder(ladder.toString());
+    }
+
+    static Ladder getMsgLadder(ArrayList<User> users) {
+        StringBuilder ladder = new StringBuilder();
+        users.sort(Comparator.comparing(User::getMessageCount));
+
+        ladder.append("Ranking wg wiadomości:\n")
+                .append("=============")
+                .append("\n");
+        for (int i = 0; i < users.size(); i++) {
+            User currUser = users.get(users.size() - 1 - i);
+            int currUserMsgs = currUser.getMessageCount();
+
+            if (i + 1 == 1) {
+                ladder.append("1\ufe0f\u20e3 ");
+            } else if (i + 1 == 2) {
+                ladder.append("2\ufe0f\u20e3 ");
+            } else if (i + 1 == 3) {
+                ladder.append("3\ufe0f\u20e3 ");
+            } else if (i + 1 == 4) {
+                ladder.append("4\ufe0f\u20e3 ");
+            } else if (i + 1 == 5) {
+                ladder.append("5\ufe0f\u20e3 ");
+            } else if (i + 1 == 6) {
+                ladder.append("6\ufe0f\u20e3 ");
+            } else if (i + 1 == 7) {
+                ladder.append("7\ufe0f\u20e3 ");
+            } else if (i + 1 == 8) {
+                ladder.append("8\ufe0f\u20e3 ");
+            } else if (i + 1 == 9) {
+                ladder.append("9\ufe0f\u20e3 ");
+            } else if (i + 1 == 10) {
+                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3");
+            }
+
+            if (i + 1 == 10) {
+                // do nothing - we don't need extra spaces, so ladder aligns
+            } else if (currUserMsgs <= 9) {
+                ladder.append("    ");
+            } else if (currUserMsgs <= 99) {
+                ladder.append("  ");
+            }
+
+            if (i != 10) {
+                ladder.append("(").append(currUserMsgs).append(") | ");
+            } else {
+                ladder.append("(").append(currUserMsgs).append(") | ");
+            }
+
+            ladder.append(currUser.getName())
+                    .append("\n");
         }
         return new Ladder(ladder.toString());
     }

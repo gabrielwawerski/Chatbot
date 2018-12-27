@@ -80,7 +80,7 @@ public class RandomGroupPhoto extends ModuleBase {
 
         if (isOr(RANDOM_REGEX, R_REGEX, R)) {
             if (now < timeoutRelease) {
-                chatbot.sendMessage(randTimeoutMsg());
+                chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
                 return false;
             } else {
                 chatbot.sendImageUrlWaitToLoad(currentFileUrl);

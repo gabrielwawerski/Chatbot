@@ -1,6 +1,7 @@
 package bot.core.gabes_framework.util;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.Utils;
 import bot.core.gabes_framework.core.api.Module;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.message.MessageModule;
@@ -10,6 +11,7 @@ import bot.core.gabes_framework.util.message.SingleMessageModule;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
@@ -113,7 +115,7 @@ public abstract class ModuleBase implements Module {
     protected boolean isCmd(Message message, List<String> REGEXES) {
         String messageBody = message.getMessage();
         for (String regex : REGEXES) {
-            if (messageBody.contains(regex)) {
+            if (messageBody.equals(regex)) {
                 return true;
             }
         }
