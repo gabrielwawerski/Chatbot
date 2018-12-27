@@ -29,7 +29,6 @@ import java.util.regex.Pattern;
  */
 public abstract class ModuleBase implements Module {
     protected final Chatbot chatbot;
-
     /** Needs to be assigned to the latest received {@code message}'s value. After overriding {@link Module#process(Message)}
      * method, call {@link #updateMatch(Message)} inside it first, which takes care of the assigning for you. Although
      * this field and it's corresponding method are not necessary, they aim to make writing modules less error prone.<br>
@@ -54,9 +53,9 @@ public abstract class ModuleBase implements Module {
     public void echoOnline() {
         String msg = "";
         if (online) {
-            msg += "ON | " + getClass().getSimpleName();
+            msg += "ONLINE | " + getClass().getSimpleName();
         } else {
-            msg += "OFF| " + getClass().getSimpleName() + " unavailable.";
+            msg += "OFFLINE| " + getClass().getSimpleName();
         }
         System.out.println(msg);
     }
@@ -125,7 +124,7 @@ public abstract class ModuleBase implements Module {
 
         for (String command : commands) {
             if (messageBody.matches(command)) {
-                return commands.get(commands.indexOf(command));
+                return command;
             }
         }
         return "";

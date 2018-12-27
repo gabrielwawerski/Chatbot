@@ -59,12 +59,15 @@ public class Mp3Tube extends ModuleBase {
 
     private String getUrl(String id) {
         timestamp = new Date();
-        return PREFIX + id + "/" + timestamp.getTime();
+        return "\u2935 Link do pobrania\n" + PREFIX + id + "/" + timestamp.getTime();
     }
 
+    // obsluguje proste linki: https://www.youtube.com/watch?v=xxx
     private String getId(String messageBody) {
+        // TODO dodac obsluge linkow z tekstem po id
+        // np. https://www.youtube.com/watch?v=pCWmHE6QpvQ&index=112&t=0s&list=PLRCByVlDWF9N-SCqUezx1xnLJzsTr9FZ8
         Matcher matcher = Pattern.compile("v=(.*)").matcher(messageBody);
-        if (matcher.find()) {
+        if (matcher.find() && matcher.group().length() < 15) {
             return matcher.group().substring(2);
         } else {
             return null;

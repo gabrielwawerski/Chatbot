@@ -90,21 +90,25 @@ public class Chatbot {
 
 
     public Chatbot(String username, String password, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
+        database = new Database();
         webController = new WebController(this, debugMessages, headless, maximised, database);
         run(username, password, threadId, debugMode, silentMode);
     }
 
     public Chatbot(String configName, String threadId, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
+        database = new Database();
         webController = new WebController(this, debugMessages, headless, maximised, database);
         runFromConfigWithThreadId(configName, threadId, debugMode, silentMode);
     }
 
     public Chatbot(String configName, boolean debugMode, boolean silentMode, boolean debugMessages, boolean headless, boolean maximised) {
+        database = new Database();
         webController = new WebController(this, debugMessages, headless, maximised, database);
         runFromConfig(configName, debugMode, silentMode);
     }
 
     public Chatbot() {
+        database = new Database();
         webController = new WebController(this, false, false, false, database);
         runFromConfig("config", false, false);
     }
@@ -248,7 +252,6 @@ public class Chatbot {
 
     private void run(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
         this.threadId = threadId;
-        database = new Database();
         init(username, password, threadId, debugMode, silentMode);
 
         while (running) {
@@ -287,10 +290,12 @@ public class Chatbot {
     }
 
     protected void initMessage() {
-        webController.sendMessage("PcionBot " + getVersion() + " online\n"
+        webController.sendMessage("PcionBot " + getVersion() + " online.\n"
                 + "Załadowane moduły:  " + Utils.NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
-                + "\nWpisz !cmd aby zobaczyć listę komend."
-                + "\n!ladder | !stats | !suggest");
+                + "\n!ladder"
+                + "\n!mp3 <youtube link> generuje link do pobrania!"
+                + "\n!b <tekst>"
+                + "\n\nWpisz !cmd aby zobaczyć listę komend.");
     }
 
     public String getModulesOnline() {

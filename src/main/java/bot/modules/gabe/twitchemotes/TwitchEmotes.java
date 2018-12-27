@@ -10,7 +10,7 @@ import bot.core.gabes_framework.core.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bot.core.gabes_framework.core.Utils.msgIsBy;
+import static bot.core.gabes_framework.core.Utils.msgBy;
 import static bot.modules.gabe.twitchemotes.Emote.*;
 
 /**
@@ -30,7 +30,7 @@ public class TwitchEmotes extends ModuleBase {
 
     public TwitchEmotes(Chatbot chatbot) {
         super(chatbot);
-        EMOTES = Emote.emotes();
+        EMOTES = Emote.getEmotes();
         setEmotesSize(SIZE_LARGE);
         initInfo();
     }
@@ -53,22 +53,22 @@ public class TwitchEmotes extends ModuleBase {
         if (isOr(INFO_REGEX, INFO)) {
             chatbot.sendMessage(emotesInfo);
             return true;
-        } else if (is(SIZE_1_REGEX) && msgIsBy(message, Users.Gabe)) {
+        } else if (is(SIZE_1_REGEX) && msgBy(message, Users.Gabe)) {
             setEmotesSize(1);
             chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
-        } else if (is(SIZE_2_REGEX) && msgIsBy(message, Users.Gabe)) {
+        } else if (is(SIZE_2_REGEX) && msgBy(message, Users.Gabe)) {
             setEmotesSize(2);
             chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
-        } else if (is(SIZE_3_REGEX) && msgIsBy(message, Users.Gabe)) {
+        } else if (is(SIZE_3_REGEX) && msgBy(message, Users.Gabe)) {
             setEmotesSize(3);
             chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
         }
 
         for (Emote current : EMOTES) {
-            if (match.equals(current.cmd())) {
+            if (match.equals(current.value())) {
                 return sendEmoteMsg(current);
             }
         }
@@ -86,7 +86,7 @@ public class TwitchEmotes extends ModuleBase {
     }
 
     private boolean isEmote(Emote emote) {
-        return match.equals(EMOTES.get(EMOTES.indexOf(emote)).cmd());
+        return match.equals(EMOTES.get(EMOTES.indexOf(emote)).value());
     }
 
     private boolean sendEmoteMsg(Emote emote) {
@@ -103,7 +103,7 @@ public class TwitchEmotes extends ModuleBase {
         regexes.add(SIZE_3_REGEX);
 
         for (Emote emote : EMOTES) {
-            regexes.add(emote.cmd());
+            regexes.add(emote.value());
         }
         return regexes;
     }
@@ -111,7 +111,7 @@ public class TwitchEmotes extends ModuleBase {
     private void initInfo() {
         StringBuilder builder = new StringBuilder();
         for (Emote emote : EMOTES) {
-            builder.append(emote.cmd()).append("\n");
+            builder.append(emote.value()).append("\n");
         }
         emotesInfo = builder.toString();
     }

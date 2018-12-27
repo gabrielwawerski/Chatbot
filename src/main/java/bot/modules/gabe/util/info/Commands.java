@@ -18,10 +18,10 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 .append("\u2935")
-                .append(NEW_BUTTON_EMOJI).append("!mp3 youtube link").append("\n")
+                .append(NEW_BUTTON_EMOJI).append("!mp3 <youtube link>").append("\n")
 
                 .append(B_EMOJI)
-                .append(NEW_BUTTON_EMOJI).append("!b tekst").append("\n")
+                .append(NEW_BUTTON_EMOJI).append("!b <tekst>").append("\n")
 
                 .append("\uD83D\uDD22")
                 .append(NEW_BUTTON_EMOJI).append("!ladder").append("\n")

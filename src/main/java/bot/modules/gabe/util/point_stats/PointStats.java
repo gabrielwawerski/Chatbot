@@ -10,6 +10,7 @@ import bot.core.hollandjake_api.helper.misc.Message;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.util.Objects.isNull;
 
@@ -30,7 +31,7 @@ public class PointStats extends ModuleBase {
     private final String LADDER_REGEX = Utils.TO_REGEX("ladder");
 
     private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
-    private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette \\d");
+    private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette (\\d+)");
 
     public PointStats(Chatbot chatbot, Database db) {
         super(chatbot);
@@ -40,18 +41,16 @@ public class PointStats extends ModuleBase {
 
     private void initialize() {
         users = new ArrayList<>();
+        System.out.println("Fetching users from database...");
         users = db.getUsers();
+        System.out.println("Users fetched.");
     }
 
     private String getLadderMsg() {
-       Ladder ladder = Ladder.getLadder(users);
-       return ladder.toString();
-    }
-
-    private void addUser(Message message) {
-        User user = new User(users.size() - 1, message.getSender().getName(), 0, 0);
-        db.createUser(user);
-        users.add(user);
+        System.out.println("generating ladder..");
+        Ladder ladder = Ladder.getLadder(users);
+        System.out.println("ladder generated. returning");
+        return ladder.toString();
     }
 
     @Override
@@ -59,7 +58,6 @@ public class PointStats extends ModuleBase {
         User user = null;
 
         if (!isNull(message) && !isNull(message.getSender())) {
-            userFound = true;
             user = getUser(message);
         } else {
             return false;
@@ -67,36 +65,107 @@ public class PointStats extends ModuleBase {
 
         updateMatch(message);
         refreshUsers();
+        // if msg isn't a command, process msg and return
+        if (!is(STATS_REGEX) && !is(LADDER_REGEX) && !is(ROULETTE_ALL_REGEX) && !is(ROULETTE_REGEX)) {
+            processMessage(user, message);
+            System.out.println("is not regex");
+            return false;
+        }
+        addMessageCount(user);
 
-        if (userFound) {
+        // stat check, we don't add points here
+        if (is(STATS_REGEX)) {
+            System.out.println("stats regex!");
+            String msg = user.getName()
+                    + "\nPunkty: " + user.getPoints()
+                    + "\nWiadomości: " + user.getMessageCount();
+            update(user);
+            chatbot.sendMessage(msg);
+            return true;
 
-            // stat check, we don't add points here
-            if (is(STATS_REGEX)) {
-                String msg = user.getName()
-                        + "\nPunkty: " + user.getPoints()
-                        + "\n"
-                        + "\nWiadomości: " + user.getMessageCount();
+        } else if (is(LADDER_REGEX)) {
+            update(user);
+            chatbot.sendMessage(getLadderMsg());
+            return true;
 
-                chatbot.sendMessage(msg);
-                addMessageCount(user);
-                update(user);
-                userFound = false;
-                return true;
+        } else if (is(ROULETTE_REGEX)) {
+            Matcher matcher = Pattern.compile(ROULETTE_REGEX).matcher(message.getMessage());
 
-            } else if (is(LADDER_REGEX)) {
-                chatbot.sendMessage(getLadderMsg());
-                addMessageCount(user);
-                update(user);
-                userFound = false;
+            if (matcher.find()) {
+                int userRoll = Integer.parseInt(matcher.group(1));
+                System.out.println("user input: " + userRoll);
+
+                if (user.getPoints() == 0) {
+                    chatbot.sendMessage("Nie masz punktów.");
+
+                    return false;
+                } else if (userRoll > user.getPoints()) {
+                    update(user);
+                    chatbot.sendMessage("Nie masz tylu punktów!");
+
+                    return false;
+                } else if (userRoll < 0) {
+                    update(user);
+                    chatbot.sendMessage("Nie da rady.");
+
+                    return false;
+                }
+                boolean result = getResult();
+
+                if (result) {
+                    user.addPoints(userRoll * 2);
+                    update(user);
+                    chatbot.sendMessage("Wygrałeś " + userRoll * 2 + " pkt!");
+
+                    return true;
+                } else {
+                    if (user.getPoints() - (userRoll * 2) < 0) {
+                        user.setPoints(0);
+                    } else {
+                        user.subPoints(userRoll * 2);
+                    }
+                    update(user);
+                    chatbot.sendMessage("Przejebałeś " + userRoll * 2 + " pkt.");
+
+                    return true;
+                }
+            } // matcher.find()
+        } // ROULETTE_REGEX
+        else if (is(ROULETTE_ALL_REGEX)) {
+            int userPoints = user.getPoints();
+            if (userPoints == 0) {
+                chatbot.sendMessage("Nie masz punktów.");
                 return true;
             }
 
-            processMessage(user, message);
+            boolean result = getResult();
+            if (result) {
+                user.setPoints(user.getPoints() * 2);
+                update(user);
+                chatbot.sendMessage("Wygrałeś " + userPoints + " pkt!");
+                return true;
+            } else {
+                user.setPoints(0);
+                update(user);
+                chatbot.sendMessage(userPoints + " pkt poszło się jebać. Brawo!");
+                return true;
+            }
         }
-
-
-        userFound = false;
         return false;
+    }
+
+    private boolean getResult() {
+        int min = 0;
+        int max = 1;
+        int range = (max - min) + 1;
+
+        int result = (int) (Math.random() * range) + min;
+        System.out.println("wynik losowania: " + result);
+        if (result == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void processMessage(User user, Message message) {
@@ -116,16 +185,18 @@ public class PointStats extends ModuleBase {
             return;
         }
 
-
         if (msgLength <= 20 && msgLength >= 3) {
             user.addPoints(1);
             System.out.println("+1 PTS " + user.getName());
+
         } else if (msgLength <= 60 && msgLength > 20) {
             user.addPoints(2);
             System.out.println("+2 PTS " + user.getName());
+
         } else if (msgLength <= 100 && msgLength > 60) {
             user.addPoints(5);
             System.out.println("+5 PTS " + user.getName());
+
         } else if (msgLength > 100) {
             user.addPoints(10);
             System.out.println("+10 PTS " + user.getName());
@@ -186,6 +257,12 @@ public class PointStats extends ModuleBase {
     @Override
     public ArrayList<String> getCommands() {
         return Utils.getCommands(STATS_REGEX, LADDER_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
+    }
+
+    private void addUser(Message message) {
+        User user = new User(users.size() - 1, message.getSender().getName(), 0, 0);
+        db.createUser(user);
+        users.add(user);
     }
 
     public void createUsers() {

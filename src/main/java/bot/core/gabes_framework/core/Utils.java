@@ -53,7 +53,7 @@ public final class Utils {
         return "";
     }
 
-    public static boolean msgIsBy(Message message, Users users) {
+    public static boolean msgBy(Message message, Users users) {
         return message.getSender().getName().equals(users.getUserName());
     }
 

@@ -24,7 +24,7 @@ public class Emote {
     public static final int SIZE_MEDIUM = 2;
     public static final int SIZE_LARGE = 3;
 
-    //region emote sources size dependent vars
+    //region emote size dependent vars
     private static String TWITCHQUOTES_SIZE;
     private static String FRANKERFACEZ_SIZE;
     private static String BTTV_SIZE;
@@ -94,7 +94,7 @@ public class Emote {
             BTTV);
     //endregion
 
-    public static  List<Emote> emotes() {
+    public static List<Emote> getEmotes() {
         return List.of(
                 Kappa,
                 LUL,
@@ -113,7 +113,7 @@ public class Emote {
                 haHAA);
     }
 
-    public String cmd() {
+    public String value() {
         return command;
     }
 
