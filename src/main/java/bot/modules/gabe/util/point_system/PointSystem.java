@@ -352,7 +352,7 @@ public class PointSystem extends ModuleBase {
         int msgLength = messageBody.length();
         db.refresh(user);
 
-        if (is(chatbot.getRegexes()) || is(REGEXES)) {
+        if (isCmd(message, chatbot.getRegexes()) || isCmd(message, REGEXES)) {
             addMessageCount(user);
             addPoints(user, 1);
             System.out.println("(+1)(CMD)");

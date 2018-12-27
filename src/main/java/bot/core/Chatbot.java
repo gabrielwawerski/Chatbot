@@ -168,15 +168,13 @@ public class Chatbot {
     }
 
     private void init(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
-        log();
-        System.out.println("Initializing...");
-        log();
-        System.out.println("Loading modules...");
+        log("Initializing...");
+        log("Loading modules...");
+
         loadModules();
-        log();
-        System.out.println("Finished loading modules.");
-        log();
-        System.out.println("Echo modules...\n");
+
+        log("Finished loading modules.");
+        log("Echo modules...\n");
 
         totalModules = modules.size();
         modulesOnline = 0;
@@ -192,26 +190,27 @@ public class Chatbot {
         }
 
         if (modulesOnline < totalModules) {
-            System.out.println("Not all modules have been successfully loaded.");
-            System.out.print("Modules unavailable this session: ");
+            log("Not all modules have been successfully loaded.");
+            log("Modules unavailable this session: ");
             for (String module : modulesOffline) {
                 System.out.print(module.getClass().getSimpleName() + ", ");
             }
-            System.out.println("ONLINE | " + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
+            log("ONLINE | " + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
         } else {
-            System.out.println("ONLINE | " + modulesOnline + "/" + totalModules);
+            log("ONLINE | " + modulesOnline + "/" + totalModules);
         }
         System.out.println("-----------------");
 
-        log();
-        System.out.println("Initializing platform...");
-        log();
-        System.out.println("Logging in...");
+        log("Initializing platform...");
+        log("Logging in...");
         webController.login(username, password);
-        log();
-        System.out.println("Successfully logged in.");
-        System.out.println("Target ID: " + threadId);
-        System.out.print("Looking for favourites... ");
+
+        log("Successfully logged in."
+                + "\n"
+                + "Target ID: " + threadId
+                + "\n"
+                + "Looking for favourites... ");
+
         String msg = "";
         if (threadId.equals(PcionBot.ID_GRUPKA)) {
             System.out.print("found.\n");
@@ -227,24 +226,21 @@ public class Chatbot {
             msg += threadId;
         }
 
-        log();
-        System.out.println("Switching to " + msg);
+        log("Switching to " + msg);
         webController.gotoFacebookThread(threadId);
-        log();
-        System.out.println("Switched to " + msg);
-        log();
-        System.out.println("Waiting for messages to load...");
+
+        log("Switched to " + msg);
+        log("Waiting for messages to load...");
         webController.waitForMessagesToLoad();
-        log();
-        System.out.println("Messages loaded.");
-        log();
-        System.out.println("Finished loading.");
-        log();
-        System.out.print("PcionBot successfully loaded, ");
-        System.out.print("running from config:\n");
-        System.out.println("max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.");
-        System.out.println("poll sleep time: " + getRefreshRate() + " millis.");
-        log(true);
+
+        log("Messages loaded.");
+        log("Finished loading.");
+
+        log("PcionBot successfully loaded, running from config:\n"
+                + "max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.\n"
+                + "poll sleep time:" + getRefreshRate() + " millis.");
+
+        System.out.println();
         System.out.println("-----------------");
         System.out.println("PcionBot " + version);
         System.out.println("Shutdown:  " + shutdownCode);
@@ -256,7 +252,7 @@ public class Chatbot {
         }
     }
 
-    private void log() {
+    private void log(String message) {
         Date dateNow = new Date();
         String timeNow = dateNow.toString();
         int dateLength = timeNow.length();
@@ -265,24 +261,8 @@ public class Chatbot {
         timeNow = timeNow.substring(0, dateLength - datePostfix);
         System.out.print("\n");
         System.out.print("- " + timeNow);
+        System.out.println(message);
         System.out.print("\n");
-    }
-
-    private void log(boolean noFreeSpace) {
-        Date dateNow = new Date();
-        String timeNow = dateNow.toString();
-        int dateLength = timeNow.length();
-        final int datePostfix = 9;
-
-        timeNow = timeNow.substring(0, dateLength - datePostfix);
-        System.out.print("\n");
-        System.out.println(timeNow);
-        if (noFreeSpace) {
-            System.out.println("  ");
-            return;
-        } else {
-            System.out.println("\n");
-        }
     }
 
     private void run(String username, String password, String threadId, boolean debugMode, boolean silentMode) {

@@ -110,6 +110,16 @@ public abstract class ModuleBase implements Module {
         return match.equals(REGEX);
     }
 
+    protected boolean isCmd(Message message, List<String> REGEXES) {
+        String messageBody = message.getMessage();
+        for (String regex : REGEXES) {
+            if (messageBody.contains(regex)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected boolean is(List<String> REGEXES) {
         for (String regex : REGEXES) {
             if (match.equals(regex)) {
