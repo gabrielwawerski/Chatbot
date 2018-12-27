@@ -81,7 +81,7 @@ public class Chatbot {
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("PointStats", new PointStats(this, database));
         modules.put("Mp3Tube", new Mp3Tube(this));
-//        modules.put("BIntoEmote", new BIntoEmote(this));
+        modules.put("B", new B(this));
     }
 
     public void reloadModules() {
