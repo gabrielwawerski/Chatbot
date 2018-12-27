@@ -6,7 +6,6 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +49,12 @@ public class Database {
         }
     }
 
-    public ArrayList<User> initialize() {
-        ArrayList<User> returnValue = new ArrayList<>();
+    public ArrayList<User> getUsers() {
+        ArrayList<User> users = new ArrayList<>();
         for (User user : userDao) {
-            returnValue.add(new User(user.getId(), user.getName(), user.getPoints(), user.getMessageCount()));
+            users.add(user);
         }
-        return returnValue;
+        return users;
     }
 
     public void refreshAll(ArrayList<User> users) {

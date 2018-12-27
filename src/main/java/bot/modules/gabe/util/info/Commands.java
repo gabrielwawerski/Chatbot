@@ -1,6 +1,7 @@
 package bot.modules.gabe.util.info;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.util.Utils;
 import bot.core.gabes_framework.util.message.SingleMessageModule;
 
 import java.util.List;
@@ -22,7 +23,8 @@ public class Commands extends SingleMessageModule {
                 .append("\n")
 
                 .append(INFRMATION_EMOJI)
-                .append(NEW_BUTTON_EMOJI).append("!stats").append("\n")
+                .append(NEW_BUTTON_EMOJI).append("!ladder").append("\n")
+                .append(INFRMATION_EMOJI).append("!stats").append("\n")
                 .append("\uD83D\uDE03").append("!emotes").append("\n")
                 .append(INFRMATION_EMOJI).append("!sylwester").append("\n")
                 .append(PENCIL_EMOJI).append("!suggest  !pomysl").append("\n")

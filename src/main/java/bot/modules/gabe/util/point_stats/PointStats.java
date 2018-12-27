@@ -1,4 +1,4 @@
-package bot.core.gabes_framework.core.point_system;
+package bot.modules.gabe.util.point_stats;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.Database;
@@ -29,8 +29,8 @@ public class PointStats extends ModuleBase {
 
     private final String LADDER_REGEX = Utils.TO_REGEX("ladder");
 
-    private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette \\d");
     private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
+    private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette \\d");
 
     public PointStats(Chatbot chatbot, Database db) {
         super(chatbot);
@@ -40,7 +40,7 @@ public class PointStats extends ModuleBase {
 
     private void initialize() {
         users = new ArrayList<>();
-        users = db.initialize();
+        users = db.getUsers();
     }
 
     private String getLadderMsg() {
@@ -107,7 +107,7 @@ public class PointStats extends ModuleBase {
 
         if (message.getImage() != null) {
             user.addPoints(2);
-            System.out.println("PTS+2 (IMG) " + user.getName());
+            System.out.println("+2 PTS (IMG) " + user.getName());
         }
 
         if (messageBody.contains("http") || messageBody.contains("www.") || messageBody.contains("//")) {
@@ -119,16 +119,16 @@ public class PointStats extends ModuleBase {
 
         if (msgLength <= 20 && msgLength >= 3) {
             user.addPoints(1);
-            System.out.println("PTS+1 " + user.getName());
+            System.out.println("+1 PTS " + user.getName());
         } else if (msgLength <= 60 && msgLength > 20) {
             user.addPoints(2);
-            System.out.println("PTS+2 " + user.getName());
+            System.out.println("+2 PTS " + user.getName());
         } else if (msgLength <= 100 && msgLength > 60) {
             user.addPoints(5);
-            System.out.println("PTS+5 " + user.getName());
+            System.out.println("+5 PTS " + user.getName());
         } else if (msgLength > 100) {
             user.addPoints(10);
-            System.out.println("PTS+10 " + user.getName());
+            System.out.println("+10 PTS " + user.getName());
         }
 
 
@@ -147,7 +147,7 @@ public class PointStats extends ModuleBase {
 
     private void addMessageCount(User user) {
         user.addMessagecount(1);
-        System.out.print(" MSG+1 " + user.getName() + "\n");
+        System.out.print("  +1 MSG " + user.getName().substring(0, 8) + "\n");
     }
 
     private void update(User user) {
@@ -180,12 +180,12 @@ public class PointStats extends ModuleBase {
 
     @Override
     public String getMatch(Message message) {
-        return findMatch(message, STATS_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
+        return findMatch(message, STATS_REGEX, LADDER_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
     }
 
     @Override
     public ArrayList<String> getCommands() {
-        return Utils.getCommands(STATS_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
+        return Utils.getCommands(STATS_REGEX, LADDER_REGEX, ROULETTE_REGEX, ROULETTE_ALL_REGEX);
     }
 
     public void createUsers() {

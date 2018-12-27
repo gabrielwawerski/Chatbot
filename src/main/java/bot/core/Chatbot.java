@@ -2,7 +2,7 @@ package bot.core;
 
 import bot.core.gabes_framework.core.database.Database;
 import bot.core.gabes_framework.util.Utils;
-import bot.core.gabes_framework.core.point_system.PointStats;
+import bot.modules.gabe.util.point_stats.PointStats;
 import bot.modules.gabe.text.rand.Roll;
 import bot.modules.gabe.util.Sylwester;
 import bot.modules.gabe.image.KartaPulapka;
@@ -79,6 +79,7 @@ public class Chatbot {
         modules.put("RandomKwejk", new RandomKwejk(this));
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("PointStats", new PointStats(this, database));
+//        modules.put("BIntoEmote", new BIntoEmote(this));
     }
 
     public void reloadModules() {
@@ -186,10 +187,10 @@ public class Chatbot {
         }
 
         log();
-        System.out.println("Switching to " + msg + "...");
+        System.out.println("Switching to " + msg);
         webController.gotoFacebookThread(threadId);
         log();
-        System.out.println("Successfully switched to " + msg + ".");
+        System.out.println("Switched to " + msg);
         log();
         System.out.println("Waiting for messages to load...");
         webController.waitForMessagesToLoad();
@@ -205,7 +206,7 @@ public class Chatbot {
         log(true);
         System.out.println("-----------------");
         System.out.println("PcionBot " + version);
-        System.out.println("shutdown:  " + shutdownCode);
+        System.out.println("Shutdown:  " + shutdownCode);
         System.out.println("-----------------");
 
         //Init message

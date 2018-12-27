@@ -19,12 +19,20 @@ public class BIntoEmote extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
         String messageBody = message.getMessage();
-        String processedMessage = "";
+        String temp = " ";
 
         if (is(B_ANY_REGEX)) {
             for (int i = 0; i < messageBody.length(); i++) {
 
+                if (messageBody.charAt(i) == 'B' || messageBody.charAt(i) == 'b') {
+                    temp = messageBody.substring(0, i);
+                    temp += Utils.B_EMOJI + messageBody.substring(i + 1, messageBody.length() + 1);
+                } else if (messageBody.charAt(i) == 'P' || messageBody.charAt(i) == 'p') {
+                    temp = messageBody.substring(0, i);
+                    temp += Utils.B_EMOJI + messageBody.substring(i + 1, messageBody.length() + 1);
+                }
             }
+            chatbot.sendMessage(temp);
             return true;
         }
         return false;
