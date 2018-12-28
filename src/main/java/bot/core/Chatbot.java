@@ -196,10 +196,10 @@ public class Chatbot {
         }
 
         if (modulesOnline < totalModules) {
-            System.out.println("Not all modules have been successfully loaded.");
+            System.out.println("Not all modules have been loaded.");
             System.out.println("Modules unavailable this session: ");
             for (String module : modulesOffline) {
-                System.out.print(module.getClass().getSimpleName() + ", ");
+                System.out.print(module + ", ");
             }
             System.out.println("ONLINE | " + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
         } else {
@@ -243,10 +243,10 @@ public class Chatbot {
                 + "max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.\n"
                 + "poll sleep time:" + getRefreshRate() + " millis.");
 
-        System.out.println("-----------------");
+        System.out.println("----------------");
         System.out.println("PcionBot " + version);
         System.out.println("Shutdown:  " + shutdownCode);
-        System.out.println("-----------------");
+        System.out.println("----------------");
 
         //Init message
         if (!silentMode) {

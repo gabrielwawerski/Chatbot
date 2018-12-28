@@ -72,13 +72,16 @@ public abstract class ModuleBase implements Module {
         User user = db.getUser(message);
         user.addPoints(points);
         user.addMessagecount(1);
+
         db.update(user);
         System.out.println(user.getName() + "(+" + points +") " );
+        System.out.print(user.getName().substring(0, 5) + "(MSG)" + "\n");
     }
 
     protected void addMessageCount(User user) {
         user.addMessagecount(1);
-        System.out.print(user.getName().substring(0, 8) + "(+1 MSG)" + "\n");
+        db.update(user);
+        System.out.print(user.getName().substring(0, 5) + "(MSG)" + "\n");
     }
 
     protected void update(User user) {

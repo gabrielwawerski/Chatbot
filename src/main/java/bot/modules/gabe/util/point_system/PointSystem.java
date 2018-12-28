@@ -342,7 +342,7 @@ public class PointSystem extends ModuleBase {
                     desiredUser = desiredUser.substring(1);
                 }
 
-                System.out.println("bet: " + bet + "\nopponent: " + desiredUser);
+                System.out.println("bet: " + bet + "\ninitiator: " + user.getName() + "\nopponent: " + desiredUser);
                 if (user.getPoints() < bet) {
                     chatbot.sendMessage("\u274c Nie masz tylu punktów! (" + user.getPoints() + ")");
                     update(user);
@@ -392,12 +392,11 @@ public class PointSystem extends ModuleBase {
 
         if (isCmd(message, REGEXES)) {
             return;
-        } else {
         }
 
         if (message.getImage() != null) {
-            user.addPoints(3);
-            System.out.println("(+3)(IMG) " + user.getName());
+            user.addPoints(2);
+            System.out.println(user.getName() + "(+2)(IMG)");
         }
 
         // if message is a url, no points are added.
