@@ -64,12 +64,35 @@ public abstract class ModuleBase implements Module {
         System.out.println(msg);
     }
 
+    /**
+     * Use when you don't have desired user reference, you pass received message and points to add.
+     * Also adds 1 messageCount.
+     */
     protected void addPoints(Message message, int points) {
         User user = db.getUser(message);
         user.addPoints(points);
         user.addMessagecount(1);
         db.update(user);
-        System.out.println("(+1) " + user.getName());
+        System.out.println(user.getName() + "(+" + points +") " );
+    }
+
+    protected void addMessageCount(User user) {
+        user.addMessagecount(1);
+        System.out.print(user.getName().substring(0, 8) + "(+1 MSG)" + "\n");
+    }
+
+    protected void update(User user) {
+        db.update(user);
+    }
+
+    /**
+     * Use when you have reference to desired user. Also adds 1 messageCount.
+     */
+    protected void addPoints(User user, int points) {
+        user.addPoints(points);
+        user.addMessagecount(1);
+        db.update(user);
+        System.out.println(user.getName() + "(+" + points +") ");
     }
 
     protected void setStatus(boolean online) {

@@ -49,11 +49,6 @@ public class RandomGroupPhoto extends ModuleBase {
             "Poczekaj chwilę.", "Chwila...", "Bo mnie przegrzejesz!",
             "Nie bądź taki hop.", "Jebneee", "Bo się przegrzeje!");
 
-    private static final List<String> FAILED_ROULETTE_NORMAL = List.of("Przejebałeś "
-            + "Straciłeś " + "Odjąłem ci " + "");
-
-    private static final List<String> FAILED_ROULETTE_ALL = List.of("");
-
     private final String RANDOM_REGEX = TO_REGEX("random");
     private final String R_REGEX = TO_REGEX("r");
     private final String R = ("r");

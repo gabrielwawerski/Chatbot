@@ -18,13 +18,13 @@ public class Commands extends SingleMessageModule {
                 .append("=============")
                 .append("\n")
 
-                .append(NEW_BUTTON_EMOJI).append("!duel <imie nazwisko> <pkt>").append("\n")
+                .append(NEW_BUTTON_EMOJI).append("!duel @uzytkownik pkt").append("\n")
 
 //                .append("\u2935")
                 .append(NEW_BUTTON_EMOJI).append("!mp3 !mp3 <yt link>").append("\n")
 
 //                .append("\uD83D\uDD22")
-                .append(NEW_BUTTON_EMOJI).append("!ladder !ladder msg").append("\n")
+                .append(NEW_BUTTON_EMOJI).append("!ladder !msg").append("\n")
 
 //                .append(INFO_EMOJI)
                 .append(NEW_BUTTON_EMOJI).append("!stats !stats uzytkownik").append("\n")

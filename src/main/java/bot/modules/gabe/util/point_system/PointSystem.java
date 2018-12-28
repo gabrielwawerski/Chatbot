@@ -6,6 +6,7 @@ import bot.core.gabes_framework.core.database.User;
 import bot.core.gabes_framework.core.Utils;
 import bot.core.gabes_framework.util.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
+import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
 
 import java.util.ArrayList;
@@ -41,6 +42,14 @@ public class PointSystem extends ModuleBase {
     private long timeoutRelease;
     private static final long TIMEOUT = 650;
 
+    private static final List<String> FAILED_ROULETTE_NORMAL
+            = List.of("Przejebałeś ");
+//            + "Straciłeś " + "Odjąłem ci " + "");
+
+    private static final List<String> FAILED_ROULETTE_ALL
+            = List.of("️ Przejebałeś wszystkie punkty. Brawo!"
+            + "");
+
     // STATS
     private final String STATS_REGEX = Utils.TO_REGEX("stats");
     private final String STATS_ANY_REGEX = Utils.TO_REGEX("stats (.*)");
@@ -48,11 +57,12 @@ public class PointSystem extends ModuleBase {
 
     // PTS AND MSGS LADDER
     private final String LADDER_REGEX = Utils.TO_REGEX("ladder");
-    private final String LADDER_MSG_REGEX = Utils.TO_REGEX("ladder msg");
+    private final String LADDER_MSG_REGEX = Utils.TO_REGEX("msg");
 
     // ROULETTE
     private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette (\\d+)");
     private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
+    private final String VABANK_REGEX = Utils.TO_REGEX("vabank");
     // TODO add these
 //    private final String RO_REGEX = Utils.TO_REGEX("ro (\\d+)");
 //    private final String RO_ALL_REGEX = Utils.TO_REGEX("ro all");
@@ -61,7 +71,7 @@ public class PointSystem extends ModuleBase {
     private final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)"); // TODO
 //    private final String DUEL_REGEX = Utils.TO_REGEX("duel (\\d+) (.*)"); // TODO
 
-    private final String DUEL_ANY_REGEX = Utils.TO_REGEX("duel (\\d+)"); // TODO
+    private final String DUEL_ALL_REGEX = Utils.TO_REGEX("duel (\\d+)"); // TODO
 
     private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
     private final String DUEL_ACCEPT_SIMPLE = "y";
@@ -85,6 +95,7 @@ public class PointSystem extends ModuleBase {
                 LADDER_MSG_REGEX,
                 ROULETTE_REGEX,
                 ROULETTE_ALL_REGEX,
+                VABANK_REGEX,
                 DUEL_REGEX,
                 DUEL_ACCEPT_REGEX,
                 DUEL_ACCEPT_SIMPLE,
@@ -181,7 +192,7 @@ public class PointSystem extends ModuleBase {
                 db.refresh(duel.getWinner());
                 db.refresh(duel.getLoser());
                 if (!duel.resolve()) {
-                    chatbot.sendMessage("\u274c Wasze punkty uległy zmianie. Pojedynek anulowany.");
+                    chatbot.sendMessage("\u274c Podczas oczekiwania  Pojedynek anulowany.");
                 }
 
                 duel.getWinner().addPoints(duel.getBet() * 2);
@@ -286,7 +297,7 @@ public class PointSystem extends ModuleBase {
                     if (user.getPoints() - desiredRoll >= 0) {
                         user.subPoints(desiredRoll);
                         update(user);
-                        chatbot.sendMessage("Przejebałeś " + desiredRoll + " pkt. (" + user.getPoints() + ")");
+                        chatbot.sendMessage(Util.GET_RANDOM(FAILED_ROULETTE_NORMAL) + desiredRoll + " pkt. (" + user.getPoints() + ")");
                         return true;
                     } else {
                         user.setPoints(0);
@@ -299,7 +310,7 @@ public class PointSystem extends ModuleBase {
             return false;
         } // ROULETTE_REGEX
 
-        else if (is(ROULETTE_ALL_REGEX)) {
+        else if (isOr(ROULETTE_ALL_REGEX, VABANK_REGEX)) {
             int userPoints = user.getPoints();
             if (userPoints == 0) {
                 chatbot.sendMessage("Nie masz punktów.");
@@ -350,7 +361,6 @@ public class PointSystem extends ModuleBase {
                     return false;
                 }
 
-                addPoints(user, 2);
                 activeDuels.add(new Duel(user, opponent, bet));
                 chatbot.sendMessage(user.getName() + " \u2694\ufe0f wyzywa \uD83D\uDEE1 " + opponent.getName() + " na pojedynek!"
                         + "\n\u23f3 Czekam 60s. na odpowiedź przeciwnika. (y/n)");
@@ -380,9 +390,7 @@ public class PointSystem extends ModuleBase {
         int msgLength = messageBody.length();
         db.refresh(user);
 
-        if (isCmd(message, chatbot.getRegexes()) || isCmd(message, REGEXES)) {
-            addPoints(user, 1);
-            System.out.println("(+1)(CMD)");
+        if (isCmd(message, REGEXES)) {
             return;
         } else {
         }
@@ -401,19 +409,18 @@ public class PointSystem extends ModuleBase {
 
         if (msgLength <= 20 && msgLength >= 3) {
             user.addPoints(1);
-            System.out.println("(+1) " + user.getName());
+            System.out.println(user.getName() + "(+1)");
 
         } else if (msgLength <= 60 && msgLength > 20) {
             user.addPoints(2);
-            System.out.println("(+2) " + user.getName());
-
+            System.out.println(user.getName() + "(+2)");
         } else if (msgLength <= 100 && msgLength > 60) {
             user.addPoints(5);
-            System.out.println("(+5) " + user.getName());
+            System.out.println(user.getName() + "(+5)");
 
         } else if (msgLength > 100 && msgLength < 300) {
             user.addPoints(10);
-            System.out.println("(+10) " + user.getName());
+            System.out.println(user.getName() + "(+10)");
         }
 
         timeoutRelease = getTimeoutRelease();
@@ -440,22 +447,6 @@ public class PointSystem extends ModuleBase {
 
     private void addMessage(User user, Message message) {
 //        db.addMessage()
-    }
-
-    private void addPoints(User user, int points) {
-        user.addPoints(points);
-        user.addMessagecount(1);
-        db.update(user);
-        System.out.println("(+1) " + user.getName());
-    }
-
-    private void addMessageCount(User user) {
-        user.addMessagecount(1);
-        System.out.print("(+1 MSG) " + user.getName().substring(0, 8) + "\n");
-    }
-
-    private void update(User user) {
-        db.update(user);
     }
 
     private boolean isUser(Message message) {

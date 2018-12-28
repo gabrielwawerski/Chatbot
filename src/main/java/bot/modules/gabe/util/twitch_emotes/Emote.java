@@ -236,7 +236,7 @@ public class Emote {
     }
 
     private Emote(String command, String url, Src src) {
-        this.command = command;
+        this.command = "(.*) " + command;
         this.url = url;
         this.src = src;
     }
