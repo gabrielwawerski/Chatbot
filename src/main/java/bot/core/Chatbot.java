@@ -98,7 +98,7 @@ public class Chatbot {
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
-        modules.put("ATG", new ATG(this, List.of("atg"), "\u274c CLOSED")); // ✅ OPEN ❌ CLOSED
+        modules.put("ATG", new ATG(this, List.of("atg"), "\u2705 OPEN")); // ✅ OPEN ❌ CLOSED
         // !atg taxi numery telefonow
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));

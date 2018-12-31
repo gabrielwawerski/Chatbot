@@ -79,7 +79,14 @@ public class TwitchEmotes extends ModuleBase {
 
     @Override
     public String getMatch(Message message) {
-        return findMatch(message, getCmds());
+        String messageBody = message.getMessage();
+
+        for (String command : getCommands()) {
+            if (messageBody.contains(command)) {
+                return command;
+            }
+        }
+        return "";
     }
 
     @Override

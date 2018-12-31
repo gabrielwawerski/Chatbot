@@ -39,7 +39,6 @@ public abstract class ModuleBase implements Module {
      * {@link #process(Message)} */
     protected String match;
     protected boolean online;
-
     protected DBConnection db;
 
     public ModuleBase(Chatbot chatbot) {

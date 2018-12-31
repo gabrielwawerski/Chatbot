@@ -64,14 +64,12 @@ public class PointSystem extends ModuleBase {
     private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
     private final String VABANK_REGEX = Utils.TO_REGEX("vabank");
     // TODO add these
-//    private final String RO_REGEX = Utils.TO_REGEX("ro (\\d+)");
-//    private final String RO_ALL_REGEX = Utils.TO_REGEX("ro all");
 
     // BET
-    private final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)"); // TODO
-//    private final String DUEL_REGEX = Utils.TO_REGEX("duel (\\d+) (.*)"); // TODO
+    private final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)");
+    private final String DUEL_ALL_REGEX = Utils.TO_REGEX("duel (\\d+)");
 
-    private final String DUEL_ALL_REGEX = Utils.TO_REGEX("duel (\\d+)"); // TODO
+    private final String GIVE_REGEX = Utils.TO_REGEX("give (.*) (\\d+)");
 
     private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
     private final String DUEL_ACCEPT_SIMPLE = "y";
@@ -167,7 +165,9 @@ public class PointSystem extends ModuleBase {
         User user = null;
 
         if (!isNull(message) && !isNull(message.getSender())) {
-            user = getUser(message);
+            if ((user = getUser(message)) == null) {
+                return false;
+            }
         } else {
             return false;
         }
@@ -362,7 +362,8 @@ public class PointSystem extends ModuleBase {
                 }
 
                 activeDuels.add(new Duel(user, opponent, bet));
-                chatbot.sendMessage(user.getName() + " \u2694\ufe0f wyzywa \uD83D\uDEE1 " + opponent.getName() + " na pojedynek!"
+                chatbot.sendMessage(user.getName() + " \u2694\ufe0f wyzywa \uD83D\uDEE1 "
+                        + opponent.getName() + " na pojedynek o " + bet * 2 + " pkt!"
                         + "\n\u23f3 Czekam 60s. na odpowiedź przeciwnika. (y/n)");
                 return true;
             }

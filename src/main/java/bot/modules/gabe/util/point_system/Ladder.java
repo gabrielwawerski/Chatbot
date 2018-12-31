@@ -14,7 +14,7 @@ class Ladder {
         users.sort(Comparator.comparing(User::getPoints));
 
         ladder.append("Ranking wg punktów:\n")
-                .append("=============")
+                .append("=================")
                 .append("\n");
 
         for (int i = 0; i < users.size(); i++) {
@@ -76,7 +76,7 @@ class Ladder {
         users.sort(Comparator.comparing(User::getMessageCount));
 
         ladder.append("Ranking wg wiadomości:\n")
-                .append("=============")
+                .append("=================")
                 .append("\n");
         for (int i = 0; i < users.size(); i++) {
             User currUser = users.get(users.size() - 1 - i);
