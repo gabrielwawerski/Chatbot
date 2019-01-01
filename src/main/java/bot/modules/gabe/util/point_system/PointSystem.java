@@ -72,8 +72,8 @@ public class PointSystem extends ModuleBase {
     private final String GIVE_REGEX = Utils.TO_REGEX("give (.*) (\\d+)");
 
     private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
-    private final String DUEL_ACCEPT_SIMPLE = "y";
     private final String DUEL_REFUSE_REGEX = Utils.TO_REGEX("n");
+    private final String DUEL_ACCEPT_SIMPLE = "y";
     private final String DUEL_REFUSE_SIMPLE = "n";
 
     private final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet >(\\d+) (.*)");
@@ -192,15 +192,15 @@ public class PointSystem extends ModuleBase {
                 db.refresh(duel.getWinner());
                 db.refresh(duel.getLoser());
                 if (!duel.resolve()) {
-                    chatbot.sendMessage("\u274c Podczas oczekiwania  Pojedynek anulowany.");
+                    chatbot.sendMessage("\u274c Pojedynek anulowany.");
                 }
 
                 duel.getWinner().addPoints(duel.getBet() * 2);
                 // TODO winner steals points up to 0 if loser doesn't have enough
                 duel.getLoser().subPoints(duel.getBet() * 2);
-
                 update(duel.getWinner());
                 update(duel.getLoser());
+
                 chatbot.sendMessage(duel.getInitiator().getName() + " \uD83C\uDD9A " + duel.getOpponent().getName()
                         + "\n"
                         + duel.getWinner().getName() + " wygrywa pojedynek i zdobywa " + duel.getBet() * 2 + " pkt! (" + duel.getWinner().getPoints() + ")"

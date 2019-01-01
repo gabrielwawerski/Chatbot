@@ -132,7 +132,7 @@ public abstract class ModuleBase implements Module {
 
     protected boolean isOr(String... regexes) {
         for (String regex : regexes) {
-            if (match.equals(regex)) {
+            if (match.equalsIgnoreCase(regex)) {
                 return true;
             }
         }
@@ -140,17 +140,17 @@ public abstract class ModuleBase implements Module {
     }
 
     protected boolean isOr(String REGEX, String OTHER) {
-        return match.equals(REGEX) || match.equals(OTHER);
+        return match.equalsIgnoreCase(REGEX) || match.equalsIgnoreCase(OTHER);
     }
 
     protected boolean is(String REGEX) {
-        return match.equals(REGEX);
+        return match.equalsIgnoreCase(REGEX);
     }
 
     protected boolean isCmd(Message message, List<String> REGEXES) {
         String messageBody = message.getMessage();
         for (String regex : REGEXES) {
-            if (messageBody.equals(regex)) {
+            if (messageBody.equalsIgnoreCase(regex)) {
                 return true;
             }
         }
@@ -159,7 +159,7 @@ public abstract class ModuleBase implements Module {
 
     protected boolean is(List<String> REGEXES) {
         for (String regex : REGEXES) {
-            if (match.equals(regex)) {
+            if (match.equalsIgnoreCase(regex)) {
                 return true;
             }
         }
