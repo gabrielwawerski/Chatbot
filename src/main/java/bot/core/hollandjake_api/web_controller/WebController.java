@@ -72,13 +72,11 @@ public class WebController {
         wait = new WebDriverWait(webDriver, TIMEOUT_IN_SEC);
         messageWait = new WebDriverWait(webDriver, chatbot.getMessageTimeout().getSeconds(), chatbot.getRefreshRate());
 
-        // TODO sposób na mniej crashy (hopefully)
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
             System.out.println("Coś poszło nie tak:");
             this.dbConnection.close();
             e.printStackTrace();
 
-//             TODO test - EXPERIMENTAL!!!!!!!!!!!
 //            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
             if (PcionBot.SILENT_MODE || PcionBot.LOG_MODE) {
                 quit(false);
@@ -222,7 +220,8 @@ public class WebController {
     public Message getLatestMessage() {
         WebElement messageElement = webDriver.findElement(By.xpath(MESSAGES_OTHERS_RECENT));
         //Move mouse over message so messenger marks it as read
-        keyboard.moveToElement(messageElement);
+//        keyboard.moveToElement(messageElement);
+        selectInputBox();
         return new Message(messageElement, chatbot);
     }
 

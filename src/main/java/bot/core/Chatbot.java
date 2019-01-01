@@ -243,7 +243,7 @@ public class Chatbot {
 
         log("PcionBot successfully loaded, running from config:\n"
                 + "max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.\n"
-                + "poll sleep time:" + getRefreshRate() + " millis.");
+                + "poll sleep time: " + getRefreshRate() + " millis.");
 
         System.out.println("----------------");
         System.out.println("PcionBot " + version);
@@ -286,6 +286,10 @@ public class Chatbot {
             try {
                 webController.waitForNewMessage();
                 Message newMessage = webController.getLatestMessage();
+
+                if (newMessage == null) {
+                    continue;
+                }
 
                 if (newMessage.getMessage().length() > 1000) {
                     System.out.println("Message too long, ignoring...");
