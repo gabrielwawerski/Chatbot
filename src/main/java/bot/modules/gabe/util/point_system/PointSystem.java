@@ -454,18 +454,18 @@ public class PointSystem extends ModuleBase {
 
         if (msgLength <= 20 && msgLength >= 3) {
             user.addPoints(Utils.POINTS_MAX_CHAR_20);
-            System.out.println(user.getName() + "(+1)");
+            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_20 + ")");
 
         } else if (msgLength <= 60 && msgLength > 20) {
             user.addPoints(Utils.POINTS_MAX_CHAR_60);
-            System.out.println(user.getName() + "(+2)");
+            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_60 + ")");
         } else if (msgLength <= 100 && msgLength > 60) {
             user.addPoints(Utils.POINTS_MAX_CHAR_100);
-            System.out.println(user.getName() + "(+5)");
+            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_100 + ")");
 
         } else if (msgLength > 100 && msgLength < 300) {
             user.addPoints(Utils.POINTS_MAX_CHAR_300);
-            System.out.println(user.getName() + "(+10)");
+            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_300 + ")");
         }
 
         timeoutRelease = getTimeoutRelease();

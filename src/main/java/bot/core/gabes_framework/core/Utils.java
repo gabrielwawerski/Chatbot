@@ -28,9 +28,9 @@ public final class Utils {
     private static final Random RANDOM = new Random();
 
     //region points
-    public static final int POINTS_MAX_CHAR_20 = 1;
-    public static final int POINTS_MAX_CHAR_60 = 2;
-    public static final int POINTS_MAX_CHAR_100 = 5;
+    public static final int POINTS_MAX_CHAR_20 = 2;
+    public static final int POINTS_MAX_CHAR_60 = 4;
+    public static final int POINTS_MAX_CHAR_100 = 7;
     public static final int POINTS_MAX_CHAR_300 = 10;
 
     public static final int POINTS_URL = 2;

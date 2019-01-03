@@ -69,8 +69,6 @@ public class Chatbot {
         modules.put("Commands", new Commands(this, List.of("cmd", "help")));
         modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
-        modules.put("Sylwester", new Sylwester(this,
-                "piosenki.txt"));
         modules.put("FeatureSuggest", new FeatureSuggest(this,
                 "sugestie.txt"));
 
@@ -110,7 +108,7 @@ public class Chatbot {
 
     public List<String> getRegexes() {
         List<String> list
-                = List.of("cmd", "help", "info", "staty", "uptime", "echo", "shutdown", "sylwester", "suggest",
+                = List.of("cmd", "help", "info", "staty", "uptime", "echo", "shutdown", "suggest",
                 "pomysl", "suggest (.*)", "pomysl (.*)", "torrent (.*)", "t (.*)", "wiki (.*)", "youtube (.*)",
                 "yt (.*)", "google (.*)", "g (.*)", "g help", "g leze", "google", "g", "allegro (.*)", "pyszne help",
                 "pyszne", "pyszne (.*)", "pyszne haianh", "pyszne hai-anh", "pyszne hai", "pyszne mariano",
@@ -181,7 +179,6 @@ public class Chatbot {
 
         loadModules();
 
-        log("Finished loading modules.");
         log("Echo modules...");
 
         totalModules = modules.size();
@@ -241,9 +238,9 @@ public class Chatbot {
         log("Messages loaded.");
         log("Finished loading.");
 
-        log("PcionBot successfully loaded, running from config:\n"
+        log("PcionBot online.\nRunning from config:\n"
                 + "max wait time  : " + WebController.TIMEOUT_IN_SEC + " sec.\n"
-                + "poll sleep time: " + getRefreshRate() + " millis.");
+                + "poll sleep time: " + getRefreshRate() + " ms.");
 
         System.out.println("----------------");
         System.out.println("PcionBot " + version);
@@ -334,7 +331,7 @@ public class Chatbot {
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " ONLINE \u2705\n"
                 + "Załadowane moduły:  " + NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
-                + "\n" + NEW_BUTTON_EMOJI + "!duel <pkt> <imie nazwisko>"
+                + "\n" + NEW_BUTTON_EMOJI + "!give <uzytkownik> <pkt>"
                 + "\n" + NEW_BUTTON_EMOJI + "!wtf"
                 + "\n" + NEW_BUTTON_EMOJI + "!wykop !wy"
                 + "\n" + NEW_BUTTON_EMOJI + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
