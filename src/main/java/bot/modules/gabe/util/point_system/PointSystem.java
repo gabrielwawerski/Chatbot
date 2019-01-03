@@ -23,11 +23,16 @@ import static java.util.Objects.isNull;
 /**
  * Main class for anything that uses points.
  *
- * <p><p>v0.2
+ * <p><p>v2.0
  * <br>- added !ladder
  * <br>- added !roulette, !roulette all
+ * <p>v2.1
+ * <br>- added !msg
+ * <p>v2.2
+ * <br>- added !give command which enables transferring points between users
  *
- * @version 0.2
+ * // TODO w chuj uproscic cala klase
+ * @version 2.2
  * @since v0.3201
  */
 public class PointSystem extends ModuleBase {
@@ -69,7 +74,6 @@ public class PointSystem extends ModuleBase {
     private final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)");
     private final String DUEL_ALL_REGEX = Utils.TO_REGEX("duel (\\d+)");
 
-    private final String GIVE_REGEX = Utils.TO_REGEX("give (.*) (\\d+)");
 
     private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
     private final String DUEL_REFUSE_REGEX = Utils.TO_REGEX("n");
@@ -80,6 +84,8 @@ public class PointSystem extends ModuleBase {
     private final String BET_FEWER_THAN_REGEX = Utils.TO_REGEX("bet <(\\d+) (.*)");
 
     // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
+    private final String GIVE_REGEX = Utils.TO_REGEX("give (.*) (\\d+)");
+
     private final List<String> REGEXES;
 
     public PointSystem(Chatbot chatbot) {
@@ -98,7 +104,8 @@ public class PointSystem extends ModuleBase {
                 DUEL_ACCEPT_REGEX,
                 DUEL_ACCEPT_SIMPLE,
                 DUEL_REFUSE_REGEX,
-                DUEL_REFUSE_SIMPLE);
+                DUEL_REFUSE_SIMPLE,
+                GIVE_REGEX);
 
         now = new Date().getTime();
         timeoutRelease = getTimeoutRelease();;
@@ -222,6 +229,31 @@ public class PointSystem extends ModuleBase {
             chatbot.sendMessage(msg);
             return true;
 
+        } else if (is(GIVE_REGEX)) {
+            Matcher matcher = Pattern.compile(GIVE_REGEX).matcher(message.getMessage());
+            if (matcher.find()) {
+                String desiredUser = matcher.group(1);
+                int points = Integer.parseInt(matcher.group(2));
+                User receiver;
+
+                if (desiredUser.charAt(0) == '@') {
+                    desiredUser = desiredUser.substring(1);
+                }
+
+                if (points > user.getPoints()) {
+                    chatbot.sendMessage("Nie masz tylu punktów!");
+                    return false;
+                } else {
+                    receiver = getUser(desiredUser);
+                    user.subPoints(points);
+                    receiver.addPoints(points);
+                    update(user);
+                    update(receiver);
+                    chatbot.sendMessage(user.getName() + " właśnie przekazał " + points + " pkt. użytkownikowi " + receiver.getName() + "!");
+                    return true;
+                }
+            }
+            return false;
         } else if (isOr(STATS_ANY_REGEX, STATS_MENTION_ANY_REGEX)) {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
             if (matcher.find()) {
@@ -276,12 +308,10 @@ public class PointSystem extends ModuleBase {
                     chatbot.sendMessage("Nieprawidłowa komenda.");
                     update(user);
                     return false;
-
                 } else if (user.getPoints() == 0) {
                     chatbot.sendMessage("Nie masz punktów.");
                     update(user);
                     return false;
-
                 } else if (desiredRoll > user.getPoints()) {
                     chatbot.sendMessage("Nie masz tylu punktów! (" + user.getPoints() + ")");
                     update(user);
@@ -297,7 +327,7 @@ public class PointSystem extends ModuleBase {
                     if (user.getPoints() - desiredRoll >= 0) {
                         user.subPoints(desiredRoll);
                         update(user);
-                        chatbot.sendMessage(Util.GET_RANDOM(FAILED_ROULETTE_NORMAL) + desiredRoll + " pkt. (" + user.getPoints() + ")");
+                        chatbot.sendMessage("\u2b07\ufe0f " + Util.GET_RANDOM(FAILED_ROULETTE_NORMAL) + desiredRoll + " pkt. (" + user.getPoints() + ")");
                         return true;
                     } else {
                         user.setPoints(0);
@@ -451,7 +481,7 @@ public class PointSystem extends ModuleBase {
 
     private boolean isUser(Message message) {
         for (User user : users) {
-            if (message.getSender().getName().equals(user.getName())) {
+            if (message.getSender().getName().equalsIgnoreCase(user.getName())) {
                 return true;
             }
         }
@@ -460,7 +490,7 @@ public class PointSystem extends ModuleBase {
 
     private User getUser(String str) {
         for (User user : users) {
-            if (user.getName().equals(str)) {
+            if (user.getName().equalsIgnoreCase(str)) {
                 return user;
             }
         }
@@ -471,7 +501,7 @@ public class PointSystem extends ModuleBase {
         String sender = message.getSender().getName();
 
         for (User user : users) {
-            if (user.getName().equals(sender)) {
+            if (user.getName().equalsIgnoreCase(sender)) {
                 return user;
             }
         }
