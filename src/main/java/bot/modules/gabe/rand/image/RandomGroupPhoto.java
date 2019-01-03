@@ -85,7 +85,7 @@ public class RandomGroupPhoto extends ModuleBase {
                 chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
                 return false;
             } else {
-                addPoints(message, 1);
+                addPoints(message, Utils.POINTS_RANDOMGROUPPHOTO_REGEX);
                 chatbot.sendImageUrlWaitToLoad(currentFileUrl);
                 currentFileUrl = uploadFile();
                 timeoutRelease = new Date().getTime() + TIMEOUT;

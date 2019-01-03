@@ -40,7 +40,7 @@ public class RandomKwejk extends ModuleBase {
         updateMatch(message);
 
         if (isOr(KWEJK_REGEX, KW_REGEX)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_RANDOMKWEJK_REGEX);
             chatbot.sendImageUrlWaitToLoad(currentImageUrl);
             getNextMeme();
             return true;

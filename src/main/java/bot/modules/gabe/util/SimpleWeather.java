@@ -1,6 +1,7 @@
 package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.gabes_framework.util.simple.SimpleModule;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -44,7 +45,7 @@ public class SimpleWeather extends SimpleModule {
         for (String command : regexList) {
             if (match.equals(command)) {
                 try {
-                    addPoints(message, 2);
+                    addPoints(message, Utils.POINTS_SIMPLEWEATHER_REGEX);
                     Weather weatherResponse = new Weather();
                     StringBuilder builder = new StringBuilder();
                     hourlyRequester = openWeatherManager.getHourlyForecastRequester();

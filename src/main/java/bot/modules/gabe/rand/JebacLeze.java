@@ -26,10 +26,11 @@ public class JebacLeze extends RandomResourceModule {
 
     public JebacLeze(Chatbot chatbot, String resourceName) {
         super(chatbot, resourceName);
-        regexes = List.of(JEBAC_LEZE, JEBACLEZE, JEBACLEZE_REGEX,
-                LEZE_REGEX, JEBAC_LEZE_REGEX, JEBAC_REGEX,
-                JEBAiC_LEZE, JEBAiC_iLEZE, JEBAiC_LEZE_REGEX,
-                JEBAiC_iLEZE_REGEX);
+        regexes = List.of(JEBAC_LEZE, JEBACLEZE,
+                JEBAiC_LEZE, JEBAiC_iLEZE,
+                JEBACLEZE_REGEX, JEBAiC_LEZE_REGEX,
+                JEBAiC_iLEZE_REGEX, LEZE_REGEX,
+                JEBAC_LEZE_REGEX, JEBAC_REGEX);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class JebacLeze extends RandomResourceModule {
         updateMatch(message);
 
         if (is(regexes)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_JEBACLEZE_REGEX);
             chatbot.sendMessage(getRandomMessage());
             return true;
         }

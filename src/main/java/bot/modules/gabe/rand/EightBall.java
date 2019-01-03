@@ -1,6 +1,7 @@
 package bot.modules.gabe.rand;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.helper.interfaces.Util;
@@ -36,7 +37,7 @@ public class EightBall extends RandomResourceModule {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
 
             if (matcher.find() && !matcher.group(1).isEmpty()) {
-                addPoints(message, 1);
+                addPoints(message, Utils.POINTS_EIGHTBALL_REGEX);
                 chatbot.sendMessage(Util.GET_RANDOM(resourceContent));
             } else {
                 throw new MalformedCommandException();

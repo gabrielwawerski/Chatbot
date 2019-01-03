@@ -67,7 +67,7 @@ public class PyszneSearch extends SearchModuleBase {
         String messageBody = message.getMessage();
 
         if (match.equals(HELP_REGEX) || match.equals(HELP_2_REGEX) ) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_PYSZNE_INFO_REGEX);
             chatbot.sendMessage(
                     "Restauracje dla kodu pocztowego."
                             + "\nAT THE GABES:"
@@ -81,17 +81,17 @@ public class PyszneSearch extends SearchModuleBase {
             return true;
 
         } else if (match.equals(MARIANO_ITALIANO_1) || match.equals(MARIANO_ITALIANO_2)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/pizzeria-mariano-italiano");
             return true;
         } else if (match.equals(HAIANH_REGEX_1) || match.equals(HAIANH_REGEX_2)
                 || match.equals(HAIANH_REGEX_3)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/bar-azjatycki-hai-ahn");
             return true;
         } else if (match.equals(FOOTBALL_PIZZA_1) || match.equals(FOOTBALL_PIZZA_2)
                 || match.equals(FOOTBALL_PIZZA_3)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/football-pizza");
             return true;
         }
@@ -102,7 +102,7 @@ public class PyszneSearch extends SearchModuleBase {
 
             if (isMatchFound()) {
                 if (analyzeMessage(messageBody)) {
-                    addPoints(message, 1);
+                    addPoints(message, Utils.POINTS_PYSZNE_REGEX);
                     chatbot.sendMessage(getFinalMessage(messageBody));
                     return true;
                 } else {

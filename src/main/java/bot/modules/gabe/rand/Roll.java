@@ -32,14 +32,14 @@ public class Roll extends ModuleBase {
         updateMatch(message);
 
         if (match.equals(ROLL_PRESET_REGEX)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_ROLL_SIMPLE_REGEX);
             int roll = roll(MIN_ROLL, MAX_ROLL);
             chatbot.sendMessage("Twój los: " + Integer.toString(roll));
             return true;
         } else if (match.equals(ROLL_REGEX)) {
             Matcher matcher = Pattern.compile(ROLL_REGEX).matcher(message.getMessage());
             if (matcher.find()) {
-                addPoints(message, 1);
+                addPoints(message, Utils.POINTS_ROLL_REGEX);
                 try {
                     int roll = roll(MIN_ROLL, Integer.parseInt(matcher.group(1)));
                     chatbot.sendMessage("Twój los: " + roll + " " + Utils.HOURGLASS_EMOJI);

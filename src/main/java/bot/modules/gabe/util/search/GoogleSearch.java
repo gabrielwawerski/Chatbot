@@ -36,7 +36,7 @@ public class GoogleSearch extends SearchModuleBase {
         String msg = message.getMessage();
 
         if (match.equals(GOOGLE_REGEX) || match.equals(G_REGEX) || match.equals(G_HELP_REGEX)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_GOOGLESEARCH_INFO_REGEX);
             chatbot.sendMessage("Jak coś przetłumaczyć?\n"
                     + "!g <tekst> translate *język*\n"
                     + "Języki: en, pl, ...");
@@ -57,7 +57,7 @@ public class GoogleSearch extends SearchModuleBase {
             updateMatcher(msg);
 
             if (isMatchFound()) {
-                addPoints(message, 2);
+                addPoints(message, Utils.POINTS_GOOGLESEARCH_REGEX);
                 chatbot.sendMessage(getFinalMessage(msg));
                 return true;
             }

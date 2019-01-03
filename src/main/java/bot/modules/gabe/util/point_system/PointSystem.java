@@ -1,7 +1,6 @@
 package bot.modules.gabe.util.point_system;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
 import bot.core.gabes_framework.core.Utils;
 import bot.core.gabes_framework.util.ModuleBase;
@@ -15,6 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static bot.core.gabes_framework.core.Utils.POINTS_URL;
 import static java.util.Objects.isNull;
 
 // TODO make more modular. If some module wants to use the system, find a way to pass it
@@ -57,6 +57,7 @@ public class PointSystem extends ModuleBase {
 
     // STATS
     private final String STATS_REGEX = Utils.TO_REGEX("stats");
+    private final String ME_REGEX = Utils.TO_REGEX("me");
     private final String STATS_ANY_REGEX = Utils.TO_REGEX("stats (.*)");
     private final String STATS_MENTION_ANY_REGEX = Utils.TO_REGEX("stats @(.*)");
 
@@ -93,6 +94,7 @@ public class PointSystem extends ModuleBase {
         initialize();
         REGEXES = List.of(
                 STATS_REGEX,
+                ME_REGEX,
                 STATS_ANY_REGEX,
                 STATS_MENTION_ANY_REGEX,
                 LADDER_REGEX,
@@ -114,9 +116,9 @@ public class PointSystem extends ModuleBase {
     private void initialize() {
         users = new ArrayList<>();
         activeDuels = new ArrayList<>();
-        System.out.println("Fetching users from database...");
+        System.out.print("\nFetching users from database... ");
         users = db.getUsers();
-        System.out.println("Users fetched.");
+        System.out.println("done.\n");
     }
 
     private String getLadderMsg() {
@@ -222,14 +224,21 @@ public class PointSystem extends ModuleBase {
         addMessageCount(user);
         // stat check, we don't add points here
         if (is(STATS_REGEX)) {
+            db.refresh(user);
             String msg = user.getName()
                     + "\nPunkty: " + user.getPoints()
                     + "\nWiadomości: " + user.getMessageCount();
-            update(user);
             chatbot.sendMessage(msg);
             return true;
 
-        } else if (is(GIVE_REGEX)) {
+        } else if (is(ME_REGEX)) {
+            db.refresh(user);
+            String msg = "Twoje punkty: " + user.getPoints();
+            chatbot.sendMessage(msg);
+            return true;
+        }
+
+        else if (is(GIVE_REGEX)) {
             Matcher matcher = Pattern.compile(GIVE_REGEX).matcher(message.getMessage());
             if (matcher.find()) {
                 String desiredUser = matcher.group(1);
@@ -253,7 +262,7 @@ public class PointSystem extends ModuleBase {
                     receiver.addPoints(points);
                     update(user);
                     update(receiver);
-                    chatbot.sendMessage("\uD83D\uDE2E " + user.getName() + " właśnie podarował️ "
+                    chatbot.sendMessage("\uD83D\uDE2E " + user.getName() + " właśnie przekazał "
                             + points + " pkt. \u27a1\ufe0f użytkownikowi " + receiver.getName() + "!");
                     return true;
                 }
@@ -431,30 +440,31 @@ public class PointSystem extends ModuleBase {
         }
 
         if (message.getImage() != null) {
-            user.addPoints(2);
-            System.out.println(user.getName() + "(+2)(IMG)");
+            user.addPoints(Utils.POINTS_IMAGE);
+            System.out.println(user.getName() + "(" + Utils.POINTS_IMAGE + ")(IMG)");
         }
 
         // if message is a url, no points are added.
         if (messageBody.contains("http") || messageBody.contains("www.") || messageBody.contains("//")) {
+            user.addPoints(POINTS_URL);
             addMessageCount(user);
             update(user);
             return;
         }
 
         if (msgLength <= 20 && msgLength >= 3) {
-            user.addPoints(1);
+            user.addPoints(Utils.POINTS_MAX_CHAR_20);
             System.out.println(user.getName() + "(+1)");
 
         } else if (msgLength <= 60 && msgLength > 20) {
-            user.addPoints(2);
+            user.addPoints(Utils.POINTS_MAX_CHAR_60);
             System.out.println(user.getName() + "(+2)");
         } else if (msgLength <= 100 && msgLength > 60) {
-            user.addPoints(5);
+            user.addPoints(Utils.POINTS_MAX_CHAR_100);
             System.out.println(user.getName() + "(+5)");
 
         } else if (msgLength > 100 && msgLength < 300) {
-            user.addPoints(10);
+            user.addPoints(Utils.POINTS_MAX_CHAR_300);
             System.out.println(user.getName() + "(+10)");
         }
 

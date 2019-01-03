@@ -31,19 +31,19 @@ public class Info extends ModuleBase {
         updateMatch(message);
 
         if (is(INFO_REGEX)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_INFO_REGEX);
             chatbot.sendMessage(getInfo());
             return true;
         } else if (is(STATS_REGEX)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_STATS_REGEX);
             chatbot.sendMessage(getStats());
             return true;
         } else if (is(UPTIME_REGEX)) {
-            addPoints(message, 1);
+            addPoints(message, Utils.POINTS_UPTIME_REGEX);
             chatbot.sendMessage(getUptime());
             return true;
         } else if (is(ECHO_COMMAND)) {
-            addPoints(message, 0);
+            addPoints(message, Utils.POINTS_ECHO_REGEX);
             chatbot.sendMessage(getMinifiedStats());
             return true;
         }

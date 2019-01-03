@@ -70,7 +70,7 @@ public class TwitchEmotes extends ModuleBase {
 
         for (Emote current : EMOTES) {
             if (match.equals(current.value())) {
-                addPoints(message, 1);
+                addPoints(message, Utils.POINTS_TWITCHEMOTES_REGEX);
                 return sendEmoteMsg(current);
             }
         }

@@ -1,6 +1,7 @@
 package bot.modules.gabe.image;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.util.simple.SimpleModule;
@@ -24,6 +25,7 @@ public class KartaPulapka extends SimpleModule {
 
         for (String command : regexList) {
             if (match.equals(command)) {
+                addPoints(message, Utils.POINTS_KARTAPULAPKA_REGEX);
                 chatbot.sendImageWithMessage(kartaPulapka, ""); // FIXME URL Z SERWERA!!!!!!!!!
                 return true;
             }
