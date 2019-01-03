@@ -170,13 +170,6 @@ public class WebController {
         inputBox.sendKeys(Keys.CONTROL + "a");
         inputBox.sendKeys(Keys.DELETE);
 
-        // if above call isn't performing well, uncomment to make sure attachment loads
-//        try {
-//            Thread.sleep(100);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         inputBox.sendKeys(Keys.ENTER);
 
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(MESSAGES_MINE),
@@ -220,7 +213,6 @@ public class WebController {
     public Message getLatestMessage() {
         WebElement messageElement = webDriver.findElement(By.xpath(MESSAGES_OTHERS_RECENT));
         //Move mouse over message so messenger marks it as read
-//        keyboard.moveToElement(messageElement);
         selectInputBox();
         return new Message(messageElement, chatbot);
     }

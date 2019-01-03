@@ -8,6 +8,9 @@ import bot.core.hollandjake_api.helper.misc.Message;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class TranslateAPI extends ModuleBase {
     private final String EN_PL_TR_REGEX = Utils.TO_REGEX("tr (.*)");
     private final String EN_PL_TRANSLATE_REGEX = Utils.TO_REGEX("translate (.*)");
