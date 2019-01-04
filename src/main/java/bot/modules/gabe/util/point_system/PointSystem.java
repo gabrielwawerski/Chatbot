@@ -73,7 +73,7 @@ public class PointSystem extends ModuleBase {
 
     // BET
     private final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)");
-    private final String DUEL_ALL_REGEX = Utils.TO_REGEX("duel (\\d+)");
+    private final String DUEL_ANY_REGEX = Utils.TO_REGEX("duel (\\d+)");
 
 
     private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
@@ -114,58 +114,11 @@ public class PointSystem extends ModuleBase {
     }
 
     private void initialize() {
-        users = new ArrayList<>();
+        users = new ArrayList<>(10);
         activeDuels = new ArrayList<>();
         System.out.print("\nFetching users from database... ");
         users = db.getUsers();
         System.out.println("done.\n");
-    }
-
-    private String getLadderMsg() {
-        System.out.println("Generating ladder...");
-        Ladder ladder = Ladder.getLadder(users);
-        System.out.println("Ladder generated");
-        return ladder.toString();
-    }
-
-    private Duel getDuelIfActive(User user) {
-        long now = new Date().getTime();
-
-        for (Duel duel : activeDuels) {
-            if (now - duel.getTimeStarted() > 60000) {
-                return null;
-            }
-
-            if (duel.getOpponent() == user) {
-                return duel;
-            }
-        }
-        return null;
-    }
-
-    private void updateDuels() {
-        if (!activeDuels.isEmpty()) {
-            long now = new Date().getTime();
-            for (int i = 0; i < activeDuels.size(); i++) {
-                if (now - activeDuels.get(i).getTimeStarted() > 60000) {
-                    activeDuels.remove(i);
-                }
-            }
-        } else {
-            return;
-        }
-    }
-
-    public void logOnly(Message message) {
-        refreshUsers();
-        User user = null;
-
-        if (!isNull(message) && !isNull(message.getSender())) {
-            user = getUser(message);
-            processMessage(user, message);
-        } else {
-            return;
-        }
     }
 
     @Override
@@ -262,8 +215,8 @@ public class PointSystem extends ModuleBase {
                     chatbot.sendMessage("Nie masz punktów.");
                     return false;
                 } else if (points < 0) {
-                  chatbot.sendMessage("No ale jak");
-                  return false;
+                    chatbot.sendMessage("No ale jak");
+                    return false;
                 } else {
                     user.subPoints(points);
                     receiver.addPoints(points);
@@ -420,13 +373,13 @@ public class PointSystem extends ModuleBase {
             }
             return false;
         }
-//        else if (is(DUEL_ANY_REGEX)) {
-//            Matcher matcher = Pattern.compile(DUEL_REGEX).matcher(message.getMessage());
-//            if (matcher.find()) {
-//                int bet = Integer.parseInt(matcher.group(1));
-//            }
-//
-//        }
+        else if (is(DUEL_ANY_REGEX)) {
+            Matcher matcher = Pattern.compile(DUEL_REGEX).matcher(message.getMessage());
+            if (matcher.find()) {
+                int bet = Integer.parseInt(matcher.group(1));
+            }
+
+        }
         return false;
     }
 
@@ -478,6 +431,53 @@ public class PointSystem extends ModuleBase {
         timeoutRelease = getTimeoutRelease();
         addMessageCount(user);
         update(user);
+    }
+
+    private String getLadderMsg() {
+        System.out.println("Generating ladder...");
+        Ladder ladder = Ladder.getLadder(users);
+        System.out.println("Ladder generated");
+        return ladder.toString();
+    }
+
+    private Duel getDuelIfActive(User user) {
+        long now = new Date().getTime();
+
+        for (Duel duel : activeDuels) {
+            if (now - duel.getTimeStarted() > 60000) {
+                return null;
+            }
+
+            if (duel.getOpponent() == user) {
+                return duel;
+            }
+        }
+        return null;
+    }
+
+    private void updateDuels() {
+        if (!activeDuels.isEmpty()) {
+            long now = new Date().getTime();
+            for (int i = 0; i < activeDuels.size(); i++) {
+                if (now - activeDuels.get(i).getTimeStarted() > 60000) {
+                    activeDuels.remove(i);
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    public void logOnly(Message message) {
+        refreshUsers();
+        User user = null;
+
+        if (!isNull(message) && !isNull(message.getSender())) {
+            user = getUser(message);
+            processMessage(user, message);
+        } else {
+            return;
+        }
     }
 
     private long getTimeoutRelease() {
