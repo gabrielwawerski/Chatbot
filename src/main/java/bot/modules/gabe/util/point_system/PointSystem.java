@@ -252,11 +252,18 @@ public class PointSystem extends ModuleBase {
                 if ((receiver = getUser(desiredUser)) == null) {
                     chatbot.sendMessage("Brak użytkownika w bazie danych.");
                     return false;
-                }
-
-                if (points > user.getPoints()) {
+                } else if (receiver.getName() == user.getName())  {
+                    chatbot.sendMessage("Nie da rady.");
+                    return false;
+                } else if (points > user.getPoints()) {
                     chatbot.sendMessage("Nie masz tylu punktów!");
                     return false;
+                } else if (user.getPoints() == 0) {
+                    chatbot.sendMessage("Nie masz punktów.");
+                    return false;
+                } else if (points < 0) {
+                  chatbot.sendMessage("No ale jak");
+                  return false;
                 } else {
                     user.subPoints(points);
                     receiver.addPoints(points);
