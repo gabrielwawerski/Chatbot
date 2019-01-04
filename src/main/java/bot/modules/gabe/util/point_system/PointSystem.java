@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.Utils.POINTS_URL;
+import static bot.core.gabes_framework.core.Utils.POINT_SYSTEM_URL;
 import static java.util.Objects.isNull;
 
 // TODO make more modular. If some module wants to use the system, find a way to pass it
@@ -440,13 +440,13 @@ public class PointSystem extends ModuleBase {
         }
 
         if (message.getImage() != null) {
-            user.addPoints(Utils.POINTS_IMAGE);
-            System.out.println(user.getName() + "(" + Utils.POINTS_IMAGE + ")(IMG)");
+            user.addPoints(Utils.POINT_SYSTEM_IMAGE);
+            System.out.println(user.getName() + "(" + Utils.POINT_SYSTEM_IMAGE + ")(IMG)");
         }
 
         // if message is a url, no points are added.
         if (messageBody.contains("http") || messageBody.contains("www.") || messageBody.contains("//")) {
-            user.addPoints(POINTS_URL);
+            user.addPoints(POINT_SYSTEM_URL);
             addMessageCount(user);
             update(user);
             return;

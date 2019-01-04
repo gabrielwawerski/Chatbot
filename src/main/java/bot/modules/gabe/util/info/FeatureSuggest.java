@@ -44,7 +44,7 @@ public class FeatureSuggest extends SaveResourceModule {
                 }
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage(Utils.PUSHPIN_EMOJI + " Dzięki!");
+                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
                 return true;
             }
         } else if (match.equals(POMYSL_ANY)) {
@@ -54,7 +54,7 @@ public class FeatureSuggest extends SaveResourceModule {
                 String msg = message.getMessage().substring(8);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage(Utils.PUSHPIN_EMOJI + " Dzięki!");
+                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
 //                 TODO random responses each time
 //                List<String> randomRespones;
 //                String uruchamiamAi = "Dzięki! \uD83D\uDD2C";

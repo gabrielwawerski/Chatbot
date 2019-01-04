@@ -28,13 +28,13 @@ public final class Utils {
     private static final Random RANDOM = new Random();
 
     //region points
-    public static final int POINTS_MAX_CHAR_20 = 2;
-    public static final int POINTS_MAX_CHAR_60 = 4;
-    public static final int POINTS_MAX_CHAR_100 = 7;
+    public static final int POINTS_MAX_CHAR_20 = 1;
+    public static final int POINTS_MAX_CHAR_60 = 2;
+    public static final int POINTS_MAX_CHAR_100 = 5;
     public static final int POINTS_MAX_CHAR_300 = 10;
 
-    public static final int POINTS_URL = 2;
-    public static final int POINTS_IMAGE = 3;
+    public static final int POINT_SYSTEM_URL = 2;
+    public static final int POINT_SYSTEM_IMAGE = 3;
 
     public static final int POINTS_B_INFO_REGEX = 1;
     public static final int POINTS_B_REGEX = 2;
@@ -60,55 +60,55 @@ public final class Utils {
 
     public static final int POINTS_MULTITORRENTSEARCH_REGEX = 3;
 
+    public static final int POINTS_SIMPLESEARCHMODULE_REGEX = 2;
+
     public static final int POINTS_PYSZNE_INFO_REGEX = 1;
     public static final int POINTS_PYSZNE_RESTAURANT = 1;
     public static final int POINTS_PYSZNE_REGEX = 2;
 
-    public static final int POINTS_RANDOMGROUPPHOTO_REGEX = 5;
+    public static final int POINTS_RANDOMGROUPPHOTO_REGEX = 3;
     public static final int POINTS_RANDOMKWEJK_REGEX = 3;
-    public static final int POINTS_RANDOMWTF_REGEX = 4;
-
-    public static final int POINTS_ROLL_SIMPLE_REGEX = 2;
-    public static final int POINTS_ROLL_REGEX = 3;
-
-    public static final int POINTS_SIMPLESEARCHMODULE_REGEX = 2;
+    public static final int POINTS_RANDOMWTF_REGEX = 3;
 
     public static final int POINTS_SIMPLEWEATHER_REGEX = 5;
 
     public static final int POINTS_TWITCHEMOTES_REGEX = 3;
+
+    public static final int POINTS_ROLL_SIMPLE_REGEX = 2;
+    public static final int POINTS_ROLL_REGEX = 3;
     //endregion
 
     //region emojis
-    /** 🆕 */
-    public static final String NEW_BUTTON_EMOJI = "\uD83C\uDD95";
-    /** 🆗 */
-    public static final String OK_BUTTON_EMOJI = "\uD83C\uDD97";
-    /** 📌 */
-    public static final String PUSHPIN_EMOJI = "\uD83D\uDCCC";
-    /** 🔀 */
-    public static final String SHUFFLE_EMOJI = "\uD83D\uDD00";
-    /** ℹ️ */
-    public static final String INFO_EMOJI = "\u2139\ufe0f";
-    /** 🔎️ */
-    public static final String MAGNIFYING_EMOJI = "\uD83D\uDD0E";
     /** ⏳ */
-    public static final String HOURGLASS_EMOJI = "\u23f3";
+    public static final String EMOJI_HOURGLASS = "\u23f3";
     /** ❗ */
-    public static final String EXCL_MARK_RED_EMOJI = "\u2757";
+    public static final String EMOJI_EXCL_MARK_RED = "\u2757";
     /** ❕ */
-    public static final String EXCL_MARK_WHITE_EMOJI = "\u2755";
+    public static final String EMOJI_EXCL_MARK_WHITE = "\u2755";
+    /** 🆕 */
+    public static final String EMOJI_NEW_BUTTON = "\uD83C\uDD95";
+    /** 🆗 */
+    public static final String EMOJI_OK_BUTTON = "\uD83C\uDD97";
+    /** 📌 */
+    public static final String EMOJI_PUSHPIN = "\uD83D\uDCCC";
+    /** 🔀 */
+    public static final String EMOJI_SHUFFLE = "\uD83D\uDD00";
+    /** ℹ️ */
+    public static final String EMOJI_INFO = "\u2139\ufe0f";
+    /** 🔎️ */
+    public static final String EMOJI_MAGNIFYING = "\uD83D\uDD0E";
     /** 🍿 */
-    public static final String POPCORN_EMOJI = "\uD83C\uDF7F";
-    /** */
-    public static final String RIGHT_ARRW_EMOJI = "\u27a1\ufe0f";
-    /** */
-    public static final String PENCIL_EMOJI = "\u270f\ufe0f";
-    /** */
-    public static final String THINK_EMOJI = "\uD83E\uDD14";
-    /** */
-    public static final String CAMERA_EMOJI = "\uD83D\uDCF8";
-    /** */
-    public static final String B_EMOJI = "\uD83C\uDD71️";
+    public static final String EMOJI_POPCORN = "\uD83C\uDF7F";
+    /** ➡️ */
+    public static final String EMOJI_RIGHT_ARRW = "\u27a1\ufe0f";
+    /** ✏️ */
+    public static final String EMOJI_PENCIL = "\u270f\ufe0f";
+    /** 🤔 */
+    public static final String EMOJI_THINK = "\uD83E\uDD14";
+    /** 📸 */
+    public static final String EMOJI_CAMERA = "\uD83D\uDCF8";
+    /** 🅱 */
+    public static final String EMOJI_B = "\uD83C\uDD71️";
     //endregion
 
     public static String getMatch(Message message, List<String> regexList) {

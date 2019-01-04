@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.Utils.B_EMOJI;
+import static bot.core.gabes_framework.core.Utils.EMOJI_B;
 
 public class B extends ModuleBase {
     private final String B_ANY_REGEX = Utils.TO_REGEX("b (.*)");
@@ -37,10 +37,10 @@ public class B extends ModuleBase {
                 temp = matcher.group(1);
                 for (int i = 0; i < messageBody.length(); i++) {
                     temp = temp
-                            .replaceAll("B", B_EMOJI)
-                            .replaceAll("b", B_EMOJI)
-                            .replaceAll("P", B_EMOJI)
-                            .replaceAll("p", B_EMOJI);
+                            .replaceAll("B", EMOJI_B)
+                            .replaceAll("b", EMOJI_B)
+                            .replaceAll("P", EMOJI_B)
+                            .replaceAll("p", EMOJI_B);
                 }
                 chatbot.sendMessage(temp);
                 return true;

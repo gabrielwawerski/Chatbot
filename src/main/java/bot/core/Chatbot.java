@@ -7,7 +7,6 @@ import bot.modules.gabe.util.info.FeatureSuggest;
 import bot.modules.gabe.util.info.Shutdown;
 import bot.modules.gabe.util.point_system.PointSystem;
 import bot.modules.gabe.rand.Roll;
-import bot.modules.gabe.util.info.Sylwester;
 import bot.modules.gabe.image.KartaPulapka;
 import bot.modules.gabe.rand.EightBall;
 import bot.modules.gabe.util.search.*;
@@ -330,14 +329,14 @@ public class Chatbot {
 
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " ONLINE \u2705\n"
-                + "Załadowane moduły:  " + NEW_BUTTON_EMOJI + " " + modulesOnline + "/" + totalModules
-                + "\n" + NEW_BUTTON_EMOJI + "!give <uzytkownik> <pkt>"
-                + "\n" + NEW_BUTTON_EMOJI + "!wtf"
-                + "\n" + NEW_BUTTON_EMOJI + "!wykop !wy"
-                + "\n" + NEW_BUTTON_EMOJI + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
+                + "Załadowane moduły:  " + EMOJI_NEW_BUTTON + " " + modulesOnline + "/" + totalModules
+                + "\n" + EMOJI_NEW_BUTTON + "!give <uzytkownik> <pkt>"
+                + "\n" + EMOJI_NEW_BUTTON + "!wtf"
+                + "\n" + EMOJI_NEW_BUTTON + "!wykop !wy"
+                + "\n" + EMOJI_NEW_BUTTON + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
                 + "\n"
                 + "\n" + "\uD83D\uDCAF Od teraz !r wysyła tylko URL, ze zdjęciem jako załącznik!"
-                + "\n" + Utils.INFO_EMOJI + " Wpisz !cmd aby zobaczyć listę komend.");
+                + "\n" + Utils.EMOJI_INFO + " Wpisz !cmd aby zobaczyć listę komend.");
     }
 
     public String getModulesOnline() {

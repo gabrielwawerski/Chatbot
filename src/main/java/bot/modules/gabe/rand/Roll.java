@@ -42,7 +42,7 @@ public class Roll extends ModuleBase {
                 addPoints(message, Utils.POINTS_ROLL_REGEX);
                 try {
                     int roll = roll(MIN_ROLL, Integer.parseInt(matcher.group(1)));
-                    chatbot.sendMessage("Twój los: " + roll + " " + Utils.HOURGLASS_EMOJI);
+                    chatbot.sendMessage("Twój los: " + roll + " " + Utils.EMOJI_HOURGLASS);
                 } catch (NumberFormatException e) {
                     chatbot.sendMessage("Coś poszło nie tak... gdzie jest moje gabe?");
                     throw new MalformedCommandException();
