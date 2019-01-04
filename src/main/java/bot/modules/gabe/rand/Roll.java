@@ -46,7 +46,6 @@ public class Roll extends ModuleBase {
                 } catch (NumberFormatException e) {
                     chatbot.sendMessage("Coś poszło nie tak... gdzie jest moje gabe?");
                     throw new MalformedCommandException();
-//                    e.printStackTrace();
                 }
             } else {
                 chatbot.sendMessage("Coś poszło nie tak... gdzie jest moje gabe?");

@@ -15,14 +15,14 @@ import java.util.regex.Pattern;
 
 /**
  * Base class for all my modules. It is the absolute minimum needed for a module to work properly. Extend from it,
- * if you need to have an absolute control over your module functionality.<p>
- *
+ * if you need to have an absolute control over your module functionality.
+ * <p>
  * If you're considering writing a module that will respond with a single message when specified trigger regex/es are
- * matched, see my library class: {@link SingleMessageModule}<p>
- *
+ * matched, see my library class: {@link SingleMessageModule}
+ * <p>
  * If you want to write a module that responds with random message if any of the trigger regex/es are detected,
- * see {@link MessageModule}<p>
- *
+ * see {@link MessageModule}
+ * <p>
  * If you want to createUser a module that will respond with random message, taken from a .txt file, take a look at
  * {@link RandomResourceModule}
  *
@@ -31,15 +31,17 @@ import java.util.regex.Pattern;
  */
 public abstract class ModuleBase implements Module {
     protected final Chatbot chatbot;
-    /** Needs to be assigned to the latest received {@code message}'s value. After overriding {@link Module#process(Message)}
+    protected DBConnection db;
+    /**
+     * Needs to be assigned to the latest received {@code message}'s value. After overriding {@link Module#process(Message)}
      * method, call {@link #updateMatch(Message)} inside it first, which takes care of the assigning for you. Although
      * this field and it's corresponding method are not necessary, they aim to make writing modules less error prone.<br>
      * If you don't want to use them, use the snippet below at the beginning of your overriden {@code process} method.
      * <pre>{@code match = getMatch(message)}</pre> See also {@link #updateMatch(Message)}, {@link #getMatch(Message)},
-     * {@link #process(Message)} */
+     * {@link #process(Message)}
+     */
     protected String match;
-    protected boolean online;
-    protected DBConnection db;
+    private boolean online;
 
     public ModuleBase(Chatbot chatbot) {
         this.chatbot = chatbot;
@@ -73,14 +75,14 @@ public abstract class ModuleBase implements Module {
         user.addMessagecount(1);
 
         db.update(user);
-        System.out.println(user.getName() + "(+" + points +") " );
+        System.out.println(user.getName() + "(+" + points + ")");
         System.out.print(user.getName().substring(0, 5) + "(MSG+)" + "\n");
     }
 
     protected void addMessageCount(User user) {
         user.addMessagecount(1);
         db.update(user);
-        System.out.print(user.getName().substring(0, 5) + "(MSG)" + "\n");
+        System.out.print(user.getName().substring(0, 5) + "(MSG+)" + "\n");
     }
 
     protected void update(User user) {
@@ -94,7 +96,7 @@ public abstract class ModuleBase implements Module {
         user.addPoints(points);
         user.addMessagecount(1);
         db.update(user);
-        System.out.println(user.getName() + "(+" + points +") ");
+        System.out.println(user.getName() + "(+" + points + ")");
     }
 
     protected void setStatus(boolean online) {

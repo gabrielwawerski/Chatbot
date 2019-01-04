@@ -88,6 +88,11 @@ public class RandomGroupPhoto extends ModuleBase {
                 addPoints(message, Utils.POINTS_RANDOMGROUPPHOTO_REGEX);
                 chatbot.sendImageUrlWaitToLoad(currentFileUrl);
                 currentFileUrl = uploadFile();
+
+                if (currentFileUrl == null) {
+                    chatbot.sendMessage("Wystąpił błąd. Spróbuj ponownie");
+                    return false;
+                }
                 timeoutRelease = new Date().getTime() + TIMEOUT;
                 return true;
             }
