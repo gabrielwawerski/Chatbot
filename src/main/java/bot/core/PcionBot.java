@@ -1,28 +1,18 @@
 package bot.core;
 
 public class PcionBot extends Chatbot {
-    // to do:
-    // !restart
-    // !info
-    //      wersja pcionbot
-    //      uptime
-    //      top 3 ladder
-    // !stats:
-    //     statystyki (unikatowe wiadomosci, etc.)
-    //     top 3 ladder
-
-    public static final String imgurSecret = "c7aae8e29fbd8eff21c742648125667abdcd579e";
-    public static final String imgurId = "ba98f25f45c4ac9";
-    public static final String yandexApiKey = "trnsl.1.1.20181218T072725Z.426c8360e3601118.ce0d07709d8e3173e8005a6e6e266a65090c04fe";
-    public static final String newsapiKey = "14a5cf3980a1408e9a4e78b002c2b3cd";
+    public static final String IMGUR_SECRET = "c7aae8e29fbd8eff21c742648125667abdcd579e";
+    public static final String IMGUR_ID = "ba98f25f45c4ac9";
+    public static final String YANDEX_API_KEY = "trnsl.1.1.20181218T072725Z.426c8360e3601118.ce0d07709d8e3173e8005a6e6e266a65090c04fe";
+    public static final String NEWS_API_KEY = "14a5cf3980a1408e9a4e78b002c2b3cd";
 
     public static final String GRUPKA_ID = "1158615960915822";
     public static final String GRZAGSOFT_ID = "1506449319457834";
     public static final String PATRO_ID = "2275107775897967";
     public static final String MOONSHINERS_ID = "1771365296265469";
-    public static final String PCIONBOT_ID = "2388008607938113";
+    public static final String PCIONBOT_MAIN_ID = "2388008607938113";
 
-    public static final boolean SILENT_MODE = false; // does not greet itself or send msg when exception occurs
+    public static final boolean SILENT_MODE = true; // does not greet itself or send msg when exception occurs
     public static final boolean LOG_MODE = false;    // doesn't respond to commands - updates database only.
 
     public static void main(String[] args) {
@@ -36,7 +26,7 @@ public class PcionBot extends Chatbot {
         boolean headless = false;
         boolean maximized = true;
 
-        pcionbot = new Chatbot(username, password, PCIONBOT_ID,
+        pcionbot = new Chatbot(username, password, PCIONBOT_MAIN_ID,
                 debugMode,
                 SILENT_MODE,
                 debugMessages,
