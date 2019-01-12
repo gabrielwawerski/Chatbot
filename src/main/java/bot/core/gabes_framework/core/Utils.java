@@ -149,4 +149,17 @@ public final class Utils {
     static <T> T getRandom(List<T> list) {
         return list.get(RANDOM.nextInt(list.size()));
     }
+
+    public static boolean fiftyFifty() {
+        int min = 0;
+        int max = 1;
+        int range = (max - min) + 1;
+
+        int result = (int) (Math.random() * range) + min;
+        if (result == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
