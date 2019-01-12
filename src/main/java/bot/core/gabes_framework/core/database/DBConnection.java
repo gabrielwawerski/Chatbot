@@ -16,11 +16,14 @@ public class DBConnection {
 
     private static DBConnection instance;
 
+    public static User BOT;
+
     private static final String URL = "jdbc:hsqldb:file:E:/IntelliJProjekty/libGDX/Chatbot/PcionDB/PcionDatabase";
 
     public static DBConnection getInstance() {
         if (instance == null) {
             instance = new DBConnection();
+            BOT = getBot();
         }
         return instance;
     }
@@ -75,6 +78,15 @@ public class DBConnection {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static User getBot() {
+        for (User user : userDao) {
+            if (user.getName().equalsIgnoreCase("Ez El")) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public User getUser(Message message) {
