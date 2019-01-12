@@ -178,10 +178,16 @@ public class WebController {
 
     public void sendMentionMessage(String USER, String message) {
         WebElement inputBox = selectInputBox();
-        setClipboardContents("@ " + USER);
-        inputBox.sendKeys(Keys.ENTER, Keys.SPACE);
-        setClipboardContents(message);
-        inputBox.sendKeys(PASTE, Keys.ENTER);
+        setClipboardContents("@" + USER);
+        inputBox.sendKeys(PASTE);
+        try {
+            chatbot.wait(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        inputBox.sendKeys(Keys.ENTER);
+//        setClipboardContents(message);
+//        inputBox.sendKeys(PASTE, Keys.ENTER);
     }
 
     protected void setClipboardContents(String contents) {

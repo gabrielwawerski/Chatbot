@@ -81,8 +81,8 @@ public class PointSystem extends ModuleBase {
     private final String DUEL_ACCEPT_SIMPLE = "y";
     private final String DUEL_REFUSE_SIMPLE = "n";
 
-    private final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet >(\\d+) (.*)");
-    private final String BET_FEWER_THAN_REGEX = Utils.TO_REGEX("bet <(\\d+) (.*)");
+    private final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet (.*) >(\\d+)");
+    private final String BET_FEWER_THAN_REGEX = Utils.TO_REGEX("bet (.*) <(\\d+)");
 
     // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
     private final String GIVE_REGEX = Utils.TO_REGEX("give (.*) (\\d+)");
@@ -141,40 +141,46 @@ public class PointSystem extends ModuleBase {
             return true;
         }
 
+        // handle duel
         updateDuels();
         Duel duel = null;
-        if ((duel = getDuelIfActive(user)) != null) {
-            System.out.println("found active duel!");
+        if ((duel = getDuel(user)) != null) {
+            // if duel refused
             if (isOr(DUEL_REFUSE_REGEX, DUEL_REFUSE_SIMPLE)) {
-                chatbot.sendMessage(user.getName()
-                        + " odrzucił wyzwanie " + duel.getInitiator().getName());
+                chatbot.sendMessage(user.getName() + " odrzucił wyzwanie " + duel.getInitiator().getName());
                 activeDuels.remove(duel);
                 return true;
-            } else if (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
-                db.refresh(duel.getWinner());
-                db.refresh(duel.getLoser());
+            }
+
+            // duel accepted, process
+            else if (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
+                db.refresh(duel.getWinner(), duel.getLoser());
+
                 if (!duel.resolve()) {
                     chatbot.sendMessage("\u274c Pojedynek anulowany.");
                 }
 
-                duel.getWinner().addPoints(duel.getBet() * 2);
-                // TODO winner steals points up to 0 if loser doesn't have enough
-                duel.getLoser().subPoints(duel.getBet() * 2);
-                update(duel.getWinner());
-                update(duel.getLoser());
+                int betPoints = duel.getBet() * 2;
+
+                // transfer points to winner
+                if (betPoints <= duel.getLoser().getPoints() * 2) {
+                    Utils.transfer(duel.getWinner(), duel.getLoser(), duel.getBet() * 2);
+                } else {
+                    Utils.transfer(duel.getWinner(), duel.getLoser(), duel.getLoser().getPoints());
+                    betPoints = duel.getLoser().getPoints();
+                }
 
                 chatbot.sendMessage(duel.getInitiator().getName() + " \uD83C\uDD9A " + duel.getOpponent().getName()
                         + "\n"
-                        + duel.getWinner().getName() + " wygrywa pojedynek i zdobywa " + duel.getBet() * 2 + " pkt! (" + duel.getWinner().getPoints() + ")"
+                        + duel.getWinner().getName() + " wygrywa pojedynek i zdobywa " + betPoints + " pkt! (" + duel.getWinner().getPoints() + ")"
                         + "\n"
-                        + duel.getLoser().getName() + " traci " + duel.getBet() * 2 + " pkt. (" + duel.getLoser().getPoints() + ")");
+                        + duel.getLoser().getName() + " traci " + betPoints + " pkt. (" + duel.getLoser().getPoints() + ")");
 
                 activeDuels.remove(duel);
                 return true;
             }
         }
 
-        addMessageCount(user);
         // stat check, we don't add points here
         if (is(STATS_REGEX)) {
             db.refresh(user);
@@ -214,7 +220,7 @@ public class PointSystem extends ModuleBase {
                 } else if (user.getPoints() == 0) {
                     chatbot.sendMessage("Nie masz punktów.");
                     return false;
-                } else if (points < 0) {
+                } else if (points < 0 || points == 0) {
                     chatbot.sendMessage("No ale jak");
                     return false;
                 } else {
@@ -222,7 +228,7 @@ public class PointSystem extends ModuleBase {
                     receiver.addPoints(points);
                     update(user);
                     update(receiver);
-                    chatbot.sendMessage("\uD83D\uDE2E " + user.getName() + " właśnie przekazał "
+                    chatbot.sendMessage(user.getName() + " właśnie przekazał "
                             + points + " pkt. \u27a1\ufe0f użytkownikowi " + receiver.getName() + "!");
                     return true;
                 }
@@ -292,7 +298,7 @@ public class PointSystem extends ModuleBase {
                     return false;
                 }
 
-                if (getFiftyFifty()) {
+                if (Utils.fiftyFifty()) {
                     user.addPoints(desiredRoll);
                     update(user);
                     chatbot.sendMessage("\uD83D\uDE4F Wygrałeś " + desiredRoll + " pkt! (" + user.getPoints() + ")");
@@ -321,7 +327,7 @@ public class PointSystem extends ModuleBase {
                 return true;
             }
 
-            if (getFiftyFifty()) {
+            if (Utils.fiftyFifty()) {
                 user.addPoints(userPoints);
                 update(user);
                 chatbot.sendMessage("\uD83D\uDCAF Wygrałeś " + userPoints + " pkt! (" + user.getPoints() + ")");
@@ -358,6 +364,14 @@ public class PointSystem extends ModuleBase {
                         chatbot.sendMessage("\u274c Przeciwnik nie ma tylu punktów! (" + opponent.getPoints() + ")");
                         update(user);
                         return false;
+                    } else if (opponent.getName() == user.getName()) {
+                        chatbot.sendMessage("Nie możesz wyzwać siebie na pojedynek!");
+                        update(user);
+                        return false;
+                    } else if (bet == 0) {
+                        chatbot.sendMessage("Nie da rady.");
+                        update(user);
+                        return false;
                     }
                 } else {
                     chatbot.sendMessage("\u274c Użytkownik nie istnieje w bazie danych.");
@@ -366,19 +380,38 @@ public class PointSystem extends ModuleBase {
                 }
 
                 activeDuels.add(new Duel(user, opponent, bet));
-                chatbot.sendMessage(user.getName() + " \u2694\ufe0f wyzywa \uD83D\uDEE1 "
-                        + opponent.getName() + " na pojedynek o " + bet * 2 + " pkt!"
-                        + "\n\u23f3 Czekam 60s. na odpowiedź przeciwnika. (y/n)");
+                String msg = user.getName() + " \u2694\ufe0f wyzywa \uD83D\uDEE1 "
+                        + opponent.getName() + " na pojedynek o " + bet * 2
+                        + " pkt!\nCzekam 60s. na odpowiedź przeciwnika. \n\u23f3 (y/n)";
+                chatbot.sendMessage(msg);
                 return true;
             }
             return false;
         }
         else if (is(DUEL_ANY_REGEX)) {
-            Matcher matcher = Pattern.compile(DUEL_REGEX).matcher(message.getMessage());
-            if (matcher.find()) {
-                int bet = Integer.parseInt(matcher.group(1));
-            }
+            Matcher matcher = Pattern.compile(DUEL_ANY_REGEX).matcher(message.getMessage());
+        }
 
+        else if (is(BET_MORE_THAN_REGEX)) {
+            Matcher matcher = Pattern.compile(BET_MORE_THAN_REGEX).matcher(message.getMessage());
+
+            if (matcher.find()) {
+                User opponent = getUser(matcher.group(1));
+                int bet = Integer.parseInt(matcher.group(2));
+
+                if (opponent == null) {
+                    chatbot.sendMessage("Brak użytkownika w bazie danych");
+                    return false;
+                }
+
+                if (bet > user.getPoints()) {
+                    chatbot.sendMessage("Nie masz tylu punktów!");
+                    return false;
+                }
+
+
+
+            }
         }
         return false;
     }
@@ -390,7 +423,6 @@ public class PointSystem extends ModuleBase {
             update(user);
             return;
         }
-        long now = new Date().getTime();
         String messageBody = message.getMessage();
         int msgLength = messageBody.length();
         db.refresh(user);
@@ -401,7 +433,7 @@ public class PointSystem extends ModuleBase {
 
         if (message.getImage() != null) {
             user.addPoints(Utils.POINT_SYSTEM_IMAGE);
-            System.out.println(user.getName() + "(" + Utils.POINT_SYSTEM_IMAGE + ")(IMG)");
+            System.out.println(user.getName() + "(+" + Utils.POINT_SYSTEM_IMAGE + ")(IMG)");
         }
 
         // if message is a url, no points are added.
@@ -419,6 +451,7 @@ public class PointSystem extends ModuleBase {
         } else if (msgLength <= 60 && msgLength > 20) {
             user.addPoints(Utils.POINTS_MAX_CHAR_60);
             System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_60 + ")");
+
         } else if (msgLength <= 100 && msgLength > 60) {
             user.addPoints(Utils.POINTS_MAX_CHAR_100);
             System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_100 + ")");
@@ -440,7 +473,10 @@ public class PointSystem extends ModuleBase {
         return ladder.toString();
     }
 
-    private Duel getDuelIfActive(User user) {
+    /**
+     * Returns duel instance based on the argument, null if no duel is found with given user.
+     */
+    private Duel getDuel(User user) {
         long now = new Date().getTime();
 
         for (Duel duel : activeDuels) {
@@ -484,19 +520,6 @@ public class PointSystem extends ModuleBase {
         return new Date().getTime() + TIMEOUT;
     }
 
-    public static boolean getFiftyFifty() {
-        int min = 0;
-        int max = 1;
-        int range = (max - min) + 1;
-
-        int result = (int) (Math.random() * range) + min;
-        if (result == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private void addMessage(User user, Message message) {
 //        db.addMessage()
     }
@@ -531,7 +554,7 @@ public class PointSystem extends ModuleBase {
     }
 
     private void refreshUsers() {
-        db.refreshAll(users);
+        db.refresh();
     }
 
     @Override

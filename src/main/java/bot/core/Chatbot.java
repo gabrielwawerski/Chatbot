@@ -30,6 +30,7 @@ import bot.modules.gabe.util.info.ATG;
 import bot.modules.gabe.rand.image.RandomWTF;
 import bot.modules.gabe.rand.image.RandomWykop;
 import bot.modules.gabe.work_in_progress.JakDojade;
+import bot.modules.gabe.work_in_progress.Mention;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -103,6 +104,7 @@ public class Chatbot {
         pointSystem = new PointSystem(this);
         modules.put("PointSystem", pointSystem);
         modules.put("JakDojade", new JakDojade(this));
+        modules.put("Mention", new Mention(this));
     }
 
     public List<String> getRegexes() {
@@ -340,26 +342,19 @@ public class Chatbot {
     }
 
     public String getModulesOnline() {
-        String string = Integer.toString(modulesOnline) + " / " + Integer.toString(totalModules);
-        return string;
+        return Integer.toString(modulesOnline) + " / " + Integer.toString(totalModules);
     }
 
     public void sendMessage(String message) {
         webController.sendMessage(message);
     }
 
-    public void sendImageWithMessage(String image, String message) {
-        webController.sendImageWithMessage(image, message);
-    }
-
     public void sendImageWithMessage(Image image, String message) {
         webController.sendMessage(new Message(me, message, image));
     }
 
-    public void sendImage(Image image) {
-    }
-
-    public void sendLoadedImage(Image image) {
+    public void sendMentionMessage(String user, String message) {
+        webController.sendMentionMessage(user, message);
     }
 
     public void sendImageFromURLWithMessage(String url, String message) {

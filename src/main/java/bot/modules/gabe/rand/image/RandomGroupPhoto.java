@@ -37,7 +37,7 @@ public class RandomGroupPhoto extends ModuleBase {
 
     private long now;
     private long timeoutRelease;
-    private static final long TIMEOUT = 6000;
+    private static final long TIMEOUT = 0;
 
     // napisać algorytm (ai?) z pomoca  regexow
 

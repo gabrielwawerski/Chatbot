@@ -142,6 +142,9 @@ public final class Utils {
         return returnList;
     }
 
+    /**
+     * Transfers points from one user to another. Refreshes first and updates db when processed.
+     */
     public static void transfer(User targetUser, User from, int points) {
         db.refresh(targetUser, from);
         targetUser.addPoints(points);
