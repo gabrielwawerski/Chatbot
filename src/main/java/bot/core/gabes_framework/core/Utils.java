@@ -1,6 +1,8 @@
 package bot.core.gabes_framework.core;
 
 import bot.core.gabes_framework.core.Users;
+import bot.core.gabes_framework.core.database.DBConnection;
+import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
 
@@ -26,6 +28,8 @@ public final class Utils {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss");
     public static final DateTimeFormatter ERROR_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
     private static final Random RANDOM = new Random();
+
+    private static DBConnection db = DBConnection.getInstance();
 
     //region points
     public static final int POINTS_MAX_CHAR_20 = 1;
@@ -136,6 +140,13 @@ public final class Utils {
             returnList.add(TO_COMMAND(x));
         }
         return returnList;
+    }
+
+    public static void transfer(User targetUser, User from, int points) {
+        db.refresh(targetUser, from);
+        targetUser.addPoints(points);
+        from.subPoints(points);
+        db.update(targetUser, from);
     }
 
     public static String TO_REGEX(String arg) {
