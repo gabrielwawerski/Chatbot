@@ -8,7 +8,6 @@ import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DBConnection {
     private static ConnectionSource connectionSource;
@@ -50,11 +49,31 @@ public class DBConnection {
         }
     }
 
+    public void refresh(User... users) {
+        for (User user : users) {
+            try {
+                userDao.refresh(user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void update(User user) {
         try {
             userDao.update(user);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void update(User... users) {
+        for (User user : users) {
+            try {
+                userDao.update(user);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -73,26 +92,6 @@ public class DBConnection {
             users.add(user);
         }
         return users;
-    }
-
-    public void refreshAll(ArrayList<User> users) {
-        for (User user : users) {
-            try {
-                userDao.refresh(user);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void updateAll(List<User> users) {
-        for (User user : users) {
-            try {
-                userDao.update(user);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void createUser(User user) {
