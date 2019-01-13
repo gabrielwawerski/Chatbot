@@ -360,7 +360,7 @@ public class Chatbot {
     }
 
     public void sendImageUrlWaitToLoad(String imageUrl) {
-        webController.sendImageUrlWaitForLoad(imageUrl);
+        webController.sendImageUrlWaitToLoad(imageUrl);
     }
 
     public String appendRootPath(String path) {

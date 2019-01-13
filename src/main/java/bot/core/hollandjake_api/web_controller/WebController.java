@@ -152,7 +152,7 @@ public class WebController {
      * @author hollandjake
      * @author gabrielwawerski
      */
-    public void sendImageUrlWaitForLoad(String imageUrl) {
+    public void sendImageUrlWaitToLoad(String imageUrl) {
         int myMessageCount = getNumberOfMyMessagesDisplayed();
         WebElement inputBox = selectInputBox();
 
