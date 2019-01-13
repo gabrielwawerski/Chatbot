@@ -5,7 +5,7 @@ import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.helper.interfaces.Util;
-import bot.core.gabes_framework.helper.resource.RandomResourceModule;
+import bot.core.gabes_framework.framework.resource.RandomResourceModule;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,9 +20,9 @@ import java.util.regex.Pattern;
  *
  */
 public class EightBall extends RandomResourceModule {
-    private final String EIGHT_BALL_REGEX = Util.ACTIONIFY("8ball (.*)");
-    private final String ASK_REGEX = Util.ACTIONIFY("ask (.*)");
-    private final String EIGHT_REGEX = Util.ACTIONIFY("8 (.*)");
+    private static final String EIGHT_BALL_REGEX = Util.ACTIONIFY("8ball (.*)");
+    private static final String ASK_REGEX = Util.ACTIONIFY("ask (.*)");
+    private static final String EIGHT_REGEX = Util.ACTIONIFY("8 (.*)");
 
     public EightBall(Chatbot chatbot, String resourceName) {
         super(chatbot, resourceName);

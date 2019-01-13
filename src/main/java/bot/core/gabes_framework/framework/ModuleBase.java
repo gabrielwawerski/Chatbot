@@ -1,4 +1,4 @@
-package bot.core.gabes_framework.helper;
+package bot.core.gabes_framework.framework;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.util.Utils;
@@ -6,15 +6,12 @@ import bot.core.gabes_framework.core.api.Module;
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.message.MessageModule;
-import bot.core.gabes_framework.helper.resource.RandomResourceModule;
-import bot.core.gabes_framework.helper.message.SingleMessageModule;
+import bot.core.gabes_framework.framework.resource.RandomResourceModule;
+import bot.core.gabes_framework.framework.message.SingleMessageModule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -22,12 +19,9 @@ import java.util.stream.Collectors;
  * if you need to have an absolute control over your module functionality.
  * <p>
  * If you're considering writing a module that will respond with a single message when specified trigger regex/es are
- * matched, see my library class: {@link SingleMessageModule}
+ * matched, see {@link SingleMessageModule}
  * <p>
- * If you want to write a module that responds with random message if any of the trigger regex/es are detected,
- * see {@link MessageModule}
- * <p>
- * If you want to createUser a module that will respond with random message taken from a .txt file, take a look at
+ * If you want to create a module that will respond with random message, taken from a .txt file, take a look at
  * {@link RandomResourceModule}
  *
  * @version 1.0
@@ -49,6 +43,7 @@ public abstract class ModuleBase implements Module {
      * See also {@linkplain #updateMatch(Message)}, {@linkplain #getMatch(Message)}, {@linkplain #process(Message)}
      */
     protected String match;
+    /** make sure to make your regexes static, otherwise null pointer exception will be thrown. */
     protected List<String> regexes;
 
     private boolean online;
@@ -56,18 +51,14 @@ public abstract class ModuleBase implements Module {
     public ModuleBase(Chatbot chatbot) {
         this.chatbot = chatbot;
         regexes = setRegexes();
-        setOnline();
         db = DBConnection.getInstance();
+        setOnline();
     }
 
     /**
      * Should return a list with all regexes you have added. Use {@code List.of("regex1", "regex2")}.
      */
     protected abstract List<String> setRegexes();
-
-    protected List<String> getMappedRegexes(String... regexes) {
-        return Arrays.stream(regexes).map(Utils::TO_REGEX).collect(Collectors.toList());
-    }
 
     public List<String> getRegexes() {
         return regexes;
@@ -89,13 +80,17 @@ public abstract class ModuleBase implements Module {
         System.out.println(msg);
     }
 
+    public void updateMatch(Message message) {
+        match = getMatch(message);
+    }
+
     /**
      * Use when you don't have desired user reference. You simply pass received message and amount of points to add.
      * Also adds 1 messageCount.
      */
     // TODO remove adding message count here!
     protected void addPoints(Message message, int points) {
-        User user = null;
+        User user;
         if ((user = db.getUser(message)) == null) {
             throw new IllegalArgumentException("User not found. FIXME!");
         } else {
@@ -121,57 +116,20 @@ public abstract class ModuleBase implements Module {
         System.out.print(user.getName().substring(0, 5) + "(MSG+)" + "\n");
     }
 
-    protected void update(User user) {
-        db.update(user);
-    }
-
-    /**
-     * Use when you have a reference to desired user. Also adds 1 messageCount.
-     */
-    protected void addPoints(User user, int points) {
-        user.addPoints(points);
-        user.addMessagecount(1);
-        db.update(user);
-        System.out.println(user.getName() + "(+" + points + ")");
-    }
-
-    protected void setStatus(boolean online) {
-        this.online = online;
-    }
-
-    protected void setOnline() {
-        online = true;
-    }
-
-    protected void setOffline() {
-        online = false;
-    }
-
-    /**
-     * Convenience method. Either make it a first call inside overriden {@link #process(Message)} method, or use the
-     * snippet below:<pre>{@code match = getMatch(message)}</pre><p><p>
-     *
-     * <b>WARNING!<br></b>
-     * Make sure that you have <b>implemented</b> {@link Module#getMatch(Message)} <b>before</b> calling this method!
-     *
-     * @param message thread latest message, passed to your module in {@link #process(Message)}
-     * @see #match
-     * @see Module#getMatch(Message)
-     * @see #process(Message)
-     */
-    public void updateMatch(Message message) {
-        match = getMatch(message);
-    }
-
     protected boolean is(String regex) {
         return match.equalsIgnoreCase(regex);
     }
 
-    /**
-     * Returns true if message contains any regex from {@link #regexes}. See {@link #setRegexes()} for more info.
-     */
-    protected boolean isRegex(Message message) {
-        return isMsgRegex(message, regexes);
+    protected boolean is(String... regexes) {
+        return findRegex(Arrays.asList(regexes));
+    }
+
+    protected boolean is(List<String> regexes) {
+        return findRegex(regexes);
+    }
+
+    protected boolean isOr(String regex, String other) {
+        return match.equalsIgnoreCase(regex) || match.equalsIgnoreCase(other);
     }
 
     /**
@@ -193,16 +151,23 @@ public abstract class ModuleBase implements Module {
         return isMsgRegex(message, regexes);
     }
 
-    protected boolean is(List<String> REGEXES) {
-        for (String regex : REGEXES) {
-            if (match.equalsIgnoreCase(regex)) {
-                return true;
-            }
-        }
-        return false;
+    protected List<String> getMappedRegexes(String... regexes) {
+        return Arrays.stream(regexes).map(Utils::TO_REGEX).collect(Collectors.toList());
     }
 
-    protected boolean is(String... regexes) {
+    protected void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    protected void setOnline() {
+        online = true;
+    }
+
+    protected void setOffline() {
+        online = false;
+    }
+
+    private boolean findRegex(List<String> regexes) {
         for (String regex : regexes) {
             if (match.equalsIgnoreCase(regex)) {
                 return true;
@@ -211,55 +176,6 @@ public abstract class ModuleBase implements Module {
         return false;
     }
 
-    protected boolean isOr(String regex, String other) {
-        return match.equalsIgnoreCase(regex) || match.equalsIgnoreCase(other);
-    }
-
-    protected String findMatch(Message message) {
-        return getRegex(message, regexes);
-    }
-
-    /**
-     * Attempts to match given message with provided regex list. If match is found, simply returns it (it's value).
-     * Returns an empty String {@code ""} otherwise.
-     */
-    protected String findMatch(Message message, List<String> regexes) {
-        return getRegex(message, regexes);
-    }
-
-    protected String findMatch(Message message, String... regexes) {
-        return getRegex(message, Arrays.asList(regexes));
-    }
-
-    protected boolean patternFound(Message message) {
-        Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
-        return matcher.find();
-    }
-
-    private String getRegex(Message message, List<String> regexes) {
-        String messageBody = message.getMessage();
-
-        for (String regex : regexes) {
-            if (messageBody.matches(regex)) {
-                return regex;
-            }
-        }
-        return "";
-    }
-
-    @SuppressWarnings("all")
-    private boolean isMsgRegex(Message message) {
-        String messageBody = message.getMessage();
-
-        for (String regex : regexes) {
-            if (messageBody.equalsIgnoreCase(regex)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @SuppressWarnings("all")
     private boolean isMsgRegex(Message message, List<String> regexes) {
         String messageBody = message.getMessage();
 
@@ -272,17 +188,24 @@ public abstract class ModuleBase implements Module {
     }
 
     @Override
-    public String appendModulePath(String message) {
-        return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
-    }
-
-    @Override
     public String getMatch(Message message) {
-        return findMatch(message, regexes);
+        String messageBody = message.getMessage();
+
+        for (String regex : regexes) {
+            if (messageBody.matches(regex)) {
+                return regex;
+            }
+        }
+        return "";
     }
 
     @Override
     public ArrayList<String> getCommands() {
         return Utils.getCommands(regexes);
+    }
+
+    @Override
+    public String appendModulePath(String message) {
+        return chatbot.appendRootPath("modules/" + getClass().getSimpleName() + "/" + message);
     }
 }

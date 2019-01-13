@@ -2,7 +2,7 @@ package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.util.Utils;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import org.jsoup.Jsoup;
@@ -26,8 +26,8 @@ public class RandomWykop extends ModuleBase {
     private static final String MEMY_URL = "https://www.wykop.pl/tag/memy/";
     private static final String POLSKA_URL = "https://www.wykop.pl/tag/polska/";
 
-    private final String WYKOP_REGEX = Utils.TO_REGEX("wykop");
-    private final String WY_REGEX = Utils.TO_REGEX("wy");
+    private static final String WYKOP_REGEX = Utils.TO_REGEX("wykop");
+    private static final String WY_REGEX = Utils.TO_REGEX("wy");
 
     public RandomWykop(Chatbot chatbot) {
         super(chatbot);

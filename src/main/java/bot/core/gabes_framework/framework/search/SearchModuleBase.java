@@ -1,9 +1,9 @@
-package bot.core.gabes_framework.helper.search;
+package bot.core.gabes_framework.framework.search;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.helper.simple.SimpleSearchModule;
+import bot.core.gabes_framework.framework.simple.SimpleSearchModule;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.List;
@@ -83,11 +83,11 @@ public abstract class SearchModuleBase extends ModuleBase {
     }
 
     protected boolean matchFound() {
-        if (matcher == null) {
+        if (matcher == null) { // && !matcher.group(1).isEmpty()?
             System.out.println(getClass().getSimpleName() + "'s matcher is null!");
             return false;
         } else {
-            return matcher.find(); // && !matcher.group(1).isEmpty()?
+            return matcher.find();
         }
     }
 
@@ -115,16 +115,14 @@ public abstract class SearchModuleBase extends ModuleBase {
     }
 
     /**
-     * Replaces every space ( ) with {@link #WORD_SEPARATOR}.
-     *
-     * @return formatted user message, ready to be
+     * Replaces every space with {@link #WORD_SEPARATOR}.
      */
     private String toQuery() {
         return getUserMessage().replaceAll("\\s+", WORD_SEPARATOR);
     }
 
     /**
-     * Returns only actual user message (omits command).
+     * Returns only the actual user message (omits command).
      */
     private String getUserMessage() {
         return matcher.group(1); // not null-safe!!!!

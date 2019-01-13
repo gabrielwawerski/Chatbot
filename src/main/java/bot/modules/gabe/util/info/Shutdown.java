@@ -3,10 +3,8 @@ package bot.modules.gabe.util.info;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
-import bot.core.gabes_framework.helper.ModuleBase;
-import bot.core.gabes_framework.core.util.Utils;
+import bot.core.gabes_framework.framework.ModuleBase;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,8 +12,8 @@ import java.util.regex.Pattern;
 import static bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY;
 
 public class Shutdown extends ModuleBase {
-    private final String SHUTDOWN_REGEX = ACTIONIFY("shutdown (\\d*)");
-    private final String SHUTDOWN = ACTIONIFY("shutdown");
+    private static final String SHUTDOWN_REGEX = ACTIONIFY("shutdown (\\d*)");
+    private static final String SHUTDOWN = ACTIONIFY("shutdown");
 
     public Shutdown(Chatbot chatbot) {
         super(chatbot);

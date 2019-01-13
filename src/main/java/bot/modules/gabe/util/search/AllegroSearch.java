@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.search;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.helper.simple.SimpleSearchModule;
+import bot.core.gabes_framework.framework.simple.SimpleSearchModule;
 
 import java.util.List;
 

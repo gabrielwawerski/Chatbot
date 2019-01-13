@@ -3,10 +3,9 @@ package bot.modules.gabe.util.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,8 +16,8 @@ public class MultiTorrentSearch extends ModuleBase {
 
     private static final String TORRENTZ_URL = "https://torrentz2.eu/search?f=";
 
-    private final String TORRENT_REGEX = Utils.TO_REGEX("torrent (.*)");
-    private final String T_REGEX = Utils.TO_REGEX("t (.*)");
+    private static final String TORRENT_REGEX = Utils.TO_REGEX("torrent (.*)");
+    private static final String T_REGEX = Utils.TO_REGEX("t (.*)");
 
     public MultiTorrentSearch(Chatbot chatbot) {
         super(chatbot);

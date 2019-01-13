@@ -1,7 +1,7 @@
 package bot.modules.gabe.rand;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.helper.resource.RandomResourceModule;
+import bot.core.gabes_framework.framework.resource.RandomResourceModule;
 
 import java.util.List;
 

@@ -1,12 +1,11 @@
 package bot.modules.gabe.text;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,8 +13,8 @@ import java.util.regex.Pattern;
 import static bot.core.gabes_framework.core.util.Utils.EMOJI_B;
 
 public class B extends ModuleBase {
-    private final String B_ANY_REGEX = Utils.TO_REGEX("b (.*)");
-    private final String INFO_REGEX = Utils.TO_REGEX("b");
+    private static final String B_ANY_REGEX = Utils.TO_REGEX("b (.*)");
+    private static final String INFO_REGEX = Utils.TO_REGEX("b");
 
     public B(Chatbot chatbot) {
         super(chatbot);
@@ -53,15 +52,5 @@ public class B extends ModuleBase {
             }
         }
         return false;
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        return findMatch(message, B_ANY_REGEX);
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        return Utils.getCommands(B_ANY_REGEX);
     }
 }

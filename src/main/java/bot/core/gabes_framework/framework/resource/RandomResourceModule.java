@@ -1,7 +1,7 @@
-package bot.core.gabes_framework.helper.resource;
+package bot.core.gabes_framework.framework.resource;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -18,11 +18,10 @@ public abstract class RandomResourceModule extends ModuleBase {
     protected List<String> resourceContents;
 
     /**
-     * Be sure to add a file (with the same name as {@code resourceName} to your module folder. Your module folder's name
-     * has to be named like your module's class name.
+     * Be sure to add a file (with the same name as {@code resourceName}) to your module folder in "resources".
+     * Your module's folder name has to be named exactly like it's class name.
      *
-     * @param chatbot
-     * @param resourceName full resource name (with extension) located in your resource package folder.
+     * @param resourceName resource name (with extension), located in your resource folder.
      * @version 1.0
      * @since 0.29
      */
@@ -46,12 +45,9 @@ public abstract class RandomResourceModule extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        String match = getMatch(message);
-        for (String regex : regexes) {
-            if (match.equalsIgnoreCase(regex)) {
-                chatbot.sendMessage(Util.GET_RANDOM(resourceContents));
-                return true;
-            }
+        if (isRegex()) {
+            chatbot.sendMessage(Util.GET_RANDOM(resourceContents));
+            return true;
         }
         return false;
     }

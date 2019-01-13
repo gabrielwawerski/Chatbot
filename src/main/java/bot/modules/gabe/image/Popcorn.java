@@ -2,14 +2,14 @@ package bot.modules.gabe.image;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.util.Utils;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.simple.SimpleModule;
 
 import java.util.List;
 
-public class Popcorn extends SimpleModule {
-    public Popcorn(Chatbot chatbot, List<String> commands) {
-        super(chatbot, commands);
+public class Popcorn extends ModuleBase {
+    public Popcorn(Chatbot chatbot) {
+        super(chatbot);
     }
 
     @Override
@@ -22,5 +22,10 @@ public class Popcorn extends SimpleModule {
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return getMappedRegexes("popcorn", "rajza");
     }
 }

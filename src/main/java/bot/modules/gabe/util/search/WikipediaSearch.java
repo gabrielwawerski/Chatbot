@@ -3,8 +3,7 @@ package bot.modules.gabe.util.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.simple.SimpleSearchModule;
-import org.apache.commons.lang.WordUtils;
+import bot.core.gabes_framework.framework.simple.SimpleSearchModule;
 
 import java.util.List;
 

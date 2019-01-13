@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.info;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.helper.simple.SimpleModule;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 
@@ -9,14 +9,16 @@ import java.util.List;
 
 import static bot.core.gabes_framework.core.util.Utils.*;
 
-public class Commands extends SimpleModule {
-    public Commands(Chatbot chatbot, List<String> regexes) {
-        super(chatbot, regexes);
+public class Commands extends ModuleBase {
+    public Commands(Chatbot chatbot) {
+        super(chatbot);
     }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
-        if (is(regexes)) {
+        updateMatch(message);
+
+        if (isRegex()) {
             // TODO zrobic obrazek w photoshopie i go wysylac?
             StringBuilder sb = new StringBuilder(); // instead of making an instance and assigning build String to message.
                     sb.append("Dostępne komendy:")
@@ -79,5 +81,10 @@ public class Commands extends SimpleModule {
                     chatbot.sendMessage(msg);
         }
         return false;
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return getMappedRegexes("cmd", "help");
     }
 }

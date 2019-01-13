@@ -4,10 +4,9 @@ import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -19,8 +18,8 @@ import static bot.core.gabes_framework.core.util.Utils.getCommands;
 public class Mp3Tube extends ModuleBase {
     private static final String PREFIX = "https://lolyoutube.com/download/mp3/";
 
-    private final String MP3_REGEX = TO_REGEX("mp3 (.*)");
-    private final String INFO_REGEX = TO_REGEX("mp3");
+    private static final String MP3_REGEX = TO_REGEX("mp3 (.*)");
+    private static final String INFO_REGEX = TO_REGEX("mp3");
 
     public Mp3Tube(Chatbot chatbot) {
         super(chatbot);
@@ -55,6 +54,11 @@ public class Mp3Tube extends ModuleBase {
             }
         }
         return false;
+    }
+
+    private boolean patternFound(Message message) {
+        Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
+        return matcher.find();
     }
 
     @Override

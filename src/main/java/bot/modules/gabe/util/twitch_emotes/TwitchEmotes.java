@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.Users;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.ArrayList;
@@ -17,15 +17,15 @@ import static bot.modules.gabe.util.twitch_emotes.Emote.*;
  * @since v0.3201
  */
 public class TwitchEmotes extends ModuleBase {
-    public enum EmoteSize { DEFAULT, MEDIUM, LARGE;}
+    public enum EmoteSize { DEFAULT, MEDIUM, LARGE}
     private String emotesInfo;
-    private List<Emote> EMOTES;
+    private static List<Emote> EMOTES;
 
-    private final String INFO_SIMPLE = "emotes";
-    private final String INFO_REGEX = Utils.TO_REGEX("emotes");
-    private final String SIZE_1_REGEX = Utils.TO_REGEX("size1");
-    private final String SIZE_2_REGEX = Utils.TO_REGEX("size2");
-    private final String SIZE_3_REGEX = Utils.TO_REGEX("size3");
+    private static final String INFO_SIMPLE = "emotes";
+    private static final String INFO_REGEX = Utils.TO_REGEX("emotes");
+    private static final String SIZE_1_REGEX = Utils.TO_REGEX("size1");
+    private static final String SIZE_2_REGEX = Utils.TO_REGEX("size2");
+    private static final String SIZE_3_REGEX = Utils.TO_REGEX("size3");
 
 
     public TwitchEmotes(Chatbot chatbot) {
@@ -78,6 +78,7 @@ public class TwitchEmotes extends ModuleBase {
 
     @Override
     protected List<String> setRegexes() {
+        EMOTES = Emote.getEmotes();
         ArrayList<String> returnList = new ArrayList<>(EMOTES.size());
 
         returnList.add(INFO_REGEX);
@@ -85,6 +86,7 @@ public class TwitchEmotes extends ModuleBase {
         returnList.add(SIZE_1_REGEX);
         returnList.add(SIZE_2_REGEX);
         returnList.add(SIZE_3_REGEX);
+
         for (Emote emote : EMOTES) {
             returnList.add(emote.value());
         }

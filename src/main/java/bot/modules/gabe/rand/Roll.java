@@ -3,26 +3,24 @@ package bot.modules.gabe.rand;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY;
-import static bot.core.hollandjake_api.helper.interfaces.Util.DEACTIONIFY;
 
 /**
  * @author Gabe
  */
 public class Roll extends ModuleBase {
-    private final String ROLL_FIXED_REGEX = ACTIONIFY("roll");
-    private final String ROLL_REGEX = ACTIONIFY("roll (\\d+)");
-
     private final int MIN_ROLL = 3;
     private final int MAX_ROLL = 100 + 1;
+
+    private static final String ROLL_FIXED_REGEX = ACTIONIFY("roll");
+    private static final String ROLL_REGEX = ACTIONIFY("roll (\\d+)");
 
     public Roll(Chatbot chatbot) {
         super(chatbot);

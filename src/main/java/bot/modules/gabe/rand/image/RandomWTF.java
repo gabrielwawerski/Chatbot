@@ -2,7 +2,7 @@ package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.util.Utils;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import org.jsoup.Jsoup;
@@ -22,7 +22,7 @@ public class RandomWTF extends ModuleBase {
 
     private static final String WTF_URL = "https://ujarani.com/wtf/losowe";
 
-    private final String WTF_REGEX = Utils.TO_REGEX("wtf");
+    private static final String WTF_REGEX = Utils.TO_REGEX("wtf");
 
     public RandomWTF(Chatbot chatbot) {
         super(chatbot);

@@ -3,14 +3,13 @@ package bot.modules.gabe.rand.image;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,8 +27,8 @@ public class RandomKwejk extends ModuleBase {
 
     private static final String KWEJK_URL = "https://kwejk.pl/losowy";
 
-    private final String KWEJK_REGEX = ACTIONIFY("kwejk");
-    private final String KW_REGEX = ACTIONIFY("kw");
+    private static final String KWEJK_REGEX = ACTIONIFY("kwejk");
+    private static final String KW_REGEX = ACTIONIFY("kw");
 
     public RandomKwejk(Chatbot chatbot) {
         super(chatbot);

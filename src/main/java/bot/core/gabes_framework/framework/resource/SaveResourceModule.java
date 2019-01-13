@@ -1,7 +1,7 @@
-package bot.core.gabes_framework.helper.resource;
+package bot.core.gabes_framework.framework.resource;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,34 +18,23 @@ public abstract class SaveResourceModule extends ModuleBase {
 
     public SaveResourceModule(Chatbot chatbot, String fileName) {
         super(chatbot);
+
         try {
-            this.file
-                    = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + fileName));
-            setStatus(true);
+            this.file = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + fileName));
+            setOnline(true);
         } catch (IOException e) { // TODO add global debugMessages field in Chatbot so this can be toggled.
-            setStatus(false);
+            setOnline(false);
             e.printStackTrace();
         }
         this.fileName = "modules/" + getClass().getSimpleName() + "/" + fileName;
     }
 
-    public void appendStringToFile(String stringToAppend)
-    {
+    public void appendStringToFile(String stringToAppend) {
         stringToAppend += "\n";
         try {
             Files.write(Paths.get(fileName), stringToAppend.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
             //exception handling left as an exercise for the reader
         }
-
-//        try {
-//            BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-//                out.write(stringToAppend + "\n");
-//                out.close();
-//        }
-//        catch (IOException e) {
-//            chatbot.sendMessage("Nie zapisałem, coś jebło. Gabeee!");
-//            System.out.println("Exception Occurred" + e);
-//        }
-        }
     }
+}

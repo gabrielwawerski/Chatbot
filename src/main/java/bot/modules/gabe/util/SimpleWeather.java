@@ -2,8 +2,8 @@ package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.util.Utils;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
-import bot.core.gabes_framework.helper.simple.SimpleModule;
 import bot.core.hollandjake_api.helper.misc.Message;
 import com.github.prominence.openweathermap.api.HourlyForecastRequester;
 import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class SimpleWeather extends SimpleModule {
+public class SimpleWeather extends ModuleBase {
     private OpenWeatherMapManager openWeatherManager;
     /** current weather */
     private WeatherRequester weatherRequester;
@@ -35,8 +35,13 @@ public class SimpleWeather extends SimpleModule {
 
 
     public SimpleWeather(Chatbot chatbot) {
-        super(chatbot, List.of("pogoda", "p"));
+        super(chatbot);
         openWeatherManager = new OpenWeatherMapManager(API_KEY);
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return getMappedRegexes("pogoda", "p");
     }
 
     @Override

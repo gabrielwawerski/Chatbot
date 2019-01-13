@@ -2,11 +2,10 @@ package bot.modules.gabe.work_in_progress;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.util.Utils;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TranslateAPI extends ModuleBase {

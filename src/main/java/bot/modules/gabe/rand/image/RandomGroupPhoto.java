@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -45,10 +45,10 @@ public class RandomGroupPhoto extends ModuleBase {
             "Poczekaj chwilę.", "Chwila...", "Bo mnie przegrzejesz!",
             "Nie bądź taki hop.", "Jebneee", "Bo się przegrzeje!");
 
-    private final String RANDOM_REGEX = TO_REGEX("random");
-    private final String R_REGEX = TO_REGEX("r");
-    private final String RANDOM_SIMPLE = ("random");
-    private final String R_SIMPLE = ("r");
+    private static final String RANDOM_REGEX = TO_REGEX("random");
+    private static final String R_REGEX = TO_REGEX("r");
+    private static final String RANDOM_SIMPLE = ("random");
+    private static final String R_SIMPLE = ("r");
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {

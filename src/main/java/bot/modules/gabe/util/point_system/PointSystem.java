@@ -4,7 +4,7 @@ import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
 import bot.core.gabes_framework.core.util.Utils;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -55,37 +55,45 @@ public class PointSystem extends ModuleBase {
 
     //region regexes
     // STATS
-    private final String STATS_REGEX = Utils.TO_REGEX("stats");
-    private final String ME_REGEX = Utils.TO_REGEX("me");
-    private final String STATS_ANY_REGEX = Utils.TO_REGEX("stats (.*)");
-    private final String STATS_MENTION_ANY_REGEX = Utils.TO_REGEX("stats @(.*)");
+    private static final String STATS_REGEX = Utils.TO_REGEX("stats");
+    private static final String ME_REGEX = Utils.TO_REGEX("me");
+    private static final String STATS_ANY_REGEX = Utils.TO_REGEX("stats (.*)");
+    private static final String STATS_MENTION_ANY_REGEX = Utils.TO_REGEX("stats @(.*)");
 
     // PTS AND MSGS LADDER
-    private final String LADDER_REGEX = Utils.TO_REGEX("ladder");
-    private final String LADDER_MSG_REGEX = Utils.TO_REGEX("msg");
+    private static final String LADDER_REGEX = Utils.TO_REGEX("ladder");
+    private static final String LADDER_MSG_REGEX = Utils.TO_REGEX("msg");
 
     // ROULETTE
-    private final String ROULETTE_REGEX = Utils.TO_REGEX("roulette (\\d+)");
-    private final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
-    private final String VABANK_REGEX = Utils.TO_REGEX("vabank");
+    private static final String ROULETTE_REGEX = Utils.TO_REGEX("roulette (\\d+)");
+    private static final String ROULETTE_ALL_REGEX = Utils.TO_REGEX("roulette all");
+    private static final String VABANK_REGEX = Utils.TO_REGEX("vabank");
     // TODO add these
 
     // BET
-    private final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)");
-    private final String DUEL_ANY_REGEX = Utils.TO_REGEX("duel (\\d+)");
+    private static final String DUEL_REGEX = Utils.TO_REGEX("duel (.*) (\\d+)");
+    private static final String DUEL_ANY_REGEX = Utils.TO_REGEX("duel (\\d+)");
 
 
-    private final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
-    private final String DUEL_REFUSE_REGEX = Utils.TO_REGEX("n");
-    private final String DUEL_ACCEPT_SIMPLE = "y";
-    private final String DUEL_REFUSE_SIMPLE = "n";
+    private static final String DUEL_ACCEPT_REGEX = Utils.TO_REGEX("y");
+    private static final String DUEL_REFUSE_REGEX = Utils.TO_REGEX("n");
+    private static final String DUEL_ACCEPT_SIMPLE = "y";
+    private static final String DUEL_REFUSE_SIMPLE = "n";
 
-    private final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet (.*) >(\\d+)");
-    private final String BET_LESS_THAN_REGEX = Utils.TO_REGEX("bet (.*) <(\\d+)");
+    private static final String BET_MORE_THAN_REGEX = Utils.TO_REGEX("bet (.*) >(\\d+)");
+    private static final String BET_LESS_THAN_REGEX = Utils.TO_REGEX("bet (.*) <(\\d+)");
 
     // !give <punkty> @uzytkownik przekazuje punkty uzytkownikowi
-    private final String GIVE_REGEX = Utils.TO_REGEX("give (.*) (\\d+)");
+    private static final String GIVE_REGEX = Utils.TO_REGEX("give (.*) (\\d+)");
     //endregion
+
+    public PointSystem(Chatbot chatbot) {
+        super(chatbot);
+        initialize();
+
+        now = new Date().getTime();
+        timeoutRelease = getTimeoutRelease();
+    }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
@@ -102,6 +110,7 @@ public class PointSystem extends ModuleBase {
 
         updateMatch(message);
         // if msg isn't a command, process msg and return
+        // TODO should check regexes from all modules, now only checks this module's regexes!!!
         if (!is(regexes)) {
             processMessage(user, message);
             return true;
@@ -208,8 +217,8 @@ public class PointSystem extends ModuleBase {
                 } else {
                     user.subPoints(points);
                     receiver.addPoints(points);
-                    update(user);
-                    update(receiver);
+                    db.update(user);
+                    db.update(receiver);
                     chatbot.sendMessage(user.getName() + " właśnie przekazał "
                             + points + " pkt. \u27a1\ufe0f użytkownikowi " + receiver.getName() + "!");
                     return true;
@@ -235,32 +244,32 @@ public class PointSystem extends ModuleBase {
                 }
 
                 if (wantedUser == null) {
-                    update(user);
+                    db.update(user);
                     chatbot.sendMessage("Użytkownik nie istnieje w bazie danych.");
                     return false;
                 }
                 String msg = wantedUser.getName()
                         + "\nPunkty: " + wantedUser.getPoints()
                         + "\nWiadomości: " + wantedUser.getMessageCount();
-                update(user);
+                db.update(user);
                 chatbot.sendMessage(msg);
                 return true;
             }
             return false;
 
         } else if (is(LADDER_REGEX)) {
-            update(user);
+            db.update(user);
             chatbot.sendMessage(getLadderMsg());
             return true;
 
         } else if (is(LADDER_MSG_REGEX)) {
-            update(user);
+            db.update(user);
             chatbot.sendMessage(Ladder.getMsgLadder(users).toString());
             return true;
 
         } else if (is(ROULETTE_REGEX)) {
             if (message.getMessage().length() > 16) {
-                update(user);
+                db.update(user);
                 chatbot.sendMessage("Podałeś zbyt dużą liczbę!");
                 return false;
             }
@@ -270,32 +279,32 @@ public class PointSystem extends ModuleBase {
 
                 if (desiredRoll <= 0) {
                     chatbot.sendMessage("Nieprawidłowa komenda.");
-                    update(user);
+                    db.update(user);
                     return false;
                 } else if (user.getPoints() == 0) {
                     chatbot.sendMessage("Nie masz punktów.");
-                    update(user);
+                    db.update(user);
                     return false;
                 } else if (desiredRoll > user.getPoints()) {
                     chatbot.sendMessage("Nie masz tylu punktów! (" + user.getPoints() + ")");
-                    update(user);
+                    db.update(user);
                     return false;
                 }
 
                 if (Utils.fiftyFifty()) {
                     user.addPoints(desiredRoll);
-                    update(user);
+                    db.update(user);
                     chatbot.sendMessage("\uD83D\uDE4F Wygrałeś " + desiredRoll + " pkt! (" + user.getPoints() + ")");
                     return true;
                 } else {
                     if (user.getPoints() - desiredRoll >= 0) {
                         user.subPoints(desiredRoll);
-                        update(user);
+                        db.update(user);
                         chatbot.sendMessage("\u2b07\ufe0f " + Util.GET_RANDOM(FAILED_ROULETTE_NORMAL) + desiredRoll + " pkt. (" + user.getPoints() + ")");
                         return true;
                     } else {
                         user.setPoints(0);
-                        update(user);
+                        db.update(user);
                         chatbot.sendMessage("\uD83C\uDD7E️ Przejebałeś wszystkie punkty. Brawo!");
                         return true;
                     }
@@ -313,12 +322,12 @@ public class PointSystem extends ModuleBase {
 
             if (Utils.fiftyFifty()) {
                 user.addPoints(userPoints);
-                update(user);
+                db.update(user);
                 chatbot.sendMessage("\uD83D\uDCAF Wygrałeś " + userPoints + " pkt! (" + user.getPoints() + ")");
                 return true;
             } else {
                 user.setPoints(0);
-                update(user);
+                db.update(user);
                 chatbot.sendMessage(userPoints + " pkt poszło się jebać. Gratulacje!");
                 return true;
             }
@@ -346,7 +355,7 @@ public class PointSystem extends ModuleBase {
                     if (opponent.getPoints() < bet) {
                         chatbot.sendMessage("\u274c Przeciwnik nie ma tylu punktów! (" + opponent.getPoints() + ")");
                         return false;
-                    } else if (opponent.getName() == user.getName()) {
+                    } else if (opponent == user) {
                         chatbot.sendMessage("Nie możesz wyzwać siebie na pojedynek!");
                         return false;
                     } else if (bet == 0) {
@@ -395,15 +404,6 @@ public class PointSystem extends ModuleBase {
         return false;
     }
 
-    public PointSystem(Chatbot chatbot) {
-        super(chatbot);
-        initialize();
-
-
-        now = new Date().getTime();
-        timeoutRelease = getTimeoutRelease();;
-    }
-
     public void logOnly(Message message) {
         refreshUsers();
         User user;
@@ -418,7 +418,7 @@ public class PointSystem extends ModuleBase {
         now = new Date().getTime();
         if (now < timeoutRelease) {
             addMessageCount(user);
-            update(user);
+            db.update(user);
             return;
         }
         String messageBody = message.getMessage();
@@ -438,7 +438,7 @@ public class PointSystem extends ModuleBase {
         if (messageBody.contains("http") || messageBody.contains("www.") || messageBody.contains("//")) {
             user.addPoints(POINT_SYSTEM_URL);
             addMessageCount(user);
-            update(user);
+            db.update(user);
             return;
         }
 
@@ -461,7 +461,7 @@ public class PointSystem extends ModuleBase {
 
         timeoutRelease = getTimeoutRelease();
         addMessageCount(user);
-        update(user);
+        db.update(user);
     }
 
     @Override

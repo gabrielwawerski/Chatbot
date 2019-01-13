@@ -3,11 +3,9 @@ package bot.core.gabes_framework.core.api;
 import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
-import bot.core.gabes_framework.helper.message.MessageModule;
-import bot.core.gabes_framework.helper.resource.RandomResourceModule;
-import bot.core.gabes_framework.helper.simple.SimpleModule;
-import bot.core.gabes_framework.helper.message.SingleMessageModule;
+import bot.core.gabes_framework.framework.ModuleBase;
+import bot.core.gabes_framework.framework.resource.RandomResourceModule;
+import bot.core.gabes_framework.framework.message.SingleMessageModule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,9 +72,6 @@ public interface Module {
 
     /**
      * Should make an attempt to match your regex/es against received message.
-     *
-     * <p>See my helper methods: {@link ModuleBase#findMatch(Message, List)},
-     * {@link ModuleBase#findMatch(Message, String...)}
      *
      * @param message message received in {@link #process(Message)}
      * @return the regex found, otherwise an empty String: {@code ""}

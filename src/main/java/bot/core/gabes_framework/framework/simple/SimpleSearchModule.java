@@ -1,8 +1,8 @@
-package bot.core.gabes_framework.helper.simple;
+package bot.core.gabes_framework.framework.simple;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
-import bot.core.gabes_framework.helper.search.SearchModuleBase;
+import bot.core.gabes_framework.framework.search.SearchModuleBase;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.core.util.Utils;
 
@@ -21,15 +21,13 @@ public abstract class SimpleSearchModule extends SearchModuleBase {
         updateMatch(message);
         String messageBody = message.getMessage();
 
-        for (String regex : regexes) {
-            if (match.equals(regex)) {
-                updateMatcher(messageBody);
+        if (isRegex()) {
+            updateMatcher(messageBody);
 
-                if (matchFound()) {
-                    addPoints(message, Utils.POINTS_SIMPLESEARCH_MODULE_REGEX);
-                    chatbot.sendMessage(getFinalMessage());
-                    return true;
-                }
+            if (matchFound()) {
+                addPoints(message, Utils.POINTS_SIMPLESEARCH_MODULE_REGEX);
+                chatbot.sendMessage(getFinalMessage());
+                return true;
             }
         }
         return false;

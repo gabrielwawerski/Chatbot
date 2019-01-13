@@ -3,7 +3,7 @@ package bot.modules.gabe.util.info;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
 import java.text.DecimalFormat;
@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 import static bot.core.hollandjake_api.helper.interfaces.Util.*;
 
 public class Info extends ModuleBase {
-    private final String ECHO_COMMAND = "echo";
-    private final String INFO_REGEX = Utils.TO_REGEX("info");
-    private final String STATS_REGEX = Utils.TO_REGEX("staty");
-    private final String UPTIME_REGEX = Utils.TO_REGEX("uptime");
+    private static final String ECHO_COMMAND = "echo";
+    private static final String INFO_REGEX = Utils.TO_REGEX("info");
+    private static final String STATS_REGEX = Utils.TO_REGEX("staty");
+    private static final String UPTIME_REGEX = Utils.TO_REGEX("uptime");
 
     public Info(Chatbot chatbot) {
         super(chatbot);
@@ -124,15 +124,5 @@ public class Info extends ModuleBase {
                 return "0";
             }
         }
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        return findMatch(message, INFO_REGEX, STATS_REGEX, UPTIME_REGEX, ECHO_COMMAND);
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        return Utils.getCommands(INFO_REGEX, STATS_REGEX, UPTIME_REGEX, ECHO_COMMAND);
     }
 }

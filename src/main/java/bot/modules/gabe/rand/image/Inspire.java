@@ -1,18 +1,23 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.simple.SimpleModule;
 
 import java.util.List;
 
 import static bot.core.hollandjake_api.helper.interfaces.Util.*;
 
-public class Inspire extends SimpleModule {
-    private final String INSPIRE_REGEX = ACTIONIFY("inspire");
+public class Inspire extends ModuleBase {
+    private static final String INSPIRE_REGEX = ACTIONIFY("inspire");
 
     public Inspire(Chatbot chatbot) {
-        super(chatbot, List.of("inspire"));
+        super(chatbot);
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return List.of(INSPIRE_REGEX);
     }
 
     @Override

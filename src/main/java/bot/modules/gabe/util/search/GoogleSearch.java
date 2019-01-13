@@ -3,7 +3,7 @@ package bot.modules.gabe.util.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.search.SearchModuleBase;
+import bot.core.gabes_framework.framework.search.SearchModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.List;
@@ -16,14 +16,14 @@ public class GoogleSearch extends SearchModuleBase {
     private static final String SEARCH_URL = "https://www.google.com/search?q=";
     private static final String SEPARATOR = "+";
 
-    private final String GOOGLE_REGEX = Utils.TO_REGEX("google");
-    private final String G_REGEX = Utils.TO_REGEX("g");
+    private static final String GOOGLE_REGEX = Utils.TO_REGEX("google");
+    private static final String G_REGEX = Utils.TO_REGEX("g");
 
-    private final String G_HELP_REGEX = Utils.TO_REGEX("g help");
-    private final String G_LEZE_REGEX = Utils.TO_REGEX("g leze");
+    private static final String G_HELP_REGEX = Utils.TO_REGEX("g help");
+    private static final String G_LEZE_REGEX = Utils.TO_REGEX("g leze");
 
-    private final String GOOGLE_ANY_REGEX = Utils.TO_REGEX("google (.*)");
-    private final String G_ANY_REGEX = Utils.TO_REGEX("g (.*)");
+    private static final String GOOGLE_ANY_REGEX = Utils.TO_REGEX("google (.*)");
+    private static final String G_ANY_REGEX = Utils.TO_REGEX("g (.*)");
 
     public GoogleSearch(Chatbot chatbot) {
         super(chatbot);

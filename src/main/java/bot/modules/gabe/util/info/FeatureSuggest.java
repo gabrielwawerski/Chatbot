@@ -4,20 +4,20 @@ import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.core.util.Utils;
-import bot.core.gabes_framework.helper.resource.SaveResourceModule;
+import bot.core.gabes_framework.framework.resource.SaveResourceModule;
 
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FeatureSuggest extends SaveResourceModule {
-    private final String INFO_MESSAGE = "Po !suggest opisz swój pomysł na nową funkcję!";
+    private static final String INFO_MESSAGE = "Po !suggest opisz swój pomysł na nową funkcję!";
 
-    private final String SUGGEST_REGEX = Utils.TO_REGEX("suggest");
-    private final String POMYSL_REGEX = Utils.TO_REGEX("pomysl");
+    private static final String SUGGEST_REGEX = Utils.TO_REGEX("suggest");
+    private static final String POMYSL_REGEX = Utils.TO_REGEX("pomysl");
 
-    private final String SUGGEST_ANY = Utils.TO_REGEX("suggest (.*)");
-    private final String POMYSL_ANY = Utils.TO_REGEX("pomysl (.*)");
+    private static final String SUGGEST_ANY = Utils.TO_REGEX("suggest (.*)");
+    private static final String POMYSL_ANY = Utils.TO_REGEX("pomysl (.*)");
 
     public FeatureSuggest(Chatbot chatbot, String fileName) {
         super(chatbot, fileName);

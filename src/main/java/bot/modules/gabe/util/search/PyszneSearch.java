@@ -3,10 +3,9 @@ package bot.modules.gabe.util.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.search.SearchModuleBase;
+import bot.core.gabes_framework.framework.search.SearchModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,22 +25,22 @@ public class PyszneSearch extends SearchModuleBase {
     private static final String MARIANO_ITALIANO_URL = "https://www.pyszne.pl/pizzeria-mariano-italiano";
     private static final String HAIANH_URL = "https://www.pyszne.pl/bar-azjatycki-hai-ahn";
 
-    private final String HELP_REGEX = TO_REGEX("pyszne help");
-    private final String HELP_2_REGEX = TO_REGEX("pyszne");
+    private static final String HELP_REGEX = TO_REGEX("pyszne help");
+    private static final String HELP_2_REGEX = TO_REGEX("pyszne");
 
-    private final String SEARCH_REGEX = TO_REGEX("pyszne (.*)");
+    private static final String SEARCH_REGEX = TO_REGEX("pyszne (.*)");
 
     // fixme all restaurants direct links are not working properly
-    private final String HAIANH_REGEX_1 = TO_REGEX("pyszne haianh");
-    private final String HAIANH_REGEX_2 = TO_REGEX("pyszne hai-anh");
-    private final String HAIANH_REGEX_3 = TO_REGEX("pyszne hai");
+    private static final String HAIANH_REGEX_1 = TO_REGEX("pyszne haianh");
+    private static final String HAIANH_REGEX_2 = TO_REGEX("pyszne hai-anh");
+    private static final String HAIANH_REGEX_3 = TO_REGEX("pyszne hai");
 
-    private final String MARIANO_ITALIANO_1 = TO_REGEX("pyszne mariano");
-    private final String MARIANO_ITALIANO_2 = TO_REGEX("pyszne italiano");
+    private static final String MARIANO_ITALIANO_1 = TO_REGEX("pyszne mariano");
+    private static final String MARIANO_ITALIANO_2 = TO_REGEX("pyszne italiano");
 
-    private final String FOOTBALL_PIZZA_1 = TO_REGEX("pyszne football");
-    private final String FOOTBALL_PIZZA_2 = TO_REGEX("pyszne footbal");
-    private final String FOOTBALL_PIZZA_3 = TO_REGEX("pyszne footballpizza");
+    private static final String FOOTBALL_PIZZA_1 = TO_REGEX("pyszne football");
+    private static final String FOOTBALL_PIZZA_2 = TO_REGEX("pyszne footbal");
+    private static final String FOOTBALL_PIZZA_3 = TO_REGEX("pyszne footballpizza");
 
 
     public PyszneSearch(Chatbot chatbot) {
@@ -90,7 +89,7 @@ public class PyszneSearch extends SearchModuleBase {
                             + "\n!pyszne football   /" + " footballpizza"
                             + "\n!pyszne hai           /" + " hai-anh / haianh"
                             + "\n\n!pyszne kod pocztowy"
-                            + "\nFormat: 00-000 lub 00 000 lub 00000");
+                            + "\nFormat: 00-000 lub 00 000");
             return true;
 
         } else if (isOr(MARIANO_ITALIANO_1, MARIANO_ITALIANO_2)) {

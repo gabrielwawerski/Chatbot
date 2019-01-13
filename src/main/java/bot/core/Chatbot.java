@@ -66,8 +66,8 @@ public class Chatbot {
     protected void loadModules() {
         pointSystem = new PointSystem(this);
         // TODO List with all regexes for PointSystem to receive in constructor.
-        modules.put("Commands", new Commands(this, List.of("cmd", "help")));
-//        modules.put("Info", new Info(this));
+        modules.put("Commands", new Commands(this));
+        modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
         modules.put("FeatureSuggest", new FeatureSuggest(this,
                 "sugestie.txt"));
@@ -81,7 +81,7 @@ public class Chatbot {
 
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this));
         modules.put("SimpleWeather", new SimpleWeather(this));
-        modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
+        modules.put("Popcorn", new Popcorn(this));
         modules.put("KartaPulapka", new KartaPulapka(this));
 //        modules.put("Inspire", new Inspire(this));
         modules.put("Roll", new Roll(this));
@@ -93,7 +93,7 @@ public class Chatbot {
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
-        modules.put("ATG", new ATG(this, List.of("atg"), "\u2705 OPEN")); // ✅ OPEN ❌ CLOSED
+        modules.put("ATG", new ATG(this, "\u2705 OPEN")); // ✅ OPEN ❌ CLOSED
         // !atg taxi numery telefonow
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
@@ -336,7 +336,7 @@ public class Chatbot {
     }
 
     public String getModulesOnline() {
-        return Integer.toString(modulesOnline) + " / " + Integer.toString(totalModules);
+        return modulesOnline + " / " + totalModules;
     }
 
     public void sendMessage(String message) {

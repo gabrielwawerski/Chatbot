@@ -3,14 +3,12 @@ package bot.modules.gabe.work_in_progress;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.framework.ModuleBase;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.util.Utils.TO_COMMAND;
 import static bot.core.gabes_framework.core.util.Utils.TO_REGEX;
 
 public class PollCreate extends ModuleBase {
