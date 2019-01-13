@@ -244,32 +244,29 @@ public class PointSystem extends ModuleBase {
                 }
 
                 if (wantedUser == null) {
-                    db.update(user);
                     chatbot.sendMessage("Użytkownik nie istnieje w bazie danych.");
                     return false;
                 }
                 String msg = wantedUser.getName()
                         + "\nPunkty: " + wantedUser.getPoints()
                         + "\nWiadomości: " + wantedUser.getMessageCount();
-                db.update(user);
                 chatbot.sendMessage(msg);
                 return true;
             }
             return false;
 
         } else if (is(LADDER_REGEX)) {
-            db.update(user);
+            db.refresh(user);
             chatbot.sendMessage(getLadderMsg());
             return true;
 
         } else if (is(LADDER_MSG_REGEX)) {
-            db.update(user);
+            db.refresh(user);
             chatbot.sendMessage(Ladder.getMsgLadder(users).toString());
             return true;
 
         } else if (is(ROULETTE_REGEX)) {
             if (message.getMessage().length() > 16) {
-                db.update(user);
                 chatbot.sendMessage("Podałeś zbyt dużą liczbę!");
                 return false;
             }
@@ -279,30 +276,30 @@ public class PointSystem extends ModuleBase {
 
                 if (desiredRoll <= 0) {
                     chatbot.sendMessage("Nieprawidłowa komenda.");
-                    db.update(user);
                     return false;
                 } else if (user.getPoints() == 0) {
                     chatbot.sendMessage("Nie masz punktów.");
-                    db.update(user);
                     return false;
                 } else if (desiredRoll > user.getPoints()) {
                     chatbot.sendMessage("Nie masz tylu punktów! (" + user.getPoints() + ")");
-                    db.update(user);
                     return false;
                 }
 
                 if (Utils.fiftyFifty()) {
+                    db.refresh(user);
                     user.addPoints(desiredRoll);
                     db.update(user);
                     chatbot.sendMessage("\uD83D\uDE4F Wygrałeś " + desiredRoll + " pkt! (" + user.getPoints() + ")");
                     return true;
                 } else {
                     if (user.getPoints() - desiredRoll >= 0) {
+                        db.refresh(user);
                         user.subPoints(desiredRoll);
                         db.update(user);
                         chatbot.sendMessage("\u2b07\ufe0f " + Util.GET_RANDOM(FAILED_ROULETTE_NORMAL) + desiredRoll + " pkt. (" + user.getPoints() + ")");
                         return true;
                     } else {
+                        db.refresh(user);
                         user.setPoints(0);
                         db.update(user);
                         chatbot.sendMessage("\uD83C\uDD7E️ Przejebałeś wszystkie punkty. Brawo!");
@@ -315,17 +312,20 @@ public class PointSystem extends ModuleBase {
 
         else if (isOr(ROULETTE_ALL_REGEX, VABANK_REGEX)) {
             int userPoints = user.getPoints();
+
             if (userPoints == 0) {
                 chatbot.sendMessage("Nie masz punktów.");
                 return true;
             }
 
             if (Utils.fiftyFifty()) {
+                db.refresh(user);
                 user.addPoints(userPoints);
                 db.update(user);
                 chatbot.sendMessage("\uD83D\uDCAF Wygrałeś " + userPoints + " pkt! (" + user.getPoints() + ")");
                 return true;
             } else {
+                db.refresh(user);
                 user.setPoints(0);
                 db.update(user);
                 chatbot.sendMessage(userPoints + " pkt poszło się jebać. Gratulacje!");
@@ -345,6 +345,7 @@ public class PointSystem extends ModuleBase {
                     desiredUser = desiredUser.substring(1);
                 }
 
+                db.refresh(user);
                 System.out.println("bet: " + bet + "\ninitiator: " + user.getName() + "\nopponent: " + desiredUser);
                 if (user.getPoints() < bet) {
                     chatbot.sendMessage("\u274c Nie masz tylu punktów! (" + user.getPoints() + ")");
