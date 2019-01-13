@@ -104,8 +104,6 @@ public class PointSystem extends ModuleBase {
             if ((user = getUser(message)) == null) {
                 return false;
             }
-        } else {
-            return false;
         }
 
         updateMatch(message);
