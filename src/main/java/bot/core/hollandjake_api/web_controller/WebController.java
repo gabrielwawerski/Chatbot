@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static bot.core.hollandjake_api.helper.interfaces.Util.CLIPBOARD;
 import static bot.core.hollandjake_api.helper.interfaces.Util.PASTE;
@@ -38,10 +39,11 @@ public class WebController {
         this.chatbot = chatbot;
         this.dbConnection = dbConnection;
         this.debugMessages = debugMessages;
-
+        File driver;
         ClassLoader classLoader = getClass().getClassLoader();
-        File driver = System.getProperty("os.name").toLowerCase().contains("windows") ?
-                new File(classLoader.getResource("drivers/windows/chromedriver.exe").getFile()) :
+
+        driver = System.getProperty("os.name").toLowerCase().contains("windows") ?
+                new File("C:/chromedriver.exe") :
                 new File(classLoader.getResource("drivers/linux/chromedriver").getFile());
         driver.setExecutable(true);
 

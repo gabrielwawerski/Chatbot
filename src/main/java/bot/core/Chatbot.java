@@ -34,6 +34,8 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
 import java.awt.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -93,14 +95,15 @@ public class Chatbot {
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("Mp3Tube", new Mp3Tube(this));
         modules.put("B", new B(this));
-        modules.put("ATG", new ATG(this, "\u2705 OPEN")); // ✅ OPEN ❌ CLOSED
         // !atg taxi numery telefonow
+        modules.put("ATG", new ATG(this, "\u2705 OPEN")); // ✅ OPEN ❌ CLOSED
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
         modules.put("PointSystem", pointSystem);
         modules.put("Mention", new Mention(this));
     }
 
+    // TODO refactor
     public List<String> getRegexes() {
         List<String> list
                 = List.of("cmd", "help", "info", "staty", "uptime", "echo", "shutdown", "suggest",
@@ -182,20 +185,22 @@ public class Chatbot {
 
         for (Module module : modules.values()) {
             if (module.isOnline()) {
-                module.echoOnline();
                 modulesOnline++;
             } else {
                 modulesOffline.add(module.getClass().getSimpleName());
             }
+            module.echoOnline();
         }
 
         if (modulesOnline < totalModules) {
-            System.out.println("Not all modules have been loaded.");
-            System.out.println("Modules unavailable this session: ");
+            System.out.println("Not all modules have been loaded.\nModules unavailable this session: ");
             for (String module : modulesOffline) {
                 System.out.print(module + ", ");
             }
-            System.out.println("ONLINE | " + modulesOnline + "/" + totalModules + " (" + (double) (totalModules - (modulesOnline * totalModules)) / 100 + "%)");
+            DecimalFormat df = new DecimalFormat("###");
+            df.setRoundingMode(RoundingMode.HALF_UP);
+            double onlinePercent = (double) modulesOnline * 100 / totalModules;
+            System.out.println(modulesOnline + "/" + totalModules + "(" + df.format(onlinePercent)  + "%)");
         } else {
             System.out.println("ONLINE | " + modulesOnline + "/" + totalModules);
         }

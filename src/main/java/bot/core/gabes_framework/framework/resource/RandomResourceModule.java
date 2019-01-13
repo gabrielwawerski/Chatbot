@@ -28,8 +28,7 @@ public abstract class RandomResourceModule extends ModuleBase {
     public RandomResourceModule(Chatbot chatbot, String resourceName) {
         super(chatbot);
         try {
-            this.resourceContents
-                    = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
+            this.resourceContents = Files.readAllLines(Paths.get("modules/" + getClass().getSimpleName() + "/" + resourceName));
             setOnline();
         } catch (IOException e) { // TODO add global debugMessages field in Chatbot so this can be toggled.
             setOffline();
