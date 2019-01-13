@@ -139,29 +139,6 @@ public abstract class ModuleBase implements Module {
         return Arrays.stream(regexes).map(Utils::TO_REGEX).collect(Collectors.toList());
     }
 
-    public boolean isOnline() {
-        return online;
-    }
-
-    protected void setOnline() {
-        online = true;
-    }
-
-    protected void setOffline() {
-        online = false;
-    }
-
-    @Override
-    public void echoOnline() {
-        String msg = "";
-        if (isOnline()) {
-            msg += "ONLINE | " + getClass().getSimpleName();
-        } else {
-            msg += "OFFLINE| " + getClass().getSimpleName();
-        }
-        System.out.println(msg);
-    }
-
     private boolean findRegex(List<String> regexes) {
         for (String regex : regexes) {
             if (match.equalsIgnoreCase(regex)) {
@@ -192,6 +169,29 @@ public abstract class ModuleBase implements Module {
             }
         }
         return "";
+    }
+
+    @Override
+    public void echoOnline() {
+        String msg = "";
+        if (isOnline()) {
+            msg += "ONLINE | " + getClass().getSimpleName();
+        } else {
+            msg += "OFFLINE| " + getClass().getSimpleName();
+        }
+        System.out.println(msg);
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    protected void setOnline() {
+        online = true;
+    }
+
+    protected void setOffline() {
+        online = false;
     }
 
     @Override
