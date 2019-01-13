@@ -1,14 +1,13 @@
 package bot.core.gabes_framework.core.api;
 
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.hollandjake_api.helper.interfaces.Util;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.util.message.MessageModule;
-import bot.core.gabes_framework.util.resource.RandomResourceModule;
-import bot.core.gabes_framework.util.simple.SimpleModule;
-import bot.core.gabes_framework.util.message.SingleMessageModule;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.helper.message.MessageModule;
+import bot.core.gabes_framework.helper.resource.RandomResourceModule;
+import bot.core.gabes_framework.helper.simple.SimpleModule;
+import bot.core.gabes_framework.helper.message.SingleMessageModule;
 
 import java.util.ArrayList;
 import java.util.List;

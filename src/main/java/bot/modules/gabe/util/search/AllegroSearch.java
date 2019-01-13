@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.search;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.util.simple.SimpleSearchModule;
+import bot.core.gabes_framework.helper.simple.SimpleSearchModule;
 
 import java.util.List;
 
@@ -14,17 +14,22 @@ public class AllegroSearch extends SimpleSearchModule {
     private static final String SEARCH_URL = "https://allegro.pl/listing?string=";
     private static final String SEPARATOR = "%20";
 
-    public AllegroSearch(Chatbot chatbot, List<String> regexes) {
-        super(chatbot, regexes);
+    public AllegroSearch(Chatbot chatbot) {
+        super(chatbot);
     }
 
     @Override
-    protected String setSearchUrl() {
+    protected List<String> setRegexes() {
+        return List.of("allegro", "all", "al");
+    }
+
+    @Override
+    protected String getSearchUrl() {
         return SEARCH_URL;
     }
 
     @Override
-    protected String setSeparator() {
+    protected String getSeparator() {
         return SEPARATOR;
     }
 }

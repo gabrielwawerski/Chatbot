@@ -1,17 +1,17 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,13 +39,18 @@ public class RandomKwejk extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (isOr(KWEJK_REGEX, KW_REGEX)) {
+        if (isRegex()) {
             addPoints(message, Utils.POINTS_RANDOMKWEJK_REGEX);
             chatbot.sendImageUrlWaitToLoad(currentImageUrl);
             getNextMeme();
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return List.of(KWEJK_REGEX, KW_REGEX);
     }
 
     private void getNextMeme() {
@@ -75,15 +80,5 @@ public class RandomKwejk extends ModuleBase {
         } catch (NullPointerException | IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        return findMatch(message, KWEJK_REGEX, KW_REGEX);
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        return Utils.getCommands(KWEJK_REGEX, KW_REGEX);
     }
 }

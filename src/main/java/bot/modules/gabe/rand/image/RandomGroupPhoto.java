@@ -1,13 +1,11 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.database.DBConnection;
-import bot.core.gabes_framework.core.database.User;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
@@ -16,7 +14,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-import static bot.core.gabes_framework.core.Utils.TO_REGEX;
+import static bot.core.gabes_framework.core.util.Utils.TO_REGEX;
 
 /**
  * <p><p>v1.1
@@ -32,14 +30,12 @@ public class RandomGroupPhoto extends ModuleBase {
     private Cloudinary cloudinary;
 
     private ArrayList<File> files;
-    private List<String> alreadySeen; // TODO implement seen already
+    private List<String> alreadySeen; // TODO implement
     private String currentFileUrl;
 
     private long now;
     private long timeoutRelease;
     private static final long TIMEOUT = 0;
-
-    // napisać algorytm (ai?) z pomoca  regexow
 
     private static final String PHOTOS_PATH = "D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\";
 
@@ -51,7 +47,33 @@ public class RandomGroupPhoto extends ModuleBase {
 
     private final String RANDOM_REGEX = TO_REGEX("random");
     private final String R_REGEX = TO_REGEX("r");
-    private final String R = ("r");
+    private final String RANDOM_SIMPLE = ("random");
+    private final String R_SIMPLE = ("r");
+
+    @Override
+    public boolean process(Message message) throws MalformedCommandException {
+        updateMatch(message);
+        now = new Date().getTime();
+
+        if (isRegex()) {
+            if (now < timeoutRelease) {
+                chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
+                return false;
+            } else {
+                addPoints(message, Utils.POINTS_RANDOMGROUPPHOTO_REGEX);
+                chatbot.sendImageUrlWaitToLoad(currentFileUrl);
+                currentFileUrl = uploadFile();
+
+                if (currentFileUrl == null) {
+                    chatbot.sendMessage("Wystąpił błąd. Spróbuj ponownie");
+                    return false;
+                }
+                timeoutRelease = new Date().getTime() + TIMEOUT;
+                return true;
+            }
+        }
+        return false;
+    }
 
     public RandomGroupPhoto(Chatbot chatbot) {
         super(chatbot);
@@ -76,28 +98,8 @@ public class RandomGroupPhoto extends ModuleBase {
     }
 
     @Override
-    public boolean process(Message message) throws MalformedCommandException {
-        updateMatch(message);
-        now = new Date().getTime();
-
-        if (isOr(RANDOM_REGEX, R_REGEX, R)) {
-            if (now < timeoutRelease) {
-                chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
-                return false;
-            } else {
-                addPoints(message, Utils.POINTS_RANDOMGROUPPHOTO_REGEX);
-                chatbot.sendImageUrlWaitToLoad(currentFileUrl);
-                currentFileUrl = uploadFile();
-
-                if (currentFileUrl == null) {
-                    chatbot.sendMessage("Wystąpił błąd. Spróbuj ponownie");
-                    return false;
-                }
-                timeoutRelease = new Date().getTime() + TIMEOUT;
-                return true;
-            }
-        }
-        return false;
+    protected List<String> setRegexes() {
+        return List.of(RANDOM_REGEX, R_REGEX, RANDOM_SIMPLE, R_SIMPLE);
     }
 
     private String uploadFile() {
@@ -133,15 +135,5 @@ public class RandomGroupPhoto extends ModuleBase {
         int result = (int) (Math.random() * range) + min;
 
         return TIMEOUT_RESPONSES.get(result);
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        return findMatch(message, RANDOM_REGEX, R_REGEX, R);
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        return Utils.getCommands(RANDOM_REGEX, R_REGEX, R);
     }
 }

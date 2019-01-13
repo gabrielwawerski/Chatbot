@@ -1,4 +1,4 @@
-package bot.core.gabes_framework.util.simple;
+package bot.core.gabes_framework.helper.simple;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
@@ -9,8 +9,8 @@ import java.util.List;
 public class SimpleMessageModule extends SimpleModule {
     private String message;
 
-    public SimpleMessageModule(Chatbot chatbot, List<String> regexList, String message) {
-        super(chatbot, regexList);
+    public SimpleMessageModule(Chatbot chatbot, List<String> regexes, String message) {
+        super(chatbot, regexes);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class SimpleMessageModule extends SimpleModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String regex : regexList) {
+        for (String regex : regexes) {
             if (match.equals(regex)) {
                 chatbot.sendMessage(this.message);
                 return true;

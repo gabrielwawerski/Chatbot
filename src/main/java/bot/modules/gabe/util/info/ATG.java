@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.info;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.util.message.SingleMessageModule;
+import bot.core.gabes_framework.helper.message.SingleMessageModule;
 
 import java.util.List;
 

@@ -1,17 +1,16 @@
 package bot.modules.gabe.util.twitch_emotes;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.Users;
-import bot.core.gabes_framework.core.database.User;
+import bot.core.gabes_framework.core.database.Users;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static bot.core.gabes_framework.core.Utils.msgBy;
+import static bot.core.gabes_framework.core.util.Utils.msgBy;
 import static bot.modules.gabe.util.twitch_emotes.Emote.*;
 
 /**
@@ -22,7 +21,7 @@ public class TwitchEmotes extends ModuleBase {
     private String emotesInfo;
     private List<Emote> EMOTES;
 
-    private final String INFO = "emotes";
+    private final String INFO_SIMPLE = "emotes";
     private final String INFO_REGEX = Utils.TO_REGEX("emotes");
     private final String SIZE_1_REGEX = Utils.TO_REGEX("size1");
     private final String SIZE_2_REGEX = Utils.TO_REGEX("size2");
@@ -51,7 +50,7 @@ public class TwitchEmotes extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (isOr(INFO_REGEX, INFO)) {
+        if (isOr(INFO_REGEX, INFO_SIMPLE)) {
             chatbot.sendMessage(emotesInfo);
             return true;
         } else if (is(SIZE_1_REGEX) && msgBy(message, Users.Gabe)) {
@@ -78,20 +77,19 @@ public class TwitchEmotes extends ModuleBase {
     }
 
     @Override
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
+    protected List<String> setRegexes() {
+        ArrayList<String> returnList = new ArrayList<>(EMOTES.size());
 
-        for (String command : getCommands()) {
-            if (messageBody.contains(command)) {
-                return command;
-            }
+        returnList.add(INFO_REGEX);
+        returnList.add(INFO_SIMPLE);
+        returnList.add(SIZE_1_REGEX);
+        returnList.add(SIZE_2_REGEX);
+        returnList.add(SIZE_3_REGEX);
+        for (Emote emote : EMOTES) {
+            returnList.add(emote.value());
         }
-        return "";
-    }
 
-    @Override
-    public ArrayList<String> getCommands() {
-        return Utils.getCommands(getCmds());
+        return returnList;
     }
 
     private boolean isEmote(Emote emote) {
@@ -101,20 +99,6 @@ public class TwitchEmotes extends ModuleBase {
     private boolean sendEmoteMsg(Emote emote) {
         chatbot.sendImageUrlWaitToLoad(emote.url());
         return true;
-    }
-
-    private ArrayList<String> getCmds() {
-        ArrayList<String> regexes = new ArrayList<>(EMOTES.size());
-        regexes.add(INFO_REGEX);
-        regexes.add(INFO);
-        regexes.add(SIZE_1_REGEX);
-        regexes.add(SIZE_2_REGEX);
-        regexes.add(SIZE_3_REGEX);
-
-        for (Emote emote : EMOTES) {
-            regexes.add(emote.value());
-        }
-        return regexes;
     }
 
     private void initInfo() {

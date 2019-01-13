@@ -3,23 +3,22 @@ package bot.modules.gabe.util.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MultiTorrentSearch extends ModuleBase {
-    private final String TORRENT_REGEX = Utils.TO_REGEX("torrent (.*)");
-    private final String T_REGEX = Utils.TO_REGEX("t (.*)");
-
-    private static final String BITLY_ACCESS_TOKEN = "ccbb8945fa671a57a48645c181466d9ad5619749";
-
     private static final String X1337_URL = "1337x.to/search/";
     private static final String X1337_POSTFIX = "/1/";
 
     private static final String TORRENTZ_URL = "https://torrentz2.eu/search?f=";
+
+    private final String TORRENT_REGEX = Utils.TO_REGEX("torrent (.*)");
+    private final String T_REGEX = Utils.TO_REGEX("t (.*)");
 
     public MultiTorrentSearch(Chatbot chatbot) {
         super(chatbot);
@@ -30,7 +29,7 @@ public class MultiTorrentSearch extends ModuleBase {
         updateMatch(message);
         String messageBody = message.getMessage();
 
-        if (match.equals(TORRENT_REGEX) || match.equals(T_REGEX)) {
+        if (isOr(TORRENT_REGEX, T_REGEX)) {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
 
             if (matcher.find()) {
@@ -49,23 +48,7 @@ public class MultiTorrentSearch extends ModuleBase {
     }
 
     @Override
-    @SuppressWarnings("Duplicates")
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-
-        if (messageBody.matches(TORRENT_REGEX)) {
-            return TORRENT_REGEX;
-        } else if (messageBody.matches(T_REGEX)) {
-            return T_REGEX;
-        }
-        return "";
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.TO_COMMAND(TORRENT_REGEX));
-        commands.add(Utils.TO_COMMAND(T_REGEX));
-        return commands;
+    protected List<String> setRegexes() {
+        return List.of(TORRENT_REGEX, T_REGEX);
     }
 }

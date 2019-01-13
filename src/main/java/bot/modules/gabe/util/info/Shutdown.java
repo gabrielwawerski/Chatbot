@@ -3,10 +3,11 @@ package bot.modules.gabe.util.info;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,9 +22,15 @@ public class Shutdown extends ModuleBase {
     }
 
     @Override
+    protected List<String> setRegexes() {
+        return List.of(SHUTDOWN_REGEX, SHUTDOWN);
+    }
+
+    @Override
     public boolean process(Message message) throws MalformedCommandException {
-        String match = getMatch(message);
-        if (match.equals(SHUTDOWN)) {
+        updateMatch(message);
+
+        if (is(SHUTDOWN)) {
             if (message.getSender().getName().equals("Gabriel Wawerski")) {
                 chatbot.quit();
                 return true;
@@ -38,19 +45,9 @@ public class Shutdown extends ModuleBase {
             chatbot.quit();
             return true;
         } else if (matcher.find() && !matcher.group(1).equals(chatbot.getShutdownCode())){
-            chatbot.sendMessage("No chyba cie pojebalo");
+            chatbot.sendMessage("No chyba cie pojebało");
             return false;
         }
         return false;
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        return findMatch(message, SHUTDOWN_REGEX, SHUTDOWN);
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        return Utils.getCommands(SHUTDOWN_REGEX, SHUTDOWN);
     }
 }

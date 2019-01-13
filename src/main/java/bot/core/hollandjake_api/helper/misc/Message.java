@@ -142,6 +142,9 @@ public class Message {
         return sender;
     }
 
+    /**
+     * Returns actual message content.
+     */
     public String getMessage() {
         return message;
     }

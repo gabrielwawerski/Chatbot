@@ -9,26 +9,26 @@ import bot.core.hollandjake_api.helper.misc.Message;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TranslateAPI extends ModuleBase {
-    private final String EN_PL_TRANSLATE_REGEX = Utils.TO_REGEX("translate (.*)");
-    private final String EN_PL_TR_REGEX = Utils.TO_REGEX("tr (.*)");
+public class Mention extends ModuleBase {
+    private final String MENTION_REGEX = Utils.TO_REGEX("mention");
 
-    private final String TRANSLATE__REGEX = Utils.TO_REGEX("translate (.*)");
-    private final String PL_REGEX = Utils.TO_REGEX("pl (.*)");
-
-    public TranslateAPI(Chatbot chatbot) {
+    public Mention(Chatbot chatbot) {
         super(chatbot);
     }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
-        if (isOr(EN_PL_TR_REGEX, EN_PL_TRANSLATE_REGEX)) {
+        updateMatch(message);
+
+        if (is(MENTION_REGEX)) {
+            chatbot.sendMentionMessage("Gabriel Wawerski", "test");
+            return true;
         }
         return false;
     }
 
     @Override
     protected List<String> setRegexes() {
-        return List.of(EN_PL_TRANSLATE_REGEX, EN_PL_TR_REGEX, TRANSLATE__REGEX, PL_REGEX);
+        return List.of(MENTION_REGEX);
     }
 }

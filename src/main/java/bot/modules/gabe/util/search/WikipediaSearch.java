@@ -3,7 +3,7 @@ package bot.modules.gabe.util.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.simple.SimpleSearchModule;
+import bot.core.gabes_framework.helper.simple.SimpleSearchModule;
 import org.apache.commons.lang.WordUtils;
 
 import java.util.List;
@@ -12,8 +12,13 @@ public class WikipediaSearch extends SimpleSearchModule {
     protected static final String SEARCH_URL = "https://pl.wikipedia.org/wiki/";
     protected static final String SEPARATOR = "_";
 
-    public WikipediaSearch(Chatbot chatbot, List<String> regexList) {
-        super(chatbot, regexList);
+    public WikipediaSearch(Chatbot chatbot) {
+        super(chatbot);
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return List.of("wiki", "wikipedia");
     }
 
     @Override
@@ -21,13 +26,13 @@ public class WikipediaSearch extends SimpleSearchModule {
         updateMatch(message);
         String messageBody = message.getMessage();
 
-        for (String regex : regexList) {
+        for (String regex : regexes) {
             if (match.equals(regex)) {
                 updateMatcher(messageBody);
 
-                if (isMatchFound()) {
+                if (matchFound()) {
                     // capitalizes each word - wiki responds to that query better it seems
-                    chatbot.sendMessage(getFinalMessage(WordUtils.capitalizeFully(messageBody)));
+                    chatbot.sendMessage(getFinalMessage());
                     return true;
                 }
             }
@@ -36,12 +41,12 @@ public class WikipediaSearch extends SimpleSearchModule {
     }
 
     @Override
-    protected String setSearchUrl() {
+    protected String getSearchUrl() {
         return SEARCH_URL;
     }
 
     @Override
-    protected String setSeparator() {
+    protected String getSeparator() {
         return SEPARATOR;
     }
 }

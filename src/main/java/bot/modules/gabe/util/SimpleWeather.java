@@ -1,9 +1,9 @@
 package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
-import bot.core.gabes_framework.util.simple.SimpleModule;
+import bot.core.gabes_framework.helper.simple.SimpleModule;
 import bot.core.hollandjake_api.helper.misc.Message;
 import com.github.prominence.openweathermap.api.HourlyForecastRequester;
 import com.github.prominence.openweathermap.api.OpenWeatherMapManager;
@@ -16,6 +16,7 @@ import com.github.prominence.openweathermap.api.exception.InvalidAuthTokenExcept
 import com.github.prominence.openweathermap.api.model.response.HourlyForecast;
 import com.github.prominence.openweathermap.api.model.response.Weather;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class SimpleWeather extends SimpleModule {
     private static final String LUBLIN_ID = "765876";
 
 
-    public SimpleWeather(Chatbot chatbot, List<String> commands) {
-        super(chatbot, commands);
+    public SimpleWeather(Chatbot chatbot) {
+        super(chatbot, List.of("pogoda", "p"));
         openWeatherManager = new OpenWeatherMapManager(API_KEY);
     }
 
@@ -42,8 +43,8 @@ public class SimpleWeather extends SimpleModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String command : regexList) {
-            if (match.equals(command)) {
+        for (String regex : regexes) {
+            if (match.equalsIgnoreCase(regex)) {
                 try {
                     addPoints(message, Utils.POINTS_SIMPLEWEATHER_REGEX);
                     Weather weatherResponse = new Weather();
@@ -63,18 +64,11 @@ public class SimpleWeather extends SimpleModule {
                             .setAccuracy(ACCURACY)
                             .getByCityId(LUBLIN_ID);
 
-                    // tells messenger to format the message as a block of code
-//                    builder.append("```\n");
-
-//                    String header = String.format("%20s%12s%1s%n",
-//                            weatherResponse.getCityName(), "*" + new java.text.DecimalFormat("#").format(weatherResponse.getTemperature()) + "*",
-//                            Character.toString(weatherResponse.getTemperatureUnit()));
-
                     // name of the city, weather description
                     builder.append(weatherResponse.getCityName())
                             // current temperature
                             .append("                   ")
-                            .append(new java.text.DecimalFormat("#").format(weatherResponse.getTemperature()))
+                            .append(new DecimalFormat("#").format(weatherResponse.getTemperature()))
                             .append(weatherResponse.getTemperatureUnit())
                             .append(System.getProperty("line.separator"));
 
@@ -97,18 +91,18 @@ public class SimpleWeather extends SimpleModule {
                             .append(System.getProperty("line.separator"));
 
                     builder.append("Maksymalna          ")
-                            .append(new java.text.DecimalFormat("#").format(hourlyForecast.getMaximumTemperature()))
+                            .append(new DecimalFormat("#").format(hourlyForecast.getMaximumTemperature()))
                             .append(weatherResponse.getWeatherInfo().getTemperatureUnit())
                             .append(System.getProperty("line.separator"));
 
                     builder.append("Minimalna            ")
-                            .append(new java.text.DecimalFormat("#").format(hourlyForecast.getMinimumTemperature()))
+                            .append(new DecimalFormat("#").format(hourlyForecast.getMinimumTemperature()))
                             .append(weatherResponse.getWeatherInfo().getTemperatureUnit())
                             .append(System.getProperty("line.separator"))
                             .append(System.getProperty("line.separator"));
 
                     builder.append("Wiatr               ")
-                            .append(new java.text.DecimalFormat("###").format(weatherResponse.getWind().getSpeed() * 3.6f)).append(" km/h*")
+                            .append(new DecimalFormat("###").format(weatherResponse.getWind().getSpeed() * 3.6f)).append(" km/h*")
                             .append(System.getProperty("line.separator"));
 
                     builder.append("Zachmurzenie       ")
@@ -136,14 +130,11 @@ public class SimpleWeather extends SimpleModule {
                     builder.append("Dane z: ")
                             .append(dataCalculationDate);
 
-//                    builder.append("\n```");
-
                     builder.trimToSize();
                     chatbot.sendMessage(builder.toString());
                     return true;
-                } catch (DataNotFoundException e) {
-                    e.printStackTrace();
-                } catch (InvalidAuthTokenException e) {
+
+                } catch (DataNotFoundException | InvalidAuthTokenException e) {
                     e.printStackTrace();
                 }
             }

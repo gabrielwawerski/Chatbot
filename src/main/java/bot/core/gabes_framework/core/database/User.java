@@ -67,6 +67,9 @@ public class User {
         this.points += value;
     }
 
+    /**
+     * If {@code points} value is less or equal than zero, sets points to 0.
+     */
     public void subPoints(int value) {
         if (points - value >= 0) {
             this.points -= value;

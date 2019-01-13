@@ -1,5 +1,6 @@
 package bot.core.gabes_framework.core.database;
 
+import bot.core.PcionBot;
 import bot.core.hollandjake_api.helper.misc.Message;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -31,8 +32,8 @@ public class DBConnection {
     private DBConnection() {
         try {
             connectionSource = new JdbcConnectionSource(URL);
-            ((JdbcConnectionSource) connectionSource).setUsername("gabe");
-            ((JdbcConnectionSource) connectionSource).setPassword("lezetykurwo");
+            ((JdbcConnectionSource) connectionSource).setUsername(PcionBot.DATABASE_USERNAME);
+            ((JdbcConnectionSource) connectionSource).setPassword(PcionBot.DATABASE_PASSWORD);
 
             userDao = DaoManager.createDao(connectionSource, User.class);
         } catch (SQLException e) {
@@ -81,9 +82,9 @@ public class DBConnection {
     }
 
     private static User getBot() {
-        for (User user : userDao) {
-            if (user.getName().equalsIgnoreCase("Ez El")) {
-                return user;
+        for (User currentUser : userDao) {
+            if (currentUser == DBConnection.BOT) {
+                return currentUser;
             }
         }
         return null;
@@ -112,8 +113,5 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public void addMessage(User user, Message message) {
     }
 }

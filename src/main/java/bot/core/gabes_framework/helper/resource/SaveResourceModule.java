@@ -1,7 +1,7 @@
-package bot.core.gabes_framework.util.resource;
+package bot.core.gabes_framework.helper.resource;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.util.ModuleBase;
+import bot.core.gabes_framework.helper.ModuleBase;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,9 +1,8 @@
-package bot.core.gabes_framework.core;
+package bot.core.gabes_framework.core.util;
 
-import bot.core.gabes_framework.core.Users;
+import bot.core.gabes_framework.core.database.Users;
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
-import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
 
 import java.text.SimpleDateFormat;
@@ -64,7 +63,7 @@ public final class Utils {
 
     public static final int POINTS_MULTITORRENTSEARCH_REGEX = 3;
 
-    public static final int POINTS_SIMPLESEARCHMODULE_REGEX = 2;
+    public static final int POINTS_SIMPLESEARCH_MODULE_REGEX = 2;
 
     public static final int POINTS_PYSZNE_INFO_REGEX = 1;
     public static final int POINTS_PYSZNE_RESTAURANT = 1;
@@ -115,45 +114,49 @@ public final class Utils {
     public static final String EMOJI_B = "\uD83C\uDD71️";
     //endregion
 
-    public static String getMatch(Message message, List<String> regexList) {
-        String messageBody = message.getMessage();
-        for (String regex : regexList) {
-            if (messageBody.matches(regex)) {
-                return regex;
-            }
-        }
-        return "";
-    }
-
     public static boolean msgBy(Message message, Users users) {
         return message.getSender().getName().equals(users.getUserName());
     }
 
-    public static ArrayList<String> getCommands(List<String> regexList) {
-        return (ArrayList<String>) regexList.stream().map(bot.core.hollandjake_api.helper.interfaces.Util::DEACTIONIFY).collect(Collectors.toList());
+    public static ArrayList<String> getCommands(List<String> regexes) {
+        return (ArrayList<String>) regexes.stream().map(bot.core.hollandjake_api.helper.interfaces.Util::DEACTIONIFY).collect(Collectors.toList());
     }
 
-    public static ArrayList<String> getCommands(String... commands) {
-        ArrayList<String> returnList = new ArrayList<>(commands.length);
+    public static ArrayList<String> getCommands(String... regexes) {
+        ArrayList<String> returnList = new ArrayList<>(regexes.length);
 
-        for (String x : commands) {
-            returnList.add(TO_COMMAND(x));
+        for (String regex : regexes) {
+            returnList.add(TO_COMMAND(regex));
         }
         return returnList;
     }
 
     /**
-     * Transfers points from one user to another. Refreshes first and updates db when processed.
+     * Transfers points from one user to another. Also refreshes and updates their database entries.
+     *
+     * @param to the user to transfer points to
+     * @param from user to transfer points from
+     * @param points amount of points to transfer
      */
-    public static void transfer(User targetUser, User from, int points) {
-        db.refresh(targetUser, from);
-        targetUser.addPoints(points);
+    public static void transfer(User to, User from, int points) {
+        db.refresh(to, from);
+        to.addPoints(points);
         from.subPoints(points);
-        db.update(targetUser, from);
+        db.update(to, from);
     }
 
     public static String TO_REGEX(String arg) {
         return "(?i)^!\\s*" + arg + "$";
+    }
+
+    // TODO TEST
+    public static List<String> TO_REGEX(List<String> regexes) {
+        ArrayList<String> returnList = new ArrayList<>(regexes.size());
+
+        for (String regex : regexes) {
+            returnList.add("(?i)^!\\s*" + regex + "$");
+        }
+        return returnList;
     }
 
     public static String TO_COMMAND(String regex) {

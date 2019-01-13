@@ -1,12 +1,12 @@
 package bot.modules.gabe.util.point_system;
 
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.core.util.Utils;
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
 
 import java.util.Date;
 
-public class Duel {
+class Duel {
     private final User initiator;
     private final User opponent;
     private final int bet;

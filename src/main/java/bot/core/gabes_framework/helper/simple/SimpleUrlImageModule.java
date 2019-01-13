@@ -1,4 +1,4 @@
-package bot.core.gabes_framework.util.simple;
+package bot.core.gabes_framework.helper.simple;
 
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
@@ -10,8 +10,8 @@ public class SimpleUrlImageModule extends SimpleModule {
     private String url;
     private String message;
 
-    public SimpleUrlImageModule(Chatbot chatbot, List<String> regexList, String url, String message) {
-        super(chatbot, regexList);
+    public SimpleUrlImageModule(Chatbot chatbot, List<String> regexes, String url, String message) {
+        super(chatbot, regexes);
         this.url = url;
         this.message = message;
     }
@@ -20,11 +20,9 @@ public class SimpleUrlImageModule extends SimpleModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String regex : regexList) {
-            if (match.equals(regex)) {
-                chatbot.sendImageFromURLWithMessage(url, this.message);
-                return true;
-            }
+        if (isRegex()) {
+            chatbot.sendImageFromURLWithMessage(url, this.message);
+            return true;
         }
         return false;
     }

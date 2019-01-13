@@ -1,6 +1,9 @@
 package bot.core;
 
 public class PcionBot extends Chatbot {
+    public static final String DATABASE_USERNAME = "gabe";
+    public static final String DATABASE_PASSWORD = "lezetykurwo";
+
     public static final String IMGUR_SECRET = "c7aae8e29fbd8eff21c742648125667abdcd579e";
     public static final String IMGUR_ID = "ba98f25f45c4ac9";
     public static final String YANDEX_API_KEY = "trnsl.1.1.20181218T072725Z.426c8360e3601118.ce0d07709d8e3173e8005a6e6e266a65090c04fe";
@@ -11,6 +14,8 @@ public class PcionBot extends Chatbot {
     public static final String PATRO_ID = "2275107775897967";
     public static final String MOONSHINERS_ID = "1771365296265469";
     public static final String PCIONBOT_MAIN_ID = "2388008607938113";
+
+    public static final String KARTAPULAPKA_IMG_URL = "https://res.cloudinary.com/drpmvrlik/image/upload/v1547334869/assets/kartapulapka/kartapulapka.jpg";
 
     public static final boolean SILENT_MODE = true; // does not greet itself or send msg when exception occurs
     public static final boolean LOG_MODE = false;    // doesn't respond to commands - updates database only.
@@ -26,7 +31,7 @@ public class PcionBot extends Chatbot {
         boolean headless = false;
         boolean maximized = true;
 
-        pcionbot = new Chatbot(username, password, PCIONBOT_MAIN_ID,
+        pcionbot = new Chatbot(username, password, PATRO_ID,
                 debugMode,
                 SILENT_MODE,
                 debugMessages,

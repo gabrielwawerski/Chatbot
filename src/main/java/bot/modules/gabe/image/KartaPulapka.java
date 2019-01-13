@@ -1,35 +1,35 @@
 package bot.modules.gabe.image;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.PcionBot;
+import bot.core.gabes_framework.core.util.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.simple.SimpleModule;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
-public class KartaPulapka extends SimpleModule {
-    private final Image kartaPulapka;
-
-    public KartaPulapka(Chatbot chatbot, List<String> commands, String fileName) {
-        super(chatbot, commands);
-        kartaPulapka = new ImageIcon("modules/" + getClass().getSimpleName() + "/" + fileName).getImage();
-        System.out.println("loaded");
+public class KartaPulapka extends ModuleBase {
+    public KartaPulapka(Chatbot chatbot) {
+        super(chatbot);
     }
 
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        for (String command : regexList) {
+        for (String command : regexes) {
             if (match.equals(command)) {
                 addPoints(message, Utils.POINTS_KARTAPULAPKA_REGEX);
-                chatbot.sendImageWithMessage(kartaPulapka, ""); // FIXME URL Z SERWERA!!!!!!!!!
+                chatbot.sendImageUrlWaitToLoad(PcionBot.KARTAPULAPKA_IMG_URL);
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return getMappedRegexes("karta", "kartapulapka", "myk");
     }
 }

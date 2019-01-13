@@ -3,10 +3,11 @@ package bot.modules.gabe.rand;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +18,7 @@ import static bot.core.hollandjake_api.helper.interfaces.Util.DEACTIONIFY;
  * @author Gabe
  */
 public class Roll extends ModuleBase {
-    private final String ROLL_PRESET_REGEX = ACTIONIFY("roll");
+    private final String ROLL_FIXED_REGEX = ACTIONIFY("roll");
     private final String ROLL_REGEX = ACTIONIFY("roll (\\d+)");
 
     private final int MIN_ROLL = 3;
@@ -28,15 +29,21 @@ public class Roll extends ModuleBase {
     }
 
     @Override
+    protected List<String> setRegexes() {
+        return List.of(ROLL_FIXED_REGEX, ROLL_REGEX);
+    }
+
+    @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (match.equals(ROLL_PRESET_REGEX)) {
+        if (is(ROLL_FIXED_REGEX)) {
             addPoints(message, Utils.POINTS_ROLL_SIMPLE_REGEX);
             int roll = roll(MIN_ROLL, MAX_ROLL);
             chatbot.sendMessage("Twój los: " + Integer.toString(roll));
             return true;
-        } else if (match.equals(ROLL_REGEX)) {
+
+        } else if (is(ROLL_REGEX)) {
             Matcher matcher = Pattern.compile(ROLL_REGEX).matcher(message.getMessage());
             if (matcher.find()) {
                 addPoints(message, Utils.POINTS_ROLL_REGEX);
@@ -57,30 +64,6 @@ public class Roll extends ModuleBase {
         }
     }
 
-    @Override
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-
-        if (messageBody.matches(ROLL_PRESET_REGEX)) {
-            return ROLL_PRESET_REGEX;
-        } else if (messageBody.matches(ROLL_REGEX)) {
-            return ROLL_REGEX;
-        } else {
-            return "";
-        }
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(DEACTIONIFY(ROLL_PRESET_REGEX));
-        commands.add(DEACTIONIFY(ROLL_REGEX));
-        return commands;
-    }
-
-    /**
-     * @author hollandjake
-     */
     private int roll(int lower, int upper) {
         return (int) (Math.random() * (upper - lower) + lower);
     }

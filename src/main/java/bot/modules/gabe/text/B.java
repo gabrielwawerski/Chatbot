@@ -1,16 +1,17 @@
 package bot.modules.gabe.text;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.Utils.EMOJI_B;
+import static bot.core.gabes_framework.core.util.Utils.EMOJI_B;
 
 public class B extends ModuleBase {
     private final String B_ANY_REGEX = Utils.TO_REGEX("b (.*)");
@@ -18,6 +19,11 @@ public class B extends ModuleBase {
 
     public B(Chatbot chatbot) {
         super(chatbot);
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return List.of(B_ANY_REGEX, INFO_REGEX);
     }
 
     @Override

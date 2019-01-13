@@ -3,32 +3,38 @@ package bot.modules.gabe.work_in_progress;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.ModuleBase;
+import bot.core.gabes_framework.helper.ModuleBase;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.Utils.TO_COMMAND;
-import static bot.core.gabes_framework.core.Utils.TO_REGEX;
+import static bot.core.gabes_framework.core.util.Utils.TO_COMMAND;
+import static bot.core.gabes_framework.core.util.Utils.TO_REGEX;
 
 public class PollCreate extends ModuleBase {
-    private static final String HELP_REGEX = TO_REGEX("poll");
-    private static final String HELP_2_REGEX = TO_REGEX("poll help");
-    private static final String POLL_1 = TO_REGEX("poll (.*) . (.*) . (.*)");
+    private final String HELP_REGEX = TO_REGEX("poll");
+    private final String HELP_2_REGEX = TO_REGEX("poll help");
+    private final String POLL_1 = TO_REGEX("poll (.*) . (.*) . (.*)");
 
     public PollCreate(Chatbot chatbot) {
         super(chatbot);
     }
 
     @Override
+    protected List<String> setRegexes() {
+        return List.of(HELP_REGEX, HELP_2_REGEX, POLL_1);
+    }
+
+    @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (match.equals(HELP_REGEX) || match.equals(HELP_2_REGEX)) {
+        if (isOr(HELP_REGEX, HELP_2_REGEX)) {
             chatbot.sendMessage("");
             return true;
-        } else if (match.equals(POLL_1)) {
+        } else if (is(POLL_1)) {
             Matcher matcher = Pattern.compile(POLL_1).matcher(message.getMessage());
             if (matcher.find()) {
 
@@ -43,28 +49,5 @@ public class PollCreate extends ModuleBase {
             }
         }
         return false;
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-
-        if (messageBody.matches(HELP_REGEX)) {
-            return HELP_REGEX;
-        } else if (messageBody.matches(HELP_2_REGEX)) {
-            return HELP_2_REGEX;
-        } else if (messageBody.matches(POLL_1)) {
-            return POLL_1;
-        }
-        return "";
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(TO_COMMAND(HELP_REGEX));
-        commands.add(TO_COMMAND(HELP_2_REGEX));
-        commands.add(TO_COMMAND(POLL_1));
-        return commands;
     }
 }

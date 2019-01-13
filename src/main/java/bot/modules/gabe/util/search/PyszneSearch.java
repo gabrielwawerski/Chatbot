@@ -3,14 +3,15 @@ package bot.modules.gabe.util.search;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.search.SearchModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.search.SearchModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.Utils.TO_REGEX;
+import static bot.core.gabes_framework.core.util.Utils.TO_REGEX;
 
 /**
  * @version 1.0
@@ -48,17 +49,29 @@ public class PyszneSearch extends SearchModuleBase {
     }
 
     @Override
-    protected String setSearchUrl() {
+    protected List<String> setRegexes() {
+        return List.of(
+                HELP_REGEX,
+                HELP_2_REGEX,
+                SEARCH_REGEX,
+                HAIANH_REGEX_1,
+                HAIANH_REGEX_2,
+                HAIANH_REGEX_3,
+                MARIANO_ITALIANO_1,
+                MARIANO_ITALIANO_2,
+                FOOTBALL_PIZZA_1,
+                FOOTBALL_PIZZA_2,
+                FOOTBALL_PIZZA_3);
+    }
+
+    @Override
+    protected String getSearchUrl() {
         return SEARCH_URL;
     }
 
     @Override
-    protected String setSeparator() {
+    protected String getSeparator() {
         return SEPARATOR;
-    }
-
-    private void sendMessage(String message) {
-        chatbot.sendMessage(getFinalMessage(message));
     }
 
     @Override
@@ -66,7 +79,7 @@ public class PyszneSearch extends SearchModuleBase {
         updateMatch(message);
         String messageBody = message.getMessage();
 
-        if (match.equals(HELP_REGEX) || match.equals(HELP_2_REGEX) ) {
+        if (isOr(HELP_REGEX, HELP_2_REGEX) ) {
             addPoints(message, Utils.POINTS_PYSZNE_INFO_REGEX);
             chatbot.sendMessage(
                     "Restauracje dla kodu pocztowego."
@@ -80,95 +93,50 @@ public class PyszneSearch extends SearchModuleBase {
                             + "\nFormat: 00-000 lub 00 000 lub 00000");
             return true;
 
-        } else if (match.equals(MARIANO_ITALIANO_1) || match.equals(MARIANO_ITALIANO_2)) {
+        } else if (isOr(MARIANO_ITALIANO_1, MARIANO_ITALIANO_2)) {
             addPoints(message, Utils.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/pizzeria-mariano-italiano");
             return true;
-        } else if (match.equals(HAIANH_REGEX_1) || match.equals(HAIANH_REGEX_2)
-                || match.equals(HAIANH_REGEX_3)) {
+
+        } else if (is(HAIANH_REGEX_1, HAIANH_REGEX_2, HAIANH_REGEX_3)) {
             addPoints(message, Utils.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/bar-azjatycki-hai-ahn");
             return true;
-        } else if (match.equals(FOOTBALL_PIZZA_1) || match.equals(FOOTBALL_PIZZA_2)
-                || match.equals(FOOTBALL_PIZZA_3)) {
+
+        } else if (is(FOOTBALL_PIZZA_1, FOOTBALL_PIZZA_2, FOOTBALL_PIZZA_3)) {
             addPoints(message, Utils.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/football-pizza");
             return true;
         }
 
         updateMatcher(messageBody);
-        if (match.equals(SEARCH_REGEX)) {
-//            updateMatcher(messageBody);
-
-            if (isMatchFound()) {
+        if (is(SEARCH_REGEX)) {
+            if (matchFound()) {
                 if (analyzeMessage(messageBody)) {
                     addPoints(message, Utils.POINTS_PYSZNE_REGEX);
-                    chatbot.sendMessage(getFinalMessage(messageBody));
+                    chatbot.sendMessage(getFinalMessage());
                     return true;
                 } else {
                     chatbot.sendMessage("Nieprawidłowy kod pocztowy.");
                     return true;
                 }
+            }
         }
-    }
         return false;
     }
 
-    @Override
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-
-        if (messageBody.matches(HELP_REGEX)) {
-            return HELP_REGEX;
-        } else if (messageBody.matches(HELP_2_REGEX)) {
-            return HELP_2_REGEX;
-        } else if (messageBody.matches(HAIANH_REGEX_1)) {
-            return HAIANH_REGEX_1;
-        } else if (messageBody.matches(HAIANH_REGEX_2)) {
-            return HAIANH_REGEX_2;
-        } else if (messageBody.matches(HAIANH_REGEX_3)) {
-            return HAIANH_REGEX_3;
-        } else if (messageBody.matches(MARIANO_ITALIANO_1)) {
-            return MARIANO_ITALIANO_1;
-        } else if (messageBody.matches(MARIANO_ITALIANO_2)) {
-            return MARIANO_ITALIANO_2;
-        } else if (messageBody.matches(FOOTBALL_PIZZA_1)) {
-            return FOOTBALL_PIZZA_1;
-        } else if (messageBody.matches(FOOTBALL_PIZZA_2)) {
-            return FOOTBALL_PIZZA_3;
-        } else if (messageBody.matches(FOOTBALL_PIZZA_3)) {
-            return FOOTBALL_PIZZA_3;
-        } else if (messageBody.matches(SEARCH_REGEX)) {
-            return SEARCH_REGEX;
-        }
-        return "";
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(Utils.TO_COMMAND(HAIANH_REGEX_1));
-        commands.add(Utils.TO_COMMAND(HAIANH_REGEX_2));
-        commands.add(Utils.TO_COMMAND(HAIANH_REGEX_3));
-        commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_1));
-        commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_2));
-        commands.add(Utils.TO_COMMAND(FOOTBALL_PIZZA_3));
-        commands.add(Utils.TO_COMMAND(MARIANO_ITALIANO_1));
-        commands.add(Utils.TO_COMMAND(MARIANO_ITALIANO_2));
-        commands.add(Utils.TO_COMMAND(HELP_REGEX));
-        commands.add(Utils.TO_COMMAND(HELP_2_REGEX));
-        commands.add(Utils.TO_COMMAND(SEARCH_REGEX));
-        return commands;
+    private void sendMessage(String message) {
+        chatbot.sendMessage(getFinalMessage());
     }
 
     private boolean analyzeMessage(String messageBody) {
-        String nr = "(\\d)";    // Any Single Digit 1
+        String digit = "(\\d)";    // Any Single Digit 1
         String hyphen = "(-)";    // Any Single Character 1
         String space = "( )";    // Any Single Character 1
 
-        Pattern pattern1 = Pattern.compile(nr + nr + hyphen + nr + nr + nr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-        Pattern pattern2 = Pattern.compile(nr + nr + space + nr + nr + nr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-        Pattern pattern3 = Pattern.compile(nr + nr + nr + nr + nr + nr, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Pattern pattern1 = Pattern.compile(digit + digit + hyphen + digit + digit + digit, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Pattern pattern2 = Pattern.compile(digit + digit + space + digit + digit + digit, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+        Pattern pattern3 = Pattern.compile(digit + digit + digit + digit + digit + digit, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
         Matcher matcher;
 

@@ -3,14 +3,15 @@ package bot.modules.gabe.util.info;
 import bot.core.Chatbot;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
-import bot.core.gabes_framework.util.ModuleBase;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +25,11 @@ public class Info extends ModuleBase {
 
     public Info(Chatbot chatbot) {
         super(chatbot);
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return List.of(ECHO_COMMAND, INFO_REGEX, STATS_REGEX, UPTIME_REGEX);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package bot.core.gabes_framework.core;
+package bot.core.gabes_framework.core.database;
 
 import java.util.List;
 

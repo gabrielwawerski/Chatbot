@@ -1,8 +1,8 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.Utils;
-import bot.core.gabes_framework.util.ModuleBase;
+import bot.core.gabes_framework.core.util.Utils;
+import bot.core.gabes_framework.helper.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import org.jsoup.Jsoup;
@@ -29,11 +29,9 @@ public class RandomWykop extends ModuleBase {
     private final String WYKOP_REGEX = Utils.TO_REGEX("wykop");
     private final String WY_REGEX = Utils.TO_REGEX("wy");
 
-    private final List<String> REGEXES;
-
     public RandomWykop(Chatbot chatbot) {
         super(chatbot);
-        REGEXES = List.of(WYKOP_REGEX, WY_REGEX);
+
         index = 0;
         getDocument(MEMY_URL);
         els = doc.getElementsByClass("media-content");
@@ -51,6 +49,11 @@ public class RandomWykop extends ModuleBase {
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected List<String> setRegexes() {
+        return List.of(WYKOP_REGEX, WY_REGEX);
     }
 
     private String getNextMeme() {
@@ -90,15 +93,5 @@ public class RandomWykop extends ModuleBase {
         } catch (NullPointerException | IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public String getMatch(Message message) {
-        return findMatch(message, REGEXES);
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        return Utils.getCommands(REGEXES);
     }
 }

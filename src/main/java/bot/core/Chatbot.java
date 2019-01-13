@@ -1,7 +1,7 @@
 package bot.core;
 
 import bot.core.gabes_framework.core.database.DBConnection;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.core.util.Utils;
 import bot.modules.gabe.text.B;
 import bot.modules.gabe.util.info.FeatureSuggest;
 import bot.modules.gabe.util.info.Shutdown;
@@ -29,7 +29,6 @@ import bot.modules.gabe.util.Mp3Tube;
 import bot.modules.gabe.util.info.ATG;
 import bot.modules.gabe.rand.image.RandomWTF;
 import bot.modules.gabe.rand.image.RandomWykop;
-import bot.modules.gabe.work_in_progress.JakDojade;
 import bot.modules.gabe.work_in_progress.Mention;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
@@ -41,7 +40,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bot.core.gabes_framework.core.Utils.*;
+import static bot.core.gabes_framework.core.util.Utils.*;
 
 public class Chatbot {
     private final String version = "v0.3313";
@@ -65,34 +64,31 @@ public class Chatbot {
     private PointSystem pointSystem;
 
     protected void loadModules() {
+        pointSystem = new PointSystem(this);
         // TODO List with all regexes for PointSystem to receive in constructor.
         modules.put("Commands", new Commands(this, List.of("cmd", "help")));
-        modules.put("Info", new Info(this));
+//        modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
         modules.put("FeatureSuggest", new FeatureSuggest(this,
                 "sugestie.txt"));
 
         modules.put("MultiTorrentSearch", new MultiTorrentSearch(this));
-        modules.put("WikipediaSearch", new WikipediaSearch(this, List.of("wiki")));
-        modules.put("YoutubeSearch", new YoutubeSearch(this, List.of("youtube", "yt")));
+        modules.put("WikipediaSearch", new WikipediaSearch(this));
+        modules.put("YoutubeSearch", new YoutubeSearch(this));
         modules.put("GoogleSearch", new GoogleSearch(this));
-        modules.put("AllegroSearch", new AllegroSearch(this, List.of("allegro")));
+        modules.put("AllegroSearch", new AllegroSearch(this));
         modules.put("PyszneSearch", new PyszneSearch(this));
 
         modules.put("RandomGroupPhoto", new RandomGroupPhoto(this));
-        modules.put("SimpleWeather", new SimpleWeather(this, List.of("pogoda", "p")));
+        modules.put("SimpleWeather", new SimpleWeather(this));
         modules.put("Popcorn", new Popcorn(this, List.of("popcorn", "rajza")));
-        modules.put("KartaPulapka", new KartaPulapka(this, List.of("karta", "kartapulapka", "myk"),
-                "kartapulapka.jpg"));
+        modules.put("KartaPulapka", new KartaPulapka(this));
 //        modules.put("Inspire", new Inspire(this));
         modules.put("Roll", new Roll(this));
         modules.put("Think", new Think(this));
-        modules.put("EightBall", new EightBall(this,
-                "responses.txt"));
-        modules.put("JebacLeze", new JebacLeze(this,
-                "responses.txt"));
-        modules.put("LezeSpam", new LezeSpam(this, List.of("spam", "kurwa"),
-                "responses.txt"));
+        modules.put("EightBall", new EightBall(this, "responses.txt"));
+        modules.put("JebacLeze", new JebacLeze(this, "responses.txt"));
+        modules.put("LezeSpam", new LezeSpam(this, "responses.txt"));
         modules.put("RandomKwejk", new RandomKwejk(this));
         modules.put("TwitchEmotes", new TwitchEmotes(this));
         modules.put("Mp3Tube", new Mp3Tube(this));
@@ -101,9 +97,7 @@ public class Chatbot {
         // !atg taxi numery telefonow
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
-        pointSystem = new PointSystem(this);
         modules.put("PointSystem", pointSystem);
-        modules.put("JakDojade", new JakDojade(this));
         modules.put("Mention", new Mention(this));
     }
 

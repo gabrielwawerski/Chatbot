@@ -1,13 +1,13 @@
 package bot.modules.gabe.rand;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.Utils;
+import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.helper.interfaces.Util;
-import bot.core.gabes_framework.util.resource.RandomResourceModule;
+import bot.core.gabes_framework.helper.resource.RandomResourceModule;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,44 +32,22 @@ public class EightBall extends RandomResourceModule {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
 
-        if (match.equals(EIGHT_BALL_REGEX) || match.equals(ASK_REGEX)
-                || match.equals(EIGHT_REGEX)) {
+        if (isRegex()) {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
 
             if (matcher.find() && !matcher.group(1).isEmpty()) {
                 addPoints(message, Utils.POINTS_EIGHTBALL_REGEX);
-                chatbot.sendMessage(Util.GET_RANDOM(resourceContent));
+                chatbot.sendMessage(Util.GET_RANDOM(resourceContents));
+                return true;
             } else {
                 throw new MalformedCommandException();
             }
-            return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
-    @SuppressWarnings("Duplicates")
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-
-        if (messageBody.matches(EIGHT_BALL_REGEX)) {
-            return EIGHT_BALL_REGEX;
-        } else if (messageBody.matches(ASK_REGEX)) {
-            return ASK_REGEX;
-        } else if (messageBody.matches(EIGHT_REGEX)) {
-            return EIGHT_REGEX;
-        } else {
-            return "";
-        }
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(Util.DEACTIONIFY(EIGHT_BALL_REGEX));
-        commands.add(Util.DEACTIONIFY(ASK_REGEX));
-        commands.add(Util.DEACTIONIFY(EIGHT_REGEX));
-        return commands;
+    protected List<String> setRegexes() {
+        return List.of(EIGHT_BALL_REGEX, ASK_REGEX, EIGHT_REGEX);
     }
 }

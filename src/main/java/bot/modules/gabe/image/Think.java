@@ -1,23 +1,21 @@
 package bot.modules.gabe.image;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.util.Text;
+import bot.core.gabes_framework.helper.ModuleBase;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
-import bot.core.gabes_framework.util.simple.SimpleModule;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static bot.core.hollandjake_api.helper.interfaces.Util.ACTIONIFY;
-import static bot.core.hollandjake_api.helper.interfaces.Util.DEACTIONIFY;
 
 /**
- * Original code by hollandjake.
- * @author Gabe
- * @author hollandjake
+ * @version 1.1
  */
-public class Think extends SimpleModule {
+public class Think extends ModuleBase {
     private final String THINK_REGEX = ACTIONIFY("think");
     private final String MULTI_THINK_REGEX = ACTIONIFY("think (\\d*)");
     private final String THONK_REGEX = ACTIONIFY("thonk");
@@ -30,15 +28,17 @@ public class Think extends SimpleModule {
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         String match = getMatch(message);
-        if (match.equals(THINK_REGEX) || match.equals(THONK_REGEX)) {
+        if (isOr(THINK_REGEX, THONK_REGEX)) {
             chatbot.sendMessage("\uD83E\uDD14");
             return true;
-        } else if (match.equals(MULTI_THINK_REGEX) || match.equals(MULTI_THONK_REGEX)) {
+        } else if (isOr(MULTI_THINK_REGEX, MULTI_THONK_REGEX)) {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
+
             if (matcher.find()) {
                 int repeats = Integer.parseInt(matcher.group(1));
+
                 if (repeats > 100) {
-                    chatbot.sendMessage("Nie zamyśl sie debilu");
+                    chatbot.sendMessage(Text.THINK_TOO_MUCH_REQUESTED);
                 } else {
                     chatbot.sendMessage(new String(new char[repeats]).replace("\0", "\uD83E\uDD14"));
                 }
@@ -52,30 +52,11 @@ public class Think extends SimpleModule {
     }
 
     @Override
-    @SuppressWarnings("Duplicates")
-    public String getMatch(Message message) {
-        String messageBody = message.getMessage();
-        if (messageBody.matches(THINK_REGEX)) {
-            return THINK_REGEX;
-        } else if (messageBody.matches(THONK_REGEX)) {
-            return THONK_REGEX;
-        } else if (messageBody.matches(MULTI_THINK_REGEX)) {
-            return MULTI_THINK_REGEX;
-        } else if (messageBody.matches(MULTI_THONK_REGEX)) {
-            return MULTI_THONK_REGEX;
-        } else {
-            return "";
-        }
-    }
-
-    @Override
-    @SuppressWarnings("Duplicates")
-    public ArrayList<String> getCommands() {
-        ArrayList<String> commands = new ArrayList<>();
-        commands.add(DEACTIONIFY(THINK_REGEX));
-        commands.add(DEACTIONIFY(THONK_REGEX));
-        commands.add(DEACTIONIFY(MULTI_THINK_REGEX));
-        commands.add(DEACTIONIFY(MULTI_THONK_REGEX));
-        return commands;
+    protected List<String> setRegexes() {
+        return List.of(
+                THINK_REGEX,
+                MULTI_THINK_REGEX,
+                THONK_REGEX,
+                MULTI_THONK_REGEX);
     }
 }
