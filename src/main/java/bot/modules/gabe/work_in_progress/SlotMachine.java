@@ -124,15 +124,29 @@ public class SlotMachine extends ModuleBase {
 
         //region find combos
         if (roll1.equals(roll2)) combo1++;
-        if (roll2.equals(roll3)) combo2++;
-        if (roll3.equals(roll4)) combo3++;
-        if (roll4.equals(roll5)) combo4++;
         if (roll1.equals(roll3)) combo1++;
         if (roll1.equals(roll4)) combo1++;
         if (roll1.equals(roll5)) combo1++;
+        
+        if (roll2.equals(roll1)) combo2++;
+        if (roll2.equals(roll3)) combo2++;
         if (roll2.equals(roll4)) combo2++;
         if (roll2.equals(roll5)) combo2++;
+        
+        if (roll3.equals(roll1)) combo3++;
+        if (roll3.equals(roll2)) combo2++;
+        if (roll3.equals(roll4)) combo3++;
         if (roll3.equals(roll5)) combo3++;
+        
+        if (roll4.equals(roll1)) combo4++;
+        if (roll4.equals(roll2)) combo4++;
+        if (roll4.equals(roll3)) combo4++;
+        if (roll4.equals(roll5)) combo4++;
+        
+        if (roll5.equals(roll1)) combo5++;
+        if (roll5.equals(roll2)) combo5++;
+        if (roll5.equals(roll3)) combo5++;
+        if (roll5.equals(roll4)) combo5++;
         //endregion
 
         if (combo1 == mul5 | combo2 == mul5 | combo3 == mul5 | combo4 == mul5 | combo5 == mul5) {
