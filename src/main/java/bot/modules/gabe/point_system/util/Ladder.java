@@ -4,10 +4,10 @@ import bot.core.gabes_framework.core.database.User;
 
 import java.util.*;
 
-class Ladder {
+public class Ladder {
     private final String ladder;
 
-    static Ladder getLadder(ArrayList<User> users) {
+    public static Ladder getLadder(ArrayList<User> users) {
         StringBuilder ladder = new StringBuilder();
 
         // sorts users by their points (ascending)
@@ -20,35 +20,6 @@ class Ladder {
         for (int i = 0; i < users.size(); i++) {
             User currUser = users.get(users.size() - 1 - i);
             int currUserPts = currUser.getPoints();
-
-            if (i + 1 == 1) {
-                ladder.append("1\ufe0f\u20e3 ");
-            } else if (i + 1 == 2) {
-                ladder.append("2\ufe0f\u20e3 ");
-            } else if (i + 1 == 3) {
-                ladder.append("3\ufe0f\u20e3 ");
-            } else if (i + 1 == 4) {
-                ladder.append("4\ufe0f\u20e3 ");
-            } else if (i + 1 == 5) {
-                ladder.append("5\ufe0f\u20e3 ");
-            } else if (i + 1 == 6) {
-                ladder.append("6\ufe0f\u20e3 ");
-            } else if (i + 1 == 7) {
-                ladder.append("7\ufe0f\u20e3 ");
-            } else if (i + 1 == 8) {
-                ladder.append("8\ufe0f\u20e3 ");
-            } else if (i + 1 == 9) {
-                ladder.append("9\ufe0f\u20e3 ");
-            } else if (i + 1 == 10) {
-                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3");
-            }
-
-//            // simple ordering. USE IF YOU FUCK SHIT UP WITH EMOJI ORDERING!!!
-//            if (i < 9) {
-//                ladder.append(i + 1).append(". ");
-//            } else {
-//                ladder.append(i + 1).append(".");
-//            }
 
             if (i + 1 == 10) {
                 // do nothing - we don't need extra spaces, so ladder aligns
@@ -71,57 +42,52 @@ class Ladder {
         return new Ladder(ladder.toString());
     }
 
-    static Ladder getMsgLadder(ArrayList<User> users) {
-        StringBuilder ladder = new StringBuilder();
-        users.sort(Comparator.comparing(User::getMessageCount));
+    public static Ladder getMsgLadder(ArrayList<User> users) {
+        return generateLadder(users, LadderType.MESSAGES);
+    }
 
-        ladder.append("Ranking wg wiadomości:\n")
-                .append("=================")
-                .append("\n");
-        for (int i = 0; i < users.size(); i++) {
-            User currUser = users.get(users.size() - 1 - i);
-            int currUserMsgs = currUser.getMessageCount();
+    private static Ladder generateLadder(ArrayList<User> users, LadderType ladderType) {
+        // TODO platform dependent ladders
+        // if mobile - remove messenger ``` text ``` formatting - it only works on desktop
+        if (ladderType == LadderType.POINTS) {
 
-            if (i + 1 == 1) {
-                ladder.append("1\ufe0f\u20e3 ");
-            } else if (i + 1 == 2) {
-                ladder.append("2\ufe0f\u20e3 ");
-            } else if (i + 1 == 3) {
-                ladder.append("3\ufe0f\u20e3 ");
-            } else if (i + 1 == 4) {
-                ladder.append("4\ufe0f\u20e3 ");
-            } else if (i + 1 == 5) {
-                ladder.append("5\ufe0f\u20e3 ");
-            } else if (i + 1 == 6) {
-                ladder.append("6\ufe0f\u20e3 ");
-            } else if (i + 1 == 7) {
-                ladder.append("7\ufe0f\u20e3 ");
-            } else if (i + 1 == 8) {
-                ladder.append("8\ufe0f\u20e3 ");
-            } else if (i + 1 == 9) {
-                ladder.append("9\ufe0f\u20e3 ");
-            } else if (i + 1 == 10) {
-                ladder.append("1\ufe0f\u20e3").append("0\ufe0f\u20e3");
-            }
+        } else if (ladderType == LadderType.MESSAGES) {
+            StringBuilder ladder = new StringBuilder();
+            users.sort(Comparator.comparing(User::getMessageCount));
 
-            if (i + 1 == 10) {
-                // do nothing - we don't need extra spaces, so ladder aligns
-            } else if (currUserMsgs <= 9) {
-                ladder.append("    ");
-            } else if (currUserMsgs <= 99) {
-                ladder.append("  ");
-            }
-
-            if (i != 10) {
-                ladder.append("(").append(currUserMsgs).append(") | ");
-            } else {
-                ladder.append("(").append(currUserMsgs).append(") | ");
-            }
-
-            ladder.append(currUser.getName())
+            ladder.append("```")
+                    .append("\nRanking wg wiadomości:\n")
+                    .append("=================")
                     .append("\n");
+
+            for (int i = 0; i < users.size(); i++) {
+                User currUser = users.get(users.size() - 1 - i);
+                int currUserMsgs = currUser.getMessageCount();
+
+                ladder.append(i + 1);
+
+                if (i + 1 < 10) {
+                    ladder.append(". ")
+                            .append("(")
+                            .append(currUserMsgs)
+                            .append(") ");
+
+                    ladder.append(currUser.getName())
+                            .append(System.lineSeparator());
+                } else {
+                    ladder.append(".")
+                            .append("(")
+                            .append(currUserMsgs)
+                            .append(") ");
+
+                    ladder.append(currUser.getName())
+                            .append(System.lineSeparator())
+                            .append("```");
+                    return new Ladder(ladder.toString());
+                }
+            }
         }
-        return new Ladder(ladder.toString());
+        throw new IllegalArgumentException("Invalid ladder type. Found: " + ladderType.toString());
     }
 
     private Ladder(String ladder) {
@@ -131,5 +97,9 @@ class Ladder {
     @Override
     public String toString() {
         return ladder;
+    }
+
+    private enum LadderType {
+        POINTS, MESSAGES
     }
 }
