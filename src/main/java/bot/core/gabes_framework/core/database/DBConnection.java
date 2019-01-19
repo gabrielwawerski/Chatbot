@@ -14,10 +14,9 @@ public class DBConnection {
     private static ConnectionSource connectionSource;
     private static Dao<User, String> userDao;
     private static Dao<MessageLog, String> messageDao;
+    public static User BOT;
 
     private static DBConnection instance;
-
-    public static User BOT;
 
     private static final String URL = "jdbc:hsqldb:file:E:/IntelliJProjekty/libGDX/Chatbot/PcionDB/PcionDatabase";
 

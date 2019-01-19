@@ -32,20 +32,18 @@ public abstract class ModuleBase implements Module {
     protected DBConnection db;
     /**
      * Needs to be assigned to latest received {@code message}. After overriding {@link Module#process(Message)} method,
-     * call {@link #updateMatch(Message)} inside it first, which takes care of the assigning for you. Although this field
+     * call {@link #updateMatch(Message)} inside it, which takes care of the assigning for you. Although this field
      * and it's corresponding method are not necessary, they aim to make writing modules less error prone.
      * <p>
-     * If you don't want to use these, take a look the snippet below at the beginning of your overriden {@code process}
-     * method.
+     * If you don't want to use these, take a look the snippet below:
      *
      * <pre>{@code match = getMatch(message)}</pre>
      *
      * See also {@linkplain #updateMatch(Message)}, {@linkplain #getMatch(Message)}, {@linkplain #process(Message)}
      */
     protected String match;
-    /** make sure to make your regexes static, otherwise null pointer exception will be thrown. */
+    /** make sure to make your regexes static, otherwise {@code NullPointerException} will be thrown. */
     protected List<String> regexes;
-
     private boolean online;
 
     public ModuleBase(Chatbot chatbot) {
@@ -56,7 +54,10 @@ public abstract class ModuleBase implements Module {
     }
 
     /**
-     * Should return a list with all regexes you have added. Use {@code List.of("regex1", "regex2")}.
+     * Should return a list with all regexes you have added. Use {@code List.of(regex1, Utils.TO_REGEX("regex2"), "regex3")}.
+     * <p>
+     * As shown in example above, you don't have to add regexes as fields, nor use {@link Utils#TO_REGEX(String)} on them.
+     * When not using abovementioned method, users will be able to trigger your regex without "!".
      */
     protected abstract List<String> setRegexes();
 
@@ -84,14 +85,6 @@ public abstract class ModuleBase implements Module {
             System.out.println(user.getName() + "(+" + points + ")");
             System.out.print(user.getName().substring(0, 5) + "(MSG+)" + "\n");
         }
-    }
-
-    protected void processMessage(Message message) {
-        // TODO
-    }
-
-    protected void processMessage(Message message, int points) {
-        // TODO
     }
 
     protected void addMessageCount(User user) {

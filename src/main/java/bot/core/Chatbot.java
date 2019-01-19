@@ -69,8 +69,8 @@ public class Chatbot {
         modules.put("Commands", new Commands(this));
         modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
-        modules.put("FeatureSuggest", new FeatureSuggest(this,
-                "sugestie.txt"));
+//        modules.put("FeatureSuggest", new FeatureSuggest(this,
+//                "sugestie.txt"));
 
         modules.put("MultiTorrentSearch", new MultiTorrentSearch(this));
         modules.put("WikipediaSearch", new WikipediaSearch(this));
@@ -328,14 +328,14 @@ public class Chatbot {
 
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " ONLINE \u2705\n"
-                + "Załadowane moduły:  " + EMOJI_NEW_BUTTON + " " + modulesOnline + "/" + totalModules
-                + "\n" + EMOJI_NEW_BUTTON + "!give <uzytkownik> <pkt>"
-                + "\n" + EMOJI_NEW_BUTTON + "!wtf"
-                + "\n" + EMOJI_NEW_BUTTON + "!wykop !wy"
-                + "\n" + EMOJI_NEW_BUTTON + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
+                + "Załadowane moduły:  " + Emoji.NEW_BUTTON + " " + modulesOnline + "/" + totalModules
+                + "\n" + Emoji.NEW_BUTTON + "!give <uzytkownik> <pkt>"
+                + "\n" + Emoji.NEW_BUTTON + "!wtf"
+                + "\n" + Emoji.NEW_BUTTON + "!wykop !wy"
+                + "\n" + Emoji.NEW_BUTTON + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
                 + "\n"
                 + "\n" + "\uD83D\uDCAF Od teraz !r wysyła tylko URL, ze zdjęciem jako załącznik!"
-                + "\n" + Utils.EMOJI_INFO + " Wpisz !cmd aby zobaczyć listę komend.");
+                + "\n" + Emoji.INFO + " Wpisz !cmd aby zobaczyć listę komend.");
     }
 
     public String getModulesOnline() {
