@@ -2,7 +2,7 @@ package bot.modules.gabe.image;
 
 import bot.core.Chatbot;
 import bot.core.PcionBot;
-import bot.core.gabes_framework.core.util.Utils;
+import bot.core.gabes_framework.core.util.Config;
 import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -19,7 +19,7 @@ public class KartaPulapka extends ModuleBase {
         updateMatch(message);
 
         if (isRegex()) {
-                addPoints(message, Utils.POINTS_KARTAPULAPKA_REGEX);
+                addPoints(message, Config.POINTS_KARTAPULAPKA_REGEX);
                 chatbot.sendImageUrlWaitToLoad(PcionBot.KARTAPULAPKA_IMG_URL);
                 return true;
         }

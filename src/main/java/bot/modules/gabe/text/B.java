@@ -1,6 +1,7 @@
 package bot.modules.gabe.text;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.util.Config;
 import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.util.Utils.EMOJI_B;
+import static bot.core.gabes_framework.core.util.Emoji.B;
 
 public class B extends ModuleBase {
     private static final String B_ANY_REGEX = Utils.TO_REGEX("b (.*)");
@@ -32,20 +33,20 @@ public class B extends ModuleBase {
         String temp;
 
         if (is(INFO_REGEX)) {
-            addPoints(message, Utils.POINTS_B_INFO_REGEX);
+            addPoints(message, Config.POINTS_B_INFO_REGEX);
             chatbot.sendMessage("Podaj tekst do transformacji.");
             return true;
         } else if (is(B_ANY_REGEX)) {
             Matcher matcher = Pattern.compile(match).matcher(messageBody);
             if (matcher.find()) {
-                addPoints(message, Utils.POINTS_B_REGEX);
+                addPoints(message, Config.POINTS_B_REGEX);
                 temp = matcher.group(1);
                 for (int i = 0; i < messageBody.length(); i++) {
                     temp = temp
-                            .replaceAll("B", EMOJI_B)
-                            .replaceAll("b", EMOJI_B)
-                            .replaceAll("P", EMOJI_B)
-                            .replaceAll("p", EMOJI_B);
+                            .replaceAll("B", B)
+                            .replaceAll("b", B)
+                            .replaceAll("P", B)
+                            .replaceAll("p", B);
                 }
                 chatbot.sendMessage(temp);
                 return true;

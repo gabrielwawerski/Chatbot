@@ -1,13 +1,15 @@
-package bot.modules.gabe.util.point_system;
+package bot.modules.gabe.point_system;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
+import bot.core.gabes_framework.core.util.Config;
 import bot.core.gabes_framework.core.util.Utils;
 import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
+import bot.modules.gabe.point_system.util.Ladder;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,11 +18,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static bot.core.gabes_framework.core.util.Utils.POINT_SYSTEM_URL;
+import static bot.core.gabes_framework.core.util.Config.POINT_SYSTEM_URL;
 import static java.util.Objects.isNull;
-
-// TODO make more modular. If some module wants to use the system, find a way to pass it
-// PointSystem system = PointSystem.getInstance() ?
 
 /**
  * Main class for anything that uses points.
@@ -33,10 +32,11 @@ import static java.util.Objects.isNull;
  * <p>v2.2
  * <br>- added !give command which enables transferring points between users
  *
- * // TODO w chuj uproscic cala klase
  * @version 2.2
  * @since v0.3201
  */
+// TODO split into several classes - this class should only be a utility class for other modules that need point system functionality
+    // singleton!!
 public class PointSystem extends ModuleBase {
     private ArrayList<User> users;
     private ArrayList<Duel> activeDuels;
@@ -143,7 +143,7 @@ public class PointSystem extends ModuleBase {
                     Utils.transfer(duel.getWinner(), duel.getLoser(), duel.getLoser().getPoints());
                     betPoints = duel.getLoser().getPoints();
                 }
-
+                db.update(duel.getWinner(), duel.getLoser());
                 if (duel.getInitiator() == duel.getWinner()) {
                     chatbot.sendMessage(duel.getInitiator().getName() + " \uD83C\uDD9A " + duel.getOpponent().getName()
                             + "\n"
@@ -429,8 +429,8 @@ public class PointSystem extends ModuleBase {
         }
 
         if (message.getImage() != null) {
-            user.addPoints(Utils.POINT_SYSTEM_IMAGE);
-            System.out.println(user.getName() + "(+" + Utils.POINT_SYSTEM_IMAGE + ")(IMG)");
+            user.addPoints(Config.POINT_SYSTEM_IMAGE);
+            System.out.println(user.getName() + "(+" + Config.POINT_SYSTEM_IMAGE + ")(IMG)");
         }
 
         // if message is a url, no points are added.
@@ -442,20 +442,20 @@ public class PointSystem extends ModuleBase {
         }
 
         if (msgLength <= 20 && msgLength >= 3) {
-            user.addPoints(Utils.POINTS_MAX_CHAR_20);
-            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_20 + ")");
+            user.addPoints(Config.POINTS_MAX_CHAR_20);
+            System.out.println(user.getName() + "(+" + Config.POINTS_MAX_CHAR_20 + ")");
 
         } else if (msgLength <= 60 && msgLength > 20) {
-            user.addPoints(Utils.POINTS_MAX_CHAR_60);
-            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_60 + ")");
+            user.addPoints(Config.POINTS_MAX_CHAR_60);
+            System.out.println(user.getName() + "(+" + Config.POINTS_MAX_CHAR_60 + ")");
 
         } else if (msgLength <= 100 && msgLength > 60) {
-            user.addPoints(Utils.POINTS_MAX_CHAR_100);
-            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_100 + ")");
+            user.addPoints(Config.POINTS_MAX_CHAR_100);
+            System.out.println(user.getName() + "(+" + Config.POINTS_MAX_CHAR_100 + ")");
 
         } else if (msgLength > 100 && msgLength < 300) {
-            user.addPoints(Utils.POINTS_MAX_CHAR_300);
-            System.out.println(user.getName() + "(+" + Utils.POINTS_MAX_CHAR_300 + ")");
+            user.addPoints(Config.POINTS_MAX_CHAR_300);
+            System.out.println(user.getName() + "(+" + Config.POINTS_MAX_CHAR_300 + ")");
         }
 
         timeoutRelease = getTimeoutRelease();

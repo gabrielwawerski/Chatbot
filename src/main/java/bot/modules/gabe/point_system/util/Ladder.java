@@ -1,4 +1,4 @@
-package bot.modules.gabe.util.point_system;
+package bot.modules.gabe.point_system.util;
 
 import bot.core.gabes_framework.core.database.User;
 

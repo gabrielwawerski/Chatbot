@@ -1,11 +1,11 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.util.Config;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.ModuleBase;
-import bot.core.gabes_framework.core.util.Utils;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
@@ -60,7 +60,7 @@ public class RandomGroupPhoto extends ModuleBase {
                 chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
                 return false;
             } else {
-                addPoints(message, Utils.POINTS_RANDOMGROUPPHOTO_REGEX);
+                addPoints(message, Config.POINTS_RANDOMGROUPPHOTO_REGEX);
                 chatbot.sendImageUrlWaitToLoad(currentFileUrl);
                 currentFileUrl = uploadFile();
 

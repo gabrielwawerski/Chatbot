@@ -2,10 +2,10 @@ package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.User;
+import bot.core.gabes_framework.core.util.Emoji;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.ModuleBase;
-import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.Date;
 import java.util.List;
@@ -34,8 +34,8 @@ public class Mp3Tube extends ModuleBase {
             user.addPoints(1);
             db.update(user);
             System.out.println("(+2) " + user.getName());
-            chatbot.sendMessage(Utils.EMOJI_INFO + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
-                    + Utils.EMOJI_EXCL_MARK_RED + " Link musi kończyć się ID filmu.");
+            chatbot.sendMessage(Emoji.INFO + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
+                    + Emoji.EMOJI_EXCL_MARK_RED + " Link musi kończyć się ID filmu.");
 
         } else if (is(MP3_REGEX)) {
             if (patternFound(message)) {

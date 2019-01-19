@@ -1,6 +1,8 @@
 package bot.modules.gabe.util.info;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.util.Config;
+import bot.core.gabes_framework.core.util.Emoji;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.core.util.Utils;
@@ -29,7 +31,7 @@ public class FeatureSuggest extends SaveResourceModule {
         Matcher matcher = null;
 
         if (isOr(SUGGEST_REGEX, POMYSL_REGEX)) {
-            addPoints(message, Utils.POINTS_FEATURESUGGEST_INFO_REGEX);
+            addPoints(message, Config.POINTS_FEATURESUGGEST_INFO_REGEX);
 
             chatbot.sendMessage(INFO_MESSAGE);
             return true;
@@ -37,7 +39,7 @@ public class FeatureSuggest extends SaveResourceModule {
             matcher = Pattern.compile(SUGGEST_ANY).matcher(message.getMessage());
 
             if (matcher.find()) {
-                addPoints(message, Utils.POINTS_FEATURESUGGEST_REGEX);
+                addPoints(message, Config.POINTS_FEATURESUGGEST_REGEX);
 
                 String msg = message.getMessage().substring(9);
                 if (msg.length() > 300) {
@@ -46,18 +48,18 @@ public class FeatureSuggest extends SaveResourceModule {
                 }
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
+                chatbot.sendMessage(Emoji.PUSHPIN + " Dzięki!");
                 return true;
             }
         } else if (is(POMYSL_ANY)) {
             matcher = Pattern.compile(POMYSL_ANY).matcher(message.getMessage());
             if (matcher.find()) {
-                addPoints(message, Utils.POINTS_FEATURESUGGEST_REGEX);
+                addPoints(message, Config.POINTS_FEATURESUGGEST_REGEX);
 
                 String msg = message.getMessage().substring(8);
                 msg = message.getSender().getName() + " " + msg;
                 appendStringToFile(msg);
-                chatbot.sendMessage(Utils.EMOJI_PUSHPIN + " Dzięki!");
+                chatbot.sendMessage(Emoji.PUSHPIN + " Dzięki!");
 //                 TODO random responses each time
 //                List<String> randomRespones;
 //                String uruchamiamAi = "Dzięki! \uD83D\uDD2C";

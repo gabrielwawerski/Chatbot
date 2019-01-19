@@ -1,6 +1,7 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.util.Config;
 import bot.core.gabes_framework.core.util.Utils;
 import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
@@ -36,7 +37,7 @@ public class RandomWTF extends ModuleBase {
         updateMatch(message);
 
         if (isRegex()) {
-            addPoints(message, Utils.POINTS_RANDOMWTF_REGEX);
+            addPoints(message, Config.POINTS_RANDOMWTF_REGEX);
             chatbot.sendImageUrlWaitToLoad(currUrl);
             currUrl = getNextMeme();
             return true;

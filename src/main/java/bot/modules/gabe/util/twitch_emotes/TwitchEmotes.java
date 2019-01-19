@@ -2,6 +2,7 @@ package bot.modules.gabe.util.twitch_emotes;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.Users;
+import bot.core.gabes_framework.core.util.Config;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.ModuleBase;
@@ -69,7 +70,7 @@ public class TwitchEmotes extends ModuleBase {
 
         for (Emote current : EMOTES) {
             if (match.equals(current.value())) {
-                addPoints(message, Utils.POINTS_TWITCHEMOTES_REGEX);
+                addPoints(message, Config.POINTS_TWITCHEMOTES_REGEX);
                 return sendEmoteMsg(current);
             }
         }

@@ -1,10 +1,11 @@
 package bot.modules.gabe.rand;
 
 import bot.core.Chatbot;
+import bot.core.gabes_framework.core.util.Config;
+import bot.core.gabes_framework.core.util.Emoji;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.ModuleBase;
-import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -36,7 +37,7 @@ public class Roll extends ModuleBase {
         updateMatch(message);
 
         if (is(ROLL_FIXED_REGEX)) {
-            addPoints(message, Utils.POINTS_ROLL_SIMPLE_REGEX);
+            addPoints(message, Config.POINTS_ROLL_SIMPLE_REGEX);
             int roll = roll(MIN_ROLL, MAX_ROLL);
             chatbot.sendMessage("Twój los: " + Integer.toString(roll));
             return true;
@@ -44,10 +45,10 @@ public class Roll extends ModuleBase {
         } else if (is(ROLL_REGEX)) {
             Matcher matcher = Pattern.compile(ROLL_REGEX).matcher(message.getMessage());
             if (matcher.find()) {
-                addPoints(message, Utils.POINTS_ROLL_REGEX);
+                addPoints(message, Config.POINTS_ROLL_REGEX);
                 try {
                     int roll = roll(MIN_ROLL, Integer.parseInt(matcher.group(1)));
-                    chatbot.sendMessage("Twój los: " + roll + " " + Utils.EMOJI_HOURGLASS);
+                    chatbot.sendMessage("Twój los: " + roll + " " + Emoji.EMOJI_HOURGLASS);
                 } catch (NumberFormatException e) {
                     chatbot.sendMessage("Coś poszło nie tak... gdzie jest moje gabe?");
                     throw new MalformedCommandException();

@@ -1,5 +1,9 @@
 package bot.core;
 
+import bot.core.gabes_framework.core.util.Emoji;
+
+import java.util.ArrayList;
+
 public class PcionBot extends Chatbot {
     public static final String DATABASE_USERNAME = "gabe";
     public static final String DATABASE_PASSWORD = "lezetykurwo";
@@ -20,6 +24,8 @@ public class PcionBot extends Chatbot {
     public static final boolean SILENT_MODE = true; // does not greet itself or send msg when exception occurs
     public static final boolean LOG_MODE = false;    // doesn't respond to commands - updates database only.
 
+    // TODO reading username, password, thread id and everything else from a file
+    // TODO database on a different thread - will allow for multiple database connections! (thread lock - synchronized)
     public static void main(String[] args) {
         System.out.println(args.toString());
         Chatbot pcionbot;
@@ -31,7 +37,7 @@ public class PcionBot extends Chatbot {
         boolean headless = false;
         boolean maximized = true;
 
-        pcionbot = new Chatbot(username, password, PATRO_ID,
+        pcionbot = new Chatbot(username, password, GRZAGSOFT_ID,
                 debugMode,
                 SILENT_MODE,
                 debugMessages,

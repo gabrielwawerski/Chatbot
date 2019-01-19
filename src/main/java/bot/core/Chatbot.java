@@ -1,11 +1,11 @@
 package bot.core;
 
 import bot.core.gabes_framework.core.database.DBConnection;
+import bot.core.gabes_framework.core.util.Emoji;
 import bot.core.gabes_framework.core.util.Utils;
 import bot.modules.gabe.text.B;
-import bot.modules.gabe.util.info.FeatureSuggest;
 import bot.modules.gabe.util.info.Shutdown;
-import bot.modules.gabe.util.point_system.PointSystem;
+import bot.modules.gabe.point_system.PointSystem;
 import bot.modules.gabe.rand.Roll;
 import bot.modules.gabe.image.KartaPulapka;
 import bot.modules.gabe.rand.EightBall;
@@ -41,8 +41,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static bot.core.gabes_framework.core.util.Utils.*;
 
 public class Chatbot {
     private final String version = "v0.3313";
