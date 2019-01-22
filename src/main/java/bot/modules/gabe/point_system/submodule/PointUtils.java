@@ -6,6 +6,7 @@ import bot.core.hollandjake_api.helper.misc.Message;
 
 import java.util.ArrayList;
 
+// todo move to utils
 public final class PointUtils {
     private static final DBConnection db = DBConnection.getInstance();
     private static ArrayList<User> users = db.getUsers();

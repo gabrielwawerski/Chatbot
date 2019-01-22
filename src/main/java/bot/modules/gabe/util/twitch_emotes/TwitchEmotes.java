@@ -32,7 +32,7 @@ public class TwitchEmotes extends ModuleBase {
     public TwitchEmotes(Chatbot chatbot) {
         super(chatbot);
         EMOTES = Emote.getEmotes();
-        setEmotesSize(SIZE_MEDIUM);
+        setEmotesSize(3);
         initInfo();
     }
 
