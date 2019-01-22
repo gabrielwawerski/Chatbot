@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 0.29
  */
+ // TODO add getMatch() calls to methods that receive Message instance
 public abstract class ModuleBase implements Module {
     protected final Chatbot chatbot;
     protected DBConnection db;
