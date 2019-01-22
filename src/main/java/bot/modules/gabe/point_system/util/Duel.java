@@ -1,4 +1,4 @@
-package bot.modules.gabe.point_system;
+package bot.modules.gabe.point_system.util;
 
 import bot.core.gabes_framework.core.util.Utils;
 import bot.core.gabes_framework.core.database.DBConnection;
@@ -6,7 +6,7 @@ import bot.core.gabes_framework.core.database.User;
 
 import java.util.Date;
 
-class Duel {
+public class Duel {
     private final User initiator;
     private final User opponent;
     private final int bet;
@@ -18,7 +18,7 @@ class Duel {
 
     private final DBConnection db = DBConnection.getInstance();
 
-    Duel(User initiator, User opponent, int bet) {
+    public Duel(User initiator, User opponent, int bet) {
         this.initiator = initiator;
         this.opponent = opponent;
         this.bet = bet;
@@ -28,7 +28,7 @@ class Duel {
     /**
      * Refreshes initiator and opponent, checks if they still have required points for duel,
      */
-    boolean resolve() {
+    public boolean resolve() {
         db.refresh(initiator, opponent);
 
         if (initiator.getPoints() < bet || opponent.getPoints() < bet) {
@@ -46,27 +46,27 @@ class Duel {
         }
     }
 
-    User getWinner() {
+    public User getWinner() {
         return winner;
     }
 
-    User getLoser() {
+    public User getLoser() {
         return loser;
     }
 
-    User getInitiator() {
+    public User getInitiator() {
         return initiator;
     }
 
-    User getOpponent() {
+    public User getOpponent() {
         return opponent;
     }
 
-    int getBet() {
+    public int getBet() {
         return bet;
     }
 
-    long getTimeStarted() {
+    public long getTimeStarted() {
         return timeStarted;
     }
 }

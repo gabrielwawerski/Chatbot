@@ -5,13 +5,13 @@ import bot.core.gabes_framework.core.util.Utils;
 import bot.core.gabes_framework.core.api.Module;
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.database.User;
+import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.resource.RandomResourceModule;
 import bot.core.gabes_framework.framework.message.SingleMessageModule;
+import bot.modules.gabe.point_system.submodule.PointUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 public abstract class ModuleBase implements Module {
     protected final Chatbot chatbot;
     protected DBConnection db;
+    protected static User user;
     /**
      * Needs to be assigned to latest received {@code message}. After overriding {@link Module#process(Message)} method,
      * call {@link #updateMatch(Message)} inside it, which takes care of the assigning for you. Although this field
@@ -38,7 +39,7 @@ public abstract class ModuleBase implements Module {
      * If you don't want to use these, take a look the snippet below:
      *
      * <pre>{@code match = getMatch(message)}</pre>
-     *
+     * <p>
      * See also {@linkplain #updateMatch(Message)}, {@linkplain #getMatch(Message)}, {@linkplain #process(Message)}
      */
     protected String match;
@@ -46,11 +47,29 @@ public abstract class ModuleBase implements Module {
     protected List<String> regexes;
     private boolean online;
 
+    private long timeoutRelease;
+
+    private static final long TIMEOUT = 350;
+
     public ModuleBase(Chatbot chatbot) {
         this.chatbot = chatbot;
         regexes = setRegexes();
         db = DBConnection.getInstance();
+        timeoutRelease = getTimeoutRelease();
         setOnline();
+    }
+
+    private long getTimeoutRelease() {
+        return new Date().getTime() + TIMEOUT;
+    }
+
+    protected boolean isRegex(String messageBody) {
+        for (String regex : regexes) {
+            if (messageBody.equalsIgnoreCase(regex)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -73,24 +92,88 @@ public abstract class ModuleBase implements Module {
      * Use when you don't have desired user reference. You simply pass received message and amount of points to add.
      * Also adds 1 messageCount.
      */
-    // TODO remove adding message count here!
-    protected void addPoints(Message message, int points) {
-        User user;
-        if ((user = db.getUser(message)) == null) {
-            throw new IllegalArgumentException("User not found. FIXME!");
+    protected void pushPoints(Message message, int points) { // TODO remove message argument
+        user = db.getUser(message);
+
+        if (user == User.INVALID_USER) {
+            System.out.println("no points added: invalid user!");
+            return;
         } else {
             user.addPoints(points);
-            user.addMessagecount(1);
             db.update(user);
-            System.out.println(user.getName() + "(+" + points + ")");
-            System.out.print(user.getName().substring(0, 5) + "(MSG+)" + "\n");
+            db.refresh(user);
+            System.out.println(user.getName().substring(0, 4) + " " + PointUtils.format(points));
         }
     }
 
-    protected void addMessageCount(User user) {
-        user.addMessagecount(1);
-        db.update(user);
-        System.out.print(user.getName().substring(0, 5) + "(MSG+)" + "\n");
+    protected void pushPoints(ArrayList<User> users, int points) {
+        for (User user : users) {
+            if (user == User.INVALID_USER) {
+                System.out.println("no points added: invalid user!");
+                continue;
+            }
+            user.addPoints(points);
+            System.out.println(user.getName().substring(0, 4) + " " + PointUtils.format(points));
+        }
+        db.update(users);
+    }
+
+    protected void pushPoints(int points) {
+        db.refresh(user);
+
+        if (user == User.INVALID_USER) {
+            System.out.println("no points added: invalid user!");
+            return;
+        } else {
+            user.addPoints(points);
+            db.update(user);
+            db.refresh(user);
+            System.out.println(user.getName() + " " + PointUtils.format(points));
+        }
+    }
+
+    protected void pullPoints(int points) {
+        db.refresh(user);
+
+        if (user == User.INVALID_USER) {
+            System.out.println("no points subtracted: invalid user!");
+            return;
+        } else {
+            user.subPoints(points);
+            db.update(user);
+            db.refresh(user);
+            System.out.println(user.getName().substring(0, 4) + " )-" + points + ")");
+        }
+    }
+
+    protected void pushMessageCount() {
+        db.refresh(user);
+
+        if (user == User.INVALID_USER) {
+            System.out.println("no points subtracted: invalid user!");
+            return;
+        } else {
+            user.addMessageCount();
+            db.update(user);
+            System.out.println(user.getName().substring(0, 4) + "(+MSG) ");
+        }
+    }
+
+    /**
+     * Caution: no invalid user check here!
+     */
+    protected void pushMessageCount(Message message) {
+        user = db.getUser(message);
+
+        if (user == User.INVALID_USER) {
+            System.out.println("no points subtracted: invalid user!");
+            return;
+        } else {
+            user.addMessagecount(1);
+            db.update(user); // todo
+            db.refresh(user);
+            System.out.println(user.getName().substring(0, 4) + "(MSG+)");
+        }
     }
 
     protected boolean is(String regex) {

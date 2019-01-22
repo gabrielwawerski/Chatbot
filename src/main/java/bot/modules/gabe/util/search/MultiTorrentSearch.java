@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.search;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.ModuleBase;
@@ -33,7 +33,7 @@ public class MultiTorrentSearch extends ModuleBase {
             Matcher matcher = Pattern.compile(match).matcher(message.getMessage());
 
             if (matcher.find()) {
-                addPoints(message, Config.POINTS_MULTITORRENTSEARCH_REGEX);
+                pushPoints(message, Points.POINTS_MULTITORRENTSEARCH_REGEX);
                 String userQuery = matcher.group(1).replaceAll("\\s+", "+");
                 String messageToSend = X1337_URL + userQuery + X1337_POSTFIX
                             + "\n\n" + TORRENTZ_URL + userQuery;

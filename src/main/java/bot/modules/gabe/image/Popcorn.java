@@ -1,7 +1,7 @@
 package bot.modules.gabe.image;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.gabes_framework.framework.ModuleBase;
 import bot.core.hollandjake_api.helper.misc.Message;
 
@@ -17,7 +17,7 @@ public class Popcorn extends ModuleBase {
         updateMatch(message);
 
         if (isRegex()) {
-            addPoints(message, Config.POINTS_POPCORN_REGEX);
+            pushPoints(message, Points.POINTS_POPCORN_REGEX);
             chatbot.sendImageUrlWaitToLoad("https://media.giphy.com/media/pUeXcg80cO8I8/giphy.gif"); // TODO get gif direct url
             return true;
         }

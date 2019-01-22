@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
+import javax.net.ssl.SSLHandshakeException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -32,10 +33,10 @@ public class Message {
 
     private boolean containsCommand = false;
 
-    public Message(String message, Human me) {
+    public Message(String url, Human me) {
         this.sender = me;
-        this.message = message;
-        this.image = null;
+        this.image = imageFromUrl(url);
+        message = null;
     }
 
     public Message(Human me, String message) {
@@ -47,7 +48,7 @@ public class Message {
     public Message(Human me, String message, String image) {
         this.sender = me; //Sender is the bot
         this.message = unescapeHtml(message);
-        this.image = new ImageIcon(image).getImage();
+        this.image = imageFromUrl(image);
     }
 
     public Message(Human me, String message, Image image) {
@@ -88,16 +89,36 @@ public class Message {
     }
 
     // TODO FUCKING MOST IMPORTANT METHOD HERE
-    private static Image imageFromUrl(String url) {
+    private static BufferedImage imageFromUrl(String url) {
         try {
             URL U = new URL(url);
-//            BufferedImage image = ImageIO.read(U);
-
             URLConnection urlConnection = U.openConnection();
             urlConnection.connect();
             ImageInputStream imageInputStream = ImageIO.createImageInputStream(urlConnection.getInputStream());
             BufferedImage image = ImageIO.read(imageInputStream);
-            return image;
+
+            if (image == null) {
+                return null;
+            }
+            double size = urlConnection.getContentLength();
+
+            //Scale image to fit in size
+            double scaleFactor = Math.min(1, 200000 / size);
+
+            if ((image.getWidth() <= 0 || image.getWidth() > 9999)
+                    && (image.getHeight() <= 0 || image.getHeight() > 9999)) {
+                return null;
+            }
+
+            int scaledWidth = (int) (image.getWidth() * scaleFactor);
+            int scaledHeight = (int) (image.getHeight() * scaleFactor);
+            Image scaledImage = image.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+
+            BufferedImage bufferedImage = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = bufferedImage.createGraphics();
+            g.drawImage(scaledImage, 0, 0, null);
+            g.dispose();
+            return bufferedImage;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -111,8 +132,10 @@ public class Message {
     }
 
     private void sendMessageWithImage(WebElement inputBox, String message, Image image) {
-        CLIPBOARD.setContents(new ImageTransferable(image), null);
-        inputBox.sendKeys(PASTE);
+        if (image != null) {
+            CLIPBOARD.setContents(new ImageTransferable(image), null);
+            inputBox.sendKeys(PASTE);
+        }
         if (!message.isEmpty()) {
             CLIPBOARD.setContents(new StringSelection(unescapeHtml(message)), null);
             inputBox.sendKeys(PASTE);

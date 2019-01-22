@@ -2,7 +2,9 @@ package bot.core;
 
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.gabes_framework.core.util.Emoji;
+import bot.core.gabes_framework.core.util.Listener;
 import bot.core.gabes_framework.core.util.Utils;
+import bot.core.gabes_framework.framework.ModuleBase;
 import bot.modules.gabe.text.B;
 import bot.modules.gabe.util.info.Shutdown;
 import bot.modules.gabe.point_system.PointSystem;
@@ -30,6 +32,7 @@ import bot.modules.gabe.util.info.ATG;
 import bot.modules.gabe.rand.image.RandomWTF;
 import bot.modules.gabe.rand.image.RandomWykop;
 import bot.modules.gabe.work_in_progress.Mention;
+import bot.modules.gabe.point_system.submodule.SlotMachine;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -42,8 +45,10 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static bot.core.PcionBot.*;
+
 public class Chatbot {
-    private final String version = "v0.3313";
+    private final String version = "v0.332";
     protected final HashMap<String, Module> modules = new HashMap<>();
     protected final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -61,11 +66,10 @@ public class Chatbot {
     private int totalModules;
     private boolean logMode = false;
 
-    private PointSystem pointSystem;
+    private Listener listener;
 
     protected void loadModules() {
-        pointSystem = new PointSystem(this);
-        // TODO List with all regexes for PointSystem to receive in constructor.
+        listener = new Listener(this);
         modules.put("Commands", new Commands(this));
         modules.put("Info", new Info(this));
         modules.put("Shutdown", new Shutdown(this));
@@ -97,8 +101,9 @@ public class Chatbot {
         modules.put("ATG", new ATG(this, "\u2705 OPEN")); // ✅ OPEN ❌ CLOSED
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
-        modules.put("PointSystem", pointSystem);
-        modules.put("Mention", new Mention(this));
+//        modules.put("Mention", new Mention(this)); // TODO fix - crashed last time
+        modules.put("SlotMachine", new SlotMachine(this));
+        modules.put("PointSystem", new PointSystem(this));
     }
 
     // TODO refactor
@@ -125,9 +130,7 @@ public class Chatbot {
                    boolean headless, boolean maximised,
                    boolean logMode) {
         dbConnection = DBConnection.getInstance();
-        if (logMode) {
-            this.logMode = true;
-        }
+        this.logMode = logMode;
         webController = new WebController(this, debugMessages, headless, maximised, dbConnection);
         run(username, password, threadId, debugMode, silentMode);
     }
@@ -165,10 +168,6 @@ public class Chatbot {
         run(username, password, threadId, debugMode, silentMode);
     }
 
-    public void reRun(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
-        run(username, password, threadId, debugMode, silentMode);
-    }
-
     private void init(String username, String password, String threadId, boolean debugMode, boolean silentMode) {
         log("Initializing...");
         log("Loading modules...");
@@ -190,6 +189,7 @@ public class Chatbot {
             module.echoOnline();
         }
 
+        System.out.println("-----------------");
         if (modulesOnline < totalModules) {
             System.out.println("Not all modules have been loaded.\nModules unavailable this session: ");
             for (String module : modulesOffline) {
@@ -198,11 +198,10 @@ public class Chatbot {
             DecimalFormat df = new DecimalFormat("###");
             df.setRoundingMode(RoundingMode.HALF_UP);
             double onlinePercent = (double) modulesOnline * 100 / totalModules;
-            System.out.println(modulesOnline + "/" + totalModules + "(" + df.format(onlinePercent)  + "%)");
+            System.out.println(modulesOnline + "/" + totalModules + "(" + df.format(onlinePercent) + "%)");
         } else {
             System.out.println("ONLINE | " + modulesOnline + "/" + totalModules);
         }
-        System.out.println("-----------------");
 
         log("Initializing platform...");
         log("Logging in...");
@@ -212,13 +211,13 @@ public class Chatbot {
         System.out.print("Looking for favourites... ");
 
         String msg = "";
-        if (threadId.equals(PcionBot.GRUPKA_ID)) {
+        if (threadId.equals(GRUPKA_ID)) {
             System.out.print("found.\n\n");
             msg += "Grupka (" + threadId + ")";
-        } else if (threadId.equals(PcionBot.GRZAGSOFT_ID)) {
+        } else if (threadId.equals(GRZAGSOFT_ID)) {
             System.out.print("found.\n\n");
             msg += "Grzagsoft (" + threadId + ")";
-        } else if (threadId.equals(PcionBot.PATRO_ID)) {
+        } else if (threadId.equals(PATRO_ID)) {
             System.out.print("found.\n\n");
             msg += "Patro (" + threadId + ")";
         } else {
@@ -272,7 +271,6 @@ public class Chatbot {
         init(username, password, threadId, debugMode, silentMode);
         Calendar now = Calendar.getInstance();
 
-
         while (running) {
             // todo weather every 6 hours
             // Weather now 12:00 (Today) 01.02.18
@@ -297,9 +295,9 @@ public class Chatbot {
                 }
 
                 if (logMode) {
-                    pointSystem.logOnly(newMessage);
+                    try { listener.process(newMessage); }
+                    catch (MalformedCommandException e) { e.printStackTrace(); }
                 } else {
-                    //Handle options
                     try {
                         for (Module module : modules.values()) {
                             module.process(newMessage);
@@ -329,10 +327,9 @@ public class Chatbot {
     protected void initMessage() {
         webController.sendMessage("PcionBot " + getVersion() + " ONLINE \u2705\n"
                 + "Załadowane moduły:  " + Emoji.NEW_BUTTON + " " + modulesOnline + "/" + totalModules
-                + "\n" + Emoji.NEW_BUTTON + "!give <uzytkownik> <pkt>"
-                + "\n" + Emoji.NEW_BUTTON + "!wtf"
-                + "\n" + Emoji.NEW_BUTTON + "!wykop !wy"
-                + "\n" + Emoji.NEW_BUTTON + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
+                + "\n" + Emoji.NEW_BUTTON + "!pull"
+                + "\n" + "!give <uzytkownik> <pkt>"
+                + "\n" + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
                 + "\n"
                 + "\n" + "\uD83D\uDCAF Od teraz !r wysyła tylko URL, ze zdjęciem jako załącznik!"
                 + "\n" + Emoji.INFO + " Wpisz !cmd aby zobaczyć listę komend.");

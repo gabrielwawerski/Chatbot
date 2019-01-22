@@ -2,6 +2,7 @@ package bot.modules.gabe.util;
 
 import bot.core.Chatbot;
 import bot.core.gabes_framework.core.database.User;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.gabes_framework.core.util.Emoji;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -28,23 +29,33 @@ public class Mp3Tube extends ModuleBase {
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
+        User user = db.getUser(message);
+        boolean userFound = user != User.INVALID_USER;
 
         if (is(INFO_REGEX)) {
-            User user = db.getUser(message);
-            user.addPoints(1);
-            db.update(user);
-            System.out.println("(+2) " + user.getName());
-            chatbot.sendMessage(Emoji.INFO + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
-                    + Emoji.EMOJI_EXCL_MARK_RED + " Link musi kończyć się ID filmu.");
+            if (userFound) {
+                user.addPoints(Points.POINTS_MP3_INFO);
+                db.update(user);
 
+                System.out.println("(+2) " + user.getName());
+                chatbot.sendMessage(Emoji.INFO + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
+                        + Emoji.EXCL_MARK_RED + " Link musi kończyć się ID filmu.");
+                return true;
+            } else {
+                chatbot.sendMessage(Emoji.INFO + " Po !mp3 wklej link do youtube'a aby otrzymać url do pobrania.\n"
+                        + Emoji.EXCL_MARK_RED + " Link musi kończyć się ID filmu.");
+                return true;
+            }
         } else if (is(MP3_REGEX)) {
             if (patternFound(message)) {
-                User user = db.getUser(message);
-                user.addPoints(2);
-                db.update(user);
-                String id = getId(message.getMessage());
-                System.out.println("id = " + id);
+                if (userFound) {
+                    user.addPoints(2);
+                    db.update(user);
+                }
+
+                String id = getVideoId(message.getMessage());
                 if (id != null) {
+                    System.out.println("id = " + id);
                     chatbot.sendMessage(getUrl(id));
                     return true;
                 } else {
@@ -52,6 +63,7 @@ public class Mp3Tube extends ModuleBase {
                     return false;
                 }
             }
+            return false;
         }
         return false;
     }
@@ -74,7 +86,7 @@ public class Mp3Tube extends ModuleBase {
     // obsluguje proste linki: https://www.youtube.com/watch?v=xxx
     // TODO dodac obsluge roznych linkow
     // np. https://www.youtube.com/watch?v=pCWmHE6QpvQ&index=112&t=0s&list=PLRCByVlDWF9N-SCqUezx1xnLJzsTr9FZ8
-    private String getId(String messageBody) {
+    private String getVideoId(String messageBody) {
         Matcher matcher = Pattern.compile("v=(.*)").matcher(messageBody);
         if (matcher.find() && matcher.group().length() < 15) {
             return matcher.group().substring(2);

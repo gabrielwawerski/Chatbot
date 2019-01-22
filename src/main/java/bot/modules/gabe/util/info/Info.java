@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.info;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.ModuleBase;
@@ -38,19 +38,19 @@ public class Info extends ModuleBase {
         updateMatch(message);
 
         if (is(INFO_REGEX)) {
-            addPoints(message, Config.POINTS_INFO_REGEX);
+            pushPoints(message, Points.POINTS_INFO_REGEX);
             chatbot.sendMessage(getInfo());
             return true;
         } else if (is(STATS_REGEX)) {
-            addPoints(message, Config.POINTS_STATS_REGEX);
+            pushPoints(message, Points.POINTS_STATS_REGEX);
             chatbot.sendMessage(getStats());
             return true;
         } else if (is(UPTIME_REGEX)) {
-            addPoints(message, Config.POINTS_UPTIME_REGEX);
+            pushPoints(message, Points.POINTS_UPTIME_REGEX);
             chatbot.sendMessage(getUptime());
             return true;
         } else if (is(ECHO_COMMAND)) {
-            addPoints(message, Config.POINTS_ECHO_REGEX);
+            pushPoints(message, Points.POINTS_ECHO_REGEX);
             chatbot.sendMessage(getMinifiedStats());
             return true;
         }

@@ -7,8 +7,6 @@ import java.util.ArrayList;
  * @since 0.3313
  */
 public final class Emoji {
-    /** ❕ */
-    public static final String EXCL_MARK_WHITE = "\u2755";
     /** 🆕 */
     public static final String NEW_BUTTON = "\uD83C\uDD95";
     /** 🆗 */
@@ -34,9 +32,11 @@ public final class Emoji {
     /** 🅱 */
     public static final String B = "\uD83C\uDD71️";
     /** ⏳ */
-    public static final String EMOJI_HOURGLASS = "\u23f3";
+    public static final String HOURGLASS = "\u23f3";
     /** ❗ */
-    public static final String EMOJI_EXCL_MARK_RED = "\u2757";
+    public static final String EXCL_MARK_RED = "\u2757";
+    /** 💯 */
+    public static final String _100 = "\uD83D\uDCAF";
 
     public static ArrayList<String> getAll() {
         ArrayList<String> emojis = new ArrayList<>();

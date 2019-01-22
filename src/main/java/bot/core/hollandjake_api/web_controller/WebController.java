@@ -16,7 +16,6 @@ import org.openqa.selenium.support.ui.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import static bot.core.hollandjake_api.helper.interfaces.Util.CLIPBOARD;
 import static bot.core.hollandjake_api.helper.interfaces.Util.PASTE;
@@ -31,13 +30,13 @@ public class WebController {
     private final WebDriverWait wait;
     private final WebDriverWait messageWait;
     private final boolean debugMessages;
-    private final DBConnection dbConnection;
+    private final DBConnection db;
 
     private final int imgLoadTime = 3000;
 
-    public WebController(Chatbot chatbot, boolean debugMessages, boolean headless, boolean maximised, DBConnection dbConnection) {
+    public WebController(Chatbot chatbot, boolean debugMessages, boolean headless, boolean maximised, DBConnection db) {
         this.chatbot = chatbot;
-        this.dbConnection = dbConnection;
+        this.db = db;
         this.debugMessages = debugMessages;
         File driver;
         ClassLoader classLoader = getClass().getClassLoader();
@@ -75,24 +74,30 @@ public class WebController {
         messageWait = new WebDriverWait(webDriver, chatbot.getMessageTimeout().getSeconds(), chatbot.getRefreshRate());
 
         Thread.setDefaultUncaughtExceptionHandler((thread, e) -> {
-            System.out.println("Coś poszło nie tak:");
-            this.dbConnection.close();
-            e.printStackTrace();
+            this.db.close();
+//            service.stop();
+//            webDriver.quit();
 
-//            this.chatbot.reRun("ezel66@gmail.com", "lezetykurwo", this.chatbot.getThreadId(), false, false);
-            if (PcionBot.SILENT_MODE || PcionBot.LOG_MODE) {
-                quit(false);
-            } else {
-                quit(true);
-            }
+            System.out.println("Coś poszło nie tak:");
+            e.printStackTrace();
+            quit(false);
+//            this.chatbot = PcionBot.getBot();
+
+//            if (PcionBot.SILENT_MODE || PcionBot.LOG_MODE) {
+//                e.printStackTrace();
+//                quit(false);
+//            } else {
+//                e.printStackTrace();
+//                quit(true);
+//            }
         });
     }
 
     public void quit(boolean withMessage) {
         if (withMessage) {
-            sendMessage("Przechodzę offline.");
+//            sendMessage("Przechodzę offline.");
         }
-        dbConnection.close();
+        db.close();
         webDriver.quit();
         System.exit(0);
     }
@@ -212,8 +217,8 @@ public class WebController {
         sendMessage(Message.withImageFromURL(chatbot.getMe(), message, url));
     }
 
-    public void sendImage(String image) {
-        sendImageWithMessage(image, "");
+    public void sendImageFromURL(String url) {
+        sendMessage(new Message(url, chatbot.getMe()));
     }
     //endregion
 

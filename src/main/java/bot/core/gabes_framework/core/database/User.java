@@ -25,8 +25,10 @@ public class User {
 //    @DatabaseField
 //    private int lezeHate;
 
-    public User() {
-    }
+    public static final User INVALID_USER = new User("INVALID_USER");
+    public static final String INVALID_NAME = "INVALID_USER";
+
+    public User() { }
 
     public User(String name) {
         this.name = name;
@@ -84,5 +86,9 @@ public class User {
 
     public void addMessagecount(int value) {
         messageCount += value;
+    }
+
+    public void addMessageCount() {
+        messageCount++;
     }
 }

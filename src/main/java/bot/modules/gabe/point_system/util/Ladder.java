@@ -5,7 +5,7 @@ import bot.core.gabes_framework.core.database.User;
 import java.util.*;
 
 public class Ladder {
-    private final String ladder;
+    private String ladder;
 
     public static Ladder getLadder(ArrayList<User> users) {
         StringBuilder ladder = new StringBuilder();
@@ -43,7 +43,30 @@ public class Ladder {
     }
 
     public static Ladder getMsgLadder(ArrayList<User> users) {
-        return generateLadder(users, LadderType.MESSAGES);
+        StringBuilder msgLadder = new StringBuilder();
+        users.sort(Comparator.comparing(User::getMessageCount));
+
+        msgLadder.append("```")
+                .append("\nRanking wg wiadomości:\n")
+                .append("=================")
+                .append("\n");
+
+        for (int i = 0; i < users.size(); i++) {
+            User currUser = users.get(users.size() - 1 - i);
+            int currUserMsgs = currUser.getMessageCount();
+//
+            msgLadder.append(i + 1);
+
+            msgLadder.append(". ")
+                    .append("(")
+                    .append(currUserMsgs)
+                    .append(") ");
+
+            msgLadder.append(currUser.getName())
+                    .append(System.lineSeparator())
+                    .append("```");
+        }
+        return new Ladder(msgLadder.toString());
     }
 
     private static Ladder generateLadder(ArrayList<User> users, LadderType ladderType) {
@@ -52,10 +75,10 @@ public class Ladder {
         if (ladderType == LadderType.POINTS) {
 
         } else if (ladderType == LadderType.MESSAGES) {
-            StringBuilder ladder = new StringBuilder();
+            StringBuilder msgLadder = new StringBuilder();
             users.sort(Comparator.comparing(User::getMessageCount));
 
-            ladder.append("```")
+            msgLadder.append("```")
                     .append("\nRanking wg wiadomości:\n")
                     .append("=================")
                     .append("\n");
@@ -64,34 +87,34 @@ public class Ladder {
                 User currUser = users.get(users.size() - 1 - i);
                 int currUserMsgs = currUser.getMessageCount();
 
-                ladder.append(i + 1);
+                msgLadder.append(i + 1);
 
                 if (i + 1 < 10) {
-                    ladder.append(". ")
+                    msgLadder.append(". ")
                             .append("(")
                             .append(currUserMsgs)
                             .append(") ");
 
-                    ladder.append(currUser.getName())
+                    msgLadder.append(currUser.getName())
                             .append(System.lineSeparator());
                 } else {
-                    ladder.append(".")
+                    msgLadder.append(".")
                             .append("(")
                             .append(currUserMsgs)
                             .append(") ");
 
-                    ladder.append(currUser.getName())
+                    msgLadder.append(currUser.getName())
                             .append(System.lineSeparator())
                             .append("```");
-                    return new Ladder(ladder.toString());
+                    return new Ladder(msgLadder.toString());
                 }
             }
         }
         throw new IllegalArgumentException("Invalid ladder type. Found: " + ladderType.toString());
     }
 
-    private Ladder(String ladder) {
-        this.ladder = ladder;
+    private Ladder(String ladder_) {
+        ladder = ladder_;
     }
 
     @Override

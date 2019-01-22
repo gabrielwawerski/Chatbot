@@ -1,7 +1,7 @@
 package bot.modules.gabe.rand;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.core.util.Utils;
@@ -31,7 +31,7 @@ public class JebacLeze extends RandomResourceModule {
         updateMatch(message);
 
         if (isRegex()) {
-            addPoints(message, Config.POINTS_JEBACLEZE_REGEX);
+            pushPoints(message, Points.POINTS_JEBACLEZE_REGEX);
             chatbot.sendMessage(getRandomMessage());
             return true;
         }

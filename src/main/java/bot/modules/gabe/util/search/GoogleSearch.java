@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.search;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.search.SearchModuleBase;
@@ -36,7 +36,7 @@ public class GoogleSearch extends SearchModuleBase {
         String msg = message.getMessage();
 
         if (is(GOOGLE_REGEX, G_REGEX, G_HELP_REGEX)) {
-            addPoints(message, Config.POINTS_GOOGLESEARCH_INFO_REGEX);
+            pushPoints(message, Points.POINTS_GOOGLESEARCH_INFO_REGEX);
             chatbot.sendMessage("Jak coś przetłumaczyć?\n"
                     + "!g <tekst> translate *język*\n"
                     + "Języki: en, pl, ...");
@@ -57,7 +57,7 @@ public class GoogleSearch extends SearchModuleBase {
             updateMatcher(msg);
 
             if (matchFound()) {
-                addPoints(message, Config.POINTS_GOOGLESEARCH_REGEX);
+                pushPoints(message, Points.POINTS_GOOGLESEARCH_REGEX);
                 chatbot.sendMessage(getFinalMessage());
                 return true;
             }

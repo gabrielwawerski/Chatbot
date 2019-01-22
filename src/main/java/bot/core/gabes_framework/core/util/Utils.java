@@ -29,7 +29,7 @@ public final class Utils {
     private static DBConnection db = DBConnection.getInstance();
 
     public static boolean msgBy(Message message, Users users) {
-        return message.getSender().getName().equals(users.getUserName());
+        return message.getSender().getName().equals(users.name());
     }
 
     public static ArrayList<String> getCommands(List<String> regexes) {
@@ -47,12 +47,11 @@ public final class Utils {
 
     /**
      * Transfers points from one user to another. Also refreshes and updates their database entries.
-     *
+     *  @param from user to transfer points from
      * @param to the user to transfer points to
-     * @param from user to transfer points from
      * @param points amount of points to transfer
      */
-    public static void transfer(User to, User from, int points) {
+    public static void transfer(User from, User to, int points) {
         db.refresh(to, from);
         to.addPoints(points);
         from.subPoints(points);
@@ -79,6 +78,10 @@ public final class Utils {
 
     static <T> T getRandom(List<T> list) {
         return list.get(RANDOM.nextInt(list.size()));
+    }
+
+    public static int getRandom(int max) {
+        return RANDOM.nextInt(max);
     }
 
     public static boolean fiftyFifty() {

@@ -1,7 +1,7 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.ModuleBase;
@@ -39,7 +39,7 @@ public class RandomKwejk extends ModuleBase {
         updateMatch(message);
 
         if (isRegex()) {
-            addPoints(message, Config.POINTS_RANDOMKWEJK_REGEX);
+            pushPoints(message, Points.POINTS_RANDOMKWEJK_REGEX);
             chatbot.sendImageUrlWaitToLoad(currentImageUrl);
             getNextMeme();
             return true;

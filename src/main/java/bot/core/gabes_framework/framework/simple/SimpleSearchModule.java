@@ -1,7 +1,7 @@
 package bot.core.gabes_framework.framework.simple;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.gabes_framework.framework.search.SearchModuleBase;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -25,7 +25,7 @@ public abstract class SimpleSearchModule extends SearchModuleBase {
             updateMatcher(messageBody);
 
             if (matchFound()) {
-                addPoints(message, Config.POINTS_SIMPLESEARCH_MODULE_REGEX);
+                pushPoints(message, Points.POINTS_SIMPLESEARCH_MODULE_REGEX);
                 chatbot.sendMessage(getFinalMessage());
                 return true;
             }

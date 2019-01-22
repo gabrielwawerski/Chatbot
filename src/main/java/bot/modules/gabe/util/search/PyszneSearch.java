@@ -1,7 +1,7 @@
 package bot.modules.gabe.util.search;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.misc.Message;
 import bot.core.gabes_framework.framework.search.SearchModuleBase;
@@ -79,7 +79,7 @@ public class PyszneSearch extends SearchModuleBase {
         String messageBody = message.getMessage();
 
         if (isOr(HELP_REGEX, HELP_2_REGEX) ) {
-            addPoints(message, Config.POINTS_PYSZNE_INFO_REGEX);
+            pushPoints(message, Points.POINTS_PYSZNE_INFO_REGEX);
             chatbot.sendMessage(
                     "Restauracje dla kodu pocztowego."
                             + "\nAT THE GABES:"
@@ -93,17 +93,17 @@ public class PyszneSearch extends SearchModuleBase {
             return true;
 
         } else if (isOr(MARIANO_ITALIANO_1, MARIANO_ITALIANO_2)) {
-            addPoints(message, Config.POINTS_PYSZNE_RESTAURANT);
+            pushPoints(message, Points.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/pizzeria-mariano-italiano");
             return true;
 
         } else if (is(HAIANH_REGEX_1, HAIANH_REGEX_2, HAIANH_REGEX_3)) {
-            addPoints(message, Config.POINTS_PYSZNE_RESTAURANT);
+            pushPoints(message, Points.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/bar-azjatycki-hai-ahn");
             return true;
 
         } else if (is(FOOTBALL_PIZZA_1, FOOTBALL_PIZZA_2, FOOTBALL_PIZZA_3)) {
-            addPoints(message, Config.POINTS_PYSZNE_RESTAURANT);
+            pushPoints(message, Points.POINTS_PYSZNE_RESTAURANT);
             chatbot.sendMessage("pyszne.pl/football-pizza");
             return true;
         }
@@ -112,7 +112,7 @@ public class PyszneSearch extends SearchModuleBase {
         if (is(SEARCH_REGEX)) {
             if (matchFound()) {
                 if (analyzeMessage(messageBody)) {
-                    addPoints(message, Config.POINTS_PYSZNE_REGEX);
+                    pushPoints(message, Points.POINTS_PYSZNE_REGEX);
                     chatbot.sendMessage(getFinalMessage());
                     return true;
                 } else {

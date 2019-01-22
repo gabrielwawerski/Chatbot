@@ -1,10 +1,6 @@
 package bot.core;
 
-import bot.core.gabes_framework.core.util.Emoji;
-
-import java.util.ArrayList;
-
-public class PcionBot extends Chatbot {
+public class PcionBot {
     public static final String DATABASE_USERNAME = "gabe";
     public static final String DATABASE_PASSWORD = "lezetykurwo";
 
@@ -16,39 +12,39 @@ public class PcionBot extends Chatbot {
     public static final String GRUPKA_ID = "1158615960915822";
     public static final String GRZAGSOFT_ID = "1506449319457834";
     public static final String PATRO_ID = "2275107775897967";
-    public static final String MOONSHINERS_ID = "1771365296265469";
     public static final String PCIONBOT_MAIN_ID = "2388008607938113";
 
     public static final String KARTAPULAPKA_IMG_URL = "https://res.cloudinary.com/drpmvrlik/image/upload/v1547334869/assets/kartapulapka/kartapulapka.jpg";
 
     public static final boolean SILENT_MODE = true; // does not greet itself or send msg when exception occurs
     public static final boolean LOG_MODE = false;    // doesn't respond to commands - updates database only.
+// debugs messages to console
+    public static final boolean DEBUG_MODE = false;// adds bot name before it's message and " : " after.
+    public static final boolean DEBUG_MESSAGES = false;
+    public static final boolean HEADLESS = false;
+    public static final boolean MAXIMIZED = true;
+
+    public static final String USERNAME = "ezelbot66@gmail.com";
+    public static final String PASSWORD = "lezetykurwo";
+
+    public static final String THREAD = GRUPKA_ID;
 
     // TODO reading username, password, thread id and everything else from a file
     // TODO database on a different thread - will allow for multiple database connections! (thread lock - synchronized)
     public static void main(String[] args) {
-        System.out.println(args.toString());
         Chatbot pcionbot;
-        String username = "ezelbot66@gmail.com";
-        String password = "lezetykurwo";
+        System.out.println(args.toString());
 
-        boolean debugMode = false;      // debugs messages to console
-        boolean debugMessages = false; // adds bot name before it's message and " : " after.
-        boolean headless = false;
-        boolean maximized = true;
-
-        pcionbot = new Chatbot(username, password, GRZAGSOFT_ID,
-                debugMode,
-                SILENT_MODE,
-                debugMessages,
-                headless,
-                maximized,
-                LOG_MODE
-        );
+        pcionbot = getBot();
     }
 
-    @Override
-    public String appendRootPath(String path) {
-        return "src/main/resources/" + path;
+    public static Chatbot getBot() {
+        return new Chatbot(USERNAME, PASSWORD, THREAD,
+                DEBUG_MODE,
+                SILENT_MODE,
+                DEBUG_MESSAGES,
+                HEADLESS,
+                MAXIMIZED,
+                LOG_MODE);
     }
 }

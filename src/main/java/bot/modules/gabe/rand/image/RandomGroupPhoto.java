@@ -1,7 +1,7 @@
 package bot.modules.gabe.rand.image;
 
 import bot.core.Chatbot;
-import bot.core.gabes_framework.core.util.Config;
+import bot.modules.gabe.point_system.util.Points;
 import bot.core.hollandjake_api.exceptions.MalformedCommandException;
 import bot.core.hollandjake_api.helper.interfaces.Util;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -35,7 +35,7 @@ public class RandomGroupPhoto extends ModuleBase {
 
     private long now;
     private long timeoutRelease;
-    private static final long TIMEOUT = 0;
+    private static final long TIMEOUT = 2000;
 
     private static final String PHOTOS_PATH = "D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\";
 
@@ -50,17 +50,39 @@ public class RandomGroupPhoto extends ModuleBase {
     private static final String RANDOM_SIMPLE = ("random");
     private static final String R_SIMPLE = ("r");
 
+    public RandomGroupPhoto(Chatbot chatbot) {
+        super(chatbot);
+        File f = new File(PHOTOS_PATH);
+        files = new ArrayList<>(Arrays.asList(f.listFiles()));
+        cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "drpmvrlik",
+                "api_key", "844188849853993",
+                "api_secret", "yutae3uoXkDwxKhhc9u2eEs5GE8"));
+
+        String fileUrl;
+        fileUrl = uploadFile();
+        if (fileUrl == null) {
+            System.out.println("Niepowodzenie. Próbuję ponownie.");
+            fileUrl = uploadFile();
+        } // zamienic na while jesli beda bledy
+
+        currentFileUrl = fileUrl;
+        now = new Date().getTime();
+        timeoutRelease = now + TIMEOUT;
+    }
+
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
         now = new Date().getTime();
 
         if (isRegex()) {
+            // if timeout hasn't passed yet, do nothing.
             if (now < timeoutRelease) {
-                chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
+//                chatbot.sendMessage("\uD83D\uDED1 " + randTimeoutMsg());
                 return false;
             } else {
-                addPoints(message, Config.POINTS_RANDOMGROUPPHOTO_REGEX);
+                pushPoints(message, Points.POINTS_RANDOMGROUPPHOTO_REGEX);
                 chatbot.sendImageUrlWaitToLoad(currentFileUrl);
                 currentFileUrl = uploadFile();
 
@@ -75,28 +97,6 @@ public class RandomGroupPhoto extends ModuleBase {
         return false;
     }
 
-    public RandomGroupPhoto(Chatbot chatbot) {
-        super(chatbot);
-        File f = new File(PHOTOS_PATH);
-        files = new ArrayList<>(Arrays.asList(f.listFiles()));
-        cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "drpmvrlik",
-                "api_key", "844188849853993",
-                "api_secret", "yutae3uoXkDwxKhhc9u2eEs5GE8"));
-
-        String fileUrl;
-        if ((fileUrl = uploadFile()) == null) {
-            System.out.println("Nie udało się zdobyć URL obrazka. Próbuję ponownie...");
-            fileUrl = uploadFile();
-            if (fileUrl == null) {
-                System.out.println("Niepowodzenie.");
-            }
-        } // zamienic na while jesli beda bledy
-        currentFileUrl = fileUrl;
-        now = new Date().getTime();
-        timeoutRelease = now + TIMEOUT;
-    }
-
     @Override
     protected List<String> setRegexes() {
         return List.of(RANDOM_REGEX, R_REGEX, RANDOM_SIMPLE, R_SIMPLE);
@@ -105,12 +105,13 @@ public class RandomGroupPhoto extends ModuleBase {
     private String uploadFile() {
         Map uploadResult = null;
         File random = null;
-        int maxTries = 5;
+        int maxTries = 10;
         int curr = 0;
 
         while (curr < maxTries) {
             random = Util.GET_RANDOM(files);
             if (random.exists()) {
+                System.out.println("wylosowano prawidlowe zdjecie");
                 break;
             }
             curr++;
@@ -119,12 +120,19 @@ public class RandomGroupPhoto extends ModuleBase {
         try {
             uploadResult = cloudinary.uploader().upload(random, ObjectUtils.emptyMap());
         } catch (IOException e) {
+            curr = 0;
             e.printStackTrace();
         }
+
         if (uploadResult == null) {
+            try {
+                uploadResult = cloudinary.uploader().upload(Util.GET_RANDOM(files), ObjectUtils.emptyMap());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return null;
         } else {
-            return (String)uploadResult.get("url");
+            return (String) uploadResult.get("url");
         }
     }
 
