@@ -32,7 +32,7 @@ public class TwitchEmotes extends ModuleBase {
     public TwitchEmotes(Chatbot chatbot) {
         super(chatbot);
         EMOTES = Emote.getEmotes();
-        setEmotesSize(SIZE_LARGE);
+        setEmotesSize(SIZE_MEDIUM);
         initInfo();
     }
 
@@ -68,8 +68,9 @@ public class TwitchEmotes extends ModuleBase {
             return true;
         }
 
+// TODO rework
         for (Emote current : EMOTES) {
-            if (match.equals(current.value())) {
+            if (match.toLowerCase().contains(current.value().toLowerCase())) {
                 pushPoints(message, Points.POINTS_TWITCHEMOTES_REGEX);
                 return sendEmoteMsg(current);
             }
