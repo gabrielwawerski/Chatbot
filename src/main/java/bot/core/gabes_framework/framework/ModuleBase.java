@@ -59,6 +59,8 @@ public abstract class ModuleBase implements Module {
         setOnline();
     }
 
+    // TODO remove from here
+    @Deprecated
     private long getTimeoutRelease() {
         return new Date().getTime() + TIMEOUT;
     }
