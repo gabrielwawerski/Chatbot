@@ -111,7 +111,7 @@ public class PointSystem extends ModuleBase {
                 chatbot.sendMessage(user.getName() + " odrzucił wyzwanie " + duel.getInitiator().getName());
                 activeDuels.remove(duel);
                 return true;
-            } else if (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
+            } else (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
                 return handleDuel(duel);
             }
         }
@@ -268,14 +268,9 @@ public class PointSystem extends ModuleBase {
             Matcher matcher = Pattern.compile(REGEX_DUEL).matcher(message.getMessage());
 
             if (matcher.find()) {
+            User user = db.getUser(message);
                 String desiredUser = matcher.group(1);
                 int bet = Integer.parseInt(matcher.group(2));
-
-                if (desiredUser.charAt(0) == '@') {
-                    desiredUser = desiredUser.substring(1);
-                }
-
-                db.refresh(user);
                 System.out.println("bet: " + bet + "\ninitiator: " + user.getName() + "\nopponent: " + desiredUser);
                 if (user.getPoints() < bet) {
                     chatbot.sendMessage("\u274c Nie masz tylu punktów! (" + user.getPoints() + ")");
@@ -342,9 +337,9 @@ public class PointSystem extends ModuleBase {
             return false;
         }
         else if (is(DUEL_ANY_REGEX)) {
-            Matcher matcher = Pattern.compile(DUEL_ANY_REGEX).matcher(message.getMessage());
-            System.out.println("duel any!!!");
-            return false;
+      //      Matcher matcher = Pattern.compile(DUEL_ANY_REGEX).matcher(message.getMessage());
+        //    System.out.println("duel any!!!");
+          //  return false;
         }
 
         else if (is(BET_MORE_THAN_REGEX)) {
@@ -524,7 +519,7 @@ public class PointSystem extends ModuleBase {
                 temp = i.next();
 
                 System.out.println("temp.getTimeStarted() = " + temp.getTimeStarted());
-                if (now - temp.getTimeStarted() > 60000) {
+                if (now > temp.getTimeStarted()) {
                     System.out.println("removed expired duel!");
                     i.remove();
                 }
