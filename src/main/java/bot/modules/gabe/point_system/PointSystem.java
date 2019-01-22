@@ -519,7 +519,7 @@ public class PointSystem extends ModuleBase {
                 temp = i.next();
 
                 System.out.println("temp.getTimeStarted() = " + temp.getTimeStarted());
-                if (now > temp.getTimeStarted()) {
+                if (now > temp.getTimeStarted() + 60000) {
                     System.out.println("removed expired duel!");
                     i.remove();
                 }
