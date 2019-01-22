@@ -9,18 +9,20 @@ public class PcionBot {
     public static final String YANDEX_API_KEY = "trnsl.1.1.20181218T072725Z.426c8360e3601118.ce0d07709d8e3173e8005a6e6e266a65090c04fe";
     public static final String NEWS_API_KEY = "14a5cf3980a1408e9a4e78b002c2b3cd";
 
+    public static final String KARTAPULAPKA_IMG_URL = "https://res.cloudinary.com/drpmvrlik/image/upload/v1547334869/assets/kartapulapka/kartapulapka.jpg";
+
+
     public static final String GRUPKA_ID = "1158615960915822";
     public static final String GRZAGSOFT_ID = "1506449319457834";
-    public static final String PATRO_ID = "2275107775897967";
-    public static final String PCIONBOT_MAIN_ID = "2388008607938113";
 
-    public static final String KARTAPULAPKA_IMG_URL = "https://res.cloudinary.com/drpmvrlik/image/upload/v1547334869/assets/kartapulapka/kartapulapka.jpg";
+    public static final String PCIONBOT_MAIN_ID = "2388008607938113";
+    public static final String PATRO_ID = "2275107775897967";
+
 
     public static final boolean SILENT_MODE = true; // does not greet itself or send msg when exception occurs
     public static final boolean LOG_MODE = false;    // doesn't respond to commands - updates database only.
-// debugs messages to console
-    public static final boolean DEBUG_MODE = false;// adds bot name before it's message and " : " after.
-    public static final boolean DEBUG_MESSAGES = false;
+    public static final boolean DEBUG_MODE = false; // adds bot name before it's message and " : " after.
+    public static final boolean DEBUG_MESSAGES = false; // debugs messages to console
     public static final boolean HEADLESS = false;
     public static final boolean MAXIMIZED = true;
 

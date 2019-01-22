@@ -18,12 +18,28 @@ public class User {
     private int points;
     @DatabaseField
     private int messageCount;
-//    @DatabaseField
-//    private int randomUsed;
-//    @DatabaseField
-//    private int kwejkUsed;
-//    @DatabaseField
-//    private int lezeHate;
+
+    // TODO add these to database:
+//    "\uD83D\uDE0D"
+    // totalLoveEmoji
+
+//    "\uD83D\uDE06"
+    // totalLaughEmoji
+
+//    "\uD83D\uDE2E "
+    // totalSurpriseEmote
+
+//    "\uD83D\uDE22"
+    // totalCryEmote
+
+//    "\uD83D\uDE20"
+    // totalAngryEmote
+
+//    "\uD83D\uDC4D"
+    // totalThumbsUpEmoji
+
+//    "\uD83D\uDC4E"
+    // totalThumbsDownEmote
 
     public static final User INVALID_USER = new User("INVALID_USER");
     public static final String INVALID_NAME = "INVALID_USER";

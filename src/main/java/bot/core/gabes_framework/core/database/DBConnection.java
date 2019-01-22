@@ -144,7 +144,7 @@ public class DBConnection {
         }
 
         for (User user : userDao) {
-            if (user.getName().equals(Users.Gabe.name()) && name_.equalsIgnoreCase("gabe")) {
+            if (user.getName().equals(Users.Gabe.name()) && name_.equalsIgnoreCase("gabe")) { // TODO Users -> nowa klasa (Presenter costam?) majaca tylko name i realWorldNickname
                 return user;
             } else if (user.getName().equals(Users.Leze.name()) && (name_.equalsIgnoreCase("leze")
                     || name_.equalsIgnoreCase("łeze") || name_.equalsIgnoreCase("śmieć")
