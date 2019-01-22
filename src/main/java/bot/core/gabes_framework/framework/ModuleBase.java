@@ -247,6 +247,10 @@ public abstract class ModuleBase implements Module {
         return "";
     }
 
+    protected List<String> noRegexes() {
+        return List.of("$^");
+    }
+
     @Override
     public void echoOnline() {
         String msg = "";
