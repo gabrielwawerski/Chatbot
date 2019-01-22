@@ -217,9 +217,11 @@ public class SlotMachine extends ModuleBase {
         if (totalCombo <= 1) {
             if (counter100 == 1) {
                 if (getCombo() > 1) {
+                pushPoints(points + (bet * MUL_EXTRA_0));
                     increaseCombo();
                     msg = "\n +" + points + "pkt! (" + user.getPoints() + ")\n Mnożnik pkt++!";
                 } else {
+                pushPoints(points + (bet * MUL_EXTRA_0));
                     System.out.println("current combo: " + getCombo());
                     msg = "\n+" + points + "pkt! (" + user.getPoints() + ")";
                 }
