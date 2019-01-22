@@ -111,7 +111,7 @@ public class PointSystem extends ModuleBase {
                 chatbot.sendMessage(user.getName() + " odrzucił wyzwanie " + duel.getInitiator().getName());
                 activeDuels.remove(duel);
                 return true;
-            } else (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
+            } else if (isOr(DUEL_ACCEPT_REGEX, DUEL_ACCEPT_SIMPLE)) {
                 return handleDuel(duel);
             }
         }

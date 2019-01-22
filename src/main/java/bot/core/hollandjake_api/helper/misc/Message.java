@@ -8,8 +8,6 @@ import org.openqa.selenium.WebElement;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
-import javax.net.ssl.SSLHandshakeException;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
@@ -21,8 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static bot.core.hollandjake_api.helper.interfaces.Util.*;
-import static bot.core.hollandjake_api.helper.interfaces.XPATHS.MESSAGE_IMAGE;
-import static bot.core.hollandjake_api.helper.interfaces.XPATHS.MESSAGE_TEXT;
+import static bot.core.hollandjake_api.helper.interfaces.XPATHS.*;
 import static org.apache.commons.lang.StringEscapeUtils.unescapeHtml;
 
 public class Message {
@@ -30,32 +27,9 @@ public class Message {
     private final String message;
     private final Image image;
     private final Date date = new Date();
+    private final WebElement webElement;
 
     private boolean containsCommand = false;
-
-    public Message(String url, Human me) {
-        this.sender = me;
-        this.image = imageFromUrl(url);
-        message = null;
-    }
-
-    public Message(Human me, String message) {
-        this.sender = me; //Sender is the bot
-        this.message = unescapeHtml(message);
-        this.image = null;
-    }
-
-    public Message(Human me, String message, String image) {
-        this.sender = me; //Sender is the bot
-        this.message = unescapeHtml(message);
-        this.image = imageFromUrl(image);
-    }
-
-    public Message(Human me, String message, Image image) {
-        this.sender = me; //Sender is the bot
-        this.message = unescapeHtml(message);
-        this.image = image;
-    }
 
     public Message(WebElement webElement, Chatbot chatbot) {
         List<WebElement> imageElements = webElement.findElements(By.xpath(MESSAGE_IMAGE));
@@ -64,6 +38,7 @@ public class Message {
             this.image = imageFromUrl(href);
             this.sender = null;
             this.message = "";
+            this.webElement = webElement;
         } else {
             this.image = null;
             this.sender = Human.getFromElement(webElement, chatbot.getPeople());
@@ -74,9 +49,49 @@ public class Message {
             } else {
                 this.message = "";
             }
-
+            this.webElement = webElement;
         }
         this.containsCommand = chatbot.containsCommand(this);
+    }
+
+    public WebElement getReactionButton() {
+        return webElement.findElement(By.xpath(REACTION_MENU_BUTTON));
+    }
+
+    public boolean reacted() {
+        return webElement.findElement(By.xpath(REACTION_PRESENT)) != null;
+    }
+
+    public WebElement getWebElement() {
+        return webElement;
+    }
+
+    public Message(String url, Human me) {
+        this.sender = me;
+        this.image = imageFromUrl(url);
+        message = null;
+        webElement = null;
+    }
+
+    public Message(Human me, String message) {
+        this.sender = me; //Sender is the bot
+        this.message = unescapeHtml(message);
+        this.image = null;
+        webElement = null;
+    }
+
+    public Message(Human me, String message, String image) {
+        this.sender = me; //Sender is the bot
+        this.message = unescapeHtml(message);
+        this.image = imageFromUrl(image);
+        webElement = null;
+    }
+
+    public Message(Human me, String message, Image image) {
+        this.sender = me; //Sender is the bot
+        this.message = unescapeHtml(message);
+        this.image = image;
+        webElement = null;
     }
 
     public static Message withImageFromURL(Human me, String message, String url) {

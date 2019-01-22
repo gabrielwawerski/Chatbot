@@ -122,6 +122,12 @@ public class WebController {
         chatbot.setMe(Human.createForBot(getMyRealName()));
         webDriver.get("https://www.messenger.com/t/" + threadId);
     }
+
+    public void switchThreads(String threadId) {
+        chatbot.setMe(Human.createForBot(getMyRealName())); // todo check if necessary
+        webDriver.get("https://www.messenger.com/t/" + threadId);
+        waitForMessagesToLoad();
+    }
     //endregion
 
     //region Sending messages
@@ -255,6 +261,7 @@ public class WebController {
         messageWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(MESSAGE_CONTAINER)));
     }
 
+    // TODO switch thread if new message in second thread
     public void waitForNewMessage() throws TimeoutException {
         messageWait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
                 By.xpath(MESSAGES_OTHERS),

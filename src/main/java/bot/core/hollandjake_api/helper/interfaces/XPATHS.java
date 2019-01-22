@@ -40,6 +40,12 @@ public interface XPATHS {
     String MESSAGES_MINE = STICKER_FILTER + "[contains(@class,'_nd_')]";
     String MESSAGES_MINE_RECENT = "(" + MESSAGES_MINE + ")[last()]";
 
+    String REACTION_MENU_BUTTON = "//*[@class='_aou']";
+    String REACTION_PRESENT = "//*[@class='_4kf5']";
+
+
+    //endregion Messages
+
     //region Requires MESSAGE ELEMENT
     /**
      * Used for checking if received message contains an image
