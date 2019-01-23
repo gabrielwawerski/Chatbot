@@ -193,6 +193,10 @@ public class WebController {
         WebElement inputBox = selectInputBox();
         setClipboardContents("@" + USER);
         inputBox.sendKeys(PASTE);
+        
+        // jesli wklejanie nie dziala, inputBox.sendKeys
+        // w petli for - ogranicznik USER.length
+        // przed USER - @
         try {
             chatbot.wait(1000);
         } catch (InterruptedException e) {
