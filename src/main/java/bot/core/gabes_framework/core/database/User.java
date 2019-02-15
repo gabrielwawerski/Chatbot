@@ -41,8 +41,8 @@ public class User {
 //    "\uD83D\uDC4E"
     // totalThumbsDownEmote
 
-    public static final User INVALID_USER = new User("INVALID_USER");
-    public static final String INVALID_NAME = "INVALID_USER";
+    public static final User EMPTY_USER = new User("EMPTY_USER");
+    public static final String INVALID_NAME = "INVALID_NAME";
 
     public User() { }
 
