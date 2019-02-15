@@ -11,28 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Connects my framework to hollandjake's facebook's messenger API. Originally taken from hollandjake's implementation:
+ * Connects my framework to hollandjake's messenger API. Originally taken from hollandjake's implementation:
  * {@link bot.core.hollandjake_api.helper.interfaces.Module}.
- *
- * <p>If you want to write modules from scratch, you have to implement this interface. It currently is hooked to
- * hollandjake's API (instead of his), therefore implementing his interface or instantiating his modules will not work.
- *
- * <p>Every message sent to thread that the bot is listening to gets scraped by the API, which creates a new
+ * <p>
+ * If you want to write modules from scratch, you have to implement this interface. It currently is hooked to
+ * hollandjake's API, therefore implementing his interface or instantiating his modules will not work.
+ * <p>
+ * Every message sent to thread that the bot is listening to, gets scraped by the API, which attempts to create
  * {@link Message} instance from message data. It then loops over all loaded modules, calling each module
  * {@link #process(Message)}.
+ * <p>
+ * Modules can react to commands, which you can specify in a simple way - by extending my framework's main class,
+ * {@link ModuleBase} and passsing their regexes, from overriden {@link ModuleBase#setRegexes()} method. For more
+ * info on regexes, see {@link Utils#TO_REGEX(String)} // TODO
+ * <p>
+ * Written for my module framework - all credit for making custom messenger bots possible goes to hollandjake.
+ * <p>
+ * For more info, see: {@linkplain ModuleBase}
+ * <p><p>
+ * v1.1<br>
+ *     - added: {@link #isOnline()} {@link #echoOnline()}
  *
- * <p>Modules can react to commands, which you can specify by subclassing one of my abstract classes and passing commands
- * in the constructor (see {@link SimpleModule} for more info), or by adding them to your subclass by
- * hand. See {@link ModuleBase} for more info.
- *
- * <p>Created for my module framework. I'm hoping to add more functionality, so this interface might change.
- * All credit for making custom messenger bots possible goes to hollandjake.
- *
- * <p>For more information, take a look at these: {@linkplain ModuleBase}, {@linkplain SimpleModule},
- * {@linkplain SingleMessageModule}, {@linkplain MessageModule}, {@linkplain RandomResourceModule}.
- *
- * <p><p>v1.1
- * <br>- added {@link #isOnline()} and {@link #echoOnline()} methods.
+ * @see ModuleBase
+ * @see SingleMessageModule
+ * @see RandomResourceModule
  *
  * @version 1.1
  * @since 0.19
