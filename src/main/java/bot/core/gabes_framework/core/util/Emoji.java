@@ -37,6 +37,13 @@ public final class Emoji {
     public static final String EXCL_MARK_RED = "\u2757";
     /** 💯 */
     public static final String _100 = "\uD83D\uDCAF";
+    public static final String DUEL = "\u2694";
+    public static final String DOWNLOAD = "\u2935";
+    public static final String STATS = "\uD83D\uDD22";
+    public static final String DIVISION = "\u2797";
+    public static final String LIT_EMOJI = "\uD83D\uDE02";
+    public static final String ABC = "\uD83D\uDD20";
+    public static final String SLOT_MACHINE = "\uD83C\uDFB0";
 
     public static ArrayList<String> getAll() {
         ArrayList<String> emojis = new ArrayList<>();
