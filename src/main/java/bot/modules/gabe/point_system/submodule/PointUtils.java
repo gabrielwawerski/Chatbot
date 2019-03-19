@@ -20,7 +20,7 @@ public final class PointUtils {
             }
         }
         System.out.println("user not found");
-        return User.INVALID_USER;
+        return User.EMPTY_USER;
     }
 
     public static ArrayList<User> usersFromDatabase() {

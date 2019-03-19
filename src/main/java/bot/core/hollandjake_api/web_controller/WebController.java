@@ -1,7 +1,6 @@
 package bot.core.hollandjake_api.web_controller;
 
 import bot.core.Chatbot;
-import bot.core.PcionBot;
 import bot.core.gabes_framework.core.database.DBConnection;
 import bot.core.hollandjake_api.helper.misc.Human;
 import bot.core.hollandjake_api.helper.misc.Message;
@@ -81,7 +80,7 @@ public class WebController {
             System.out.println("Coś poszło nie tak:");
             e.printStackTrace();
             quit(false);
-//            this.chatbot = PcionBot.getBot();
+//            this.chatbot = PcionBot.newBot();
 
 //            if (PcionBot.SILENT_MODE || PcionBot.LOG_MODE) {
 //                e.printStackTrace();
@@ -189,22 +188,72 @@ public class WebController {
                 myMessageCount));
     }
 
+    public void kickUser() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(INFO_BUTTON)));
+        WebElement infoMenu = webDriver.findElement(By.xpath(INFO_BUTTON));
+
+        infoMenu.click();
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOADED_THUMBNAIL))).isDisplayed();
+
+        //_364g
+    }
+
+    public void sendImageUrlLoadURL(String imageUrl) {
+        int myMessageCount = getNumberOfMyMessagesDisplayed();
+        WebElement inputBox = selectInputBox();
+
+        /** {@link Message#sendMessage(WebElement, String)}  */
+        // wkleja link do zdjęcia
+        CLIPBOARD.setContents(new StringSelection((imageUrl)), null);
+
+        // TODO move some code to Message class where an object of it should be created
+        // paste link
+        inputBox.sendKeys(PASTE);
+        // waits until image fully loads as an attachment
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(LOADED_THUMBNAIL))).isDisplayed();
+
+        inputBox.sendKeys(Keys.ENTER);
+
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(MESSAGES_MINE),
+                myMessageCount));
+    }
+
+    public void sendMentionMessage(String USER) {
+        WebElement inputBox = selectInputBox();
+        inputBox.sendKeys("@");
+        for (int i = 0; i < 5; i++) {
+            inputBox.sendKeys(Character.toString(USER.charAt(i)));
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        inputBox.sendKeys(Keys.ENTER);
+        inputBox.sendKeys(Keys.SPACE);
+//        setClipboardContents(message);
+//        inputBox.sendKeys(PASTE);
+        inputBox.sendKeys(Keys.ENTER);
+    }
+
     public void sendMentionMessage(String USER, String message) {
         WebElement inputBox = selectInputBox();
-        setClipboardContents("@" + USER);
-        inputBox.sendKeys(PASTE);
-        
-        // jesli wklejanie nie dziala, inputBox.sendKeys
-        // w petli for - ogranicznik USER.length
-        // przed USER - @
-        try {
-            chatbot.wait(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        inputBox.sendKeys("@");
+        for (int i = 0; i < 8; i++) {
+            inputBox.sendKeys(Character.toString(USER.charAt(i)));
+            try {
+                Thread.sleep(50); // TODO increase if not mentioning properly
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
         inputBox.sendKeys(Keys.ENTER);
-//        setClipboardContents(message);
-//        inputBox.sendKeys(PASTE, Keys.ENTER);
+        setClipboardContents(message);
+        inputBox.sendKeys(PASTE);
+        inputBox.sendKeys(Keys.ENTER);
     }
 
     protected void setClipboardContents(String contents) {

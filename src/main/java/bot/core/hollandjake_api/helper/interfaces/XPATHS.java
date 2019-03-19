@@ -10,13 +10,19 @@ public interface XPATHS {
     // i maed this
     String REMOVE_BUTTON = "//button[@class='_tij _50zy _50zz _50z- _5upp _42ft']";
     String LOADED_THUMBNAIL = "//div[@class='_52kr']";
-    String SEND_BUTTON = "//button[@class='_30yy _38lh _39bl']"; // no such element
+//    String INFO_MENU_USER = "//div[@class='_364g']";
+//    String INFO_USER_MENU = "//div[@class='_364g']";
+//    String INFO_USER_REMOVE_BUTTON = "//div[@class='_3quh _30yy _2t_ _3ay_ _5ixy']";
+
+    String INFO_REMOVE_USER_BUTTON = "//button[@class='_30yy _38lh _39bl']";
 
     //endregion
 
     //region Inputs
     String INPUT_FIELD = "//div[@class='notranslate _5rpu']";
     //endregion
+
+    String INFO_BUTTON = "//a[@title='Conversation information']";
 
     //region Loading
     String MESSAGE_CONTAINER = "//div[@aria-label='Messages']";

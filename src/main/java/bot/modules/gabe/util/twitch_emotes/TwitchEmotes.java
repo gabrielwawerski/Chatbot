@@ -10,6 +10,8 @@ import bot.core.gabes_framework.core.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static bot.core.gabes_framework.core.util.Utils.msgBy;
 import static bot.modules.gabe.util.twitch_emotes.Emote.*;
@@ -36,17 +38,6 @@ public class TwitchEmotes extends ModuleBase {
         initInfo();
     }
 
-    /**
-     * @see EmoteSize#DEFAULT
-     * @see EmoteSize#MEDIUM
-     * @see EmoteSize#LARGE
-     */
-    public TwitchEmotes(Chatbot chatbot, int emoteSize) {
-        super(chatbot);
-        initInfo();
-        setEmotesSize(emoteSize);
-    }
-
     @Override
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
@@ -56,23 +47,40 @@ public class TwitchEmotes extends ModuleBase {
             return true;
         } else if (is(SIZE_1_REGEX) && msgBy(message, Users.Gabe)) {
             setEmotesSize(1);
-            chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
         } else if (is(SIZE_2_REGEX) && msgBy(message, Users.Gabe)) {
             setEmotesSize(2);
-            chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
         } else if (is(SIZE_3_REGEX) && msgBy(message, Users.Gabe)) {
             setEmotesSize(3);
-            chatbot.sendMessage("Rozmiar zmieniony.");
             return true;
         }
 
 // TODO rework
+        Matcher matcher;
         for (Emote current : EMOTES) {
-            if (match.toLowerCase().contains(current.value().toLowerCase())) {
+            matcher = Pattern.compile(current.value() + "(.+)").matcher(message.getMessage());
+            if (matcher.find()) {
                 pushPoints(message, Points.POINTS_TWITCHEMOTES_REGEX);
-                return sendEmoteMsg(current);
+                chatbot.sendImageUrlWaitToLoad(current.url());
+                System.out.println("found1");
+                return true;
+            }
+
+            matcher = Pattern.compile("(.+)" + current.value()).matcher(message.getMessage());
+            if (matcher.find()) {
+                pushPoints(message, Points.POINTS_TWITCHEMOTES_REGEX);
+                chatbot.sendImageUrlWaitToLoad(current.url());
+                System.out.println("found2");
+                return true;
+            }
+
+            matcher = Pattern.compile(current.value()).matcher(message.getMessage());
+            if (matcher.find()) {
+                pushPoints(message, Points.POINTS_TWITCHEMOTES_REGEX);
+                chatbot.sendImageUrlWaitToLoad(current.url());
+                System.out.println("found3");
+                return true;
             }
         }
         return false;
@@ -98,11 +106,6 @@ public class TwitchEmotes extends ModuleBase {
 
     private boolean isEmote(Emote emote) {
         return match.equals(EMOTES.get(EMOTES.indexOf(emote)).value());
-    }
-
-    private boolean sendEmoteMsg(Emote emote) {
-        chatbot.sendImageUrlWaitToLoad(emote.url());
-        return true;
     }
 
     private void initInfo() {

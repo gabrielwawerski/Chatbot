@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+// TODO !top - wiadomosci z najwieksza iloscia reakcji (w tym dniu)
 public class Reactions extends ModuleBase {
     private static ArrayList<Message> messages;
     private static Date time = new Date();
@@ -48,10 +49,8 @@ public class Reactions extends ModuleBase {
                 }
                 System.out.println("not reacted");
             }
-
 //            messages.clear();
 //        }
-
         return false;
     }
 
@@ -62,6 +61,6 @@ public class Reactions extends ModuleBase {
 
     @Override
     protected List<String> setRegexes() {
-        return noRegexes();
+        return NO_REGEX();
     }
 }

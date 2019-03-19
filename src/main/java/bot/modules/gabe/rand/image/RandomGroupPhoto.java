@@ -37,7 +37,7 @@ public class RandomGroupPhoto extends ModuleBase {
     private long timeoutRelease;
     private static final long TIMEOUT = 2000;
 
-    private static final String PHOTOS_PATH = "D:\\Dokumenty\\Data Backup\\Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\";
+    private static final String PHOTOS_PATH = "D:\\Dokumenty\\Data Backup\\facebook-gabrielwawerski\\messages\\JakbedziewCorsieSekcjazjebow_96428634ae\\photos\\";
 
     private static final List<String> TIMEOUT_RESPONSES = List.of(
             "Musisz jeszcze poczekać.", "Leze nie spamuj.",

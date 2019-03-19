@@ -16,8 +16,10 @@ import java.util.regex.Pattern;
 import static bot.core.gabes_framework.core.util.Utils.TO_REGEX;
 import static bot.core.gabes_framework.core.util.Utils.getCommands;
 
+// TODO FIX, NOT WORKING ANYMORE
 public class Mp3Tube extends ModuleBase {
-    private static final String PREFIX = "https://lolyoutube.com/download/mp3/";
+    private static final String PREFIX = "api.listenvid.  com/?default/";
+    private static final String POSTFIX = "/mp3/000000";
 
     private static final String MP3_REGEX = TO_REGEX("mp3 (.*)");
     private static final String INFO_REGEX = TO_REGEX("mp3");
@@ -30,7 +32,7 @@ public class Mp3Tube extends ModuleBase {
     public boolean process(Message message) throws MalformedCommandException {
         updateMatch(message);
         User user = db.getUser(message);
-        boolean userFound = user != User.INVALID_USER;
+        boolean userFound = user != User.EMPTY_USER;
 
         if (is(INFO_REGEX)) {
             if (userFound) {
@@ -79,8 +81,7 @@ public class Mp3Tube extends ModuleBase {
     }
 
     private String getUrl(String id) {
-        Date timestamp = new Date();
-        return "\u2935 Link do pobrania:\n" + PREFIX + id + "/" + timestamp.getTime();
+        return "\u2935 Link do pobrania (usuń spację przed com)\n" + PREFIX + id + POSTFIX;
     }
 
     // obsluguje proste linki: https://www.youtube.com/watch?v=xxx

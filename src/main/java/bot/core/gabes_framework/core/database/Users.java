@@ -2,6 +2,9 @@ package bot.core.gabes_framework.core.database;
 
 import java.util.List;
 
+/**
+ * Dummy objects, representing only the full name of each group member. TODO should also have a list of users nicknames
+ */
 public class Users {
     private String name;
 
@@ -30,5 +33,6 @@ public class Users {
 
     public static List<Users> getUserList() {
         return List.of(Gabe, Bot, Leze, Hube, Mege, Jakubow, Kaspe, Wiesio, Melchior, Petek);
+//        return List.of(Users.class.getDeclaredFields()); // todo
     }
 }

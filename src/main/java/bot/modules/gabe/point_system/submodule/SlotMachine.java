@@ -59,7 +59,7 @@ public class SlotMachine extends ModuleBase {
         if (is(REGEX_PULL_ANY)) {
             user = db.getUser(message);
 
-            if (user == User.INVALID_USER) {
+            if (user == User.EMPTY_USER) {
                 System.out.println("invalid user!");
                 return false;
             }
@@ -104,7 +104,7 @@ public class SlotMachine extends ModuleBase {
         } else if (is(REGEX_PULL_ALL)) {
             user = db.getUser(message);
 
-            if (user == User.INVALID_USER) {
+            if (user == User.EMPTY_USER) {
                 System.out.println("invalid user!");
                 return false;
             }
@@ -217,11 +217,11 @@ public class SlotMachine extends ModuleBase {
         if (totalCombo <= 1) {
             if (counter100 == 1) {
                 if (getCombo() > 1) {
-                pushPoints(points + (int)(double)((bet * MUL_EXTRA_0)));
+                    pushPoints(points + (int)(double)((bet * MUL_EXTRA_0)));
                     increaseCombo();
                     msg = "\n +" + points + "pkt! (" + user.getPoints() + ")\n Mnożnik pkt++!";
                 } else {
-                pushPoints(points + (int)(double)((bet * MUL_EXTRA_0)));
+                    pushPoints(points + (int)(double)((bet * MUL_EXTRA_0)));
                     System.out.println("current combo: " + getCombo());
                     msg = "\n+" + points + "pkt! (" + user.getPoints() + ")";
                 }

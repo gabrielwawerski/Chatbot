@@ -12,10 +12,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MultiTorrentSearch extends ModuleBase {
-    private static final String X1337_URL = "1337x.to/search/";
+    private static final String X1337_URL = "1337x.  to/search/";
     private static final String X1337_POSTFIX = "/1/";
 
-    private static final String TORRENTZ_URL = "https://torrentz2.eu/search?f=";
+    private static final String TORRENTZ_URL = "https://torrentz2.  eu/search?f=";
 
     private static final String TORRENT_REGEX = Utils.TO_REGEX("torrent (.*)");
     private static final String T_REGEX = Utils.TO_REGEX("t (.*)");

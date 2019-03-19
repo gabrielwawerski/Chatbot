@@ -1,6 +1,9 @@
 package bot.modules.gabe.point_system.util;
 
 import bot.core.gabes_framework.core.database.User;
+import bot.core.gabes_framework.core.database.Users;
+import bot.modules.gabe.point_system.submodule.PointUtils;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
 
@@ -13,36 +16,28 @@ public class Ladder {
         // sorts users by their points (ascending)
         users.sort(Comparator.comparing(User::getPoints));
 
-        ladder.append("Ranking wg punktów:\n")
-                .append("=================")
+        ladder.append("Ranking pkt:\n")
+                .append("============")
                 .append("\n");
 
+        User currUser;
+        int pos = 1;
         for (int i = 0; i < users.size(); i++) {
-            User currUser = users.get(users.size() - 1 - i);
-            int currUserPts = currUser.getPoints();
-
-            if (i + 1 == 10) {
-                // do nothing - we don't need extra spaces, so ladder aligns
-            } else if (currUserPts <= 9) {
-                ladder.append("    ");
-            } else if (currUserPts <= 99) {
-                ladder.append("  ");
+            currUser = users.get(users.size() - 1 - i);
+            if (currUser.getName().equals(Users.Bot.name())) {
+                continue;
             }
+            String name = currUser.getName().substring(0, 7);
+            int userPoints = currUser.getPoints();
 
-            if (i != users.size() - 1) {
-                ladder.append("(").append(currUserPts).append(") | ");
-            } else {
-                ladder.append("(").append(currUserPts).append(") | ");
-            }
-
-            ladder.append(currUser.getName())
-                    .append("\n");
-
+            ladder.append(pos++).append(". ")
+                    .append(StringUtils.rightPad(String.valueOf(userPoints), 10)).append(name).append("\n");
         }
         return new Ladder(ladder.toString());
     }
 
-    public static Ladder getMsgLadder(ArrayList<User> users) {
+    // TODO fix
+    public static String getMsgLadder(ArrayList<User> users) {
         StringBuilder msgLadder = new StringBuilder();
         users.sort(Comparator.comparing(User::getMessageCount));
 
@@ -52,6 +47,9 @@ public class Ladder {
                 .append("\n");
 
         for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getName().equals(Users.Bot.name())) {
+                continue;
+            }
             User currUser = users.get(users.size() - 1 - i);
             int currUserMsgs = currUser.getMessageCount();
 //
@@ -63,10 +61,10 @@ public class Ladder {
                     .append(") ");
 
             msgLadder.append(currUser.getName())
-                    .append(System.lineSeparator())
-                    .append("```");
+                    .append(System.lineSeparator());
         }
-        return new Ladder(msgLadder.toString());
+        msgLadder.append("```");
+        return msgLadder.toString();
     }
 
     private static Ladder generateLadder(ArrayList<User> users, LadderType ladderType) {

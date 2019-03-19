@@ -23,7 +23,6 @@ public abstract class SimpleSearchModule extends SearchModuleBase {
 
         if (isRegex()) {
             updateMatcher(messageBody);
-
             if (matchFound()) {
                 pushPoints(message, Points.POINTS_SIMPLESEARCH_MODULE_REGEX);
                 chatbot.sendMessage(getFinalMessage());

@@ -1,6 +1,7 @@
 package bot.core.gabes_framework.core.database;
 
 import bot.core.PcionBot;
+import bot.core.gabes_framework.core.util.Utils;
 import bot.core.hollandjake_api.helper.misc.Message;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -39,6 +40,7 @@ public class DBConnection {
             ((JdbcConnectionSource) connectionSource).setUsername(PcionBot.DATABASE_USERNAME);
             ((JdbcConnectionSource) connectionSource).setPassword(PcionBot.DATABASE_PASSWORD);
             userDao = DaoManager.createDao(connectionSource, User.class);
+            System.out.println("new instance");
             refreshAll();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -122,7 +124,7 @@ public class DBConnection {
                 return currentUser;
             }
         }
-        return User.INVALID_USER;
+        return User.EMPTY_USER;
     }
 
     public User getUser(Message message) {
@@ -133,10 +135,10 @@ public class DBConnection {
                 }
             }
         }
-        return User.INVALID_USER;
+        return User.EMPTY_USER;
     }
 
-
+    // TODO expand checking etc.
     public User findUser(String name) {
         String name_ = name;
         if (name.charAt(0) == '@') {
@@ -144,11 +146,14 @@ public class DBConnection {
         }
 
         for (User user : userDao) {
+            if (user.getName().equals(Users.Bot.name())) {
+                continue;
+            }
+
             if (user.getName().equals(Users.Gabe.name()) && name_.equalsIgnoreCase("gabe")) { // TODO Users -> nowa klasa (Presenter costam?) majaca tylko name i realWorldNickname
                 return user;
             } else if (user.getName().equals(Users.Leze.name()) && (name_.equalsIgnoreCase("leze")
-                    || name_.equalsIgnoreCase("łeze") || name_.equalsIgnoreCase("śmieć")
-                    || name_.equalsIgnoreCase("smiec"))) {
+                    || name_.equalsIgnoreCase("łeze"))) {
                 return user;
             } else if (user.getName().equals(Users.Hube.name()) && name_.equalsIgnoreCase("hube")) {
                 return user;
@@ -166,7 +171,7 @@ public class DBConnection {
                 return user;
             }
         }
-        return User.INVALID_USER;
+        return User.EMPTY_USER;
     }
 
     public ArrayList<User> getUsers() {

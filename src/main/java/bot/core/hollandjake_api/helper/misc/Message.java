@@ -105,11 +105,13 @@ public class Message {
 
     // TODO FUCKING MOST IMPORTANT METHOD HERE
     private static BufferedImage imageFromUrl(String url) {
+        ImageInputStream imageInputStream = null;
+
         try {
             URL U = new URL(url);
             URLConnection urlConnection = U.openConnection();
             urlConnection.connect();
-            ImageInputStream imageInputStream = ImageIO.createImageInputStream(urlConnection.getInputStream());
+            imageInputStream = ImageIO.createImageInputStream(urlConnection.getInputStream());
             BufferedImage image = ImageIO.read(imageInputStream);
 
             if (image == null) {

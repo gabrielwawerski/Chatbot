@@ -5,7 +5,7 @@ import bot.core.gabes_framework.core.util.Emoji;
 import bot.core.gabes_framework.core.util.Listener;
 import bot.core.gabes_framework.core.util.Utils;
 import bot.modules.gabe.text.B;
-import bot.modules.gabe.util.info.Shutdown;
+import bot.modules.gabe.util.info.*;
 import bot.modules.gabe.point_system.PointSystem;
 import bot.modules.gabe.rand.Roll;
 import bot.modules.gabe.image.KartaPulapka;
@@ -23,15 +23,14 @@ import bot.modules.gabe.rand.image.RandomGroupPhoto;
 import bot.modules.gabe.rand.image.RandomKwejk;
 import bot.modules.gabe.rand.JebacLeze;
 import bot.modules.gabe.rand.LezeSpam;
-import bot.modules.gabe.util.info.Commands;
-import bot.modules.gabe.util.info.Info;
 import bot.modules.gabe.util.twitch_emotes.TwitchEmotes;
 import bot.modules.gabe.util.Mp3Tube;
-import bot.modules.gabe.util.info.ATG;
 import bot.modules.gabe.rand.image.RandomWTF;
 import bot.modules.gabe.rand.image.RandomWykop;
 import bot.modules.gabe.point_system.submodule.SlotMachine;
-import bot.modules.gabe.work_in_progress.Reactions;
+import bot.modules.gabe.util.TextToImage;
+import bot.modules.gabe.util.Insult;
+import bot.modules.gabe.util.Mention;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 
@@ -47,7 +46,7 @@ import java.util.stream.Collectors;
 import static bot.core.PcionBot.*;
 
 public class Chatbot {
-    private final String version = "v0.332";
+    private final String version = "v0.34";
     protected final HashMap<String, Module> modules = new HashMap<>();
     public final WebController webController;
     private final ArrayList<Message> messageLog = new ArrayList<>();
@@ -100,10 +99,12 @@ public class Chatbot {
         modules.put("ATG", new ATG(this, "\u2705 OPEN")); // ✅ OPEN ❌ CLOSED
         modules.put("RandomWykop", new RandomWykop(this));
         modules.put("RandomWTF", new RandomWTF(this));
-//        modules.put("Mention", new Mention(this)); // TODO fix - crashed last time
+        modules.put("Mention", new Mention(this)); // TODO fix - crashed last time
         modules.put("SlotMachine", new SlotMachine(this));
         modules.put("PointSystem", new PointSystem(this));
 //        modules.put("Reactions", new Reactions(this));
+        modules.put("TextToImage", new TextToImage(this));
+        modules.put("Insult", new Insult(this));
     }
 
     // TODO refactor
@@ -214,10 +215,7 @@ public class Chatbot {
         if (threadId.equals(GRUPKA_ID)) {
             System.out.print("found.\n\n");
             msg += "Grupka (" + threadId + ")";
-        } else if (threadId.equals(GRZAGSOFT_ID)) {
-            System.out.print("found.\n\n");
-            msg += "Grzagsoft (" + threadId + ")";
-        } else if (threadId.equals(PATRO_ID)) {
+        }  else if (threadId.equals(PATRO_ID)) {
             System.out.print("found.\n\n");
             msg += "Patro (" + threadId + ")";
         } else {
@@ -331,8 +329,7 @@ public class Chatbot {
                 + "\n" + "!give <uzytkownik> <pkt>"
                 + "\n" + "!mp3 !mp3 <youtube url> generuje link do pobrania!"
                 + "\n"
-                + "\n" + "\uD83D\uDCAF Od teraz !r wysyła tylko URL, ze zdjęciem jako załącznik!"
-                + "\n" + Emoji.INFO + " Wpisz !cmd aby zobaczyć listę komend.");
+                + "\n" + Emoji.INFO + " Wpisz !cmd !cmd2 aby zobaczyć listę komend.");
     }
 
     public String getModulesOnline() {
@@ -351,6 +348,10 @@ public class Chatbot {
         webController.sendMentionMessage(user, message);
     }
 
+    public void sendMentionMessage(String user) {
+        webController.sendMentionMessage(user);
+    }
+
     public void sendImageFromURLWithMessage(String url, String message) {
         webController.sendImageFromURLWithMessage(url, message);
     }
@@ -361,6 +362,10 @@ public class Chatbot {
 
     public void sendImageUrlWaitToLoad(String imageUrl) {
         webController.sendImageUrlWaitToLoad(imageUrl);
+    }
+
+    public void sendImageUrlLoadURL(String imageUrl) {
+        webController.sendImageUrlLoadURL(imageUrl);
     }
 
     public String appendRootPath(String path) {

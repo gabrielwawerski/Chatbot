@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
  */
 public abstract class SearchModuleBase extends ModuleBase {
     protected Matcher matcher;
+    private String userMessage;
 
     // TODO move these to SimpleSearchModule
     private String SEARCH_URL;
@@ -82,6 +83,10 @@ public abstract class SearchModuleBase extends ModuleBase {
         return SEARCH_URL + toQuery();
     }
 
+    protected void setUserMessage(String message) {
+        userMessage = message;
+    }
+
     protected boolean matchFound() {
         if (matcher == null) { // && !matcher.group(1).isEmpty()?
             System.out.println(getClass().getSimpleName() + "'s matcher is null!");
@@ -124,8 +129,14 @@ public abstract class SearchModuleBase extends ModuleBase {
     /**
      * Returns only the actual user message (omits command).
      */
-    private String getUserMessage() {
-        return matcher.group(1); // not null-safe!!!!
+    protected String getUserMessage() {
+        if (userMessage == null) {
+            System.out.println("user message null");
+            return matcher.group(1); // not null-safe!!!!
+        } else {
+            System.out.println("not null");
+            return userMessage;
+        }
     }
 
     /**

@@ -97,8 +97,8 @@ public class Emote {
     public static List<Emote> getEmotes() {
         return List.of(
                 Kappa,
-                LUL,
                 OMEGALUL,
+                LUL,
                 TheIlluminati,
                 FailFish,
                 NotLikeThis,
