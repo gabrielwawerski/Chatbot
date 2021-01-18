@@ -1,15 +1,15 @@
 package bot.core;
 
 public class PcionBot {
-    public static final String USERNAME = "ezelbot66@gmail.com";
-    public static final String PASSWORD = "lezetykurwo";
-    public static final String DATABASE_USERNAME = "gabe";
-    public static final String DATABASE_PASSWORD = "lezetykurwo";
+    public static final String USERNAME = "";
+    public static final String PASSWORD = "";
+    public static final String DATABASE_USERNAME = "";
+    public static final String DATABASE_PASSWORD = "";
 
-    public static final String IMGUR_SECRET = "c7aae8e29fbd8eff21c742648125667abdcd579e";
-    public static final String IMGUR_ID = "ba98f25f45c4ac9";
-    public static final String YANDEX_API_KEY = "trnsl.1.1.20181218T072725Z.426c8360e3601118.ce0d07709d8e3173e8005a6e6e266a65090c04fe";
-    public static final String NEWS_API_KEY = "14a5cf3980a1408e9a4e78b002c2b3cd";
+    public static final String IMGUR_SECRET = "";
+    public static final String IMGUR_ID = "";
+    public static final String YANDEX_API_KEY = ".";
+    public static final String NEWS_API_KEY = "";
 
     public static final String KARTAPULAPKA_IMG_URL = "https://res.cloudinary.com/drpmvrlik/image/upload/v1547334869/assets/kartapulapka/kartapulapka.jpg";
 
